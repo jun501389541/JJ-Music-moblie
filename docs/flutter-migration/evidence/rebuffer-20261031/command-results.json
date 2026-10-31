@@ -1,0 +1,50 @@
+[
+  {
+    "log": "android-red.log",
+    "exitCode": 1
+  },
+  {
+    "log": "android-initial.log",
+    "exitCode": 1
+  },
+  {
+    "log": "android-diagnose.log",
+    "exitCode": 1
+  },
+  {
+    "log": "android-foreground.log",
+    "exitCode": 1
+  },
+  {
+    "log": "android-visible.log",
+    "exitCode": 0
+  },
+  {
+    "log": "android-regression.log",
+    "exitCode": 0
+  },
+  {
+    "log": "windows-gate.log",
+    "exitCode": 0
+  },
+  {
+    "log": "windows-local.log",
+    "exitCode": 0
+  },
+  {
+    "log": "quality-summary.log",
+    "exitCode": 0
+  },
+  {
+    "log": "build-summary.log",
+    "exitCode": 0
+  },
+  {
+    "log": "normal-install.log",
+    "exitCode": 0
+  },
+  {
+    "log": "normal-start.log",
+    "exitCode": 0
+  }
+]

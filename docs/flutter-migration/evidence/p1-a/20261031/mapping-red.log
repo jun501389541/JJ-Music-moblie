@@ -1,0 +1,25 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_evidence_test.dart
+00:00 +0: native confirmation requires observed running and advancing samples
+00:00 +0 -1: native confirmation requires observed running and advancing samples [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\platform\native_evidence_test.dart 15:7        main.<fn>
+  
+00:00 +0 -1: ready/intent/buffering/paused/seek jumps cannot alone confirm
+00:00 +0 -2: ready/intent/buffering/paused/seek jumps cannot alone confirm [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\platform\native_evidence_test.dart 29:7        main.<fn>
+  
+00:00 +0 -2: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_evidence_test.dart: native confirmation requires observed running and advancing samples
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_evidence_test.dart: ready/intent/buffering/paused/seek jumps cannot alone confirm

@@ -1,0 +1,40 @@
+{
+  "platform": "windows",
+  "sameBinarySha256": "4389c187b32c3a2d5ff64d25517545a9c4ea79047b897d472fab8936c2ed67bc",
+  "dartAssetSha256": "29f2e98598a7cd3cbaf15f2c59e61a71edeecc0563142369dc660102fed85b94",
+  "forcedTermination": true,
+  "saved": {
+    "stage": "saved",
+    "pid": 17656,
+    "coordinatorEpoch": 1793414721339293,
+    "session": "local-27048-1793412760863",
+    "revision": 3,
+    "position": 2345,
+    "desired": "paused",
+    "consumers": 1,
+    "fixture": "tone-long",
+    "confirmations": [
+      "local-27048-1793412760863:1",
+      "local-27048-1793412760863:2",
+      "local-27048-1793412760863:3"
+    ],
+    "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\p1-process-temp/jj-owned-p1/recovery\\process-proof"
+  },
+  "loaded": {
+    "stage": "loaded",
+    "pid": 32220,
+    "coordinatorEpoch": 1793414723410462,
+    "session": "local-27048-1793412760863",
+    "revision": 3,
+    "position": 2345,
+    "desired": "paused",
+    "consumers": 0,
+    "fixture": "tone-long",
+    "confirmations": [
+      "local-27048-1793412760863:1",
+      "local-27048-1793412760863:2",
+      "local-27048-1793412760863:3"
+    ],
+    "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\p1-process-temp/jj-owned-p1/recovery\\process-proof"
+  }
+}

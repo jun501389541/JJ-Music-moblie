@@ -1,0 +1,17 @@
+[
+  {
+    "path": "clients/flutter/build/app/outputs/flutter-apk/app-release.apk",
+    "bytes": 47353426,
+    "sha256": "30572c5d2cc482f80c4c338de2c1e9bfdab11c8ff4946eb343f5934da2012029"
+  },
+  {
+    "path": "clients/flutter/build/app/outputs/flutter-apk/app-debug.apk",
+    "bytes": 66407684,
+    "sha256": "415454c089ca7a836058810549985dba25cede67419b5d64f7e646ca92552f45"
+  },
+  {
+    "path": "clients/flutter/build/windows/x64/runner/Release/jj_music_mobile.exe",
+    "bytes": 91136,
+    "sha256": "cc06465a5348c11d17aa61fdc61e4c1bd607f4362f5197b6833fd7af10cef1c0"
+  }
+]

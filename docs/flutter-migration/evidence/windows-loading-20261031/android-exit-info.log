@@ -1,0 +1,12 @@
+ACTIVITY MANAGER PROCESS EXIT INFO (dumpsys activity exit-info)
+Last Timestamp of Persistence Into Persistent Storage: 2026-10-31 15:31:52.439
+  package: dev.jjmusic.diagnostics.jj_music_mobile
+    Historical Process Exit for uid=10374
+        ApplicationExitInfo #0:
+          timestamp=2026-10-31 15:54:14.549 pid=7480 realUid=10374 packageUid=10374 definingUid=10374 user=0
+          process=dev.jjmusic.diagnostics.jj_music_mobile reason=4 (APP CRASH(EXCEPTION)) subreason=0 (UNKNOWN) status=0
+          importance=325 pss=0.00 rss=0.00 description=crash state=empty trace=null
+        ApplicationExitInfo #1:
+          timestamp=2026-10-31 15:54:04.300 pid=4756 realUid=10374 packageUid=10374 definingUid=10374 user=0
+          process=dev.jjmusic.diagnostics.jj_music_mobile reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=325 pss=47MB rss=160MB description=stop dev.jjmusic.diagnostics.jj_music_mobile due to from process:7279 state=empty trace=null

@@ -1,0 +1,12 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/diagnostic_smoke_test.dart
+Running Gradle task 'assembleDebug'...                          
+Picked up project-scoped Java proxy options (address omitted)
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Running Gradle task 'assembleDebug'...                             60.8s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...          822ms
+00:00 +0: A01/A02 native shell startup control and real-file diagnostics
+DIAGNOSTIC_SCREENSHOT=/data/user/0/dev.jjmusic.diagnostics.jj_music_mobile/code_cache/diagnostic-smoke.png
+00:02 +1: (tearDownAll)
+00:03 +1: All tests passed!

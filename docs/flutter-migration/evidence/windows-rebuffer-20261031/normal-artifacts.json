@@ -1,0 +1,22 @@
+{
+  "windows": {
+    "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\jj_music_mobile.exe",
+    "bytes": 340992,
+    "sha256": "b625c2ec731e86efe6fa453d392215ee25e4eac085cb2be575c1d6d9af37c3aa",
+    "rebuiltThisBatch": true,
+    "pid": 46856,
+    "exited": false,
+    "windowHandle": 6293364,
+    "title": "jj_music_mobile",
+    "manualButtons": false,
+    "listening": false
+  },
+  "android": {
+    "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\app\\outputs\\flutter-apk\\app-release.apk",
+    "bytes": 48509302,
+    "sha256": "ba53596dba601ee13d3b395ea637bcaf3885629b7f063b8cd8280a511ffc6a60",
+    "rebuiltThisBatch": false,
+    "installedThisBatch": false,
+    "deviceTestThisBatch": false
+  }
+}

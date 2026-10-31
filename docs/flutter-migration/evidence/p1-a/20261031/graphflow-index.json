@@ -1,0 +1,12 @@
+{
+  "requested": 74,
+  "indexed": 26,
+  "unchanged": 45,
+  "unsupported": [
+    "clients/flutter/analysis_options.yaml",
+    "clients/flutter/pubspec.yaml",
+    "clients/flutter/tool/gradle_repositories.init.gradle"
+  ],
+  "errors": [],
+  "scope": "targeted source and document files only; no broad SDK/cache index"
+}

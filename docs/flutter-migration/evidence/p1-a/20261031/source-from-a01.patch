@@ -1,0 +1,3106 @@
+diff --git a/clients/flutter/README.md b/clients/flutter/README.md
+index 84884c5..cebb2e6 100644
+--- a/clients/flutter/README.md
++++ b/clients/flutter/README.md
+@@ -1,42 +1,46 @@
+-# JJ-Music Flutter 技术诊断
++# JJ-Music Flutter：P1自有本地样本技术诊断
+ 
+-本批完成A01/A02诊断入口与共享合同，尚不是可听音乐的播放器。不需要真实音源、账号或个人曲库。
++已有Android/Windows真实本地播放及共享恢复原型；不是正式播放器/UI。完整G-L仍未通过，实际结果和未验项见[阶段报告](../../docs/flutter-migration/evidence/p1-a/20261031/report.md)。
+ 
+-Windows双击 `E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\Release\jj_music_mobile.exe`；必须保留整个Release目录，不能只复制EXE。
++Windows程序：`E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\Release\jj_music_mobile.exe`。必须保留整个Release文件夹，不能只复制EXE。
+ 
+-Android内部诊断包：`E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\app\outputs\flutter-apk\app-release.apk`。使用模板调试签名，不是正式签名发行。app-debug.apk是集成测试入口包，不供人工验收。
++Android普通诊断包：`E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\app\outputs\flutter-apk\app-release.apk`。本批已安装到用户选定小米2211133C（35a63609，Android13）。应用名jj_music_mobile，内部调试签名，不是正式发行。app-debug.apk是测试入口，不能作普通验收包。
+ 
+-手机打开开发者选项及USB调试，USB连接电脑，在手机上允许调试。在PowerShell执行：
++[简单验收清单](../../docs/flutter-migration/evidence/p1-a/20261031/acceptance.md)：进入“自有样本播放诊断”，播放/暂停/定位3秒/继续/切换/停止；确认数仅合法新播放增加，UI重连及组件重建不重播；保存后重开默认暂停。短音调可听感验收，不导入个人曲库/音源。
++
++重新安装（USB调试已允许，设备编号先核对）：
+ 
+ ```powershell
+-& 'E:\Android\sdk\platform-tools\adb.exe' devices
+-# 用上一步状态为device的实际编号替换DEVICE_ID
+-& 'E:\Android\sdk\platform-tools\adb.exe' -s 'DEVICE_ID' install -r 'E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\app\outputs\flutter-apk\app-release.apk'
++& 'E:\Android\sdk\platform-tools\adb.exe' devices -l
++& 'E:\Android\sdk\platform-tools\adb.exe' -s '35a63609' install -r 'E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\app\outputs\flutter-apk\app-release.apk'
+ ```
+ 
+-打开应用列表中的 `jj_music_mobile`。没有手机可在Android Studio的Device Manager启动已有Pixel8_API36模拟器，再执行上面的命令。实体手机尚未验证。
+-
+-| 操作 | 预期 |
+-| --- | --- |
+-| 运行入口检查 | 显示“入口检查通过” |
+-| 运行共享合同自检 | 显示“共享合同检查通过”；准备卡住时仍能停止，迟到资源释放；无声音 |
+-| 保存并读回测试快照 | 显示“快照写读检查通过”、修订号和暂停恢复意图；重复点修订号递增 |
+-
+-快照位于系统临时目录独立run目录；Android是应用私有code_cache。本批是同进程中新store实例读回，不是系统强杀恢复。
+-
+-开发复验，在本目录执行：
++开发复验，在本目录运行：
+ 
+ ```powershell
+ flutter pub get
+ flutter analyze
+ flutter test --reporter expanded
+-flutter build windows --release
+-.\tool\flutter_with_proxy.ps1 -FlutterArgs @('build','apk','--release')
+-.\tool\flutter_with_proxy.ps1 -FlutterArgs @('test','integration_test/diagnostic_smoke_test.dart','--device-id','windows','--reporter','expanded')
+-# 先flutter devices确认实际编号，不假设模拟器在线
+-.\tool\flutter_with_proxy.ps1 -FlutterArgs @('test','integration_test/diagnostic_smoke_test.dart','--device-id','emulator-5554','--reporter','expanded')
++flutter test integration_test/windows_local_playback_test.dart --device-id windows --reporter expanded
++flutter test integration_test/windows_media_test.dart --device-id windows --reporter expanded
++flutter test integration_test/runtime_recovery_test.dart --device-id windows --reporter expanded
++.\tool\flutter_with_proxy.ps1 -FlutterArgs @('test','integration_test/android_local_playback_test.dart','--device-id','35a63609','--reporter','expanded')
++.\tool\flutter_with_proxy.ps1 -FlutterArgs @('test','integration_test/android_lifecycle_test.dart','--device-id','35a63609','--reporter','expanded')
++.\tool\flutter_with_proxy.ps1 -FlutterArgs @('test','integration_test/runtime_recovery_test.dart','--device-id','35a63609','--reporter','expanded')
+ ```
+ 
+-脚本只给当前构建进程设置Java代理与工程内Gradle缓存，不修改全局配置。使用显式FlutterArgs数组，避免短参数被PowerShell解析为自身选项。下载辅助脚本需PowerShell7，校验官方Gradle SHA256，仅必要时使用。
++设备必须实际在线；UI测试另需解锁亮屏，关屏测试要求原生screenInteractive=false，不能仅运行定时器。WindowsOS测试的独立probe由工程自编译，位于diagnostic_tools目录且不装入普通Release包。辅助构建脚本仅当前进程设置代理/工程内Gradle缓存，不改全局；使用显式FlutterArgs数组，不用会被PowerShell解析的短-d。
++
++专用两进程强杀证明（测试入口，不是用户程序）：
++
++```powershell
++flutter build windows --release --target lib/p1_process_probe.dart
++.\tool\run_windows_recovery_probe.ps1
++.\tool\flutter_with_proxy.ps1 -FlutterArgs @('build','apk','--release','--target','lib/p1_process_probe.dart')
++.\tool\run_android_recovery_probe.ps1 -DeviceId '35a63609'
++# 验证后必须重建普通入口，避免把探针当用户程序
++flutter build windows --release --target lib/main.dart
++.\tool\flutter_with_proxy.ps1 -FlutterArgs @('build','apk','--release','--target','lib/main.dart')
++```
+ 
+-[实际证据](../../docs/flutter-migration/evidence/A01/20261030-batch.md)；[冻结合同](../../docs/flutter-migration/evidence/A02/20261030-freeze.md)。真实音频后端、后台服务、系统媒体会话、正式UI和强杀恢复均待后续授权任务。
++快照只在临时目录jj-owned-p1/recovery/<runId>，普通运行owned-p1、专用探针process-proof，Android为本应用code_cache。系统可清理缓存；不是正式用户数据库/备份。自有WAV来源和SHA见fixtures/local_playback；[当前共享冻结](../../docs/flutter-migration/evidence/A02/20261031-freeze.md)。真实持续缓冲、独立engine/服务回收、输出失效等仍需本阶段补验，没有自动进入P2或正式UI。
+diff --git a/clients/flutter/android/app/build.gradle.kts b/clients/flutter/android/app/build.gradle.kts
+index 152785f..a9291b6 100644
+--- a/clients/flutter/android/app/build.gradle.kts
++++ b/clients/flutter/android/app/build.gradle.kts
+@@ -47,3 +47,7 @@ kotlin {
+ flutter {
+     source = "../.."
+ }
++
++dependencies {
++    implementation("androidx.media3:media3-exoplayer:1.11.0")
++}
+diff --git a/clients/flutter/android/app/src/main/AndroidManifest.xml b/clients/flutter/android/app/src/main/AndroidManifest.xml
+index 69c2d0d..57f46b7 100644
+--- a/clients/flutter/android/app/src/main/AndroidManifest.xml
++++ b/clients/flutter/android/app/src/main/AndroidManifest.xml
+@@ -1,8 +1,12 @@
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android">
++    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
++    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+     <application
+         android:label="jj_music_mobile"
+         android:name="${applicationName}"
+         android:icon="@mipmap/ic_launcher">
++        <service android:name=".PlaybackService" android:exported="false" android:foregroundServiceType="mediaPlayback" />
++        <provider android:name=".FixtureProvider" android:authorities="dev.jjmusic.diagnostics.jj_music_mobile.fixture" android:exported="false" />
+         <activity
+             android:name=".MainActivity"
+             android:exported="true"
+diff --git a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/FixtureProvider.kt b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/FixtureProvider.kt
+new file mode 100644
+index 0000000..ab76a4c
+--- /dev/null
++++ b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/FixtureProvider.kt
+@@ -0,0 +1,23 @@
++package dev.jjmusic.diagnostics.jj_music_mobile
++
++import android.content.ContentProvider
++import android.content.ContentValues
++import android.database.Cursor
++import android.net.Uri
++import android.os.ParcelFileDescriptor
++import java.io.File
++import java.io.FileNotFoundException
++
++/** Private seekable provider for the one owned fixture. No filesystem discovery. */
++class FixtureProvider : ContentProvider() {
++    override fun onCreate() = true
++    override fun getType(uri: Uri) = "audio/wav"
++    override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor {
++        if (mode != "r" || uri.path != "/tone-long" || LocalHost.revoked) throw FileNotFoundException("fixture-denied")
++        return ParcelFileDescriptor.open(File(context!!.cacheDir, "owned-tone-long.wav"), ParcelFileDescriptor.MODE_READ_ONLY)
++    }
++    override fun query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor? = null
++    override fun insert(uri: Uri, values: ContentValues?): Uri? = null
++    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?) = 0
++    override fun update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?) = 0
++}
+diff --git a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+new file mode 100644
+index 0000000..bd3abb3
+--- /dev/null
++++ b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+@@ -0,0 +1,157 @@
++package dev.jjmusic.diagnostics.jj_music_mobile
++
++import android.content.Context
++import android.content.Intent
++import android.media.AudioManager
++import android.media.AudioFocusRequest
++import android.media.AudioAttributes as SystemAudioAttributes
++import android.net.Uri
++import android.os.Process
++import android.os.SystemClock
++import androidx.media3.common.MediaItem
++import androidx.media3.common.Player
++import androidx.media3.common.AudioAttributes
++import androidx.media3.common.C
++import androidx.media3.exoplayer.ExoPlayer
++import io.flutter.embedding.engine.FlutterEngine
++import io.flutter.embedding.engine.dart.DartExecutor
++import io.flutter.plugin.common.MethodChannel
++import java.io.File
++
++/** One process host. No native queue, retry, shuffle or playback business state. */
++object LocalHost {
++    private var cached: FlutterEngine? = null
++    var activity: MainActivity? = null
++    lateinit var context: Context
++    private val players = linkedMapOf<String, ExoPlayer>()
++    private val commands = arrayListOf<Map<String, Any>>()
++    val instance = "host-${Process.myPid()}-${SystemClock.elapsedRealtime()}"
++    var revoked = false
++    var launchMode = ""
++    var launchToken = ""
++    private var failNextPlay = false
++    var session: android.media.session.MediaSession? = null
++    private var focus: AudioFocusRequest? = null
++    private val life = arrayListOf<Map<String, Any>>()
++    fun timeline(event: String) {
++        if (life.size >= 60) life.removeAt(0)
++        life.add(mapOf("event" to event, "time" to SystemClock.elapsedRealtime(),
++            "pid" to Process.myPid(), "host" to instance,
++            "engine" to (cached?.hashCode() ?: 0), "activity" to (activity?.hashCode() ?: 0)))
++    }
++    fun command(name: String, position: Long = 0) {
++        if (commands.size < 32) commands.add(mapOf("command" to name, "position" to position))
++    }
++    fun engine(input: Context): FlutterEngine {
++        cached?.let { return it }
++        context = input.applicationContext
++        val engine = FlutterEngine(context)
++        cached = engine
++        MethodChannel(engine.dartExecutor.binaryMessenger, "jj_music/local").setMethodCallHandler { call, result ->
++            try {
++                val id = call.argument<String>("id")
++                when (call.method) {
++                    "launchMode" -> { result.success(launchMode); return@setMethodCallHandler }
++                    "launchToken" -> { result.success(launchToken); return@setMethodCallHandler }
++                    "diagnosticScreen" -> {
++                        if (call.argument<Boolean>("keepOn") == true) activity?.window?.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
++                        else activity?.window?.clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
++                        result.success((context.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive)
++                        return@setMethodCallHandler
++                    }
++                    "proof" -> android.util.Log.i("JJOwnedProbe", call.argument<String>("json") ?: "{}")
++                    "prepare" -> {
++                        check(players.size < 2 && id != null && !players.containsKey(id))
++                        val uri = Uri.parse(call.argument<String>("path")!!)
++                        val ownFile = uri.scheme == "file" && (File(uri.path!!).canonicalPath.startsWith(context.cacheDir.canonicalPath + "/") || File(uri.path!!).canonicalPath.startsWith(context.codeCacheDir.canonicalPath + "/"))
++                        val ownContent = uri.scheme == "content" && uri.authority == "${context.packageName}.fixture"
++                        check(ownFile || ownContent) { "only-owned-fixtures" }
++                        val player = ExoPlayer.Builder(context).build()
++                        player.setAudioAttributes(AudioAttributes.Builder().setUsage(C.USAGE_MEDIA).setContentType(C.AUDIO_CONTENT_TYPE_MUSIC).build(), false)
++                        player.repeatMode = Player.REPEAT_MODE_OFF
++                        player.shuffleModeEnabled = false
++                        player.volume = 0.35f
++                        players[id] = player
++                        player.setMediaItem(MediaItem.fromUri(uri)); player.prepare()
++                        timeline("prepare-$id")
++                    }
++                    "play" -> {
++                        // Hard switch only; old physical resource is closed by shared release.
++                        players.filterKeys { it != id }.values.forEach { it.pause() }
++                        if (failNextPlay) { failNextPlay=false; error("owned-injected-play-failure") }
++                        requestFocus()
++                        val intent = Intent(context, PlaybackService::class.java)
++                        context.startForegroundService(intent)
++                        players.getValue(id!!).play()
++                    }
++                    "pause" -> players.values.forEach { it.pause() }
++                    "failNextPlay" -> failNextPlay=true
++                    "stop" -> {
++                        players.values.forEach { it.stop() }
++                        context.stopService(Intent(context, PlaybackService::class.java))
++                        focus?.let { (context.getSystemService(Context.AUDIO_SERVICE) as AudioManager).abandonAudioFocusRequest(it) }
++                    }
++                    "seek" -> players.getValue(id!!).seekTo(call.argument<Number>("position")!!.toLong())
++                    "release" -> {
++                        players.remove(id)?.release(); timeline("released-$id")
++                        if (players.isEmpty()) context.stopService(Intent(context, PlaybackService::class.java))
++                    }
++                    "fixtureUri" -> {
++                        val target = File(context.cacheDir, "owned-tone-long.wav")
++                        context.assets.open("flutter_assets/fixtures/local_playback/tone-long.wav").use { source -> target.outputStream().use { source.copyTo(it) } }
++                        result.success("content://${context.packageName}.fixture/tone-long"); return@setMethodCallHandler
++                    }
++                    "revokeFixture" -> revoked = call.argument<Boolean>("revoked") == true
++                    "recreateActivity" -> activity?.recreate()
++                    "backgroundActivity" -> activity?.moveTaskToBack(true)
++                    "showActivity" -> context.startActivity(Intent(context, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP))
++                    "osCommand" -> {
++                        val controls = session?.controller?.transportControls ?: error("no-session")
++                        when (call.argument<String>("command")) {
++                            "pause" -> controls.pause()
++                            "play" -> controls.play()
++                            "seek" -> controls.seekTo(3000)
++                            "next" -> controls.skipToNext()
++                            "stop" -> controls.stop()
++                        }
++                    }
++                    "mirror" -> {
++                        val status = call.argument<String>("status")
++                        val state = if (status == "playing") android.media.session.PlaybackState.STATE_PLAYING else if (status == "paused") android.media.session.PlaybackState.STATE_PAUSED else android.media.session.PlaybackState.STATE_STOPPED
++                        session?.setPlaybackState(android.media.session.PlaybackState.Builder()
++                            .setActions(android.media.session.PlaybackState.ACTION_PLAY or android.media.session.PlaybackState.ACTION_PAUSE or android.media.session.PlaybackState.ACTION_STOP or android.media.session.PlaybackState.ACTION_SEEK_TO or android.media.session.PlaybackState.ACTION_SKIP_TO_NEXT or android.media.session.PlaybackState.ACTION_SKIP_TO_PREVIOUS)
++                            .setState(state, call.argument<Number>("position")!!.toLong(), if (state == android.media.session.PlaybackState.STATE_PLAYING) 1f else 0f).build())
++                        session?.setMetadata(android.media.MediaMetadata.Builder()
++                            .putString(android.media.MediaMetadata.METADATA_KEY_TITLE, call.argument<String>("title"))
++                            .putLong(android.media.MediaMetadata.METADATA_KEY_DURATION, call.argument<Number>("duration")!!.toLong()).build())
++                    }
++                    "poll" -> {
++                        val samples = players.map { (key, p) -> mapOf(
++                            "id" to key, "platform" to "android", "state" to p.playbackState,
++                            "ready" to (p.playbackState == Player.STATE_READY), "nativePlaying" to p.isPlaying,
++                            "playWhenReady" to p.playWhenReady, "suppression" to p.playbackSuppressionReason,
++                            "position" to p.currentPosition, "duration" to if (p.duration == C.TIME_UNSET) 0L else p.duration,
++                            "ended" to (p.playbackState == Player.STATE_ENDED), "error" to (p.playerError != null)) }
++                        result.success(mapOf("samples" to samples, "commands" to commands.toList(), "lifecycle" to life.toList(), "host" to instance, "pid" to Process.myPid(), "screenInteractive" to (context.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive))
++                        commands.clear(); return@setMethodCallHandler
++                    }
++                    else -> { result.notImplemented(); return@setMethodCallHandler }
++                }
++                result.success(null)
++            } catch (e: Exception) { result.error("android-local", e.javaClass.simpleName, null) }
++        }
++        engine.dartExecutor.executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault())
++        timeline("engine-create")
++        return engine
++    }
++    private fun requestFocus() {
++        val manager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
++        if (focus == null) focus = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
++            .setAudioAttributes(SystemAudioAttributes.Builder().setUsage(SystemAudioAttributes.USAGE_MEDIA).build())
++            .setOnAudioFocusChangeListener { change ->
++                // Safety suppress immediately, business paused intent goes through Dart.
++                if (change < 0) { players.values.forEach { it.pause() }; command("pause"); timeline("focus-$change") }
++            }.build()
++        check(manager.requestAudioFocus(focus!!) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) { "focus-denied" }
++    }
++}
+diff --git a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/MainActivity.kt b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/MainActivity.kt
+index a2fe8b7..edd6ea9 100644
+--- a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/MainActivity.kt
++++ b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/MainActivity.kt
+@@ -1,5 +1,26 @@
+ package dev.jjmusic.diagnostics.jj_music_mobile
+ 
+ import io.flutter.embedding.android.FlutterActivity
++import android.content.Context
++import android.os.Bundle
++import io.flutter.embedding.engine.FlutterEngine
++import io.flutter.embedding.engine.dart.DartExecutor
+ 
+-class MainActivity : FlutterActivity()
++class MainActivity : FlutterActivity() {
++    override fun provideFlutterEngine(context: Context): FlutterEngine {
++        LocalHost.launchMode = intent?.getStringExtra("p1Mode") ?: ""
++        LocalHost.launchToken = intent?.getStringExtra("p1Token") ?: ""
++        return LocalHost.engine(context)
++    }
++    override fun shouldDestroyEngineWithHost() = false
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        LocalHost.activity = this
++        LocalHost.timeline("activity-create")
++    }
++    override fun onDestroy() {
++        LocalHost.timeline("activity-destroy")
++        if (LocalHost.activity === this) LocalHost.activity = null
++        super.onDestroy()
++    }
++}
+diff --git a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/PlaybackService.kt b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/PlaybackService.kt
+new file mode 100644
+index 0000000..eae56d4
+--- /dev/null
++++ b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/PlaybackService.kt
+@@ -0,0 +1,39 @@
++package dev.jjmusic.diagnostics.jj_music_mobile
++
++import android.app.*
++import android.content.Intent
++import android.media.session.MediaSession
++import android.os.IBinder
++
++class PlaybackService : Service() {
++    override fun onBind(intent: Intent?): IBinder? = null
++    override fun onCreate() {
++        super.onCreate()
++        LocalHost.timeline("service-create")
++        val manager = getSystemService(NotificationManager::class.java)
++        manager.createNotificationChannel(NotificationChannel("owned_playback", "自有样本技术诊断", NotificationManager.IMPORTANCE_LOW))
++        val session = MediaSession(this, "JJ-Music-owned-diagnostic")
++        session.setCallback(object : MediaSession.Callback() {
++            override fun onPlay() = LocalHost.command("play")
++            override fun onPause() = LocalHost.command("pause")
++            override fun onStop() = LocalHost.command("stop")
++            override fun onSeekTo(pos: Long) = LocalHost.command("seek", pos)
++            override fun onSkipToNext() = LocalHost.command("next")
++            override fun onSkipToPrevious() = LocalHost.command("previous")
++        })
++        session.isActive = true
++        LocalHost.session = session
++        val launch = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
++        startForeground(41, Notification.Builder(this,"owned_playback")
++            .setSmallIcon(android.R.drawable.ic_media_play).setContentTitle("JJ-Music 自有样本诊断")
++            .setContentText("仅本地测试媒体").setContentIntent(launch)
++            .setStyle(Notification.MediaStyle().setMediaSession(session.sessionToken)).build())
++    }
++    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int) = START_NOT_STICKY
++    override fun onDestroy() {
++        LocalHost.timeline("service-destroy")
++        LocalHost.session?.release(); LocalHost.session = null
++        stopForeground(STOP_FOREGROUND_REMOVE)
++        super.onDestroy()
++    }
++}
+diff --git a/clients/flutter/fixtures/local_playback/README.md b/clients/flutter/fixtures/local_playback/README.md
+index 8108330..138927c 100644
+--- a/clients/flutter/fixtures/local_playback/README.md
++++ b/clients/flutter/fixtures/local_playback/README.md
+@@ -1,9 +1,10 @@
+-# 自有技术夹具 v1
++# 自有技术夹具 v2（P1诊断）
+ 
+-由tool/generate_fixtures.dart确定性生成，不读取任何音乐或账号数据。作者将生成的两个测试音及本说明按CC0-1.0提供。
++本项目确定性生成，不读取个人媒体或账号。生成的测试音及本说明按CC0-1.0提供。
+ 
+-- tone-a.wav：440Hz，PCM16 LE，单声道，8000Hz，0.5秒。
+-- tone-b.wav：660Hz，同格式。每文件8044字节。
+-- 共享合同中的occurrence-a与occurrence-b可指向同一个tone-a，证明业务occurrence不能由trackKey代替。
+-- 当前诊断不解码/不播放这些文件；真实本地播放及content URI留A03/A05。
+-- 文件摘要见SHA256SUMS；冻结范围及消费者规则见docs/flutter-migration/evidence/A02/20261030-freeze.md。
++- tone-a.wav：440Hz，PCM16LE、mono、8000Hz、0.5秒，8044字节。
++- tone-b.wav：660Hz，同格式/长度。
++- tone-long.wav：440Hz，PCM16LE、mono、16000Hz、12秒，384044字节，幅度1500；由tool/generate_long_fixture.dart生成。
++- 原始短音由tool/generate_fixtures.dart生成；occurrence-a/b可指向同一tone-a，验证条目身份不能用trackKey代替。
++- A03/A05已实际解码这些样本；不是全部格式支持或人工听感通过。坏文件是测试临时目录中自行写入的4字节文件，不修改本目录原件。
++- 摘要见SHA256SUMS；当前冻结见docs/flutter-migration/evidence/A02/20261031-freeze.md，旧v1保留历史。
+diff --git a/clients/flutter/fixtures/local_playback/SHA256SUMS b/clients/flutter/fixtures/local_playback/SHA256SUMS
+index 12c28be..c1fa34b 100644
+--- a/clients/flutter/fixtures/local_playback/SHA256SUMS
++++ b/clients/flutter/fixtures/local_playback/SHA256SUMS
+@@ -1,2 +1,3 @@
+ e7f5e0c48bc0a088e5c26273ea995869125bb663201e1cc61dedf6b80a336512  tone-a.wav
+ 6fde56220d24f304bd37270879473bcdf775b9968df2d7a4e4e679bd504c38e7  tone-b.wav
++38288bb41430cef5d69b99ecbc356d3a6bd9db2ffa6d907156ba8a825bfbd094  tone-long.wav
+diff --git a/clients/flutter/fixtures/local_playback/tone-long.wav b/clients/flutter/fixtures/local_playback/tone-long.wav
+new file mode 100644
+index 0000000000000000000000000000000000000000..6f3bbe5bcb1f121cec957820a7fcbc44c9da54ae
+GIT binary patch
+literal 384044
+zcmeI*&ud;)8VB(E<D8WciYVHyiZs?iqQRlkx~NRr8V4!Jv^ESvYG5i<nvF@^)Z&PC
+zV{A7S3*$mt5Q$bO6v1L!s0$Utl(a##wuq}#QKS^yoO6H7{X2#aAtZrt-+K;R-uK?m
+z_j#Uw{Qaq?Hr<TH)Zg~)dU1As<GP|K%HiwZ+lOC{6h&36EB-YzKT{0<GyGLH<*n*M
+zy%6q-hvVgVGkzNv;{)+T__<zJKU9sEj}~M7csJ1=Y(B{&`Q7w%dN7Tr7t`12+1%!D
+znltU`?sWfQak_k`db!>bu7|1kY5YEZ7e9)-<8l}c`|H=Lx65P2Tm52pvi+?2Jx}C|
+z>4h|wHmBX`{j?!}kq<Xh?PRyJpDZTJ?bW9GPJJpo5>Lec#vAcsoQr)p5I(L~tF`jC
+z;+Otb_eUGr$C_93ujxp7B5fMJkECDItNF1ew12d>x?lR=inVgJ`nWz2`Y<;f<Hm5T
+z6Y-IFD%`0z)!VDda<Uj+ubXNQH(%rp`TgNsHV^0YLb{kH^6&Yx=489rz11Hp-Y#FO
+z_Sd6fIqV+R^xd$wPvca)9=3#+>vyWt<*@etba$rxrfKuD`RieC#)mz6I=!1l@+bLV
+zGtrKBWBsGWc==GZuKu|`5gr)!_}gKxFAsZuS6m1e>RVM)R%KCiUFg=gJDbJ)XF8gm
+z99H&tT1Y>o*}Sp2-Tct5bXWV;Vx_!Povfb=cfw2Y^Y~+2iT{b);@MD#t@Yk&x|}Ya
+z@29&%?eS(gZ_Z0;Px?!GIQ=u7OIz}de5!f9o$u!QSBi!5VD(IWPq-9z#1G<XydKZR
+znYb2qg`@RSb-uh%obS(fU$!@!k!F9smS)pm(`ed}j-@icm-jVe?S}5&{{CWpd3V)R
+zSL!#zeesR>)v&U!hM)JvH^Y^>sqU`Um-iR<_8Ypfc3<;eF7vVB7^B0nX4AE_KaVsw
+zn=jk*-T8iay>h8KTJH*LVP-g&>%%#H5O>5&;hykJeXv?6Un%DL`R?`hRC6P5$>)YO
+zJv^*!Pg+Ww^Kw4k9BQY#VeQ3qxwqO{*Wql~HtfyHut%TAm*So9TsT=@s#eO?;%dLr
+z{m|ZSHa4^Qr(usDANKmmVbA|ei+N|Wz71X1xjtMUt`FCT_YdzM-amZ4^7+c=EB7Dn
+zKiq$~KX-rb{@n8`&#yec@_g6xUC(#<2mjz7e2@?FL4MB9`8hwAFOe^iFOk2JzmmU_
+zPn1uTPn6%4-<98$Z<lYEZ&&}J{zLtT`Y82L>Z8;TsvlH8sJ>Qxt@>K^=jzYZpQ}ID
+zpFw{H{TcKx(Z59h68(Mj_tD=+|115k^uN*{PJcN4;q*_`KT-cg{YCW`)n8QqUHy0U
+z-_@U5e`@`y^>5d|UH^9d+s!vH-@tqW^FPf0F#p4R9P@F^$1y+3{3!FI%vUpC&3rZU
+z2hATef6#nR^Eu7uG{4sTTJvkocQ)VId}s5|%|AE)-2C(H6+h?a{G6ZjbAHax`8hx5
+z=lq<X^K*XA&-pn&=jZ&KpYwBm&d>QdKj-KCoS*Y^e$LPN`CQM>`8hx5=lq<X^K*XA
+z&-pn&=jZ&KpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{G6ZjbAG<k@pFF8&-pn&=jZ&K
+zpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5=lq<XuU7n=pYwBm&d>Qd
+zKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&=jY3rpYwBm&d>Qd
+zKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&=jZ%<Tjb~boS*Y^
+ze$LPNIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&=jZ&KpYwBm&d>QdKYt?ebAHax
+z`8hx5=lq<X^K*XA&-pn&=jZ&KpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{G6Y!3_S?8
+z#j~LfTkE~mbU9r--%odk+T)Gu!}a0%aD6N#`4agO`4agO`4agO`4agO`4agO`4agO
+z`4agO`4agO`4agO`4agO`4agO`4agO`4agO`4WE4&-pn&=jR6kKj-KCoS*Y^e$LPN
+zIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&=jZ&KpYwBm&d>Sz?S`N8bAHax`8hx5
+z=lq<X^K*XA&-pn&=jZ&KpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{CuJ0=lq<X^K*XA
+z&-pn&=jZ&KpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hwIEciJ;=jZ&K
+zpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&qK%0`8hx5
+z=lq<X^K*XA&-pn&=jZ&KpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{G6ZjbAEob=I8vJ
+zpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&pUC{2
+zpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&=jV%&
+zpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&=jZ%<
+zH1TtO&d>QdKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&=jZ&K
+zpMMnjIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&=jZ&KpYwBm&d>QdKj-KCoS*Y^
+ze$LNFGC$|%{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&=jZ&KpYwBm&d>QdKj-KCoS*Y^
+ze$LPN`IVZV^K*XA&-pn&=jZ&KpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax
+z`8hx5=luLk%g^~aKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&
+z=jZ&KpYwBm{$at-`8hx5=lq<X^K*XA&-pn&=jZ&KpYwBm&d>QdKj-KCoS*Y^e$LPN
+zIX~y;{G6ZjbAG<Q<mddHpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5
+z=lq<X^K*XA&-pn&pJ@3xKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA
+z&-pn&=jZ&KpYwBm&d)~!Kj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA
+z&-pn&=jZ&KpYwBm&d>SzwZzZ)IX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&=jZ&K
+zpYwBm&d>QdKj-KCoS*Y^ettRfbAHax`8hx5=lq<X^K*XA&-pn&=jZ&KpYwBm&d>Qd
+zKj-KCoS*Y^e$LPNIX~y;{G6YUC4SD&`8hx5=lq<X^K*XA&-pn&=jZ&KpYwBm&d>Qd
+zKj-KCoS*Y^e$LPNIX~y;{G6Zj^O?xc`8hx5=lq<X^K*XA&-pn&=jZ&KpYwBm&d>Qd
+zKj-KCoS*Y^e$LPNIX~y;{G6ZjbAG;<`8hx5=lq<X^K*XA&-pn&=jZ&KpYwBm&d>Qd
+zKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHaxH`V-{pYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;
+z{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&=jZbsKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax
+z`8hx5=lq<X^K*XA&-pn&=jZ&KpYwBm&d>Sz)t;a8bAHax`8hx5=lq<X^K*XA&-pn&
+z=jZ&KpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{CutC=lq<X^K*XA&-pn&=jZ&KpYwBm
+z&d>QdKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hv7-tcpN&d>QdKj-KCoS*Y^e$LPN
+zIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&=jZ&KpPvo<oS*Y^e$LPNIX~y;{G6Zj
+zbAHax`8hx5=lq<X^K*XA&-pn&=jZ&KpYwBm&d>QdKj-I15<lnX{G6ZjbAHax`8hx5
+z=lq<X^K*XA&-pn&=jZ&KpYwBm&d>QdKj-KCoS*Y^e$LPN`HzvG^K*XA&-pn&=jZ&K
+zpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5=lpz6;^+LFpYwBm&d>Qd
+zKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&?*l*Q=lq<X^K*XA
+z&-pn&=jZ&KpYwBm&d>QdKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`T53%pYwBm&d>Qd
+zKj-KCoS*Y^e$LPNIX~y;{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&=jZ(VV8ze*IX~y;
+z{G6ZjbAHax`8hx5=lq<X^K*XA&-pn&=jZ&KpYwBm&d>QdKj-KCoS*Y^e!jEk=lq<X
+W^K*XA&-pn&=jZ&KpZ~x5`Tqb=MgJK9
+
+literal 0
+HcmV?d00001
+
+diff --git a/clients/flutter/integration_test/android_background_probe_test.dart b/clients/flutter/integration_test/android_background_probe_test.dart
+new file mode 100644
+index 0000000..47383ae
+--- /dev/null
++++ b/clients/flutter/integration_test/android_background_probe_test.dart
+@@ -0,0 +1,45 @@
++import 'dart:convert';
++import 'dart:io';
++
++import 'package:flutter_test/flutter_test.dart';
++import 'package:integration_test/integration_test.dart';
++import 'package:jj_music_mobile/app/runtime/local_runtime.dart';
++
++import 'windows_local_playback_test.dart' show until;
++
++void main() {
++  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
++  testWidgets('owned sample progresses while actual screen is off', (
++    tester,
++  ) async {
++    final r = await LocalRuntime.create(runId: 'screen-off-$pid');
++    try {
++      r.command('a');
++      await until(() => r.snapshot.currentEntryId == ownedA.entryId);
++      final before = r.snapshot.positionMs;
++      // Host controller must actually issue sleep/wake and save display evidence.
++      // ignore: avoid_print
++      print('READY_FOR_SCREEN_OFF');
++      var observedOff = false;
++      for (var i = 0; i < 16; i++) {
++        await Future<void>.delayed(const Duration(milliseconds: 500));
++        if (r.backend.lastHost['screenInteractive'] == false) {
++          observedOff = true;
++        }
++      }
++      expect(
++        observedOff,
++        isTrue,
++        reason: 'Host must prove actual display-off; timer progress alone is insufficient',
++      );
++      expect(r.snapshot.positionMs, greaterThan(before + 4000));
++      expect(r.snapshot.confirmations.length, 1);
++      r.command('stop');
++      await until(() => r.backend.consumers == 0);
++    } finally {
++      // ignore: avoid_print
++      print('SCREEN_OFF_NATIVE=${jsonEncode(r.backend.lastHost)}');
++      await r.close();
++    }
++  });
++}
+diff --git a/clients/flutter/integration_test/android_lifecycle_test.dart b/clients/flutter/integration_test/android_lifecycle_test.dart
+new file mode 100644
+index 0000000..70a8a83
+--- /dev/null
++++ b/clients/flutter/integration_test/android_lifecycle_test.dart
+@@ -0,0 +1,69 @@
++import 'dart:convert';
++import 'dart:io';
++
++import 'package:flutter_test/flutter_test.dart';
++import 'package:integration_test/integration_test.dart';
++import 'package:jj_music_mobile/app/runtime/local_runtime.dart';
++import 'package:jj_music_mobile/platform/local/native_local_backend.dart';
++import 'package:jj_music_mobile/domain/playback/contracts.dart';
++
++import 'windows_local_playback_test.dart' show until;
++
++void main() {
++  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
++  testWidgets(
++    'Android Activity recreation preserves engine authority and resource',
++    (tester) async {
++      final r = await LocalRuntime.create(runId: 'lifecycle-$pid');
++      try {
++        r.command('a');
++        await until(() => r.snapshot.currentEntryId == ownedA.entryId);
++        final host = r.backend.lastHost['host'];
++        final session = r.snapshot.playbackSessionId;
++        final handle = r.snapshot.tracks.single.trackHandleId;
++        await NativeLocalBackend.channel.invokeMethod<void>('recreateActivity');
++        await Future<void>.delayed(const Duration(seconds: 2));
++        expect(r.backend.lastHost['host'], host);
++        expect(r.snapshot.playbackSessionId, session);
++        expect(r.snapshot.tracks.single.trackHandleId, handle);
++        expect(r.snapshot.confirmations.length, 1);
++        expect(r.snapshot.positionMs, greaterThan(1000));
++        final beforeBackground = r.snapshot.positionMs;
++        await NativeLocalBackend.channel.invokeMethod<void>(
++          'backgroundActivity',
++        );
++        await Future<void>.delayed(const Duration(seconds: 2));
++        expect(r.snapshot.positionMs, greaterThan(beforeBackground + 800));
++        expect(r.snapshot.confirmations.length, 1);
++        await NativeLocalBackend.channel.invokeMethod<void>('showActivity');
++        await NativeLocalBackend.channel.invokeMethod<void>('osCommand', {
++          'command': 'pause',
++        });
++        await until(() => r.snapshot.desired == DesiredTransport.paused);
++        expect(r.snapshot.confirmations.length, 1);
++        await NativeLocalBackend.channel.invokeMethod<void>('osCommand', {
++          'command': 'play',
++        });
++        await until(() => r.snapshot.desired == DesiredTransport.playing);
++        final life = (r.backend.lastHost['lifecycle'] as List).cast<Map>();
++        expect(
++          life.where((e) => e['event'] == 'activity-create').length,
++          greaterThanOrEqualTo(2),
++        );
++        expect(life.where((e) => e['event'] == 'activity-destroy'), isNotEmpty);
++        r.reconnect();
++        r.reconnect();
++        expect(r.snapshot.tracks.single.trackHandleId, handle);
++        expect(r.snapshot.confirmations.length, 1);
++        r.command('stop');
++        await until(() => r.backend.consumers == 0);
++      } finally {
++        // ignore: avoid_print
++        print('ANDROID_LIFECYCLE_JSON=${jsonEncode(r.backend.lastHost)}');
++        // ignore: avoid_print
++        print('ANDROID_LIFECYCLE_RAW=${jsonEncode(r.backend.raw)}');
++        await r.close();
++      }
++    },
++  );
++}
+diff --git a/clients/flutter/integration_test/android_local_playback_test.dart b/clients/flutter/integration_test/android_local_playback_test.dart
+new file mode 100644
+index 0000000..3f845ca
+--- /dev/null
++++ b/clients/flutter/integration_test/android_local_playback_test.dart
+@@ -0,0 +1,73 @@
++import 'dart:io';
++import 'dart:convert';
++
++import 'package:flutter_test/flutter_test.dart';
++import 'package:integration_test/integration_test.dart';
++import 'package:jj_music_mobile/application/playback/playback_coordinator.dart';
++import 'package:jj_music_mobile/domain/playback/contracts.dart';
++import 'package:jj_music_mobile/platform/local/native_local_backend.dart';
++
++import 'support/local_playback_contract.dart';
++import 'support/native_failure_cases.dart';
++import 'windows_local_playback_test.dart' show until;
++
++void main() {
++  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
++  registerNativeFailureCases();
++  testWidgets('Android Media3 content URI transport, denial and release', (
++    tester,
++  ) async {
++    final uri = await NativeLocalBackend.channel.invokeMethod<String>(
++      'fixtureUri',
++    );
++    final backend = NativeLocalBackend({
++      'tone-a': uri!,
++    }, logFile: File('${Directory.systemTemp.path}/android-raw.jsonl'));
++    final c = PlaybackCoordinator(backend);
++    CommandContext cmd(String id) => CommandContext(id, c.claim);
++    PlayIntent intent(QueueEntry e) =>
++        PlayIntent(entries: [fixtureA, fixtureB], entryId: e.entryId);
++    try {
++      expectControlApplied(c.play(cmd('a'), intent(fixtureA)));
++      await until(() => c.snapshot.currentEntryId == fixtureA.entryId);
++      expectConfirmedIdentity(c.snapshot, fixtureA.entryId, 1);
++      await until(() => c.snapshot.positionMs > 400);
++      c.pause(cmd('pause'));
++      await Future<void>.delayed(const Duration(milliseconds: 400));
++      final paused = c.snapshot.positionMs;
++      await Future<void>.delayed(const Duration(milliseconds: 400));
++      expect((c.snapshot.positionMs - paused).abs(), lessThan(150));
++      c.seek(cmd('seek'), 3000);
++      await until(() => c.snapshot.positionMs >= 2900);
++      c.resume(cmd('resume'));
++      await until(() => c.snapshot.positionMs > 3400);
++      expect(c.snapshot.confirmations.length, 1);
++      c.play(cmd('b'), intent(fixtureB));
++      c.stop(cmd('cancel'));
++      await until(() => backend.consumers == 0);
++      c.play(cmd('c'), intent(fixtureB));
++      await until(() => c.snapshot.currentEntryId == fixtureB.entryId);
++      expectConfirmedIdentity(c.snapshot, fixtureB.entryId, 2);
++      c.stop(cmd('stop'));
++      await until(() => backend.consumers == 0);
++      await NativeLocalBackend.channel.invokeMethod<void>('revokeFixture', {
++        'revoked': true,
++      });
++      c.play(cmd('denied'), intent(fixtureA));
++      await until(() => c.failures.isNotEmpty);
++      expect(c.snapshot.confirmations.length, 2);
++      await until(() => backend.consumers == 0);
++    } finally {
++      await NativeLocalBackend.channel.invokeMethod<void>('revokeFixture', {
++        'revoked': false,
++      });
++      await c.dispose();
++      await backend.close();
++      // Only owned fixture native samples; no device/library data.
++      // ignore: avoid_print
++      print('ANDROID_RAW_LOG=${backend.logFile!.path}');
++      // ignore: avoid_print
++      print('ANDROID_RAW_JSON=${jsonEncode(backend.raw)}');
++    }
++  });
++}
+diff --git a/clients/flutter/integration_test/local_diagnostic_ui_test.dart b/clients/flutter/integration_test/local_diagnostic_ui_test.dart
+new file mode 100644
+index 0000000..29a3618
+--- /dev/null
++++ b/clients/flutter/integration_test/local_diagnostic_ui_test.dart
+@@ -0,0 +1,101 @@
++import 'dart:io';
++
++import 'package:flutter/material.dart';
++import 'package:flutter_test/flutter_test.dart';
++import 'package:integration_test/integration_test.dart';
++import 'package:jj_music_mobile/main.dart' as app;
++import 'package:jj_music_mobile/app/runtime/local_runtime.dart';
++import 'package:jj_music_mobile/domain/playback/contracts.dart';
++import 'package:jj_music_mobile/platform/local/native_local_backend.dart';
++
++import 'windows_local_playback_test.dart' show until;
++
++void main() {
++  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
++  testWidgets(
++    'actual diagnostic buttons and route reconstruction retain playback',
++    (tester) async {
++      if (Platform.isAndroid) {
++        final awake = await NativeLocalBackend.channel.invokeMethod<bool>(
++          'diagnosticScreen',
++          {'keepOn': true},
++        );
++        if (awake != true) {
++          await NativeLocalBackend.channel.invokeMethod<void>(
++            'diagnosticScreen',
++            {'keepOn': false},
++          );
++          fail(
++            'Android UI verification requires user-unlocked interactive screen; not a background test',
++          );
++        }
++      }
++      app.main();
++      await tester.pumpAndSettle();
++      await tester.tap(find.text('打开自有样本播放诊断'));
++      await tester.pump(const Duration(milliseconds: 400));
++      final r = await LocalRuntime.instance();
++      final initial = r.snapshot.confirmations.length;
++      try {
++        await tester.pump();
++        await tester.tap(find.text('播放样本A'));
++        await until(
++          () =>
++              r.snapshot.currentEntryId == ownedA.entryId &&
++              r.snapshot.confirmations.length == initial + 1,
++        );
++        await tester.pump();
++        await tester.tap(find.text('暂停'));
++        await tester.pump();
++        expect(r.snapshot.desired, DesiredTransport.paused);
++        await tester.tap(find.text('定位3秒'));
++        await tester.pump();
++        await until(() => r.snapshot.positionMs >= 2900);
++        await tester.tap(find.text('继续'));
++        await tester.pump();
++        await tester.tap(find.text('切换样本B'));
++        await tester.pump();
++        await until(() => r.snapshot.currentEntryId == ownedB.entryId);
++        await until(() => r.backend.consumers == 1);
++        final handle = r.snapshot.tracks
++            .where((t) => t.role == TrackRole.active)
++            .single
++            .trackHandleId;
++        await tester.tap(find.text('UI重新连接'));
++        await tester.pump();
++        await tester.tap(find.text('重建组件'));
++        await tester.pump(const Duration(milliseconds: 400));
++        expect(
++          r.snapshot.tracks
++              .where((t) => t.role == TrackRole.active)
++              .single
++              .trackHandleId,
++          handle,
++        );
++        expect(r.snapshot.confirmations.length, initial + 2);
++        await tester.tap(find.text('暂停'));
++        await tester.pump();
++        final saved = r.savedRevision;
++        await tester.tap(find.text('保存恢复快照'));
++        await until(() => r.savedRevision > saved);
++        await tester.pump();
++        await tester.tap(find.text('停止'));
++        await tester.pump();
++        await until(() => r.backend.consumers == 0);
++        // ignore: avoid_print
++        print(
++          'DIAGNOSTIC_UI_${Platform.operatingSystem}: buttons, real route replacement, saved revision ${r.savedRevision}, consumers0',
++        );
++      } finally {
++        await tester.pumpWidget(const SizedBox.shrink());
++        await r.close();
++        if (Platform.isAndroid) {
++          await NativeLocalBackend.channel.invokeMethod<void>(
++            'diagnosticScreen',
++            {'keepOn': false},
++          );
++        }
++      }
++    },
++  );
++}
+diff --git a/clients/flutter/integration_test/runtime_recovery_test.dart b/clients/flutter/integration_test/runtime_recovery_test.dart
+new file mode 100644
+index 0000000..4b524b5
+--- /dev/null
++++ b/clients/flutter/integration_test/runtime_recovery_test.dart
+@@ -0,0 +1,95 @@
++import 'dart:io';
++import 'dart:convert';
++
++import 'package:flutter/material.dart';
++import 'package:flutter_test/flutter_test.dart';
++import 'package:integration_test/integration_test.dart';
++import 'package:jj_music_mobile/app/runtime/local_runtime.dart';
++
++import 'package:jj_music_mobile/domain/playback/contracts.dart';
++
++import 'windows_local_playback_test.dart' show until;
++
++class _Subscriber extends StatefulWidget {
++  const _Subscriber(this.runtime, {super.key});
++  final LocalRuntime runtime;
++  @override
++  State<_Subscriber> createState() => _SubscriberState();
++}
++
++class _SubscriberState extends State<_Subscriber> {
++  @override
++  void initState() {
++    super.initState();
++    widget.runtime.reconnect();
++  }
++
++  @override
++  Widget build(BuildContext context) =>
++      Text(widget.runtime.snapshot.playbackSessionId);
++}
++
++void main() {
++  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
++  testWidgets(
++    'R1 widget replacement, exclusive ownership, native destruction and paused resume',
++    (tester) async {
++      final r = await LocalRuntime.create(runId: 'runtime-$pid');
++      try {
++        r.command('a');
++        await until(() => r.snapshot.currentEntryId == ownedA.entryId);
++        final first = r.snapshot;
++        await tester.pumpWidget(
++          MaterialApp(home: _Subscriber(r, key: const ValueKey(1))),
++        );
++        await tester.pumpWidget(
++          MaterialApp(home: _Subscriber(r, key: const ValueKey(2))),
++        );
++        expect(r.snapshot.playbackSessionId, first.playbackSessionId);
++        expect(
++          r.snapshot.tracks.single.trackHandleId,
++          first.tracks.single.trackHandleId,
++        );
++        expect(r.snapshot.confirmations, first.confirmations);
++        final stale = r.coordinator.claim;
++        final next = r.coordinator.acquireController(
++          expectedOwner: stale.ownerId,
++          newOwner: 'reconnected-owner',
++        );
++        expect(next, isNotNull);
++        expect(
++          r.coordinator.pause(CommandContext('stale', stale)).accepted,
++          isFalse,
++        );
++        expect(
++          r.snapshot.tracks.single.trackHandleId,
++          first.tracks.single.trackHandleId,
++        );
++        r.command('pause');
++        final before = r.snapshot;
++        await r.destroyBackend();
++        expect(r.snapshot.backendEpoch, before.backendEpoch + 1);
++        expect(r.snapshot.coordinatorEpoch, before.coordinatorEpoch);
++        expect(r.snapshot.brokerEpoch, before.brokerEpoch);
++        expect(r.backend.consumers, 0);
++        expect(r.snapshot.desired, DesiredTransport.paused);
++        r.command('play');
++        await until(
++          () => r.snapshot.tracks.any((t) => t.role == TrackRole.active),
++        );
++        expect(
++          r.snapshot.tracks.last.trackHandleId,
++          isNot(first.tracks.single.trackHandleId),
++        );
++        r.command('stop');
++        await until(() => r.backend.consumers == 0);
++        // ignore: avoid_print
++        print(
++          'RUNTIME_RECOVERY=${jsonEncode({'platform': Platform.operatingSystem, 'pid': pid, 'oldHandle': first.tracks.single.trackHandleId, 'coordinatorEpoch': r.snapshot.coordinatorEpoch, 'backendEpoch': r.snapshot.backendEpoch, 'confirmations': r.snapshot.confirmations})}',
++        );
++      } finally {
++        await r.close();
++      }
++    },
++  );
++}
+diff --git a/clients/flutter/integration_test/support/native_failure_cases.dart b/clients/flutter/integration_test/support/native_failure_cases.dart
+new file mode 100644
+index 0000000..e0f750a
+--- /dev/null
++++ b/clients/flutter/integration_test/support/native_failure_cases.dart
+@@ -0,0 +1,126 @@
++import 'dart:convert';
++import 'dart:io';
++
++import 'package:flutter/services.dart';
++import 'package:flutter_test/flutter_test.dart';
++import 'package:jj_music_mobile/application/playback/playback_coordinator.dart';
++import 'package:jj_music_mobile/domain/playback/contracts.dart';
++import 'package:jj_music_mobile/platform/local/native_local_backend.dart';
++
++import 'local_playback_contract.dart';
++
++void registerNativeFailureCases() {
++  testWidgets('native preconfirmation play failure resumes old real track', (
++    tester,
++  ) async {
++    final dir = await Directory.systemTemp.createTemp('jj-owned-rollback-');
++    final file = File('${dir.path}/long.wav');
++    final data = await rootBundle.load('fixtures/local_playback/tone-long.wav');
++    await file.writeAsBytes(data.buffer.asUint8List(), flush: true);
++    final b = NativeLocalBackend({'tone-a': file.uri.toString()});
++    final c = PlaybackCoordinator(b);
++    Future<void> until(bool Function() check) async {
++      final deadline = DateTime.now().add(const Duration(seconds: 10));
++      while (!check() && DateTime.now().isBefore(deadline)) {
++        await Future<void>.delayed(const Duration(milliseconds: 50));
++      }
++      expect(check(), isTrue);
++    }
++
++    try {
++      c.play(
++        CommandContext('a', c.claim),
++        PlayIntent(entries: [fixtureA, fixtureB], entryId: fixtureA.entryId),
++      );
++      await until(() => c.snapshot.currentEntryId == fixtureA.entryId);
++      final old = c.snapshot.tracks.single.trackHandleId;
++      final oldPosition = c.snapshot.positionMs;
++      await NativeLocalBackend.channel.invokeMethod<void>('failNextPlay');
++      c.play(
++        CommandContext('b', c.claim),
++        PlayIntent(entries: [fixtureA, fixtureB], entryId: fixtureB.entryId),
++      );
++      await until(() => c.failures.isNotEmpty && b.consumers == 1);
++      await until(
++        () => (b.lastHost['samples'] as List? ?? []).any(
++          (s) =>
++              s['id'] == old &&
++              s['nativePlaying'] == true &&
++              (s['position'] as int) > oldPosition + 200,
++        ),
++      );
++      expectConfirmedIdentity(c.snapshot, fixtureA.entryId, 1);
++      c.stop(CommandContext('stop', c.claim));
++      await until(() => b.consumers == 0);
++    } finally {
++      await c.dispose();
++      await b.close();
++      // ignore: avoid_print
++      print('NATIVE_ROLLBACK_${Platform.operatingSystem}=${jsonEncode(b.raw)}');
++    }
++  });
++  testWidgets(
++    'native file URI natural end and malformed owned file never confirms',
++    (tester) async {
++      final root = await Directory.systemTemp.createTemp('jj-owned-cases-');
++      final short = File('${root.path}/short.wav');
++      final data = await rootBundle.load('fixtures/local_playback/tone-a.wav');
++      await short.writeAsBytes(data.buffer.asUint8List(), flush: true);
++      final bad = File('${root.path}/bad.wav');
++      await bad.writeAsBytes([1, 2, 3, 4], flush: true);
++      final backend = NativeLocalBackend({
++        'short': short.uri.toString(),
++        'bad': bad.uri.toString(),
++      });
++      final c = PlaybackCoordinator(backend);
++      Future<void> until(bool Function() check) async {
++        final deadline = DateTime.now().add(const Duration(seconds: 10));
++        while (!check() && DateTime.now().isBefore(deadline)) {
++          await Future<void>.delayed(const Duration(milliseconds: 50));
++        }
++        expect(check(), isTrue);
++      }
++
++      try {
++        await until(() => backend.lastHost.isNotEmpty);
++        final serviceStopsBefore=Platform.isAndroid
++            ? (backend.lastHost['lifecycle'] as List).where((v)=>v['event']=='service-destroy').length : 0;
++        const item = QueueEntry(
++          entryId: 'short-owned',
++          trackKey: 'short',
++          fixtureId: 'short',
++        );
++        expectControlApplied(
++          c.play(
++            CommandContext('short', c.claim),
++            PlayIntent(entries: [item], entryId: item.entryId),
++          ),
++        );
++        await until(() => c.snapshot.confirmations.length == 1);
++        await until(() => backend.consumers == 0);
++        if(Platform.isAndroid) {
++          await until(()=>(backend.lastHost['lifecycle'] as List? ?? []).where((v)=>v['event']=='service-destroy').length>serviceStopsBefore);
++        }
++        expect(c.snapshot.desired, DesiredTransport.paused);
++        const broken = QueueEntry(
++          entryId: 'bad-owned',
++          trackKey: 'bad',
++          fixtureId: 'bad',
++        );
++        c.play(
++          CommandContext('bad', c.claim),
++          PlayIntent(entries: [broken], entryId: broken.entryId),
++        );
++        await until(() => c.failures.isNotEmpty && backend.consumers == 0);
++        expect(c.snapshot.confirmations.length, 1);
++      } finally {
++        await c.dispose();
++        await backend.close();
++        // ignore: avoid_print
++        print(
++          'NATIVE_FAILURE_CASES_${Platform.operatingSystem}=${jsonEncode(backend.raw)}',
++        );
++      }
++    },
++  );
++}
+diff --git a/clients/flutter/integration_test/windows_local_playback_test.dart b/clients/flutter/integration_test/windows_local_playback_test.dart
+new file mode 100644
+index 0000000..701ea8a
+--- /dev/null
++++ b/clients/flutter/integration_test/windows_local_playback_test.dart
+@@ -0,0 +1,97 @@
++import 'dart:io';
++
++import 'package:flutter/services.dart';
++import 'package:flutter_test/flutter_test.dart';
++import 'package:integration_test/integration_test.dart';
++import 'package:jj_music_mobile/application/playback/playback_coordinator.dart';
++import 'package:jj_music_mobile/domain/playback/contracts.dart';
++import 'package:jj_music_mobile/platform/local/native_local_backend.dart';
++
++import 'support/local_playback_contract.dart';
++import 'support/native_failure_cases.dart';
++
++Future<void> until(bool Function() check, {int seconds = 10}) async {
++  final end = DateTime.now().add(Duration(seconds: seconds));
++  while (!check() && DateTime.now().isBefore(end)) {
++    await Future<void>.delayed(const Duration(milliseconds: 100));
++  }
++  expect(check(), isTrue, reason: 'native condition timed out');
++}
++
++void main() {
++  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
++  registerNativeFailureCases();
++  testWidgets(
++    'Windows native local transport uses shared identities and releases',
++    (tester) async {
++      final dir = await Directory.systemTemp.createTemp('jj-owned-playback-');
++      final file = File('${dir.path}/tone-long.wav');
++      final bytes = await rootBundle.load(
++        'fixtures/local_playback/tone-long.wav',
++      );
++      await file.writeAsBytes(bytes.buffer.asUint8List(), flush: true);
++      final backend = NativeLocalBackend(
++        {'tone-a': file.uri.toString()},
++        logFile: File(
++          'E:/Workspace/project/JJ-Music-mobile/docs/flutter-migration/evidence/p1-a/20261031/windows-raw.jsonl',
++        ),
++      );
++      final coordinator = PlaybackCoordinator(backend);
++      CommandContext cmd(String id) => CommandContext(id, coordinator.claim);
++      try {
++        expectControlApplied(
++          coordinator.play(
++            cmd('a'),
++            PlayIntent(
++              entries: [fixtureA, fixtureB],
++              entryId: fixtureA.entryId,
++            ),
++          ),
++        );
++        await until(
++          () => coordinator.snapshot.currentEntryId == fixtureA.entryId,
++        );
++        expectConfirmedIdentity(coordinator.snapshot, fixtureA.entryId, 1);
++        await until(() => coordinator.snapshot.positionMs > 400);
++        expectControlApplied(coordinator.pause(cmd('pause')));
++        await Future<void>.delayed(const Duration(milliseconds: 400));
++        final paused = coordinator.snapshot.positionMs;
++        await Future<void>.delayed(const Duration(milliseconds: 400));
++        expect((coordinator.snapshot.positionMs - paused).abs(), lessThan(150));
++        expectControlApplied(coordinator.seek(cmd('seek'), 3000));
++        await until(() => coordinator.snapshot.positionMs >= 2900);
++        expectControlApplied(coordinator.resume(cmd('resume')));
++        await until(() => coordinator.snapshot.positionMs > 3400);
++        expect(coordinator.snapshot.confirmations.length, 1);
++        // Old load invalidated by stop without awaiting prepare; physical close observed.
++        coordinator.play(
++          cmd('b'),
++          PlayIntent(entries: [fixtureA, fixtureB], entryId: fixtureB.entryId),
++        );
++        coordinator.stop(cmd('stop-immediate'));
++        await until(() => backend.consumers == 0);
++        coordinator.play(
++          cmd('c'),
++          PlayIntent(entries: [fixtureA, fixtureB], entryId: fixtureB.entryId),
++        );
++        await until(
++          () => coordinator.snapshot.currentEntryId == fixtureB.entryId,
++        );
++        expectConfirmedIdentity(coordinator.snapshot, fixtureB.entryId, 2);
++        coordinator.stop(cmd('stop'));
++        await until(() => backend.consumers == 0);
++        expect(
++          coordinator.snapshot.tracks.every(
++            (t) => t.role == TrackRole.released,
++          ),
++          isTrue,
++        );
++        // On Windows this additionally proves no retained file read handle.
++        await file.rename('${dir.path}/released.wav');
++      } finally {
++        await coordinator.dispose();
++        await backend.close();
++      }
++    },
++  );
++}
+diff --git a/clients/flutter/integration_test/windows_media_test.dart b/clients/flutter/integration_test/windows_media_test.dart
+new file mode 100644
+index 0000000..a6531f7
+--- /dev/null
++++ b/clients/flutter/integration_test/windows_media_test.dart
+@@ -0,0 +1,58 @@
++import 'dart:convert';
++import 'dart:io';
++
++import 'package:flutter_test/flutter_test.dart';
++import 'package:integration_test/integration_test.dart';
++import 'package:jj_music_mobile/app/runtime/local_runtime.dart';
++import 'package:jj_music_mobile/domain/playback/contracts.dart';
++
++import 'windows_local_playback_test.dart' show until;
++
++void main() {
++  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
++  testWidgets(
++    'Windows OS SMTC pause/play/seek/next route to shared authority',
++    (tester) async {
++      final r = await LocalRuntime.create(runId: 'smtc-$pid');
++      Future<void> os(String action) async {
++        final exe = File(Platform.resolvedExecutable);
++        final probe = File(
++          '${exe.parent.path}/../../diagnostic_tools/Debug/jj_smtc_probe.exe',
++        );
++        final result = await Process.run(probe.absolute.path, ['$pid', action]);
++        // ignore: avoid_print
++        print('SMTC_OS_$action=${result.stdout}');
++        expect(result.exitCode, 0);
++      }
++
++      try {
++        r.command('a');
++        await until(() => r.snapshot.currentEntryId == ownedA.entryId);
++        await until(
++          () =>
++              r.backend.lastHost['mirroredStatus'] == 'playing' &&
++              r.backend.lastHost['mirroredDuration'] == 12000,
++        );
++        await os('pause');
++        await until(() => r.snapshot.desired == DesiredTransport.paused);
++        await until(() => r.backend.lastHost['mirroredStatus'] == 'paused');
++        expect(r.snapshot.confirmations.length, 1);
++        await os('play');
++        await until(() => r.snapshot.desired == DesiredTransport.playing);
++        await until(() => r.backend.lastHost['mirroredStatus'] == 'playing');
++        await os('seek');
++        await until(() => r.snapshot.positionMs >= 2900);
++        await os('next');
++        await until(() => r.snapshot.currentEntryId == ownedB.entryId);
++        await until(() => r.backend.consumers == 1);
++        expect(r.snapshot.confirmations.length, 2);
++        r.command('stop');
++        await until(() => r.backend.consumers == 0);
++      } finally {
++        // ignore: avoid_print
++        print('SMTC_NATIVE_JSON=${jsonEncode(r.backend.lastHost)}');
++        await r.close();
++      }
++    },
++  );
++}
+diff --git a/clients/flutter/lib/app/local_diagnostic_page.dart b/clients/flutter/lib/app/local_diagnostic_page.dart
+new file mode 100644
+index 0000000..f37ed1c
+--- /dev/null
++++ b/clients/flutter/lib/app/local_diagnostic_page.dart
+@@ -0,0 +1,110 @@
++import 'package:flutter/material.dart';
++
++import 'runtime/local_runtime.dart';
++
++class LocalDiagnosticPage extends StatefulWidget {
++  const LocalDiagnosticPage({super.key});
++  @override
++  State<LocalDiagnosticPage> createState() => _LocalDiagnosticPageState();
++}
++
++class _LocalDiagnosticPageState extends State<LocalDiagnosticPage> {
++  LocalRuntime? runtime;
++  String? error;
++  @override
++  void initState() {
++    super.initState();
++    LocalRuntime.instance()
++        .then((r) {
++          if (!mounted) {
++            return;
++          }
++          runtime = r;
++          r.reconnect();
++          r.addListener(refresh);
++          setState(() {});
++        })
++        .catchError((Object e) {
++          if (mounted) {
++            setState(() => error = e.runtimeType.toString());
++          }
++        });
++  }
++
++  void refresh() {
++    if (mounted) {
++      setState(() {});
++    }
++  }
++
++  @override
++  void dispose() {
++    runtime?.removeListener(refresh);
++    super.dispose();
++  }
++
++  @override
++  Widget build(BuildContext context) {
++    final r = runtime, s = r?.snapshot;
++    return Scaffold(
++      appBar: AppBar(title: const Text('P1 自有样本播放诊断')),
++      body: ListView(
++        padding: const EdgeInsets.all(20),
++        children: [
++          const Text('仅12秒自有音调；不是正式产品UI。系统按钮与此界面使用同一共享入口。'),
++          if (r == null)
++            Text(error ?? '初始化中…')
++          else ...[
++            Text(
++              '会话 ${s!.playbackSessionId}\nUI ${s.uiConnectionId}\n意图 ${s.desired.name}  当前 ${s.currentEntryId}\n位置 ${s.positionMs} / ${s.durationMs ?? 0} ms\n确认数 ${s.confirmations.length}  资源 ${r.backend.consumers}\n${r.message}',
++              key: const Key('local-state'),
++            ),
++            Wrap(
++              spacing: 12,
++              runSpacing: 10,
++              children: [
++                for (final item in [
++                  ('a', '播放样本A'),
++                  ('b', '切换样本B'),
++                  ('pause', '暂停'),
++                  ('play', '继续'),
++                  ('seek', '定位3秒'),
++                  ('stop', '停止'),
++                ])
++                  FilledButton(
++                    onPressed: () => r.command(item.$1),
++                    child: Text(item.$2),
++                  ),
++                OutlinedButton(
++                  onPressed: r.reconnect,
++                  child: const Text('UI重新连接'),
++                ),
++                OutlinedButton(
++                  onPressed: () async {
++                    try {
++                      await r.save();
++                    } catch (e) {
++                      r.message = '保存失败：${e.runtimeType}';
++                      refresh();
++                    }
++                  },
++                  child: const Text('保存恢复快照'),
++                ),
++                OutlinedButton(
++                  onPressed: () {
++                    Navigator.of(context).pushReplacement(
++                      MaterialPageRoute<void>(
++                        builder: (_) => const LocalDiagnosticPage(),
++                      ),
++                    );
++                  },
++                  child: const Text('重建组件'),
++                ),
++              ],
++            ),
++          ],
++        ],
++      ),
++    );
++  }
++}
+diff --git a/clients/flutter/lib/app/runtime/local_runtime.dart b/clients/flutter/lib/app/runtime/local_runtime.dart
+new file mode 100644
+index 0000000..d62bf46
+--- /dev/null
++++ b/clients/flutter/lib/app/runtime/local_runtime.dart
+@@ -0,0 +1,248 @@
++import 'dart:async';
++import 'dart:io';
++
++import 'package:flutter/foundation.dart';
++import 'package:flutter/services.dart';
++
++import '../../application/playback/playback_coordinator.dart';
++import '../../domain/playback/contracts.dart';
++import '../../domain/playback/recovery_snapshot.dart';
++import '../../data/prototype_recovery/file_snapshot_store.dart';
++import '../../platform/local/native_local_backend.dart';
++
++const ownedA = QueueEntry(
++  entryId: 'owned-a',
++  trackKey: 'owned-tone',
++  fixtureId: 'tone-long',
++);
++const ownedB = QueueEntry(
++  entryId: 'owned-b',
++  trackKey: 'owned-tone',
++  fixtureId: 'tone-long',
++);
++
++/// Process runtime retained independently of widget subscriptions and Activity.
++class LocalRuntime extends ChangeNotifier {
++  LocalRuntime._(
++    this.backend,
++    this.store,
++    this._lock,
++    SnapshotReadResult loaded,
++  ) : coordinator = PlaybackCoordinator(
++        backend,
++        sessionId:
++            loaded.snapshot?.playbackSessionId ??
++            'local-$pid-${DateTime.now().millisecondsSinceEpoch}',
++        initialEpoch: DateTime.now().microsecondsSinceEpoch,
++      ) {
++    if (loaded.snapshot != null) {
++      coordinator.restoreSnapshot(loaded.snapshot!);
++      savedRevision = loaded.snapshot!.revision;
++      message = 'R3已读回修订$savedRevision，默认暂停，尚未分配播放资源';
++    } else if (loaded.issues.isNotEmpty) {
++      message = '快照不可用：安全空态/暂停退路；未自动播放';
++    }
++    _events = backend.events.listen((event) {
++      final s = coordinator.snapshot;
++      // P1 has a hard-switch policy, not crossfade. Commit and close outgoing
++      // only after the coordinator accepted this incoming confirmation.
++      if (event.kind == BackendEventKind.playing &&
++          s.tracks.any(
++            (t) =>
++                t.trackHandleId == event.trackHandleId &&
++                t.role == TrackRole.active,
++          )) {
++        coordinator.completeTransition(
++          event.trackHandleId,
++          transitionId: event.transitionId,
++        );
++      }
++    });
++    _commands = backend.systemCommands.listen((value) {
++      command(
++        value['command'] as String,
++        position: value['position'] as int? ?? 0,
++      );
++    });
++    _timer = Timer.periodic(const Duration(milliseconds: 200), (_) {
++      _mirrorFuture = _mirror();
++    });
++  }
++  static Future<LocalRuntime>? _instance;
++  static Future<LocalRuntime> instance() => _instance ??= create();
++  static Future<LocalRuntime> create({String runId = 'owned-p1'}) async {
++    final root = Directory('${Directory.systemTemp.path}/jj-owned-p1');
++    await root.create(recursive: true);
++    final store = FileSnapshotStore(
++      root: Directory('${root.path}/recovery'),
++      runId: runId,
++      allowedFixtureIds: {'tone-long'},
++    );
++    await store.directory.create(recursive: true);
++    final lock = await File('${store.directory.path}/writer.lock')
++        .open(mode: FileMode.append);
++    try {
++      await lock.lock(FileLock.exclusive);
++    } catch (_) {
++      await lock.close();
++      rethrow;
++    }
++    try {
++      final loaded = await store.load();
++      final file = File('${root.path}/tone-long-$pid.wav');
++      final bytes = await rootBundle.load(
++        'fixtures/local_playback/tone-long.wav',
++      );
++      await file.writeAsBytes(bytes.buffer.asUint8List(), flush: true);
++      final uri = Platform.isAndroid
++          ? await NativeLocalBackend.channel.invokeMethod<String>('fixtureUri')
++          : file.uri.toString();
++      return LocalRuntime._(
++        NativeLocalBackend({
++          'tone-long': uri!,
++        }, logFile: File('${root.path}/native-$pid.jsonl')),
++        store,
++        lock,
++        loaded,
++      );
++    } catch (_) {
++      await lock.close();
++      rethrow;
++    }
++  }
++
++  final NativeLocalBackend backend;
++  final PlaybackCoordinator coordinator;
++  final FileSnapshotStore store;
++  final RandomAccessFile _lock;
++  int savedRevision = 0;
++  Future<void>? _mirrorFuture;
++  bool _closed = false;
++  Future<SnapshotSaveReceipt> save() async {
++    final s = snapshot;
++    final index = s.entries.indexWhere((e) => e.entryId == s.currentEntryId);
++    if (index < 0) {
++      throw StateError('no-confirmed-entry');
++    }
++    final receipt = await store.save(
++      RecoverySnapshot(
++        runId: store.runId,
++        revision: savedRevision + 1,
++        playbackSessionId: s.playbackSessionId,
++        entries: s.entries,
++        currentIndex: index,
++        positionMs: s.positionMs,
++        mode: s.mode,
++        preview: s.preview,
++        confirmations: s.confirmations,
++      ),
++    );
++    savedRevision = receipt.revision;
++    message = 'saved修订$savedRevision 已flush落盘；可停止进程后手动重开验证';
++    notifyListeners();
++    return receipt;
++  }
++
++  late final StreamSubscription<BackendEvent> _events;
++  late final StreamSubscription<Map<String, dynamic>> _commands;
++  Timer? _timer;
++  int _request = 0, _ui = 0;
++  bool _mirroring = false;
++  String message = '就绪；仅播放自有12秒样本';
++  PlaybackSnapshot get snapshot => coordinator.snapshot;
++  Future<void> destroyBackend() async {
++    final receipts = await backend.destroyNativeResources();
++    final ack = coordinator.backendReleased(_cmd(), receipts);
++    if (!ack.applied) {
++      throw StateError('backend-loss-not-proven');
++    }
++    message = '底层播放器已销毁；backendEpoch递增，暂停等待恢复';
++    notifyListeners();
++  }
++
++  void reconnect() {
++    coordinator.attachUi('ui-${++_ui}');
++    notifyListeners();
++  }
++
++  CommandContext _cmd() =>
++      CommandContext('local-${++_request}', coordinator.claim);
++  CommandAck? command(String name, {int position = 3000}) {
++    final c = _cmd();
++    final ack = switch (name) {
++      'a' => coordinator.play(
++        c,
++        PlayIntent(entries: [ownedA, ownedB], entryId: ownedA.entryId),
++      ),
++      'b' || 'next' || 'previous' => coordinator.play(
++        c,
++        PlayIntent(
++          entries: [ownedA, ownedB],
++          entryId: snapshot.currentEntryId == ownedB.entryId
++              ? ownedA.entryId
++              : ownedB.entryId,
++        ),
++      ),
++      'pause' => coordinator.pause(c),
++      'play' => coordinator.resume(c),
++      'stop' => coordinator.stop(c),
++      'seek' => coordinator.seek(c, position),
++      _ => null,
++    };
++    message =
++        '$name: ${ack?.applied == true ? '已提交；等待后端确认' : ack?.failure?.code ?? '未执行'}';
++    notifyListeners();
++    return ack;
++  }
++
++  Future<void> _mirror() async {
++    if (_mirroring || _closed) {
++      return;
++    }
++    _mirroring = true;
++    try {
++      final s = snapshot;
++      final running = (backend.lastHost['samples'] as List? ?? []).any(
++        (v) =>
++            v['nativePlaying'] == true &&
++            s.tracks.any(
++              (t) =>
++                  t.trackHandleId == v['id'] &&
++                  t.role == TrackRole.active &&
++                  t.playbackConfirmationId != null,
++            ),
++      );
++      await NativeLocalBackend.channel.invokeMethod<void>('mirror', {
++        'title': s.currentEntryId == null
++            ? 'JJ owned diagnostic pid-$pid'
++            : 'JJ owned ${s.currentEntryId} pid-$pid',
++        'status': s.desired == DesiredTransport.stopped
++            ? 'stopped'
++            : running && s.desired == DesiredTransport.playing
++            ? 'playing'
++            : 'paused',
++        'position': s.positionMs,
++        'duration': s.durationMs ?? 0,
++      });
++    } catch (e) {
++      message = '系统镜像失败：${e.runtimeType}';
++    } finally {
++      _mirroring = false;
++      if (!_closed) {
++        notifyListeners();
++      }
++    }
++  }
++
++  Future<void> close() async {
++    _closed = true;
++    _timer?.cancel();
++    await _mirrorFuture;
++    await _events.cancel();
++    await _commands.cancel();
++    await coordinator.dispose();
++    await backend.close();
++    await _lock.close();
++    super.dispose();
++  }
++}
+diff --git a/clients/flutter/lib/application/playback/playback_coordinator.dart b/clients/flutter/lib/application/playback/playback_coordinator.dart
+index 1783272..c20771e 100644
+--- a/clients/flutter/lib/application/playback/playback_coordinator.dart
++++ b/clients/flutter/lib/application/playback/playback_coordinator.dart
+@@ -2,6 +2,7 @@ import 'dart:async';
+ import 'dart:convert';
+ 
+ import '../../domain/playback/contracts.dart';
++import '../../domain/playback/recovery_snapshot.dart';
+ 
+ class _Track {
+   _Track(this.request, this.resource);
+@@ -33,7 +34,9 @@ class PlaybackCoordinator {
+     this.backend, {
+     this.sessionId = 'fixture-session',
+     this.releaseTimeout = const Duration(seconds: 3),
++    int initialEpoch = 1,
+   }) {
++    _epoch = initialEpoch;
+     _subscription = backend.events.listen(
+       _onEvent,
+       onError: (Object error) => _fail('backend-stream', 'events'),
+@@ -45,9 +48,10 @@ class PlaybackCoordinator {
+   late final StreamSubscription<BackendEvent> _subscription;
+   String _owner = 'owner-1';
+   int _epoch = 1, _generation = 0, _revision = 0, _cursor = 0;
+-  final int _backendEpoch = 1;
++  int _backendEpoch = 1;
+   int _confirmationCounter = 0;
+   String? _ui, _active, _currentRequest, _requested;
++  String? _restoredEntry;
+   int _position = 0;
+   int? _duration;
+   bool _preview = false, _disposed = false;
+@@ -78,7 +82,7 @@ class PlaybackCoordinator {
+     tracks: _tracks.values.map((t) => t.snapshot).toList(),
+     confirmations: _confirmations,
+     currentEntryId: _active == null
+-        ? null
++        ? _restoredEntry
+         : _tracks[_active]?.request.entry.entryId,
+     requestedEntryId: _requested,
+     uiConnectionId: _ui,
+@@ -93,6 +97,88 @@ class PlaybackCoordinator {
+     return snapshot;
+   }
+ 
++  /// Fresh authority only. R3 never restores native handles or auto-plays.
++  void restoreSnapshot(RecoverySnapshot saved) {
++    if (!_disposed &&
++        _generation == 0 &&
++        _entries.isEmpty &&
++        saved.entries.isEmpty &&
++        saved.currentIndex == -1 &&
++        saved.playbackSessionId == sessionId) {
++      _desired = DesiredTransport.paused;
++      _cursor++;
++      return;
++    }
++    if (_disposed ||
++        _generation != 0 ||
++        _entries.isNotEmpty ||
++        saved.playbackSessionId != sessionId ||
++        !_validEntries(saved.entries) ||
++        saved.currentIndex < 0 ||
++        saved.currentIndex >= saved.entries.length ||
++        saved.positionMs < 0) {
++      throw StateError('invalid-restore');
++    }
++    _entries = List.of(saved.entries);
++    _restoredEntry = saved.entries[saved.currentIndex].entryId;
++    _requested = _restoredEntry;
++    _position = saved.positionMs;
++    _mode = saved.mode;
++    _preview = saved.preview;
++    _confirmations.addAll(saved.confirmations);
++    for (final id in saved.confirmations) {
++      final value = int.tryParse(id.split(':').last) ?? 0;
++      if (value > _confirmationCounter) {
++        _confirmationCounter = value;
++      }
++    }
++    _desired = DesiredTransport.paused;
++    _revision++;
++    _cursor++;
++  }
++
++  /// Trusted host destruction receipts, never infer physical death from timeout.
++  CommandAck backendReleased(CommandContext c, List<ReleaseReceipt> receipts) {
++    final signature = jsonEncode([
++      'backend-released',
++      receipts
++          .map((r) => [r.trackHandleId, r.consumerId, r.backendEpoch])
++          .toList(),
++    ]);
++    final old = _existing(c, signature);
++    if (old != null) {
++      return old;
++    }
++    final live = _tracks.values
++        .where((t) => t.role != TrackRole.released)
++        .toList();
++    if (live.any(
++      (t) => !receipts.any(
++        (r) =>
++            r.trackHandleId == t.resource.trackHandleId &&
++            r.consumerId == t.resource.consumerId &&
++            r.backendEpoch == t.request.backendEpoch,
++      ),
++    )) {
++      return _reject(c, 'missing-destruction-receipt');
++    }
++    _restoredEntry = _active == null
++        ? _requested
++        : _tracks[_active]?.request.entry.entryId;
++    _invalidatePrepare();
++    _generation++;
++    _currentRequest = null;
++    for (final t in live) {
++      t.releaseTimer?.cancel();
++      t.role = TrackRole.released;
++    }
++    _tracks.clear();
++    _active = null;
++    _backendEpoch++;
++    _desired = DesiredTransport.paused;
++    return _applied(c, signature);
++  }
++
+   ControllerClaim? acquireController({
+     required String expectedOwner,
+     required String newOwner,
+@@ -177,6 +263,7 @@ class PlaybackCoordinator {
+     intent.entryId,
+     intent.mode.name,
+     intent.preview,
++    intent.startPositionMs,
+     _queueSignature(intent.entries),
+   ]);
+ 
+@@ -186,7 +273,8 @@ class PlaybackCoordinator {
+     if (old != null) {
+       return old;
+     }
+-    if (!_validEntries(intent.entries) ||
++    if (intent.startPositionMs < 0 ||
++        !_validEntries(intent.entries) ||
+         !intent.entries.any((e) => e.entryId == intent.entryId)) {
+       return _reject(c, 'invalid-intent');
+     }
+@@ -204,6 +292,7 @@ class PlaybackCoordinator {
+     _entries = intent.entries;
+     _revision++;
+     _requested = intent.entryId;
++    _restoredEntry = null;
+     _preview = intent.preview;
+     _mode = intent.mode;
+     _desired = DesiredTransport.playing;
+@@ -214,6 +303,7 @@ class PlaybackCoordinator {
+       generation: _generation,
+       backendEpoch: _backendEpoch,
+       transitionId: _active == null ? null : 'transition-$_generation',
++      startPositionMs: intent.startPositionMs,
+     );
+     _pending[c.requestId] = request;
+     final ack = _applied(c, signature);
+@@ -354,6 +444,22 @@ class PlaybackCoordinator {
+     if (old != null) {
+       return old;
+     }
++    if (_restoredEntry != null && _active == null) {
++      final ack = play(
++        c,
++        PlayIntent(
++          entries: _entries,
++          entryId: _restoredEntry!,
++          preview: _preview,
++          mode: _mode,
++          startPositionMs: _position,
++        ),
++      );
++      if (ack.applied) {
++        _acks[c.requestId] = ('resume', ack);
++      }
++      return ack;
++    }
+     final track = _active == null
+         ? _tracks.values
+               .where(
+@@ -386,6 +492,7 @@ class PlaybackCoordinator {
+     _generation++;
+     _currentRequest = null;
+     _requested = null;
++    _restoredEntry = null;
+     _desired = DesiredTransport.stopped;
+     _active = null;
+     _position = 0;
+@@ -425,9 +532,8 @@ class PlaybackCoordinator {
+         _generation++;
+         _currentRequest = null;
+         _requested = null;
+-        _desired = _active == null
+-            ? DesiredTransport.stopped
+-            : DesiredTransport.playing;
++        _desired = _active == null ? DesiredTransport.stopped : _desired;
++        _resumeValidActive();
+       }
+     }
+     return _applied(c, signature);
+@@ -461,6 +567,16 @@ class PlaybackCoordinator {
+     return _applied(c, signature);
+   }
+ 
++  void _resumeValidActive() {
++    final active = _tracks[_active];
++    if (_desired == DesiredTransport.playing &&
++        active != null &&
++        active.role == TrackRole.active &&
++        !active.revoked) {
++      _dispatch(() => backend.play(active.resource.trackHandleId), 'rollback');
++    }
++  }
++
+   CommandAck replaceQueue(
+     CommandContext c,
+     List<QueueEntry> entries,
+@@ -566,11 +682,15 @@ class PlaybackCoordinator {
+           if (fallback != null) {
+             fallback.role = TrackRole.active;
+             _active = fallback.resource.trackHandleId;
+-            _dispatch(() => backend.play(_active!), 'rollback');
++            _resumeValidActive();
+           } else {
+             _active = null;
+             _desired = DesiredTransport.paused;
+           }
++        } else if (_active != null) {
++          _resumeValidActive();
++        } else {
++          _desired = DesiredTransport.paused;
+         }
+         _release(t);
+       case BackendEventKind.progress:
+diff --git a/clients/flutter/lib/domain/playback/contracts.dart b/clients/flutter/lib/domain/playback/contracts.dart
+index 036ea6c..8c25be1 100644
+--- a/clients/flutter/lib/domain/playback/contracts.dart
++++ b/clients/flutter/lib/domain/playback/contracts.dart
+@@ -81,11 +81,13 @@ class PlayIntent {
+     required this.entryId,
+     this.preview = false,
+     this.mode = PlaybackMode.sequence,
++    this.startPositionMs = 0,
+   }) : entries = List.unmodifiable(entries);
+   final List<QueueEntry> entries;
+   final String entryId;
+   final bool preview;
+   final PlaybackMode mode;
++  final int startPositionMs;
+ }
+ 
+ class PrepareRequest {
+@@ -95,10 +97,12 @@ class PrepareRequest {
+     required this.generation,
+     required this.backendEpoch,
+     this.transitionId,
++    this.startPositionMs = 0,
+   });
+   final String requestId;
+   final QueueEntry entry;
+   final int generation, backendEpoch;
++  final int startPositionMs;
+   final String? transitionId;
+ }
+ 
+diff --git a/clients/flutter/lib/main.dart b/clients/flutter/lib/main.dart
+index c9c07b7..f03dd3a 100644
+--- a/clients/flutter/lib/main.dart
++++ b/clients/flutter/lib/main.dart
+@@ -1,6 +1,7 @@
+ import 'package:flutter/material.dart';
+ 
+ import 'app/diagnostic_checks.dart';
++import 'app/local_diagnostic_page.dart';
+ 
+ void main() => runApp(const MyApp());
+ 
+@@ -55,7 +56,15 @@ class _DiagnosticPageState extends State<DiagnosticPage> {
+     body: ListView(
+       padding: const EdgeInsets.all(24),
+       children: [
+-        const Text('A01 / A02 最小验证入口。不是正式播放器，不播放音频。'),
++        const Text('A01 / A02 检查不播放音频；本地样本入口仅用于P1技术验证，不是正式播放器。'),
++        OutlinedButton(
++          onPressed: () => Navigator.of(context).push(
++            MaterialPageRoute<void>(
++              builder: (_) => const LocalDiagnosticPage(),
++            ),
++          ),
++          child: const Text('打开自有样本播放诊断'),
++        ),
+         const SizedBox(height: 16),
+         FilledButton(
+           onPressed: () => setState(() => result = '入口检查通过：界面可响应'),
+diff --git a/clients/flutter/lib/p1_process_probe.dart b/clients/flutter/lib/p1_process_probe.dart
+new file mode 100644
+index 0000000..068a1b2
+--- /dev/null
++++ b/clients/flutter/lib/p1_process_probe.dart
+@@ -0,0 +1,87 @@
++import 'dart:async';
++import 'dart:convert';
++import 'dart:io';
++
++import 'package:flutter/material.dart';
++
++import 'app/runtime/local_runtime.dart';
++import 'domain/playback/contracts.dart';
++import 'platform/local/native_local_backend.dart';
++
++/// Explicit test entrypoint, never the normal product assembly. Same binary
++/// launched twice; external controller kills process after saved receipt.
++Future<void> main(List<String> args) async {
++  WidgetsFlutterBinding.ensureInitialized();
++  runApp(
++    const MaterialApp(
++      home: Scaffold(body: Text('P1 isolated process recovery probe')),
++    ),
++  );
++  final mode = Platform.isAndroid
++      ? await NativeLocalBackend.channel.invokeMethod<String>('launchMode')
++      : args.firstOrNull;
++  LocalRuntime? r;
++  try {
++    r = await LocalRuntime.create(runId: 'process-proof');
++    if (mode == 'save') {
++      r.command('a');
++      final end = DateTime.now().add(const Duration(seconds: 10));
++      while (r.snapshot.currentEntryId != ownedA.entryId &&
++          DateTime.now().isBefore(end)) {
++        await Future<void>.delayed(const Duration(milliseconds: 100));
++      }
++      if (r.snapshot.currentEntryId != ownedA.entryId) {
++        throw StateError('native-not-confirmed');
++      }
++      r.command('pause');
++      await Future<void>.delayed(const Duration(milliseconds: 300));
++      r.command('seek', position: 2345);
++      await Future<void>.delayed(const Duration(milliseconds: 300));
++      await r.save();
++    } else if (mode != 'restore') {
++      throw StateError('explicit-mode-required');
++    }
++    final s = r.snapshot;
++    if (mode == 'restore' &&
++        (r.savedRevision == 0 ||
++            s.desired != DesiredTransport.paused ||
++            s.positionMs < 2250 ||
++            s.positionMs > 2450 ||
++            r.backend.consumers != 0 ||
++            s.confirmations.isEmpty)) {
++      throw StateError('disk-restore-check-failed');
++    }
++    final proof = <String, dynamic>{
++      'stage': mode == 'save' ? 'saved' : 'loaded',
++      'pid': pid,
++      'coordinatorEpoch': s.coordinatorEpoch,
++      'session': s.playbackSessionId,
++      'revision': r.savedRevision,
++      'position': s.positionMs,
++      'desired': s.desired.name,
++      'consumers': r.backend.consumers,
++      'fixture': s.entries.first.fixtureId,
++      'confirmations': s.confirmations,
++      'directory': r.store.directory.path,
++    };
++    await _proof(proof);
++    // Stay alive. The controller must kill us; no graceful stop/save callback.
++  } catch (e) {
++    await _proof({'stage': 'error', 'pid': pid, 'error': e.toString()});
++  }
++}
++
++Future<void> _proof(Map<String, dynamic> proof) async {
++  if(Platform.isAndroid) {
++    proof['probeToken']=await NativeLocalBackend.channel.invokeMethod<String>('launchToken');
++  }
++  final json = jsonEncode(proof);
++  final file = File('${Directory.systemTemp.path}/jj-owned-p1/proof-$pid.json');
++  await file.parent.create(recursive: true);
++  await file.writeAsString(json, flush: true);
++  if (Platform.isAndroid) {
++    await NativeLocalBackend.channel.invokeMethod<void>('proof', {
++      'json': json,
++    });
++  }
++}
+diff --git a/clients/flutter/lib/platform/local/native_evidence.dart b/clients/flutter/lib/platform/local/native_evidence.dart
+new file mode 100644
+index 0000000..328521b
+--- /dev/null
++++ b/clients/flutter/lib/platform/local/native_evidence.dart
+@@ -0,0 +1,22 @@
++/// Pure mapping of authoritative native samples. No extrapolated Dart position.
++class NativeEvidence {
++  int? _lastPosition;
++  bool observe(Map<String, dynamic> sample, {required bool intended}) {
++    final position = sample['position'] as int;
++    final running =
++        intended &&
++        sample['ready'] == true &&
++        sample['state'] == 3 &&
++        sample['nativePlaying'] == true &&
++        (sample['suppression'] ?? 0) == 0 &&
++        sample['playWhenReady'] == true;
++    final previous = _lastPosition;
++    _lastPosition = running ? position : null;
++    return running &&
++        previous != null &&
++        position > previous &&
++        position - previous < 1500;
++  }
++
++  void reset() => _lastPosition = null;
++}
+diff --git a/clients/flutter/lib/platform/local/native_local_backend.dart b/clients/flutter/lib/platform/local/native_local_backend.dart
+new file mode 100644
+index 0000000..defee16
+--- /dev/null
++++ b/clients/flutter/lib/platform/local/native_local_backend.dart
+@@ -0,0 +1,270 @@
++import 'dart:async';
++import 'dart:convert';
++import 'dart:io';
++
++import 'package:flutter/services.dart';
++
++import '../../domain/playback/contracts.dart';
++import 'native_evidence.dart';
++
++class _Handle {
++  _Handle(this.request, this.id);
++  final PrepareRequest request;
++  final String id;
++  final prepared = Completer<PreparedTrack>();
++  final evidence = NativeEvidence();
++  bool intended = false, ready = false, confirmed = false, retiring = false;
++  int sequence = 0;
++  Future<void>? closing;
++}
++
++/// Thin transport only. The coordinator owns identities, queue and policies.
++class NativeLocalBackend implements PlaybackBackend {
++  NativeLocalBackend(this.files, {this.logFile}) {
++    _timer = Timer.periodic(const Duration(milliseconds: 100), (_) => _poll());
++  }
++  static const channel = MethodChannel('jj_music/local');
++  final Map<String, String> files;
++  final File? logFile;
++  final _stream = StreamController<BackendEvent>.broadcast(sync: true);
++  final _handles = <String, _Handle>{};
++  final _system = StreamController<Map<String, dynamic>>.broadcast(sync: true);
++  Stream<Map<String, dynamic>> get systemCommands => _system.stream;
++  final raw = <Map<String, dynamic>>[];
++  Timer? _timer;
++  int _next = 0;
++  bool _polling = false, _closed = false;
++  Map<String, dynamic> lastHost = {};
++  int get consumers => _handles.length;
++  @override
++  Stream<BackendEvent> get events => _stream.stream;
++  void _record(Map<String, dynamic> value) {
++    raw.add(value);
++    if (raw.length > 400) {
++      raw.removeAt(0);
++    }
++    // Bounded in-memory samples; explicit flush only, never log private sources.
++  }
++
++  Future<void> flushLog() async {
++    if (logFile != null) {
++      await logFile!.parent.create(recursive: true);
++      await logFile!.writeAsString(raw.map(jsonEncode).join('\n'), flush: true);
++    }
++  }
++
++  void _emit(_Handle h, BackendEventKind kind, Map<String, dynamic> s) {
++    _stream.add(
++      BackendEvent(
++        kind: kind,
++        trackHandleId: h.id,
++        backendEpoch: h.request.backendEpoch,
++        generation: h.request.generation,
++        requestId: h.request.requestId,
++        eventSequence: ++h.sequence,
++        positionMs: s['position'] as int? ?? 0,
++        durationMs: s['duration'] as int?,
++        transitionId: h.request.transitionId,
++        confirmationEvidence: kind == BackendEventKind.playing
++            ? '${s['platform']}:native-ready-running-advancing:${h.sequence}'
++            : null,
++      ),
++    );
++  }
++
++  Future<void> _poll() async {
++    if (_polling || _closed) {
++      return;
++    }
++    _polling = true;
++    try {
++      final reply = Map<String, dynamic>.from(
++        await channel.invokeMapMethod<String, dynamic>('poll') ?? {},
++      );
++      lastHost = reply;
++      for (final action in reply['commands'] as List? ?? []) {
++        _record({'systemCommand': action});
++        _system.add(Map<String, dynamic>.from(action as Map));
++      }
++      for (final value in reply['samples'] as List? ?? []) {
++        final s = Map<String, dynamic>.from(value as Map);
++        _record(s);
++        final h = _handles[s['id']];
++        if (h == null || h.retiring) {
++          continue;
++        }
++        if (s['error'] == true) {
++          if (!h.prepared.isCompleted) {
++            h.prepared.completeError(StateError('native-load-failed'));
++          } else {
++            _emit(h, BackendEventKind.error, s);
++          }
++          continue;
++        }
++        if (s['ready'] == true && !h.ready) {
++          h.ready = true;
++          h.prepared.complete(
++            PreparedTrack(
++              h.id,
++              consumerId: 'consumer-${h.id}',
++              resourceRevision: 'owned-fixture-v2',
++            ),
++          );
++          _emit(h, BackendEventKind.ready, s);
++        }
++        if (h.evidence.observe(s, intended: h.intended) && !h.confirmed) {
++          h.confirmed = true;
++          _emit(h, BackendEventKind.playing, s);
++        }
++        if (s['state'] == 2) {
++          _emit(h, BackendEventKind.buffering, s);
++        }
++        _emit(h, BackendEventKind.progress, s);
++        if (s['ended'] == true && h.intended) {
++          h.intended = false;
++          _emit(h, BackendEventKind.ended, s);
++        }
++      }
++    } catch (e) {
++      _record({'bridgeError': e.runtimeType.toString()});
++    } finally {
++      _polling = false;
++    }
++  }
++
++  @override
++  Future<PreparedTrack> prepare(PrepareRequest request) async {
++    if (_closed || _handles.length >= 2) {
++      throw StateError('native-capacity');
++    }
++    final path = files[request.entry.fixtureId];
++    if (path == null) {
++      throw StateError('fixture-not-authorized');
++    }
++    final h = _Handle(request, 'native-${++_next}');
++    _handles[h.id] = h;
++    // Attach error handler before cancellation can complete the future.
++    final result = h.prepared.future.timeout(const Duration(seconds: 8));
++    // A stop can finish this before the allocation method-channel reply arrives.
++    // Observe immediately, then propagate the same failure to the caller below.
++    unawaited(
++      result.then<void>((_) {}, onError: (Object _, StackTrace trace) {}),
++    );
++    try {
++      await channel.invokeMethod<void>('prepare', {'id': h.id, 'path': path});
++      final resource = await result;
++      if (request.startPositionMs > 0 && !h.retiring) {
++        await channel.invokeMethod<void>('seek', {
++          'id': h.id,
++          'position': request.startPositionMs,
++        });
++        h.evidence.reset();
++      }
++      return resource;
++    } catch (_) {
++      await _closeHandle(h);
++      rethrow;
++    }
++  }
++
++  Future<void> _closeHandle(_Handle h) {
++    if (h.closing != null) {
++      return h.closing!;
++    }
++    h.retiring = true;
++    return h.closing = () async {
++      await channel.invokeMethod<void>('release', {'id': h.id});
++      _handles.remove(h.id);
++    }();
++  }
++
++  @override
++  Future<void> cancelPrepare(String requestId) async {
++    for (final h in _handles.values.toList()) {
++      if (h.request.requestId == requestId && !h.prepared.isCompleted) {
++        h.prepared.completeError(StateError('prepare-cancelled'));
++        await _closeHandle(h);
++      }
++    }
++  }
++
++  @override
++  Future<void> play(String trackHandleId) async {
++    final h = _handles[trackHandleId]!;
++    for (final other in _handles.values.where((v) => v != h)) {
++      other.intended = false;
++      other.evidence.reset();
++    }
++    h.intended = true;
++    h.evidence.reset();
++    try {
++      await channel.invokeMethod<void>('play', {'id': h.id});
++    } catch (_) {
++      if (!h.retiring) {
++        h.intended = false;
++        _emit(h, BackendEventKind.error, {'position': 0});
++      }
++      rethrow;
++    }
++  }
++
++  Future<void> _all(String method) async {
++    for (final h in _handles.values.toList()) {
++      h.intended = false;
++      h.evidence.reset();
++    }
++    await channel.invokeMethod<void>(method);
++  }
++
++  @override
++  Future<void> pause() => _all('pause');
++  @override
++  Future<void> stop() => _all('stop');
++  @override
++  Future<void> seek(String trackHandleId, int positionMs) async {
++    _handles[trackHandleId]?.evidence.reset();
++    await channel.invokeMethod<void>('seek', {
++      'id': trackHandleId,
++      'position': positionMs,
++    });
++  }
++
++  @override
++  Future<ReleaseReceipt> release(
++    String trackHandleId,
++    String consumerId,
++    int backendEpoch,
++  ) async {
++    final h = _handles[trackHandleId];
++    if (h != null) {
++      await _closeHandle(h);
++    }
++    return ReleaseReceipt(trackHandleId, consumerId, backendEpoch);
++  }
++
++  Future<void> close() async {
++    _closed = true;
++    _timer?.cancel();
++    for (final h in _handles.values.toList()) {
++      await _closeHandle(h);
++    }
++    await flushLog();
++    await _stream.close();
++    await _system.close();
++  }
++
++  Future<List<ReleaseReceipt>> destroyNativeResources() async {
++    final all = _handles.values.toList();
++    final receipts = <ReleaseReceipt>[];
++    for (final h in all) {
++      if (!h.prepared.isCompleted) {
++        h.prepared.completeError(StateError('backend-destroyed'));
++      }
++      await _closeHandle(h);
++      receipts.add(
++        ReleaseReceipt(h.id, 'consumer-${h.id}', h.request.backendEpoch),
++      );
++    }
++    return receipts;
++  }
++}
+diff --git a/clients/flutter/pubspec.yaml b/clients/flutter/pubspec.yaml
+index 523691f..6fd9f31 100644
+--- a/clients/flutter/pubspec.yaml
++++ b/clients/flutter/pubspec.yaml
+@@ -15,3 +15,8 @@ dev_dependencies:
+   flutter_lints: 6.0.0
+ flutter:
+   uses-material-design: true
++
++
++  assets:
++    - fixtures/local_playback/
++
+diff --git a/clients/flutter/test/platform/native_evidence_test.dart b/clients/flutter/test/platform/native_evidence_test.dart
+new file mode 100644
+index 0000000..fe975b9
+--- /dev/null
++++ b/clients/flutter/test/platform/native_evidence_test.dart
+@@ -0,0 +1,54 @@
++import 'package:flutter_test/flutter_test.dart';
++import 'package:jj_music_mobile/platform/local/native_evidence.dart';
++
++void main() {
++  Map<String, dynamic> sample(
++    String platform,
++    int position, {
++    int state = 3,
++    bool ready = true,
++    bool playing = true,
++    int suppression = 0,
++  }) => {
++    'platform': platform,
++    'state': state,
++    'ready': ready,
++    'nativePlaying': playing,
++    'suppression': suppression,
++    'position': position,
++    'playWhenReady': playing,
++  };
++  test(
++    'native confirmation requires observed running and advancing samples',
++    () {
++      for (final platform in ['windows', 'android']) {
++        final e = NativeEvidence();
++        expect(e.observe(sample(platform, 0), intended: true), isFalse);
++        expect(e.observe(sample(platform, 150), intended: true), isTrue);
++      }
++    },
++  );
++  test('ready/intent/buffering/paused/seek jumps cannot alone confirm', () {
++    for (final platform in ['windows', 'android']) {
++      final e = NativeEvidence();
++      e.observe(sample(platform, 0), intended: true);
++      expect(
++        e.observe(sample(platform, 100, state: 2), intended: true),
++        isFalse,
++      );
++      expect(e.observe(sample(platform, 200), intended: false), isFalse);
++      expect(
++        e.observe(sample(platform, 300, playing: false), intended: true),
++        isFalse,
++      );
++      expect(
++        e.observe(sample(platform, 400, suppression: 1), intended: true),
++        isFalse,
++      );
++      e.reset();
++      expect(e.observe(sample(platform, 5000), intended: true), isFalse);
++      expect(e.observe(sample(platform, 5000), intended: true), isFalse);
++      expect(e.observe(sample(platform, 5100), intended: true), isTrue);
++    }
++  });
++}
+diff --git a/clients/flutter/test/platform/native_release_test.dart b/clients/flutter/test/platform/native_release_test.dart
+new file mode 100644
+index 0000000..428979c
+--- /dev/null
++++ b/clients/flutter/test/platform/native_release_test.dart
+@@ -0,0 +1,65 @@
++import 'dart:async';
++
++import 'package:flutter_test/flutter_test.dart';
++import 'package:jj_music_mobile/platform/local/native_local_backend.dart';
++import 'package:jj_music_mobile/domain/playback/contracts.dart';
++
++void main() {
++  TestWidgetsFlutterBinding.ensureInitialized();
++  test('duplicate release waits for same physical close', () async {
++    final gate = Completer<void>();
++    var ready = false;
++    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
++        .setMockMethodCallHandler(NativeLocalBackend.channel, (call) async {
++          if (call.method == 'release') {
++            await gate.future;
++          }
++          if (call.method == 'prepare') {
++            ready = true;
++          }
++          if (call.method == 'poll') {
++            return {
++              'samples': ready
++                  ? [
++                      {
++                        'id': 'native-1',
++                        'platform': 'windows',
++                        'ready': true,
++                        'nativePlaying': false,
++                        'playWhenReady': false,
++                        'state': 1,
++                        'position': 0,
++                        'duration': 12000,
++                      },
++                    ]
++                  : [],
++              'commands': [],
++            };
++          }
++          return null;
++        });
++    final b = NativeLocalBackend({'tone-a': 'file:///owned.wav'});
++    final h = await b.prepare(
++      const PrepareRequest(
++        requestId: 'r',
++        entry: QueueEntry(entryId: 'a', trackKey: 'a', fixtureId: 'tone-a'),
++        generation: 1,
++        backendEpoch: 1,
++      ),
++    );
++    var first = false, second = false;
++    final f1 = b
++        .release(h.trackHandleId, h.consumerId, 1)
++        .then((_) => first = true);
++    final f2 = b
++        .release(h.trackHandleId, h.consumerId, 1)
++        .then((_) => second = true);
++    await Future<void>.delayed(const Duration(milliseconds: 10));
++    expect(first, isFalse);
++    expect(second, isFalse);
++    gate.complete();
++    await Future.wait([f1, f2]);
++    expect(b.consumers, 0);
++    await b.close();
++  });
++}
+diff --git a/clients/flutter/test/playback/preconfirmation_rollback_test.dart b/clients/flutter/test/playback/preconfirmation_rollback_test.dart
+new file mode 100644
+index 0000000..0608095
+--- /dev/null
++++ b/clients/flutter/test/playback/preconfirmation_rollback_test.dart
+@@ -0,0 +1,44 @@
++import 'package:flutter_test/flutter_test.dart';
++import 'package:jj_music_mobile/application/playback/playback_coordinator.dart';
++import 'package:jj_music_mobile/domain/playback/contracts.dart';
++
++import '../../integration_test/support/controlled_backend.dart';
++import '../../integration_test/support/local_playback_contract.dart';
++
++void main() {
++  for (final failure in ['cancel', 'error']) {
++    test(
++      'preconfirmation $failure resumes still-valid old physical track',
++      () async {
++        final b = ControlledBackend();
++        final c = PlaybackCoordinator(b);
++        CommandContext cmd(String id) => CommandContext(id, c.claim);
++        c.play(
++          cmd('a'),
++          PlayIntent(entries: [fixtureA, fixtureB], entryId: fixtureA.entryId),
++        );
++        b.ready('a', 'ha');
++        await flushContractEvents();
++        b.emit('a', 'ha', BackendEventKind.playing, 1);
++        c.play(
++          cmd('b'),
++          PlayIntent(entries: [fixtureA, fixtureB], entryId: fixtureB.entryId),
++        );
++        b.ready('b', 'hb');
++        await flushContractEvents();
++        // Real adapters hard-switch: play(hb) physically paused ha, before hb confirms.
++        final before = b.actions.where((a) => a == 'play:ha').length;
++        if (failure == 'cancel') {
++          c.cancel(cmd('cancel'), 'b');
++        } else {
++          b.emit('b', 'hb', BackendEventKind.error, 1);
++        }
++        expect(b.actions.where((a) => a == 'play:ha').length, before + 1);
++        expect(c.snapshot.currentEntryId, fixtureA.entryId);
++        expect(c.snapshot.confirmations.length, 1);
++        await c.dispose();
++        await b.close();
++      },
++    );
++  }
++}
+diff --git a/clients/flutter/test/playback/recovery_restore_test.dart b/clients/flutter/test/playback/recovery_restore_test.dart
+new file mode 100644
+index 0000000..255eead
+--- /dev/null
++++ b/clients/flutter/test/playback/recovery_restore_test.dart
+@@ -0,0 +1,87 @@
++import 'package:flutter_test/flutter_test.dart';
++import 'package:jj_music_mobile/application/playback/playback_coordinator.dart';
++import 'package:jj_music_mobile/domain/playback/contracts.dart';
++import 'package:jj_music_mobile/domain/playback/recovery_snapshot.dart';
++
++import '../../integration_test/support/controlled_backend.dart';
++
++void main() {
++  test(
++    'valid empty persisted snapshot restores safe paused empty state',
++    () async {
++      final b = ControlledBackend();
++      final c = PlaybackCoordinator(b, sessionId: 'empty');
++      c.restoreSnapshot(
++        RecoverySnapshot(
++          runId: 'owned',
++          revision: 1,
++          playbackSessionId: 'empty',
++          entries: [],
++          currentIndex: -1,
++        ),
++      );
++      expect(c.snapshot.entries, isEmpty);
++      expect(c.snapshot.desired, DesiredTransport.paused);
++      expect(b.actions, isEmpty);
++      await c.dispose();
++      await b.close();
++    },
++  );
++  test('confirmed backend destruction advances only backend epoch and rejects stale events', () async {
++    final b = ControlledBackend();
++    final c = PlaybackCoordinator(b);
++    const e = QueueEntry(entryId: 'a', trackKey: 'owned', fixtureId: 'tone-a');
++    c.play(
++      CommandContext('p', c.claim),
++      PlayIntent(entries: [e], entryId: 'a'),
++    );
++    b.ready('p', 'h');
++    await Future<void>.delayed(Duration.zero);
++    b.emit('p', 'h', BackendEventKind.playing, 1);
++    final before = c.snapshot;
++    expect(
++      c.backendReleased(CommandContext('lost', c.claim), [
++        const ReleaseReceipt('h', 'consumer-h', 1),
++      ]).applied,
++      isTrue,
++    );
++    expect(c.snapshot.backendEpoch, before.backendEpoch + 1);
++    expect(c.snapshot.coordinatorEpoch, before.coordinatorEpoch);
++    expect(c.snapshot.brokerEpoch, before.brokerEpoch);
++    expect(c.snapshot.desired, DesiredTransport.paused);
++    b.emit('p', 'h', BackendEventKind.ended, 9);
++    expect(c.snapshot.confirmations.length, 1);
++    await c.dispose();
++    await b.close();
++  });
++  test('R3 restore stays paused without native handles and resumes at saved position', () async {
++    final b = ControlledBackend();
++    final c = PlaybackCoordinator(b, sessionId: 'logical');
++    const e = QueueEntry(
++      entryId: 'saved',
++      trackKey: 'owned',
++      fixtureId: 'tone-a',
++    );
++    final s = RecoverySnapshot(
++      runId: 'owned',
++      revision: 2,
++      playbackSessionId: 'logical',
++      entries: [e],
++      currentIndex: 0,
++      positionMs: 2345,
++      confirmations: ['logical:4'],
++    );
++    // This callable is introduced as an A02-owned additive v2 recovery extension.
++    c.restoreSnapshot(s);
++    expect(c.snapshot.desired, DesiredTransport.paused);
++    expect(c.snapshot.positionMs, 2345);
++    expect(c.snapshot.currentEntryId, 'saved');
++    expect(b.actions, isEmpty);
++    c.resume(CommandContext('resume', c.claim));
++    expect(c.resume(CommandContext('resume', c.claim)).applied, isTrue);
++    expect(b.pending.values, isNotEmpty);
++    expect(b.requests.values.single.startPositionMs, 2345);
++    await c.dispose();
++    await b.close();
++  });
++}
+diff --git a/clients/flutter/tool/generate_long_fixture.dart b/clients/flutter/tool/generate_long_fixture.dart
+new file mode 100644
+index 0000000..3ed2326
+--- /dev/null
++++ b/clients/flutter/tool/generate_long_fixture.dart
+@@ -0,0 +1,36 @@
++import 'dart:io';
++import 'dart:math' as math;
++import 'dart:typed_data';
++
++void main() {
++  const rate = 16000, samples = rate * 12;
++  final b = ByteData(44 + samples * 2);
++  void text(int at, String s) {
++    for (var i = 0; i < s.length; i++) {
++      b.setUint8(at + i, s.codeUnitAt(i));
++    }
++  }
++
++  text(0, 'RIFF');
++  b.setUint32(4, 36 + samples * 2, Endian.little);
++  text(8, 'WAVE');
++  text(12, 'fmt ');
++  b.setUint32(16, 16, Endian.little);
++  b.setUint16(20, 1, Endian.little);
++  b.setUint16(22, 1, Endian.little);
++  b.setUint32(24, rate, Endian.little);
++  b.setUint32(28, rate * 2, Endian.little);
++  b.setUint16(32, 2, Endian.little);
++  b.setUint16(34, 16, Endian.little);
++  text(36, 'data');
++  b.setUint32(40, samples * 2, Endian.little);
++  for (var i = 0; i < samples; i++) {
++    b.setInt16(
++      44 + i * 2,
++      (math.sin(i * 2 * math.pi * 440 / rate) * 1500).round(),
++      Endian.little,
++    );
++  }
++  File('fixtures/local_playback/tone-long.wav')
++      .writeAsBytesSync(b.buffer.asUint8List());
++}
+diff --git a/clients/flutter/tool/run_android_recovery_probe.ps1 b/clients/flutter/tool/run_android_recovery_probe.ps1
+new file mode 100644
+index 0000000..eb9d379
+--- /dev/null
++++ b/clients/flutter/tool/run_android_recovery_probe.ps1
+@@ -0,0 +1,46 @@
++param([Parameter(Mandatory=$true)][string]$DeviceId)
++$ErrorActionPreference='Stop'
++$client=Split-Path $PSScriptRoot -Parent
++$workspace=[IO.Path]::GetFullPath((Join-Path $client '../..'))
++$adb='E:/Android/sdk/platform-tools/adb.exe'
++$package='dev.jjmusic.diagnostics.jj_music_mobile'
++$apk=Join-Path $client 'build/app/outputs/flutter-apk/app-release.apk'
++& $adb -s $DeviceId install -r $apk
++if($LASTEXITCODE -ne 0){throw 'Installation failed'}
++function Start-Probe([string]$mode){
++  $token=[Guid]::NewGuid().ToString('N')
++  & $adb -s $DeviceId shell am start -n "$package/.MainActivity" --es p1Mode $mode --es p1Token $token | Out-Null
++  if($LASTEXITCODE -ne 0){throw 'Start failed'}
++  $deadline=[DateTime]::UtcNow.AddSeconds(25)
++  while([DateTime]::UtcNow -lt $deadline){
++    $processId=([string](& $adb -s $DeviceId shell pidof $package)).Trim()
++    if($processId -match '^\d+$'){
++      $log=& $adb -s $DeviceId logcat -d --pid=$processId -s 'JJOwnedProbe:I' '*:S'
++      foreach($line in $log){
++        if($line -match 'JJOwnedProbe:\s*(\{.+\})'){
++          $value=$Matches[1]|ConvertFrom-Json
++          if($value.probeToken -ne $token){continue}
++          if($value.stage -eq 'error'){throw "Probe failure: $($value.error)"}
++          return $value
++        }
++      }
++    }
++    Start-Sleep -Milliseconds 250
++  }
++  throw 'Android proof timed out'
++}
++& $adb -s $DeviceId shell am force-stop $package
++$saved=Start-Probe 'save'
++if($saved.stage -ne 'saved' -or $saved.revision -lt 1){throw 'No saved receipt'}
++& $adb -s $DeviceId shell am force-stop $package
++if((& $adb -s $DeviceId shell pidof $package)){throw 'Old process still alive'}
++$loaded=Start-Probe 'restore'
++try {
++  if($loaded.stage -ne 'loaded' -or $loaded.pid -eq $saved.pid -or
++     $loaded.coordinatorEpoch -eq $saved.coordinatorEpoch -or
++     $loaded.session -ne $saved.session -or $loaded.revision -ne $saved.revision -or
++     $loaded.position -ne $saved.position -or $loaded.desired -ne 'paused' -or $loaded.consumers -ne 0 -or
++     (ConvertTo-Json -Compress $loaded.confirmations) -ne (ConvertTo-Json -Compress $saved.confirmations)) {throw 'Android cross-process mismatch'}
++  [ordered]@{platform='android';device=$DeviceId;apkSha256=(Get-FileHash $apk -Algorithm SHA256).Hash.ToLower();forcedTermination=$true;saved=$saved;loaded=$loaded} | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $workspace 'docs/flutter-migration/evidence/p1-a/20261031/android-process-proof.json') -Encoding utf8
++  'Android two-process force-stop recovery passed'
++}finally{& $adb -s $DeviceId shell am force-stop $package}
+diff --git a/clients/flutter/tool/run_windows_recovery_probe.ps1 b/clients/flutter/tool/run_windows_recovery_probe.ps1
+new file mode 100644
+index 0000000..7739917
+--- /dev/null
++++ b/clients/flutter/tool/run_windows_recovery_probe.ps1
+@@ -0,0 +1,49 @@
++$ErrorActionPreference='Stop'
++$client=Split-Path $PSScriptRoot -Parent
++$workspace=[IO.Path]::GetFullPath((Join-Path $client '../..'))
++$temporary=Join-Path $workspace 'graphflow-out/p1-process-temp'
++if(!$temporary.StartsWith($workspace+[IO.Path]::DirectorySeparatorChar)){throw 'Invalid isolated root'}
++New-Item -ItemType Directory $temporary -Force | Out-Null
++$exe=Join-Path $client 'build/windows/x64/runner/Release/jj_music_mobile.exe'
++function Start-Probe([string]$mode) {
++  $start=[Diagnostics.ProcessStartInfo]::new($exe,$mode)
++  $start.WorkingDirectory=Split-Path $exe
++  $start.UseShellExecute=$false
++  $start.WindowStyle=[Diagnostics.ProcessWindowStyle]::Hidden
++  $start.EnvironmentVariables['TEMP']=$temporary
++  $start.EnvironmentVariables['TMP']=$temporary
++  $launched=[DateTime]::UtcNow
++  $process=[Diagnostics.Process]::Start($start)
++  $file=Join-Path $temporary "jj-owned-p1/proof-$($process.Id).json"
++  $deadline=[DateTime]::UtcNow.AddSeconds(25)
++  while([DateTime]::UtcNow -lt $deadline -and !$process.HasExited){
++    if((Test-Path $file) -and (Get-Item $file).LastWriteTimeUtc -ge $launched){
++      $value=Get-Content $file -Raw | ConvertFrom-Json
++      if($value.pid -ne $process.Id){throw 'Probe PID mismatch'}
++      if($value.stage -eq 'error'){ $process.Kill();throw "Probe failure: $($value.error)" }
++      return @{process=$process;proof=$value}
++    }
++    Start-Sleep -Milliseconds 100
++  }
++  if(!$process.HasExited){$process.Kill()}
++  throw 'Probe receipt timed out'
++}
++$saved=Start-Probe 'save'
++if($saved.proof.stage -ne 'saved' -or $saved.proof.revision -lt 1){throw 'No saved receipt'}
++# Kill only the exact Process instance started above. Never rely on graceful exit.
++$saved.process.Kill(); $saved.process.WaitForExit()
++$loaded=Start-Probe 'restore'
++try {
++  if($loaded.proof.stage -ne 'loaded' -or $loaded.proof.pid -eq $saved.proof.pid -or
++    $loaded.proof.coordinatorEpoch -eq $saved.proof.coordinatorEpoch -or
++    $loaded.proof.revision -ne $saved.proof.revision -or
++    $loaded.proof.session -ne $saved.proof.session -or
++    $loaded.proof.position -ne $saved.proof.position -or
++    $loaded.proof.desired -ne 'paused' -or $loaded.proof.consumers -ne 0 -or
++    (ConvertTo-Json -Compress $loaded.proof.confirmations) -ne (ConvertTo-Json -Compress $saved.proof.confirmations)) {throw 'Cross-process recovery mismatch'}
++  $output=[ordered]@{platform='windows';sameBinarySha256=(Get-FileHash $exe -Algorithm SHA256).Hash.ToLower();dartAssetSha256=(Get-FileHash (Join-Path (Split-Path $exe) 'data/app.so') -Algorithm SHA256).Hash.ToLower();forcedTermination=$true;saved=$saved.proof;loaded=$loaded.proof}
++  $output | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $workspace 'docs/flutter-migration/evidence/p1-a/20261031/windows-process-proof.json') -Encoding utf8
++  'Windows two-process forced-termination recovery passed'
++} finally {
++  if(!$loaded.process.HasExited){$loaded.process.Kill();$loaded.process.WaitForExit()}
++}
+diff --git a/clients/flutter/windows/runner/CMakeLists.txt b/clients/flutter/windows/runner/CMakeLists.txt
+index 2041a04..837a536 100644
+--- a/clients/flutter/windows/runner/CMakeLists.txt
++++ b/clients/flutter/windows/runner/CMakeLists.txt
+@@ -8,6 +8,7 @@ project(runner LANGUAGES CXX)
+ # Any new source files that you add to the application should be added here.
+ add_executable(${BINARY_NAME} WIN32
+   "flutter_window.cpp"
++  "local_playback.cpp"
+   "main.cpp"
+   "utils.cpp"
+   "win32_window.cpp"
+@@ -19,6 +20,7 @@ add_executable(${BINARY_NAME} WIN32
+ # Apply the standard set of build settings. This can be removed for applications
+ # that need different build settings.
+ apply_standard_settings(${BINARY_NAME})
++set_target_properties(${BINARY_NAME} PROPERTIES CXX_STANDARD 20)
+ 
+ # Add preprocessor definitions for the build version.
+ target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION=\"${FLUTTER_VERSION}\"")
+@@ -34,7 +36,17 @@ target_compile_definitions(${BINARY_NAME} PRIVATE "NOMINMAX")
+ # dependencies here.
+ target_link_libraries(${BINARY_NAME} PRIVATE flutter flutter_wrapper_app)
+ target_link_libraries(${BINARY_NAME} PRIVATE "dwmapi.lib")
++target_link_libraries(${BINARY_NAME} PRIVATE "windowsapp.lib")
++target_link_libraries(${BINARY_NAME} PRIVATE "shell32.lib")
+ target_include_directories(${BINARY_NAME} PRIVATE "${CMAKE_SOURCE_DIR}")
+ 
+ # Run the Flutter tool portions of the build. This must not be removed.
+ add_dependencies(${BINARY_NAME} flutter_assemble)
++
++# Test controller is outside the installed Flutter application bundle.
++add_executable(jj_smtc_probe "smtc_probe.cpp")
++apply_standard_settings(jj_smtc_probe)
++set_target_properties(jj_smtc_probe PROPERTIES CXX_STANDARD 20
++  RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/diagnostic_tools")
++target_link_libraries(jj_smtc_probe PRIVATE "windowsapp.lib")
++add_dependencies(${BINARY_NAME} jj_smtc_probe)
+diff --git a/clients/flutter/windows/runner/flutter_window.cpp b/clients/flutter/windows/runner/flutter_window.cpp
+index c819cb0..b3ffb59 100644
+--- a/clients/flutter/windows/runner/flutter_window.cpp
++++ b/clients/flutter/windows/runner/flutter_window.cpp
+@@ -25,6 +25,8 @@ bool FlutterWindow::OnCreate() {
+     return false;
+   }
+   RegisterPlugins(flutter_controller_->engine());
++  local_playback_ = std::make_unique<LocalPlayback>(
++      flutter_controller_->engine()->messenger(), GetHandle());
+   SetChildContent(flutter_controller_->view()->GetNativeWindow());
+ 
+   flutter_controller_->engine()->SetNextFrameCallback([&]() {
+@@ -40,6 +42,7 @@ bool FlutterWindow::OnCreate() {
+ }
+ 
+ void FlutterWindow::OnDestroy() {
++  local_playback_ = nullptr;
+   if (flutter_controller_) {
+     flutter_controller_ = nullptr;
+   }
+diff --git a/clients/flutter/windows/runner/flutter_window.h b/clients/flutter/windows/runner/flutter_window.h
+index 28c2383..cc8a3ba 100644
+--- a/clients/flutter/windows/runner/flutter_window.h
++++ b/clients/flutter/windows/runner/flutter_window.h
+@@ -7,6 +7,7 @@
+ #include <memory>
+ 
+ #include "win32_window.h"
++#include "local_playback.h"
+ 
+ // A window that does nothing but host a Flutter view.
+ class FlutterWindow : public Win32Window {
+@@ -28,6 +29,7 @@ class FlutterWindow : public Win32Window {
+ 
+   // The Flutter instance hosted by this window.
+   std::unique_ptr<flutter::FlutterViewController> flutter_controller_;
++  std::unique_ptr<LocalPlayback> local_playback_;
+ };
+ 
+ #endif  // RUNNER_FLUTTER_WINDOW_H_
+diff --git a/clients/flutter/windows/runner/local_playback.cpp b/clients/flutter/windows/runner/local_playback.cpp
+new file mode 100644
+index 0000000..36f67c6
+--- /dev/null
++++ b/clients/flutter/windows/runner/local_playback.cpp
+@@ -0,0 +1,245 @@
++#include "local_playback.h"
++#include <flutter/method_channel.h>
++#include <flutter/standard_method_codec.h>
++#include <winrt/Windows.Foundation.h>
++#include <winrt/Windows.Foundation.Collections.h>
++#include <winrt/Windows.Media.h>
++#include <winrt/Windows.Media.Core.h>
++#include <winrt/Windows.Media.Playback.h>
++#include <winrt/Windows.Media.Control.h>
++#include <systemmediatransportcontrolsinterop.h>
++#include <atomic>
++#include <map>
++#include <mutex>
++#include <vector>
++#include <future>
++
++using flutter::EncodableValue;
++using flutter::EncodableMap;
++using flutter::EncodableList;
++using namespace winrt;
++using namespace Windows::Media;
++using namespace Windows::Media::Playback;
++using namespace Windows::Media::Core;
++using namespace Windows::Foundation;
++namespace {
++std::string Text(const EncodableMap& m, const char* key) {
++  const auto it = m.find(EncodableValue(key));
++  return it == m.end() ? "" : std::get<std::string>(it->second);
++}
++int64_t Number(const EncodableMap& m, const char* key) {
++  const auto& v = m.at(EncodableValue(key));
++  if (std::holds_alternative<int32_t>(v)) return std::get<int32_t>(v);
++  return std::get<int64_t>(v);
++}
++struct Track {
++  MediaPlayer player{nullptr};
++  std::atomic_bool opened{false}, ended{false}, failed{false};
++  event_token openedToken{}, endedToken{}, failedToken{};
++  bool intended = false;
++  bool closed = false;
++  void Close() {
++    if(closed) return;
++    closed=true;
++    if (player) {
++      player.MediaOpened(openedToken);
++      player.MediaEnded(endedToken);
++      player.MediaFailed(failedToken);
++      player.Close();
++    }
++  }
++  ~Track() { Close(); }
++};
++struct Commands {
++  std::mutex mutex;
++  EncodableList pending;
++  void Push(const std::string& command, int64_t position = 0) {
++    std::lock_guard<std::mutex> lock(mutex);
++    if (pending.size() < 32) pending.emplace_back(EncodableMap{
++      {EncodableValue("command"), EncodableValue(command)},
++      {EncodableValue("position"), EncodableValue(position)}});
++  }
++};
++}
++struct LocalPlayback::Impl {
++  std::unique_ptr<flutter::MethodChannel<EncodableValue>> channel;
++  std::map<std::string, std::shared_ptr<Track>> tracks;
++  std::shared_ptr<Commands> commands = std::make_shared<Commands>();
++  SystemMediaTransportControls smtc{nullptr};
++  event_token buttonToken{}, seekToken{};
++  std::future<EncodableMap> probe;
++  EncodableMap probeResult;
++  std::string lastTitle;
++  std::string lastError, mirrorStage;
++  std::string mirroredStatus;
++  int64_t mirroredDuration=0;
++  bool failNextPlay=false;
++  explicit Impl(flutter::BinaryMessenger* messenger, HWND window) {
++    auto interop = get_activation_factory<SystemMediaTransportControls,
++      ISystemMediaTransportControlsInterop>();
++    check_hresult(interop->GetForWindow(window, guid_of<SystemMediaTransportControls>(),
++      put_abi(smtc)));
++    smtc.IsEnabled(true);
++    smtc.IsPlayEnabled(true); smtc.IsPauseEnabled(true);
++    smtc.IsStopEnabled(true); smtc.IsNextEnabled(true); smtc.IsPreviousEnabled(true);
++    auto weak = std::weak_ptr<Commands>(commands);
++    buttonToken = smtc.ButtonPressed([weak](auto const&, auto const& args) {
++      auto q = weak.lock(); if (!q) return;
++      switch (args.Button()) {
++        case SystemMediaTransportControlsButton::Play: q->Push("play"); break;
++        case SystemMediaTransportControlsButton::Pause: q->Push("pause"); break;
++        case SystemMediaTransportControlsButton::Stop: q->Push("stop"); break;
++        case SystemMediaTransportControlsButton::Next: q->Push("next"); break;
++        case SystemMediaTransportControlsButton::Previous: q->Push("previous"); break;
++        default: break;
++      }
++    });
++    seekToken = smtc.PlaybackPositionChangeRequested([weak](auto const&, auto const& args) {
++      if (auto q = weak.lock()) q->Push("seek", args.RequestedPlaybackPosition().count()/10000);
++    });
++    channel = std::make_unique<flutter::MethodChannel<EncodableValue>>(
++      messenger, "jj_music/local", &flutter::StandardMethodCodec::GetInstance());
++    channel->SetMethodCallHandler([this](auto const& call, auto result) {
++      try {
++        EncodableMap empty;
++        const auto* args = std::get_if<EncodableMap>(call.arguments());
++        const auto& m = args ? *args : empty;
++        const auto& method = call.method_name();
++        if (method == "prepare") {
++          if (tracks.size() >= 2) throw hresult_invalid_argument();
++          const auto id = Text(m,"id"), path = Text(m,"path");
++          if (id.empty() || tracks.contains(id)) throw hresult_invalid_argument();
++          // Only explicit local file URI generated by the fixture-only Dart resolver.
++          if (path.rfind("file:",0) != 0) throw hresult_invalid_argument();
++          auto t = std::make_shared<Track>(); t->player = MediaPlayer();
++          t->player.AutoPlay(false);
++          t->player.CommandManager().IsEnabled(false);
++          t->player.SystemMediaTransportControls().IsEnabled(false);
++          std::weak_ptr<Track> weak = t;
++          t->openedToken = t->player.MediaOpened([weak](auto const&, auto const&) {
++            if (auto v=weak.lock()) v->opened=true;
++          });
++          t->endedToken = t->player.MediaEnded([weak](auto const&, auto const&) {
++            if (auto v=weak.lock()) v->ended=true;
++          });
++          t->failedToken = t->player.MediaFailed([weak](auto const&, auto const&) {
++            if (auto v=weak.lock()) v->failed=true;
++          });
++          tracks.emplace(id,t);
++          t->player.Source(MediaSource::CreateFromUri(Uri(to_hstring(path))));
++        } else if (method == "play") {
++          for (auto const& entry: tracks) {
++            if (entry.first != Text(m,"id")) { entry.second->intended=false; entry.second->player.Pause(); }
++          }
++          if(failNextPlay) {failNextPlay=false; throw hresult_error(E_FAIL,L"owned-injected-play-failure");}
++          auto t=tracks.at(Text(m,"id")); t->intended=true; t->player.Play();
++        } else if (method == "pause" || method == "stop") {
++          for (auto const& entry: tracks) { entry.second->intended=false; entry.second->player.Pause(); }
++        } else if (method == "seek") {
++          tracks.at(Text(m,"id"))->player.PlaybackSession().Position(
++            TimeSpan{Number(m,"position")*10000});
++        } else if (method == "release") {
++          // Destruction revokes callbacks and Close finishes before returning receipt.
++          const auto id=Text(m,"id");
++          if(auto it=tracks.find(id);it!=tracks.end()) {it->second->Close(); tracks.erase(it);}
++        } else if (method == "mirror") {
++          mirrorStage="enabled";
++          smtc.IsEnabled(true);
++          const auto title=Text(m,"title"), status=Text(m,"status");
++          smtc.PlaybackStatus(status=="playing" ? MediaPlaybackStatus::Playing :
++            status=="paused" ? MediaPlaybackStatus::Paused : MediaPlaybackStatus::Stopped);
++          if(lastTitle!=title) {
++            auto updater=smtc.DisplayUpdater(); updater.ClearAll();
++            updater.Type(MediaPlaybackType::Music);
++            updater.MusicProperties().Title(to_hstring(title)); updater.Update();
++            lastTitle=title;
++          }
++          SystemMediaTransportControlsTimelineProperties timeline;
++          mirrorStage="timeline-values";
++          timeline.StartTime(TimeSpan{0}); timeline.MinSeekTime(TimeSpan{0});
++          timeline.EndTime(TimeSpan{Number(m,"duration")*10000});
++          timeline.MaxSeekTime(timeline.EndTime());
++          timeline.Position(TimeSpan{Number(m,"position")*10000});
++          smtc.UpdateTimelineProperties(timeline);
++          mirroredStatus=status; mirroredDuration=Number(m,"duration");
++          mirrorStage="complete";
++        } else if (method == "osCommand") {
++          if (probe.valid()) throw hresult_invalid_argument();
++          auto command = Text(m,"command");
++          const auto marker = std::wstring(L"pid-")+std::to_wstring(GetCurrentProcessId());
++          probe = std::async(std::launch::async, [command,marker]() -> EncodableMap {
++            init_apartment(apartment_type::multi_threaded);
++            bool found=false, accepted=false;
++            try {
++              auto manager = Windows::Media::Control::GlobalSystemMediaTransportControlsSessionManager::RequestAsync().get();
++              for (auto const& session: manager.GetSessions()) {
++                // Never query another app's media metadata.
++                const auto source = std::wstring(session.SourceAppUserModelId());
++                if (source!=L"JJMusic.OwnedDiagnostic" && source.find(L"jj_music_mobile") == std::wstring::npos) continue;
++                const auto title=std::wstring(session.TryGetMediaPropertiesAsync().get().Title());
++                if(title.rfind(L"JJ owned ",0)!=0) continue;
++                if(title.find(marker)==std::wstring::npos) continue;
++                found=true;
++                if(command=="pause") accepted=session.TryPauseAsync().get();
++                else if(command=="play") accepted=session.TryPlayAsync().get();
++                else if(command=="next") accepted=session.TrySkipNextAsync().get();
++                else if(command=="seek") accepted=session.TryChangePlaybackPositionAsync(3000*10000LL).get();
++                break;
++              }
++            } catch(hresult_error const&) {}
++            return {{EncodableValue("found"),EncodableValue(found)},
++              {EncodableValue("accepted"),EncodableValue(accepted)},
++              {EncodableValue("command"),EncodableValue(command)}};
++          });
++        } else if (method == "failNextPlay") {
++          failNextPlay=true;
++        } else if (method == "poll") {
++          if(probe.valid() && probe.wait_for(std::chrono::milliseconds(0))==std::future_status::ready) {
++            probeResult=probe.get();
++          }
++          EncodableList samples;
++          for (auto const& entry: tracks) {
++            auto t=entry.second; auto s=t->player.PlaybackSession();
++            auto state=s.PlaybackState();
++            samples.emplace_back(EncodableMap{
++              {EncodableValue("id"),EncodableValue(entry.first)},
++              {EncodableValue("platform"),EncodableValue("windows")},
++              {EncodableValue("nativeState"),EncodableValue(static_cast<int32_t>(state))},
++              {EncodableValue("state"),EncodableValue(state==MediaPlaybackState::Playing ? 3 : state==MediaPlaybackState::Buffering ? 2 : 1)},
++              {EncodableValue("ready"),EncodableValue(t->opened.load())},
++              {EncodableValue("nativePlaying"),EncodableValue(state==MediaPlaybackState::Playing)},
++              {EncodableValue("playWhenReady"),EncodableValue(t->intended)},
++              {EncodableValue("position"),EncodableValue(s.Position().count()/10000)},
++              {EncodableValue("duration"),EncodableValue(s.NaturalDuration().count()/10000)},
++              {EncodableValue("ended"),EncodableValue(t->ended.load())},
++              {EncodableValue("error"),EncodableValue(t->failed.load())}});
++          }
++          EncodableList actions;
++          { std::lock_guard<std::mutex> lock(commands->mutex); actions.swap(commands->pending); }
++          result->Success(EncodableMap{{EncodableValue("samples"),EncodableValue(samples)},
++            {EncodableValue("osResult"),EncodableValue(probeResult)},
++            {EncodableValue("smtcEnabled"),EncodableValue(smtc.IsEnabled())},
++            {EncodableValue("mirrorStage"),EncodableValue(mirrorStage)},
++            {EncodableValue("lastNativeError"),EncodableValue(lastError)},
++            {EncodableValue("mirroredStatus"),EncodableValue(mirroredStatus)},
++            {EncodableValue("mirroredDuration"),EncodableValue(mirroredDuration)},
++            {EncodableValue("commands"),EncodableValue(actions)}}); return;
++        } else { result->NotImplemented(); return; }
++        result->Success();
++      } catch (hresult_error const& error) {
++        lastError=to_string(error.message());
++        result->Error("winrt",to_string(error.message()));
++      } catch (std::exception const& error) { lastError=error.what(); result->Error("native","invalid-native-operation"); }
++    });
++  }
++  ~Impl() {
++    channel->SetMethodCallHandler(nullptr);
++    smtc.ButtonPressed(buttonToken); smtc.PlaybackPositionChangeRequested(seekToken);
++    smtc.IsEnabled(false); smtc.DisplayUpdater().ClearAll();
++    for(auto const& entry:tracks) entry.second->Close();
++    tracks.clear(); commands.reset();
++  }
++};
++LocalPlayback::LocalPlayback(flutter::BinaryMessenger* messenger, HWND window)
++  : impl_(std::make_unique<Impl>(messenger,window)) {}
++LocalPlayback::~LocalPlayback() = default;
+diff --git a/clients/flutter/windows/runner/local_playback.h b/clients/flutter/windows/runner/local_playback.h
+new file mode 100644
+index 0000000..3e24030
+--- /dev/null
++++ b/clients/flutter/windows/runner/local_playback.h
+@@ -0,0 +1,13 @@
++#pragma once
++#include <flutter/binary_messenger.h>
++#include <memory>
++#include <windows.h>
++
++class LocalPlayback {
++ public:
++  LocalPlayback(flutter::BinaryMessenger* messenger, HWND window);
++  ~LocalPlayback();
++ private:
++  struct Impl;
++  std::unique_ptr<Impl> impl_;
++};
+diff --git a/clients/flutter/windows/runner/main.cpp b/clients/flutter/windows/runner/main.cpp
+index 9c4a8db..1461315 100644
+--- a/clients/flutter/windows/runner/main.cpp
++++ b/clients/flutter/windows/runner/main.cpp
+@@ -1,6 +1,7 @@
+ #include <flutter/dart_project.h>
+ #include <flutter/flutter_view_controller.h>
+ #include <windows.h>
++#include <shobjidl.h>
+ 
+ #include "flutter_window.h"
+ #include "utils.h"
+@@ -16,6 +17,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
+   // Initialize COM, so that it is available for use in the library and/or
+   // plugins.
+   ::CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
++  ::SetCurrentProcessExplicitAppUserModelID(L"JJMusic.OwnedDiagnostic");
+ 
+   flutter::DartProject project(L"data");
+ 
+diff --git a/clients/flutter/windows/runner/smtc_probe.cpp b/clients/flutter/windows/runner/smtc_probe.cpp
+new file mode 100644
+index 0000000..795840e
+--- /dev/null
++++ b/clients/flutter/windows/runner/smtc_probe.cpp
+@@ -0,0 +1,32 @@
++// Test controller: queries only our explicit app ID/title marker, no other metadata.
++#include <winrt/Windows.Foundation.h>
++#include <winrt/Windows.Foundation.Collections.h>
++#include <winrt/Windows.Media.Control.h>
++#include <iostream>
++#include <string>
++int main(int argc,char** argv) {
++  if(argc!=3) return 2;
++  winrt::init_apartment(winrt::apartment_type::multi_threaded);
++  const auto marker=winrt::to_hstring(std::string("pid-")+argv[1]);
++  const std::string command=argv[2];
++  try {
++    auto manager=winrt::Windows::Media::Control::GlobalSystemMediaTransportControlsSessionManager::RequestAsync().get();
++    for(auto const& session:manager.GetSessions()) {
++      const auto source=std::wstring(session.SourceAppUserModelId());
++      if(source!=L"JJMusic.OwnedDiagnostic" && source.find(L"jj_music_mobile")==std::wstring::npos) continue;
++      const auto title=std::wstring(session.TryGetMediaPropertiesAsync().get().Title());
++      if(title.find(marker.c_str())==std::wstring::npos) continue;
++      bool ok=false;
++      if(command=="pause") ok=session.TryPauseAsync().get();
++      if(command=="play") ok=session.TryPlayAsync().get();
++      if(command=="next") ok=session.TrySkipNextAsync().get();
++      if(command=="seek") ok=session.TryChangePlaybackPositionAsync(3000*10000LL).get();
++      const auto timeline=session.GetTimelineProperties();
++      std::cout<<"{\"found\":true,\"accepted\":"<<(ok?"true":"false")
++        <<",\"positionTicks\":"<<timeline.Position().count()<<",\"endTicks\":"<<timeline.EndTime().count()<<"}"<<std::endl;
++      return ok?0:3;
++    }
++    std::cout<<"{\"found\":false}"<<std::endl;
++  }catch(winrt::hresult_error const&){std::cout<<"{\"error\":true}"<<std::endl;}
++  return 1;
++}

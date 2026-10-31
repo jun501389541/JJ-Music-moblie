@@ -1,0 +1,12 @@
+2026-10-31 A01/A02 final delivery check
+- 10 protected baseline files match original MANIFEST: AGENTS,05,08,task index,ownership,EV-DOC001..005.
+- Frozen p1-a02-v1 file SHA256 values match current files.
+- New delivery Markdown links resolve.
+- Source manifest/patch includes 67 nonignored new source/config/test/fixture files.
+- Dependencies inventory resolves relative package URI correctly; 36 packages; own version0.1.0+1.
+- GraphFlow targeted incremental index: 45 source/document files, no tool errors; no broad SDK/cache indexing.
+- Branch feat/flutter-a01-a02; no HEAD, no staged files, no remote; no commit/push/release.
+- Old repository tracked diff empty; preexisting untracked docs/flutter-migration, ZIP and SHA256 unchanged in status.
+- Final adb devices: no devices attached after emulator shutdown. No physical phone tested.
+- Final code evidence: flutter test 30 passed; analyze no issues; Windows release/native smoke passed; Android release build/signature/install/3-button checks and native smoke passed.
+- Latest edits after those checks affect delivery docs/inventory and Gradle download cache helper only, not Dart/native app code.

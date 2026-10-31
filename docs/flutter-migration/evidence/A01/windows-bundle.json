@@ -1,0 +1,57 @@
+[
+  {
+    "path": "flutter_windows.dll",
+    "bytes": 21289472,
+    "sha256": "30494fb08f9f101a8fbe42568110aaa160efbd7341f3cfe877dc14214be3a233"
+  },
+  {
+    "path": "jj_music_mobile.exe",
+    "bytes": 91136,
+    "sha256": "cc06465a5348c11d17aa61fdc61e4c1bd607f4362f5197b6833fd7af10cef1c0"
+  },
+  {
+    "path": "data/app.so",
+    "bytes": 4768648,
+    "sha256": "7455f62f080b00e5b8513bda3f1406477d87adb1965aa190659c39369a20c37c"
+  },
+  {
+    "path": "data/icudtl.dat",
+    "bytes": 864880,
+    "sha256": "325a86063d26334c2eabe1743cea073b612540fbf3d8fc2ef0b5708e3763a8c7"
+  },
+  {
+    "path": "data/flutter_assets/AssetManifest.bin",
+    "bytes": 2,
+    "sha256": "f566cc6fccc657365c0197accf3a7d6f80f85209ff666ff774f4dcbc524aa842"
+  },
+  {
+    "path": "data/flutter_assets/FontManifest.json",
+    "bytes": 82,
+    "sha256": "28b1eb2b3d2e1ad60b8c8b0f9100b1ccbf492f7fa97f5bebb51ea97e73926e7d"
+  },
+  {
+    "path": "data/flutter_assets/NativeAssetsManifest.json",
+    "bytes": 45,
+    "sha256": "9548a31e4a048135c1d94f919328bfb62ae2c7bb3cab96557c7941daa97776cb"
+  },
+  {
+    "path": "data/flutter_assets/NOTICES.Z",
+    "bytes": 98847,
+    "sha256": "e6727abeb5b9c52cd511308b6c3da8befd130249ada005085ab50e82453fece4"
+  },
+  {
+    "path": "data/flutter_assets/fonts/MaterialIcons-Regular.otf",
+    "bytes": 1420,
+    "sha256": "ced99e203d4268bda1e4396794f7544a1d4db0b6cad196bc9ba37d4d7b36e3be"
+  },
+  {
+    "path": "data/flutter_assets/shaders/ink_sparkle.frag",
+    "bytes": 21856,
+    "sha256": "1fe8436a743884cb65078fe8c7b38e18f5365f2a2961270916f426fd13c604af"
+  },
+  {
+    "path": "data/flutter_assets/shaders/stretch_effect.frag",
+    "bytes": 17616,
+    "sha256": "bc7599dbbbaab310efe41520574138d21fb18a88c8fe4495ed79315309336f6f"
+  }
+]

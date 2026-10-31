@@ -1,0 +1,19 @@
+.graphflow-cache/
+.graphflow/
+graphflow-out/
+*.zip
+*.zip.sha256
+*.keystore
+*.jks
+**/local.properties
+.ci-cache/
+.superpowers/
+**/.env
+**/.env.*
+!**/.env.example
+**/key.properties
+*.p12
+*.pfx
+# Historical network download probes are local evidence, not project assets.
+/docs/flutter-migration/evidence/A01/logs/gradle-probe.bin
+/docs/flutter-migration/evidence/A01/logs/maven-probe.bin

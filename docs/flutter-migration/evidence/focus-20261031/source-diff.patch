@@ -1,0 +1,681 @@
+diff --git a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+--- a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
++++ b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+@@ -32,6 +32,10 @@
+     private var failNextPlay = false
+     var session: android.media.session.MediaSession? = null
+     private var focus: AudioFocusRequest? = null
++    private var focusProbe: AudioFocusRequest? = null
++    private var focusEpoch = 0L
++    private var capturedFocusCallback: ((Int) -> Unit)? = null
++    private var currentFocusCallback: ((Int) -> Unit)? = null
+     private val life = arrayListOf<Map<String, Any>>()
+     fun timeline(event: String) {
+         if (life.size >= 60) life.removeAt(0)
+@@ -79,22 +83,58 @@
+                         // Hard switch only; old physical resource is closed by shared release.
+                         players.filterKeys { it != id }.values.forEach { it.pause() }
+                         if (failNextPlay) { failNextPlay=false; error("owned-injected-play-failure") }
+-                        requestFocus()
+                         val intent = Intent(context, PlaybackService::class.java)
+                         context.startForegroundService(intent)
+-                        players.getValue(id!!).play()
+-                    }
+-                    "pause" -> players.values.forEach { it.pause() }
++                        try {
++                            requestFocus(call.argument<Number>("transportRevision")!!.toLong())
++                            players.getValue(id!!).play()
++                        } catch (e: Exception) {
++                            abandonFocus()
++                            context.stopService(intent)
++                            throw e
++                        }
++                    }
++                    "pause" -> {
++                        players.values.forEach { it.pause() }
++                        abandonFocus()
++                    }
+                     "failNextPlay" -> failNextPlay=true
++                    // Owned diagnostic focus contender. Requests actual OS focus,
++                    // emits no sound and never changes device/global settings.
++                    "focusProbe" -> {
++                        check(focusProbe == null) { "probe-already-active" }
++                        val manager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
++                        val probe = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
++                            .setAudioAttributes(SystemAudioAttributes.Builder().setUsage(SystemAudioAttributes.USAGE_MEDIA).build())
++                            .setOnAudioFocusChangeListener { change -> timeline("probe-focus-$change") }.build()
++                        val granted = manager.requestAudioFocus(probe) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
++                        if (granted) focusProbe = probe
++                        result.success(granted); return@setMethodCallHandler
++                    }
++                    "releaseFocusProbe" -> {
++                        focusProbe?.let { (context.getSystemService(Context.AUDIO_SERVICE) as AudioManager).abandonAudioFocusRequest(it) }
++                        focusProbe = null
++                    }
++                    // Explicit fault injection, NOT an OS focus event. Retains
++                    // only one callback for a stale-listener regression test.
++                    "captureFocusCallback" -> capturedFocusCallback = currentFocusCallback
++                    "deliverCapturedFocusLoss" -> {
++                        val callback = capturedFocusCallback ?: error("no-captured-callback")
++                        capturedFocusCallback = null
++                        callback(AudioManager.AUDIOFOCUS_LOSS)
++                    }
+                     "stop" -> {
+                         players.values.forEach { it.stop() }
+                         context.stopService(Intent(context, PlaybackService::class.java))
+-                        focus?.let { (context.getSystemService(Context.AUDIO_SERVICE) as AudioManager).abandonAudioFocusRequest(it) }
++                        abandonFocus()
+                     }
+                     "seek" -> players.getValue(id!!).seekTo(call.argument<Number>("position")!!.toLong())
+                     "release" -> {
+                         players.remove(id)?.release(); timeline("released-$id")
+-                        if (players.isEmpty()) context.stopService(Intent(context, PlaybackService::class.java))
++                        if (players.isEmpty()) {
++                            abandonFocus()
++                            context.stopService(Intent(context, PlaybackService::class.java))
++                        }
+                     }
+                     "fixtureUri" -> {
+                         val target = File(context.cacheDir, "owned-tone-long.wav")
+@@ -132,7 +172,8 @@
+                             "playWhenReady" to p.playWhenReady, "suppression" to p.playbackSuppressionReason,
+                             "position" to p.currentPosition, "duration" to if (p.duration == C.TIME_UNSET) 0L else p.duration,
+                             "ended" to (p.playbackState == Player.STATE_ENDED), "error" to (p.playerError != null)) }
+-                        result.success(mapOf("samples" to samples, "commands" to commands.toList(), "lifecycle" to life.toList(), "host" to instance, "pid" to Process.myPid(), "screenInteractive" to (context.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive))
++                        val validCommands = commands.filter { it["focusEpoch"] == null || it["focusEpoch"] == focusEpoch }
++                        result.success(mapOf("samples" to samples, "commands" to validCommands, "lifecycle" to life.toList(), "host" to instance, "pid" to Process.myPid(), "focusHeld" to (focus != null), "focusEpoch" to focusEpoch, "screenInteractive" to (context.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive))
+                         commands.clear(); return@setMethodCallHandler
+                     }
+                     else -> { result.notImplemented(); return@setMethodCallHandler }
+@@ -144,14 +185,45 @@
+         timeline("engine-create")
+         return engine
+     }
+-    private fun requestFocus() {
++    private fun requestFocus(transportRevision: Long) {
++        // A fresh request fences callbacks belonging to a released/paused track.
++        abandonFocus()
+         val manager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+-        if (focus == null) focus = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
++        val epoch = ++focusEpoch
++        lateinit var request: AudioFocusRequest
++        var lossDelivered = false
++        val callback: (Int) -> Unit = { change ->
++            if (focus !== request || focusEpoch != epoch) {
++                timeline("focus-stale-ignored")
++            } else if (change < 0 && !lossDelivered) {
++                lossDelivered = true
++                // Immediate physical safety; shared Dart remains the only
++                // authority that commits the paused intent. Gain never plays.
++                players.values.forEach { it.pause() }
++                if (commands.size < 32) commands.add(mapOf("command" to "pause", "position" to 0L, "focusEpoch" to epoch, "transportRevision" to transportRevision))
++                timeline("focus-$change")
++            }
++        }
++        request = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+             .setAudioAttributes(SystemAudioAttributes.Builder().setUsage(SystemAudioAttributes.USAGE_MEDIA).build())
+-            .setOnAudioFocusChangeListener { change ->
+-                // Safety suppress immediately, business paused intent goes through Dart.
+-                if (change < 0) { players.values.forEach { it.pause() }; command("pause"); timeline("focus-$change") }
+-            }.build()
+-        check(manager.requestAudioFocus(focus!!) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) { "focus-denied" }
++            .setOnAudioFocusChangeListener(callback, android.os.Handler(android.os.Looper.getMainLooper())).build()
++        focus = request
++        currentFocusCallback = callback
++        if (manager.requestAudioFocus(request) != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
++            abandonFocus()
++            error("focus-denied")
++        }
++        timeline("focus-acquired")
++    }
++    private fun abandonFocus() {
++        val previous = focus
++        // Invalidate before calling the OS, which may schedule a late callback.
++        focus = null
++        currentFocusCallback = null
++        ++focusEpoch
++        if (previous != null) {
++            (context.getSystemService(Context.AUDIO_SERVICE) as AudioManager).abandonAudioFocusRequest(previous)
++            timeline("focus-abandoned")
++        }
+     }
+ }
+diff --git a/clients/flutter/lib/platform/local/native_local_backend.dart b/clients/flutter/lib/platform/local/native_local_backend.dart
+--- a/clients/flutter/lib/platform/local/native_local_backend.dart
++++ b/clients/flutter/lib/platform/local/native_local_backend.dart
+@@ -33,6 +33,7 @@
+   final raw = <Map<String, dynamic>>[];
+   Timer? _timer;
+   int _next = 0;
++  int _transportRevision = 0;
+   bool _polling = false, _closed = false;
+   Map<String, dynamic> lastHost = {};
+   int get consumers => _handles.length;
+@@ -83,8 +84,17 @@
+       );
+       lastHost = reply;
+       for (final action in reply['commands'] as List? ?? []) {
++        final command = Map<String, dynamic>.from(action as Map);
++        // The reply can have left native before a newer Dart intent arrived.
++        // Validate the revision stamped by native at the focus request, rather
++        // than poll start time (which could discard a genuinely NEW loss).
++        if (command.containsKey('focusEpoch') &&
++            command['transportRevision'] != _transportRevision) {
++          _record({'ignoredStaleFocus': command});
++          continue;
++        }
+         _record({'systemCommand': action});
+-        _system.add(Map<String, dynamic>.from(action as Map));
++        _system.add(command);
+       }
+       for (final value in reply['samples'] as List? ?? []) {
+         final s = Map<String, dynamic>.from(value as Map);
+@@ -141,6 +151,7 @@
+     if (path == null) {
+       throw StateError('fixture-not-authorized');
+     }
++    ++_transportRevision;
+     final h = _Handle(request, 'native-${++_next}');
+     _handles[h.id] = h;
+     // Attach error handler before cancellation can complete the future.
+@@ -190,6 +201,7 @@
+ 
+   @override
+   Future<void> play(String trackHandleId) async {
++    final revision = ++_transportRevision;
+     final h = _handles[trackHandleId]!;
+     for (final other in _handles.values.where((v) => v != h)) {
+       other.intended = false;
+@@ -198,7 +210,10 @@
+     h.intended = true;
+     h.evidence.reset();
+     try {
+-      await channel.invokeMethod<void>('play', {'id': h.id});
++      await channel.invokeMethod<void>('play', {
++        'id': h.id,
++        'transportRevision': revision,
++      });
+     } catch (_) {
+       if (!h.retiring) {
+         h.intended = false;
+@@ -209,6 +224,7 @@
+   }
+ 
+   Future<void> _all(String method) async {
++    ++_transportRevision;
+     for (final h in _handles.values.toList()) {
+       h.intended = false;
+       h.evidence.reset();
+diff --git a/clients/flutter/integration_test/android_audio_focus_test.dart b/clients/flutter/integration_test/android_audio_focus_test.dart
+--- /dev/null
++++ b/clients/flutter/integration_test/android_audio_focus_test.dart
+@@ -0,0 +1,138 @@
++import 'dart:convert';
++import 'dart:io';
++
++import 'package:flutter_test/flutter_test.dart';
++import 'package:integration_test/integration_test.dart';
++import 'package:jj_music_mobile/app/runtime/local_runtime.dart';
++import 'package:jj_music_mobile/domain/playback/contracts.dart';
++import 'package:jj_music_mobile/platform/local/native_local_backend.dart';
++
++import 'windows_local_playback_test.dart' show until;
++
++void main() {
++  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
++
++  testWidgets('Android last native release abandons audio focus', (
++    tester,
++  ) async {
++    final runtime = await LocalRuntime.create(runId: 'focus-release-$pid');
++    try {
++      runtime.command('a');
++      await until(() => runtime.snapshot.currentEntryId == ownedA.entryId);
++      await until(() => runtime.backend.lastHost['focusHeld'] == true);
++      // Natural completion releases the last physical player without stop().
++      runtime.command('seek', position: 11000);
++      await until(() => runtime.backend.consumers == 0);
++      await until(
++        () =>
++            runtime.backend.lastHost['samples'] is List &&
++            (runtime.backend.lastHost['samples'] as List).isEmpty,
++      );
++      expect(
++        runtime.backend.lastHost['focusHeld'],
++        isFalse,
++        reason: 'No native reader may retain OS audio focus',
++      );
++      expect(runtime.snapshot.confirmations.length, 1);
++    } finally {
++      // ignore: avoid_print
++      print('FOCUS_RELEASE_HOST=${jsonEncode(runtime.backend.lastHost)}');
++      await runtime.close();
++    }
++  });
++
++  testWidgets(
++    'Android OS transient focus loss pauses once and needs explicit resume',
++    (tester) async {
++      final runtime = await LocalRuntime.create(runId: 'focus-interrupt-$pid');
++      try {
++        runtime.command('a');
++        await until(() => runtime.snapshot.currentEntryId == ownedA.entryId);
++        final handle = runtime.snapshot.tracks.single.trackHandleId;
++        expect(
++          await NativeLocalBackend.channel.invokeMethod<bool>('focusProbe'),
++          isTrue,
++        );
++        await until(() => runtime.snapshot.desired == DesiredTransport.paused);
++        await until(() => runtime.backend.lastHost['focusHeld'] == false);
++        final paused = runtime.snapshot.positionMs;
++        await NativeLocalBackend.channel.invokeMethod<void>(
++          'releaseFocusProbe',
++        );
++        await Future<void>.delayed(const Duration(milliseconds: 600));
++        expect(runtime.snapshot.desired, DesiredTransport.paused);
++        expect((runtime.snapshot.positionMs - paused).abs(), lessThan(180));
++        expect(runtime.snapshot.confirmations.length, 1);
++        runtime.command('play');
++        await until(() => runtime.snapshot.positionMs > paused + 300);
++        expect(runtime.snapshot.tracks.single.trackHandleId, handle);
++        expect(runtime.snapshot.confirmations.length, 1);
++        // Stop while an actual OS contender still owns transient focus.
++        expect(
++          await NativeLocalBackend.channel.invokeMethod<bool>('focusProbe'),
++          isTrue,
++        );
++        await until(() => runtime.snapshot.desired == DesiredTransport.paused);
++        runtime.command('stop');
++        await until(() => runtime.backend.consumers == 0);
++        await NativeLocalBackend.channel.invokeMethod<void>(
++          'releaseFocusProbe',
++        );
++        await Future<void>.delayed(const Duration(milliseconds: 500));
++        expect(runtime.snapshot.desired, DesiredTransport.stopped);
++        await until(() => runtime.backend.lastHost['focusHeld'] == false);
++        expect(runtime.snapshot.confirmations.length, 1);
++      } finally {
++        await NativeLocalBackend.channel.invokeMethod<void>(
++          'releaseFocusProbe',
++        );
++        // ignore: avoid_print
++        print('FOCUS_INTERRUPT_HOST=${jsonEncode(runtime.backend.lastHost)}');
++        // ignore: avoid_print
++        print('FOCUS_INTERRUPT_RAW=${jsonEncode(runtime.backend.raw)}');
++        await runtime.close();
++      }
++    },
++  );
++
++  testWidgets('Android abandoned listener cannot pause a renewed focus lease', (
++    tester,
++  ) async {
++    final runtime = await LocalRuntime.create(runId: 'focus-stale-$pid');
++    try {
++      runtime.command('a');
++      await until(() => runtime.snapshot.currentEntryId == ownedA.entryId);
++      await NativeLocalBackend.channel.invokeMethod<void>(
++        'captureFocusCallback',
++      );
++      runtime.command('pause');
++      await until(() => runtime.backend.lastHost['focusHeld'] == false);
++      runtime.command('play');
++      await until(() => runtime.backend.lastHost['focusHeld'] == true);
++      final before = runtime.snapshot.positionMs;
++      await until(() => runtime.snapshot.positionMs > before + 150);
++      // Fault injection into the old listener, explicitly not an OS event.
++      await NativeLocalBackend.channel.invokeMethod<void>(
++        'deliverCapturedFocusLoss',
++      );
++      await until(
++        () => (runtime.backend.lastHost['lifecycle'] as List).any(
++          (e) => (e as Map)['event'] == 'focus-stale-ignored',
++        ),
++      );
++      final position = runtime.snapshot.positionMs;
++      await until(() => runtime.snapshot.positionMs > position + 350);
++      expect(runtime.snapshot.desired, DesiredTransport.playing);
++      expect(runtime.backend.lastHost['focusHeld'], isTrue);
++      expect(runtime.snapshot.confirmations.length, 1);
++      runtime.command('stop');
++      await until(() => runtime.backend.consumers == 0);
++    } finally {
++      // ignore: avoid_print
++      print('FOCUS_STALE_HOST=${jsonEncode(runtime.backend.lastHost)}');
++      // ignore: avoid_print
++      print('FOCUS_STALE_RAW=${jsonEncode(runtime.backend.raw)}');
++      await runtime.close();
++    }
++  });
++}
+diff --git a/clients/flutter/integration_test/windows_local_playback_test.dart b/clients/flutter/integration_test/windows_local_playback_test.dart
+--- a/clients/flutter/integration_test/windows_local_playback_test.dart
++++ b/clients/flutter/integration_test/windows_local_playback_test.dart
+@@ -30,12 +30,9 @@
+         'fixtures/local_playback/tone-long.wav',
+       );
+       await file.writeAsBytes(bytes.buffer.asUint8List(), flush: true);
+-      final backend = NativeLocalBackend(
+-        {'tone-a': file.uri.toString()},
+-        logFile: File(
+-          'E:/Workspace/project/JJ-Music-mobile/docs/flutter-migration/evidence/p1-a/20261031/windows-raw.jsonl',
+-        ),
+-      );
++      final backend = NativeLocalBackend({
++        'tone-a': file.uri.toString(),
++      }, logFile: File('${dir.path}/native-raw.jsonl'));
+       final coordinator = PlaybackCoordinator(backend);
+       CommandContext cmd(String id) => CommandContext(id, coordinator.claim);
+       try {
+@@ -91,6 +88,10 @@
+       } finally {
+         await coordinator.dispose();
+         await backend.close();
++        // The runner captures this owned-only trace into the current batch log.
++        // Never overwrite an immutable historical evidence directory.
++        // ignore: avoid_print
++        print('WINDOWS_LOCAL_RAW=${await backend.logFile!.readAsString()}');
+       }
+     },
+   );
+diff --git a/clients/flutter/test/platform/native_focus_command_test.dart b/clients/flutter/test/platform/native_focus_command_test.dart
+--- /dev/null
++++ b/clients/flutter/test/platform/native_focus_command_test.dart
+@@ -0,0 +1,97 @@
++import 'dart:async';
++
++import 'package:flutter_test/flutter_test.dart';
++import 'package:jj_music_mobile/domain/playback/contracts.dart';
++import 'package:jj_music_mobile/platform/local/native_local_backend.dart';
++
++void main() {
++  TestWidgetsFlutterBinding.ensureInitialized();
++  test('late focus poll cannot pause a renewed transport; media controls survive', () async {
++    final pendingPoll = Completer<Map<String, Object?>>();
++    final pollEntered = Completer<void>();
++    var prepared = false, delayPoll = false;
++    int? playRevision;
++    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
++        .setMockMethodCallHandler(NativeLocalBackend.channel, (call) async {
++          if (call.method == 'prepare') prepared = true;
++          if (call.method == 'play') {
++            playRevision = (call.arguments as Map)['transportRevision'] as int?;
++          }
++          if (call.method == 'poll') {
++            if (delayPoll) {
++              if (!pollEntered.isCompleted) pollEntered.complete();
++              return pendingPoll.future;
++            }
++            return {
++              'samples': prepared
++                  ? [
++                      {
++                        'id': 'native-1',
++                        'ready': true,
++                        'state': 3,
++                        'position': 0,
++                        'nativePlaying': false,
++                      },
++                    ]
++                  : [],
++              'commands': [],
++            };
++          }
++          return null;
++        });
++    final backend = NativeLocalBackend({'owned': 'file:///owned.wav'});
++    final received = <Map<String, dynamic>>[];
++    final sub = backend.systemCommands.listen(received.add);
++    try {
++      final h = await backend.prepare(
++        const PrepareRequest(
++          requestId: 'a',
++          entry: QueueEntry(entryId: 'a', trackKey: 'a', fixtureId: 'owned'),
++          generation: 1,
++          backendEpoch: 1,
++        ),
++      );
++      await backend.play(h.trackHandleId);
++      final oldRevision = playRevision;
++      delayPoll = true;
++      await pollEntered.future.timeout(const Duration(seconds: 2));
++      // A real native poll already holds the old focus pause, but its reply
++      // arrives after Dart has dispatched a fresh play on the SAME handle.
++      await backend.play(h.trackHandleId);
++      pendingPoll.complete({
++        'samples': [],
++        'commands': [
++          {
++            'command': 'pause',
++            'focusEpoch': 1,
++            'transportRevision': oldRevision,
++          },
++          {'command': 'pause'}, // Ordinary media key is not a focus callback.
++          {
++            'command': 'pause',
++            'focusEpoch': 2,
++            'transportRevision': playRevision,
++          },
++        ],
++      });
++      // Stop repeated sampling of the same fake reply after this poll finishes.
++      delayPoll = false;
++      await Future<void>.delayed(const Duration(milliseconds: 20));
++      expect(
++        received,
++        hasLength(2),
++        reason: 'Only the old focus pause is stale',
++      );
++      expect(received.first.containsKey('focusEpoch'), isFalse);
++      expect(received.last['transportRevision'], playRevision);
++    } finally {
++      if (!pendingPoll.isCompleted) {
++        pendingPoll.complete({'samples': [], 'commands': []});
++      }
++      await sub.cancel();
++      await backend.close();
++      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
++          .setMockMethodCallHandler(NativeLocalBackend.channel, null);
++    }
++  });
++}
+diff --git a/clients/flutter/lib/p1_focus_probe.dart b/clients/flutter/lib/p1_focus_probe.dart
+--- /dev/null
++++ b/clients/flutter/lib/p1_focus_probe.dart
+@@ -0,0 +1,138 @@
++import 'dart:convert';
++import 'dart:io';
++
++import 'package:flutter/foundation.dart';
++import 'package:flutter/material.dart';
++
++import 'app/runtime/local_runtime.dart';
++import 'domain/playback/contracts.dart';
++import 'platform/local/native_local_backend.dart';
++
++/// Explicit release-only owned-media verification. Never normal app assembly.
++Future<void> main() async {
++  WidgetsFlutterBinding.ensureInitialized();
++  runApp(const MaterialApp(home: Scaffold(body: Text('P1 focus probe'))));
++  final token = await NativeLocalBackend.channel.invokeMethod<String>(
++    'launchToken',
++  );
++  LocalRuntime? runtime;
++  final checks = <String>[];
++  Map<String, dynamic> proof;
++  try {
++    _require(
++      kReleaseMode && token != null && token.isNotEmpty,
++      'explicit-release-token-required',
++    );
++    final r = runtime = await LocalRuntime.create(runId: 'focus-$token');
++    r.command('a');
++    await _until(() => r.snapshot.currentEntryId == ownedA.entryId);
++    final handle = r.snapshot.tracks.single.trackHandleId;
++    _require(
++      await NativeLocalBackend.channel.invokeMethod<bool>('focusProbe') == true,
++      'os-focus-request-denied',
++    );
++    await _until(
++      () =>
++          r.snapshot.desired == DesiredTransport.paused &&
++          r.backend.lastHost['focusHeld'] == false,
++    );
++    final paused = r.snapshot.positionMs;
++    await NativeLocalBackend.channel.invokeMethod<void>('releaseFocusProbe');
++    await Future<void>.delayed(const Duration(milliseconds: 600));
++    _require(
++      r.snapshot.desired == DesiredTransport.paused &&
++          (r.snapshot.positionMs - paused).abs() < 180,
++      'unexpected-auto-resume',
++    );
++    checks.add('os-transient-loss-pauses-without-auto-resume');
++    r.command('play');
++    await _until(() => r.snapshot.positionMs > paused + 300);
++    _require(
++      r.snapshot.tracks.single.trackHandleId == handle &&
++          r.snapshot.confirmations.length == 1,
++      'resume-identity-changed',
++    );
++    checks.add('explicit-resume-same-confirmation');
++    await NativeLocalBackend.channel.invokeMethod<void>('captureFocusCallback');
++    r.command('pause');
++    await _until(() => r.backend.lastHost['focusHeld'] == false);
++    r.command('play');
++    await _until(() => r.backend.lastHost['focusHeld'] == true);
++    final before = r.snapshot.positionMs;
++    await NativeLocalBackend.channel.invokeMethod<void>(
++      'deliverCapturedFocusLoss',
++    );
++    await _until(() => r.snapshot.positionMs > before + 350);
++    _require(
++      r.snapshot.desired == DesiredTransport.playing &&
++          r.snapshot.confirmations.length == 1,
++      'stale-listener-paused-new-lease',
++    );
++    checks.add('injected-stale-listener-ignored');
++    _require(
++      await NativeLocalBackend.channel.invokeMethod<bool>('focusProbe') == true,
++      'second-focus-request-denied',
++    );
++    await _until(() => r.snapshot.desired == DesiredTransport.paused);
++    r.command('stop');
++    await _until(
++      () =>
++          r.backend.consumers == 0 && r.backend.lastHost['focusHeld'] == false,
++    );
++    await NativeLocalBackend.channel.invokeMethod<void>('releaseFocusProbe');
++    await Future<void>.delayed(const Duration(milliseconds: 500));
++    _require(
++      r.snapshot.desired == DesiredTransport.stopped,
++      'stop-auto-resumed',
++    );
++    checks.add('stop-during-interruption-remains-stopped');
++    r.command('a');
++    await _until(
++      () =>
++          r.snapshot.confirmations.length == 2 &&
++          r.snapshot.tracks.any((t) => t.role == TrackRole.active),
++    );
++    r.command('seek', position: 11000);
++    await _until(
++      () =>
++          r.backend.consumers == 0 &&
++          r.backend.lastHost['focusHeld'] == false &&
++          (r.backend.lastHost['samples'] as List).isEmpty,
++    );
++    checks.add('natural-end-final-release-abandons-focus');
++    proof = {
++      'stage': 'focus-passed',
++      'checks': checks,
++      'consumers': r.backend.consumers,
++      'focusHeld': r.backend.lastHost['focusHeld'],
++      'events': (r.backend.lastHost['lifecycle'] as List)
++          .map((e) => (e as Map)['event'])
++          .toList(),
++    };
++  } catch (e) {
++    proof = {'stage': 'error', 'error': e.toString(), 'checks': checks};
++  } finally {
++    await NativeLocalBackend.channel.invokeMethod<void>('releaseFocusProbe');
++    await runtime?.close();
++  }
++  await NativeLocalBackend.channel.invokeMethod<void>('proof', {
++    'json': jsonEncode({
++      ...proof,
++      'pid': pid,
++      'probeToken': token,
++      'releaseMode': kReleaseMode,
++    }),
++  });
++}
++
++void _require(bool value, String failure) {
++  if (!value) throw StateError(failure);
++}
++
++Future<void> _until(bool Function() check) async {
++  final end = DateTime.now().add(const Duration(seconds: 10));
++  while (!check() && DateTime.now().isBefore(end)) {
++    await Future<void>.delayed(const Duration(milliseconds: 100));
++  }
++  _require(check(), 'native-condition-timeout');
++}
+diff --git a/clients/flutter/tool/run_android_focus_probe.ps1 b/clients/flutter/tool/run_android_focus_probe.ps1
+--- /dev/null
++++ b/clients/flutter/tool/run_android_focus_probe.ps1
+@@ -0,0 +1,42 @@
++param(
++  [Parameter(Mandatory=$true)][string]$DeviceId,
++  [Parameter(Mandatory=$true)][string]$EvidenceDirectory
++)
++$ErrorActionPreference='Stop'
++$client=Split-Path $PSScriptRoot -Parent
++$apk=Join-Path $client 'build/app/outputs/flutter-apk/app-release.apk'
++$package='dev.jjmusic.diagnostics.jj_music_mobile'
++$logs=[IO.Path]::GetFullPath($EvidenceDirectory)
++New-Item -ItemType Directory -Force $logs | Out-Null
++if((& adb -s $DeviceId get-state) -ne 'device'){throw 'Selected device not online'}
++$model=([string](& adb -s $DeviceId shell getprop ro.product.model)).Trim()
++$token=[Guid]::NewGuid().ToString('N')
++& adb -s $DeviceId install -r $apk *> (Join-Path $logs 'probe-install.log')
++if($LASTEXITCODE -ne 0){throw 'Probe install failed'}
++try {
++  & adb -s $DeviceId shell am force-stop $package
++  if($LASTEXITCODE -ne 0){throw 'Probe stop failed'}
++  & adb -s $DeviceId shell am start -W -n "$package/.MainActivity" --es p1Token $token *> (Join-Path $logs 'probe-start.log')
++  if($LASTEXITCODE -ne 0){throw 'Probe start failed'}
++  $deadline=[DateTime]::UtcNow.AddSeconds(35)
++  $proof=$null
++  while([DateTime]::UtcNow -lt $deadline -and !$proof){
++    $processId=([string](& adb -s $DeviceId shell pidof $package)).Trim()
++    if($processId -match '^\d+$'){
++      $lines=& adb -s $DeviceId logcat -d --pid=$processId -s 'JJOwnedProbe:I' '*:S'
++      foreach($line in $lines){
++        if($line -match 'JJOwnedProbe:\s*(\{.+\})'){
++          $value=$Matches[1]|ConvertFrom-Json
++          if($value.probeToken -eq $token -and [string]$value.pid -eq $processId){$proof=$value; break}
++        }
++      }
++    }
++    if(!$proof){Start-Sleep -Milliseconds 250}
++  }
++  if(!$proof){throw 'No fresh release focus proof; do not count as pass'}
++  [ordered]@{device=$DeviceId;model=$model;entrypoint='lib/p1_focus_probe.dart';apkSha256=(Get-FileHash $apk -Algorithm SHA256).Hash.ToLower();proof=$proof} | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $logs 'release-focus-proof.json') -Encoding utf8
++  if($proof.stage -ne 'focus-passed' -or $proof.releaseMode -ne $true -or $proof.checks.Count -ne 5 -or $proof.consumers -ne 0 -or $proof.focusHeld -ne $false){throw 'Release focus checks failed; see proof JSON'}
++  'Android release focus probe: 5 checks passed'
++} finally {
++  & adb -s $DeviceId shell am force-stop $package
++}
+diff --git a/clients/flutter/tool/check.ps1 b/clients/flutter/tool/check.ps1
+--- a/clients/flutter/tool/check.ps1
++++ b/clients/flutter/tool/check.ps1
+@@ -23,7 +23,7 @@
+   if($Mode -in @('Quality','All')){
+     & flutter pub get --enforce-lockfile *> (Join-Path $logs 'pub-get.log')
+     Assert-Result 'pub-get'
+-    $freeze=Get-Content (Join-Path $client '../../docs/flutter-migration/evidence/A02/20261031-bootstrap-freeze.json') -Raw | ConvertFrom-Json
++    $freeze=Get-Content (Join-Path $client '../../docs/flutter-migration/evidence/A02/20261031-focus-freeze.json') -Raw | ConvertFrom-Json
+     $workspace=[IO.Path]::GetFullPath((Join-Path $client '../..'))
+     foreach($entry in $freeze.files){
+       if((Get-FileHash (Join-Path $workspace $entry.path) -Algorithm SHA256).Hash.ToLower() -ne $entry.sha256){

@@ -1,0 +1,32 @@
+[
+  {
+    "path": "clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt",
+    "bytes": 16234,
+    "sha256": "46a144e9c64260b20a8bdb98ca1a051cef521e0cf5a9879ce1a483d1e1059497",
+    "beforeSha256": "a1f83bdf8d85cabb92ef35ba035d5ce9ca1d91288f8d1541d4b5388b6e8adc51"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/OwnedReadGate.kt",
+    "bytes": 2886,
+    "sha256": "aa963700bbe7376aa381c73e2a70c710cd0c5ded3132090e4680a831eafdccb5",
+    "beforeSha256": null
+  },
+  {
+    "path": "clients/flutter/integration_test/android_loading_test.dart",
+    "bytes": 5204,
+    "sha256": "6a0cbdfc89ab6d54aaefeb73cc81a1525a0c552ae269d9bda03c60959e07899e",
+    "beforeSha256": null
+  },
+  {
+    "path": "docs/flutter-migration/status.md",
+    "bytes": 23466,
+    "sha256": "cdcd1f454218d07750a92a8b50786eaa890344c070da1381d4fb36c3381a7cfa",
+    "beforeSha256": "ab9300ef7d4ba44a7734c916963afe7758f3eb736d29aca86b928450430e2e9f"
+  },
+  {
+    "path": "docs/flutter-migration/handoff.md",
+    "bytes": 12577,
+    "sha256": "6b4ef9e0403bdd5272822358954d8225af40c6edc82ae78ebfbbddefbf1dffc1",
+    "beforeSha256": "b76fa1a7228f5a9f6c2c4b9c1cdac0e7ba5c270e999b91ffe0e5d09c26e1a9b1"
+  }
+]

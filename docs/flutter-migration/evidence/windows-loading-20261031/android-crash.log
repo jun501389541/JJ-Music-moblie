@@ -1,0 +1,28 @@
+--------- beginning of crash
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: FATAL EXCEPTION: main
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: Process: dev.jjmusic.diagnostics.jj_music_mobile, PID: 7480
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: android.app.RemoteServiceException$ForegroundServiceDidNotStartInTimeException: Context.startForegroundService() did not then call Service.startForeground(): ServiceRecord{74cd7f2 u0 dev.jjmusic.diagnostics.jj_music_mobile/.PlaybackService}
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at android.app.ActivityThread.generateForegroundServiceDidNotStartInTimeException(ActivityThread.java:2078)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at android.app.ActivityThread.throwRemoteServiceException(ActivityThread.java:2052)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mthrowRemoteServiceException(Unknown Source:0)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2314)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:210)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:299)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:8240)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:559)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:954)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: Caused by: android.app.StackTrace: Last startServiceCommon() call for this service was made here
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at android.app.ContextImpl.startServiceCommon(ContextImpl.java:1925)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at android.app.ContextImpl.startForegroundService(ContextImpl.java:1880)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at android.content.ContextWrapper.startForegroundService(ContextWrapper.java:832)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at dev.jjmusic.diagnostics.jj_music_mobile.LocalHost.engine$lambda$1(LocalHost.kt:110)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at dev.jjmusic.diagnostics.jj_music_mobile.LocalHost$$ExternalSyntheticLambda0.onMethodCall(D8$$SyntheticClass:0)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at android.os.Handler.handleCallback(Handler.java:942)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+10-31 15:54:14.538  7480  7480 E AndroidRuntime: 	... 6 more

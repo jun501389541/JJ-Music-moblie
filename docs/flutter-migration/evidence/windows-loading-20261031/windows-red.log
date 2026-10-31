@@ -1,0 +1,112 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_loading_test.dart
+Building Windows application...                                    16.0s
+√ Built build\windows\x64\runner\Debug\jj_music_mobile.exe
+00:00 +0: Windows actual pending stream read: pause
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following MissingPluginException was thrown running a test:
+MissingPluginException(No implementation found for method registerOwnedGate on channel
+jj_music/local)
+
+When the exception was thrown, this was the stack:
+#0      MethodChannel._invokeMethod (package:flutter/src/services/platform_channel.dart:364:7)
+<asynchronous suspension>
+#1      main.<anonymous closure> (file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_loading_test.dart:32:21)
+<asynchronous suspension>
+#2      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  Windows actual pending stream read: pause
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -1: Windows actual pending stream read: pause [E]
+  Test failed. See exception logs above.
+  The test description was: Windows actual pending stream read: pause
+  
+00:00 +0 -1: Windows actual pending stream read: stop
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following MissingPluginException was thrown running a test:
+MissingPluginException(No implementation found for method registerOwnedGate on channel
+jj_music/local)
+
+When the exception was thrown, this was the stack:
+#0      MethodChannel._invokeMethod (package:flutter/src/services/platform_channel.dart:364:7)
+<asynchronous suspension>
+#1      main.<anonymous closure> (file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_loading_test.dart:32:21)
+<asynchronous suspension>
+#2      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  Windows actual pending stream read: stop
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -2: Windows actual pending stream read: stop [E]
+  Test failed. See exception logs above.
+  The test description was: Windows actual pending stream read: stop
+  
+00:00 +0 -2: Windows actual pending stream read: cancel
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following MissingPluginException was thrown running a test:
+MissingPluginException(No implementation found for method registerOwnedGate on channel
+jj_music/local)
+
+When the exception was thrown, this was the stack:
+#0      MethodChannel._invokeMethod (package:flutter/src/services/platform_channel.dart:364:7)
+<asynchronous suspension>
+#1      main.<anonymous closure> (file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_loading_test.dart:32:21)
+<asynchronous suspension>
+#2      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  Windows actual pending stream read: cancel
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -3: Windows actual pending stream read: cancel [E]
+  Test failed. See exception logs above.
+  The test description was: Windows actual pending stream read: cancel
+  
+00:00 +0 -3: Windows actual pending stream read: new-play
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following MissingPluginException was thrown running a test:
+MissingPluginException(No implementation found for method registerOwnedGate on channel
+jj_music/local)
+
+When the exception was thrown, this was the stack:
+#0      MethodChannel._invokeMethod (package:flutter/src/services/platform_channel.dart:364:7)
+<asynchronous suspension>
+#1      main.<anonymous closure> (file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_loading_test.dart:32:21)
+<asynchronous suspension>
+#2      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  Windows actual pending stream read: new-play
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -4: Windows actual pending stream read: new-play [E]
+  Test failed. See exception logs above.
+  The test description was: Windows actual pending stream read: new-play
+  
+00:00 +0 -4: (tearDownAll)
+00:00 +0 -4: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_loading_test.dart: Windows actual pending stream read: cancel
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_loading_test.dart: Windows actual pending stream read: new-play
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_loading_test.dart: Windows actual pending stream read: pause
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_loading_test.dart: Windows actual pending stream read: stop

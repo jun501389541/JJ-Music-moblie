@@ -1,0 +1,80 @@
+diff --git a/docs/flutter-migration/evidence/windows-rebuffer-20261031/before/clients/flutter/windows/runner/local_playback.cpp b/clients/flutter/windows/runner/local_playback.cpp
+index 3da9377..cc9805e 100644
+--- a/docs/flutter-migration/evidence/windows-rebuffer-20261031/before/clients/flutter/windows/runner/local_playback.cpp
++++ b/clients/flutter/windows/runner/local_playback.cpp
+@@ -1,5 +1,6 @@
+ #include "local_playback.h"
+ #include "owned_gate_stream.h"
++#include "owned_pcm_source.h"
+ #include <flutter/method_channel.h>
+ #include <flutter/standard_method_codec.h>
+ #include <winrt/Windows.Foundation.h>
+@@ -36,6 +37,7 @@ int64_t Number(const EncodableMap& m, const char* key) {
+ struct Track {
+   MediaPlayer player{nullptr};
+   std::shared_ptr<owned_loading::GateState> gate;
++  std::unique_ptr<owned_loading::PcmSource> pcm;
+   Windows::Storage::Streams::IRandomAccessStream stream{nullptr};
+   MediaSource source{nullptr};
+   std::atomic_bool opened{false}, ended{false}, failed{false};
+@@ -54,6 +56,7 @@ struct Track {
+     auto attempt=[&](auto operation) {
+       try { operation(); } catch(...) { if(!failure) failure=std::current_exception(); }
+     };
++    if(pcm) attempt([&] {pcm->Detach();});
+     if(player && !playerClosed) {
+       if(hooksRegistered) {
+         attempt([&] {player.MediaOpened(openedToken);});
+@@ -172,11 +175,12 @@ struct LocalPlayback::Impl {
+         const auto* args = std::get_if<EncodableMap>(call.arguments());
+         const auto& m = args ? *args : empty;
+         const auto& method = call.method_name();
+-        if(method=="registerOwnedGate") {
++        if(method=="registerOwnedGate" || method=="registerOwnedPcm") {
+           const auto* bytes=std::get_if<std::vector<uint8_t>>(&m.at(EncodableValue("bytes")));
+           if(!bytes || bytes->size()<44 || bytes->size()>2*1024*1024 ||
+              std::memcmp(bytes->data(),"RIFF",4)!=0 || std::memcmp(bytes->data()+8,"WAVE",4)!=0)
+             throw hresult_invalid_argument();
++          if(method=="registerOwnedPcm") owned_loading::ValidatePcm(*bytes);
+           if(registeredGates.size()>=8) {
+             auto old=std::find_if(registeredGates.begin(),registeredGates.end(),[](auto const& entry) {
+               std::lock_guard lock(entry.second->mutex);
+@@ -186,7 +190,9 @@ struct LocalPlayback::Impl {
+             registeredGates.erase(old);
+           }
+           const auto token="owned-gate:"+std::to_string(++nextGate);
+-          registeredGates.emplace(token,std::make_shared<owned_loading::GateState>(*bytes));
++          auto gate=std::make_shared<owned_loading::GateState>(*bytes);
++          gate->pcm=method=="registerOwnedPcm";
++          registeredGates.emplace(token,gate);
+           result->Success(EncodableValue(token)); return;
+         } else if(method=="failOwnedClose") {
+           auto t=tracks.at(Text(m,"id"));
+@@ -210,7 +216,8 @@ struct LocalPlayback::Impl {
+               gated->second->claimed=true;
+             }
+             t->gate=gated->second;
+-            t->stream=make<owned_loading::GateStream>(t->gate);
++            if(t->gate->pcm) t->pcm=std::make_unique<owned_loading::PcmSource>(t->gate);
++            else t->stream=make<owned_loading::GateStream>(t->gate);
+             if(streamGates.size()>=8 && !streamGates.contains(id)) {
+               auto old=std::find_if(streamGates.begin(),streamGates.end(),[this](auto const& entry) {return !tracks.contains(entry.first);});
+               if(old==streamGates.end()) throw hresult_invalid_argument();
+@@ -234,7 +241,8 @@ struct LocalPlayback::Impl {
+           t->hooksRegistered=true;
+           tracks.emplace(id,t);
+           if(t->gate) {
+-            t->source=MediaSource::CreateFromStream(t->stream,L"audio/wav");
++            t->source=t->pcm ? MediaSource::CreateFromMediaStreamSource(t->pcm->source) :
++              MediaSource::CreateFromStream(t->stream,L"audio/wav");
+             t->player.Source(t->source);
+           } else t->player.Source(MediaSource::CreateFromUri(Uri(to_hstring(path))));
+         } else if (method == "play") {
+@@ -340,6 +348,7 @@ struct LocalPlayback::Impl {
+           for(auto const& entry:streamGates) {
+             const auto& g=entry.second; std::lock_guard lock(g->mutex);
+             gates.emplace(EncodableValue(entry.first),EncodableMap{
++              {EncodableValue("inputKind"),EncodableValue(g->pcm ? "pcm-sample-request" : "random-access-read")},
+               {EncodableValue("blocked"),EncodableValue(g->waiting>0)},
+               {EncodableValue("readers"),EncodableValue(g->readers)},
+               {EncodableValue("bytesRead"),EncodableValue(g->bytesRead)},

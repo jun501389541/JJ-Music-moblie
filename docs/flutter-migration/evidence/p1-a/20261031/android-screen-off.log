@@ -1,0 +1,13 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/android_background_probe_test.dart
+Running Gradle task 'assembleDebug'...                          
+Picked up JAVA_TOOL_OPTIONS: -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=7897 -Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=7897 -Dhttp.nonProxyHosts=localhost|127.*|[::1]
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Running Gradle task 'assembleDebug'...                             10.2s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           3.7s
+00:00 +0: owned sample progresses while actual screen is off
+READY_FOR_SCREEN_OFF
+SCREEN_OFF_NATIVE={"samples":[],"commands":[],"lifecycle":[{"event":"engine-create","time":61237946,"pid":25150,"host":"host-25150-61237528","engine":192633113,"activity":0},{"event":"activity-create","time":61237971,"pid":25150,"host":"host-25150-61237528","engine":192633113,"activity":153406044},{"event":"prepare-native-1","time":61240896,"pid":25150,"host":"host-25150-61237528","engine":192633113,"activity":153406044},{"event":"service-create","time":61241263,"pid":25150,"host":"host-25150-61237528","engine":192633113,"activity":153406044},{"event":"released-native-1","time":61249483,"pid":25150,"host":"host-25150-61237528","engine":192633113,"activity":153406044},{"event":"service-destroy","time":61249487,"pid":25150,"host":"host-25150-61237528","engine":192633113,"activity":153406044}],"host":"host-25150-61237528","pid":25150,"screenInteractive":false}
+00:10 +1: (tearDownAll)
+00:10 +1: All tests passed!

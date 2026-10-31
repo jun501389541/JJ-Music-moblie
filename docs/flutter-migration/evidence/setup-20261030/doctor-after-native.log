@@ -1,0 +1,51 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+[√] Flutter (Channel stable, 3.47.9, on Microsoft Windows [版本 10.0.26200.9278], locale zh-CN) [504ms]
+    • Flutter version 3.47.9 on channel stable at E:\SDKs\flutter
+    • Upstream repository https://github.com/flutter/flutter.git
+    • Framework revision c197ca5199 (24 hours ago), 2026-10-29 10:10:20 -0400
+    • Engine revision 89c39edfdf
+    • Dart version 3.13.7
+    • DevTools version 2.60.0
+    • Pub download mirror https://pub.flutter-io.cn
+    • Flutter download mirror https://storage.flutter-io.cn
+    • Feature flags: enable-web, enable-linux-desktop, enable-macos-desktop, enable-windows-desktop, enable-android, enable-ios, cli-animations, enable-native-assets, enable-record-use, enable-swift-package-manager, omit-legacy-version-file, enable-lldb-debugging, enable-uiscene-migration
+
+[√] Windows Version (Windows 11 or higher, 25H2, 2009) [896ms]
+
+[√] Android toolchain - develop for Android devices (Android SDK version 37.0.0) [519ms]
+    • Android SDK at E:\Android\sdk
+    • Emulator version 37.2.9.0 (build_id 16322952) (CL:N/A)
+    • Platform android-37.0, build-tools 37.0.0
+    • ANDROID_HOME = E:\Android\sdk
+    • ANDROID_SDK_ROOT = E:\Android\sdk
+    • Java binary at: E:\Android\jdk21\bin\java
+      This JDK is specified in your Flutter configuration.
+      To change the current JDK, run: `flutter config --jdk-dir="path/to/jdk"`.
+    • Java version OpenJDK Runtime Environment Microsoft-14941484 (build 21.0.12.1+1-LTS)
+    • All Android licenses accepted.
+
+[√] Chrome - develop for the web [150ms]
+    • Chrome at C:\Program Files\Google\Chrome\Application\chrome.exe
+
+[√] Visual Studio - develop Windows apps (Visual Studio 生成工具 2026 18.9.2) [149ms]
+    • Visual Studio at C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools
+    • Visual Studio 生成工具 2026 version 18.9.12120.119
+    • Windows 10 SDK version 10.0.26100.0
+
+[√] Proxy Configuration [79ms]
+    • HTTP_PROXY is set
+    • NO_PROXY is localhost,127.0.0.1,::1
+    • NO_PROXY contains localhost
+    • NO_PROXY contains ::1
+    • NO_PROXY contains 127.0.0.1
+
+[√] Connected device (4 available) [472ms]
+    • sdk gphone64 x86 64 (mobile) • emulator-5554 • android-x64    • Android 16 (API 36) (emulator)
+    • Windows (desktop)            • windows       • windows-x64    • Microsoft Windows [版本 10.0.26200.9278]
+    • Chrome (web)                 • chrome        • web-javascript • Google Chrome 156.0.8078.79
+    • Edge (web)                   • edge          • web-javascript • Microsoft Edge 156.0.4314.50
+
+[√] Network resources [1,914ms]
+    • All expected network resources are available.
+
+• No issues found!

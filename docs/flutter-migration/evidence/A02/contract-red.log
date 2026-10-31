@@ -1,0 +1,70 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/playback_contract_test.dart
+00:00 +0: TC-56 stop is dispatched before an old prepare Future completes
+00:00 +0 -1: TC-56 stop is dispatched before an old prepare Future completes [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                             expect
+  package:flutter_test/src/widget_tester.dart 473:18          expect
+  integration_test\support\local_playback_contract.dart 28:7  registerLocalPlaybackContract.<fn>
+  
+00:00 +0 -1: TC-56 pause is dispatched before an old prepare Future completes
+00:00 +0 -2: TC-56 pause is dispatched before an old prepare Future completes [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                             expect
+  package:flutter_test/src/widget_tester.dart 473:18          expect
+  integration_test\support\local_playback_contract.dart 28:7  registerLocalPlaybackContract.<fn>
+  
+00:00 +0 -2: TC-56 cancel is dispatched before an old prepare Future completes
+00:00 +0 -3: TC-56 cancel is dispatched before an old prepare Future completes [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                             expect
+  package:flutter_test/src/widget_tester.dart 473:18          expect
+  integration_test\support\local_playback_contract.dart 28:7  registerLocalPlaybackContract.<fn>
+  
+00:00 +0 -3: TC-56 new-play is dispatched before an old prepare Future completes
+00:00 +0 -4: TC-56 new-play is dispatched before an old prepare Future completes [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                             expect
+  package:flutter_test/src/widget_tester.dart 473:18          expect
+  integration_test\support\local_playback_contract.dart 28:7  registerLocalPlaybackContract.<fn>
+  
+00:00 +0 -4: TC-57 raw playing, ready and buffering do not confirm; normalized confirmation deduplicates
+00:00 +0 -5: TC-57 raw playing, ready and buffering do not confirm; normalized confirmation deduplicates [E]
+  Null check operator used on a null value
+  integration_test\support\controlled_backend.dart 20:54       ControlledBackend.ready
+  integration_test\support\local_playback_contract.dart 40:13  registerLocalPlaybackContract.<fn>
+  
+00:00 +0 -5: TC-03/32 stale epoch, generation and duplicate events never commit identity
+00:00 +0 -6: TC-03/32 stale epoch, generation and duplicate events never commit identity [E]
+  Null check operator used on a null value
+  integration_test\support\controlled_backend.dart 20:54       ControlledBackend.ready
+  integration_test\support\local_playback_contract.dart 53:13  registerLocalPlaybackContract.<fn>
+  
+00:00 +0 -6: TC-06/07 incoming failure preserves outgoing resource and rollback retains confirmed history
+00:00 +0 -7: TC-06/07 incoming failure preserves outgoing resource and rollback retains confirmed history [E]
+  Null check operator used on a null value
+  integration_test\support\controlled_backend.dart 20:54       ControlledBackend.ready
+  integration_test\support\local_playback_contract.dart 63:62  registerLocalPlaybackContract.<fn>
+  
+00:00 +0 -7: TC-09 stop applied is separate from physical release receipt
+00:00 +0 -8: TC-09 stop applied is separate from physical release receipt [E]
+  Null check operator used on a null value
+  integration_test\support\controlled_backend.dart 20:54       ControlledBackend.ready
+  integration_test\support\local_playback_contract.dart 77:62  registerLocalPlaybackContract.<fn>
+  
+00:00 +0 -8: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/playback_contract_test.dart: TC-03/32 stale epoch, generation and duplicate events never commit identity
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/playback_contract_test.dart: TC-06/07 incoming failure preserves outgoing resource and rollback retains confirmed history
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/playback_contract_test.dart: TC-09 stop applied is separate from physical release receipt
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/playback_contract_test.dart: TC-56 cancel is dispatched before an old prepare Future completes
+  ... and 4 more

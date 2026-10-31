@@ -1,0 +1,1 @@
+[{"repository":"actions/checkout","tag":"v7","commit":"3d3c42e5aac5ba805825da76410c181273ba90b1","source":"https://api.github.com/repos/actions/checkout/git/ref/tags/v7"},{"repository":"actions/setup-java","tag":"v6","commit":"b843ebf9b913146b38da2eaa7aeddf76074ae1ad","source":"https://api.github.com/repos/actions/setup-java/git/ref/tags/v6"}]

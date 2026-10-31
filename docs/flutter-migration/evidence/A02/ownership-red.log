@@ -1,0 +1,59 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/ownership_resources_test.dart
+00:00 +0: superseding a ready but unconfirmed prepare releases its consumer
+00:00 +0 -1: superseding a ready but unconfirmed prepare releases its consumer [E]
+  Expected: contains 'release:ha'
+    Actual: ['prepare:a', 'play:ha', 'prepare:b']
+     Which: does not contain 'release:ha'
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\ownership_resources_test.dart 16:5    main.<fn>
+  
+00:00 +0 -1: cancel after prepare but before confirmation cannot later commit playing
+00:00 +0 -2: cancel after prepare but before confirmation cannot later commit playing [E]
+  Expected: empty
+    Actual: ['fixture-session:1']
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\ownership_resources_test.dart 21:5    main.<fn>
+  
+00:00 +0 -2: pause and resume keep one confirmation even when play Future stays pending
+00:00 +0 -3: pause and resume keep one confirmation even when play Future stays pending [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\ownership_resources_test.dart 25:27   main.<fn>
+  
+00:00 +0 -3: authority CAS rejects old owner and invalidates its pending completion
+00:00 +0 -4: authority CAS rejects old owner and invalidates its pending completion [E]
+  Expected: not contains 'play:late'
+    Actual: ['prepare:a', 'play:late']
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\ownership_resources_test.dart 36:5    main.<fn>
+  
+00:00 +0 -4: R1 UI reconnect does not reload handles or change epochs and confirmation
+00:00 +1 -4: queue revision conflicts and same request id with changed payload are rejected
+00:00 +1 -5: queue revision conflicts and same request id with changed payload are rejected [E]
+  Expected: false
+    Actual: <true>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\ownership_resources_test.dart 49:5    main.<fn>
+  
+00:00 +1 -5: two live tracks forbid a third and old outgoing release still works across generations
+00:00 +2 -5: revocation wins over rollback without erasing already confirmed history
+00:00 +3 -5: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/ownership_resources_test.dart: authority CAS rejects old owner and invalidates its pending completion
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/ownership_resources_test.dart: cancel after prepare but before confirmation cannot later commit playing
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/ownership_resources_test.dart: pause and resume keep one confirmation even when play Future stays pending
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/ownership_resources_test.dart: queue revision conflicts and same request id with changed payload are rejected
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/ownership_resources_test.dart: superseding a ready but unconfirmed prepare releases its consumer

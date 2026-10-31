@@ -1,0 +1,43 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Running Gradle task 'assembleRelease'...                        
+Picked up project-scoped Java proxy options (address omitted)
+Warning: SDK processing. This version only understands SDK XML versions up to 3 but an SDK XML file of version 4 was encountered. This can happen if you use versions of Android Studio and the command-line tools that were released at different times.
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Font asset "MaterialIcons-Regular.otf" was tree-shaken, reducing it from 1645184 to 1420 bytes (99.9% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileReleaseKotlin'.
+> Could not isolate parameters org.jetbrains.kotlin.gradle.internal.transforms.ClasspathEntrySnapshotTransform$Parameters_Decorated@4121690f of artifact transform ClasspathEntrySnapshotTransform
+   > Could not isolate value org.jetbrains.kotlin.gradle.internal.transforms.ClasspathEntrySnapshotTransform$Parameters_Decorated@4121690f of type ClasspathEntrySnapshotTransform.Parameters
+      > Could not resolve all files for configuration ':app:kotlinBuildToolsApiClasspath'.
+         > Could not download kotlin-daemon-embeddable-2.4.0.jar (org.jetbrains.kotlin:kotlin-daemon-embeddable:2.4.0)
+            > Could not get resource 'https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-daemon-embeddable/2.4.0/kotlin-daemon-embeddable-2.4.0.jar'.
+               > Could not GET 'https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-daemon-embeddable/2.4.0/kotlin-daemon-embeddable-2.4.0.jar'.
+                  > The server may not support the client's requested TLS protocol versions: (TLSv1.2, TLSv1.3). You may need to configure the client to allow other protocols to be used. For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/build_environment.html#sec:gradle_system_properties in the Gradle documentation.
+                     > Remote host terminated the handshake
+
+* Try:
+> Run the 'artifactTransforms' report task to view details about registered transforms.
+> Review the documentation on Artifact Transforms at https://docs.gradle.org/9.3.1/userguide/artifact_transforms.html.
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 39m 52s
+Running Gradle task 'assembleRelease'...                         2392.7s
+[!] Gradle threw an error while downloading artifacts from the network.
+Retrying Gradle Build: #1, wait time: 100ms
+Running Gradle task 'assembleRelease'...                        
+Picked up project-scoped Java proxy options (address omitted)
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Picked up project-scoped Java proxy options (address omitted)
+
+Picked up project-scoped Java proxy options (address omitted)
+
+Picked up project-scoped Java proxy options (address omitted)
+
+Running Gradle task 'assembleRelease'...                         1232.1s
+√ Built build\app\outputs\flutter-apk\app-release.apk (45.2MB)

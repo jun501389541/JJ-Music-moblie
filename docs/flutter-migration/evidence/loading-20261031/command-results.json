@@ -1,0 +1,30 @@
+[
+  {
+    "log": "android-red.log",
+    "exitCode": 1
+  },
+  {
+    "log": "android-initial.log",
+    "exitCode": 0
+  },
+  {
+    "log": "android-final.log",
+    "exitCode": 0
+  },
+  {
+    "log": "windows-final.log",
+    "exitCode": 0
+  },
+  {
+    "log": "final-check-summary.log",
+    "exitCode": 0
+  },
+  {
+    "log": "normal-install.log",
+    "exitCode": 0
+  },
+  {
+    "log": "normal-start.log",
+    "exitCode": 0
+  }
+]

@@ -1,0 +1,107 @@
+[
+  {
+    "file": "androidx.media3/media3-common/1.11.0/6df68ed61f4df1ef3a1874ac5a31b756eaddc91d/media3-common-1.11.0.aar",
+    "bytes": 643517,
+    "sha256": "6641b3779dc4a160183b94eefe641fa077bd262543c3c6fe303342a3c29c6ec9"
+  },
+  {
+    "file": "androidx.media3/media3-common/1.11.0/95f9f5ecc3235b93f9185cf808890ec7d2fea702/media3-common-1.11.0.module",
+    "bytes": 12151,
+    "sha256": "21619c7818840aaea4b15d78c1737cc666be81ff23383327d1fe54cfa7292505"
+  },
+  {
+    "file": "androidx.media3/media3-common/1.11.0/e728220f914bca584d9e713ee6ed656e95ef8e5b/media3-common-1.11.0.pom",
+    "bytes": 9848,
+    "sha256": "2a5965ff854b35afeea3d8636db2c3d23fedfdea048edce3b221c7e62c528370"
+  },
+  {
+    "file": "androidx.media3/media3-container/1.11.0/2c008f9527f2d76743b9fb49fe945c47b6d1ce1d/media3-container-1.11.0.pom",
+    "bytes": 1725,
+    "sha256": "dadb4850002322170c78b53b6325a16118562aaf568800ba7a635799f42d417c"
+  },
+  {
+    "file": "androidx.media3/media3-container/1.11.0/7a090d2d6a189a97d23e96ead3d72d32771a0f1c/media3-container-1.11.0.aar",
+    "bytes": 67351,
+    "sha256": "930fca2f018f06f1d08c12599f8c97f31eddbd728edee5de06eb53a882f8fc54"
+  },
+  {
+    "file": "androidx.media3/media3-container/1.11.0/b9121e7b166d3b62fe03abd2dbcc5d5c025db898/media3-container-1.11.0.module",
+    "bytes": 3278,
+    "sha256": "cc6d18081d74e396c7d2ce2e34fa89273415f2a55fb0f8cd81fab81378e8e044"
+  },
+  {
+    "file": "androidx.media3/media3-database/1.11.0/6b821756f11487ef88f035fcf4dd1d7f93b111cf/media3-database-1.11.0.module",
+    "bytes": 3268,
+    "sha256": "5f517c7f2dbac522e6c78f657469cd2f86a614d090c998bb0306b9f8c789bf75"
+  },
+  {
+    "file": "androidx.media3/media3-database/1.11.0/d766fcc83e6a166baa1dbd92a61ab5da233e447a/media3-database-1.11.0.aar",
+    "bytes": 7197,
+    "sha256": "520e6f814e42a7d428db187ac073b453c0fcba0f4f5f4edd1cf33fafd2cfb740"
+  },
+  {
+    "file": "androidx.media3/media3-database/1.11.0/dea3c001054cfd41d6a8ba73c9b11ec40947e2f5/media3-database-1.11.0.pom",
+    "bytes": 1723,
+    "sha256": "951d795778085be496046b11743865f8c4f9e7c385ed163c38bcacb185177e5e"
+  },
+  {
+    "file": "androidx.media3/media3-datasource/1.11.0/459eb7737c5f59a81ab204c3df75460926b24387/media3-datasource-1.11.0.module",
+    "bytes": 3790,
+    "sha256": "46545dafbebf3e8802ac0d5ce2e44e0742a5338bf4efecc3592cc35308e0aec7"
+  },
+  {
+    "file": "androidx.media3/media3-datasource/1.11.0/db815ab7872342978255fec3baa4c9bf166ab016/media3-datasource-1.11.0.pom",
+    "bytes": 2145,
+    "sha256": "2d2b4880cd083dff95bae49c79920bbc9506c97d211e5441f5c84f00f6ccaf99"
+  },
+  {
+    "file": "androidx.media3/media3-datasource/1.11.0/f45b0955a50d78e448c054fc70588360c069165b/media3-datasource-1.11.0.aar",
+    "bytes": 168578,
+    "sha256": "490fd23c7562a6a1183d63bf854b291ae3a77dce5a151450aa1937148c80c60b"
+  },
+  {
+    "file": "androidx.media3/media3-decoder/1.11.0/33b482428b9c56e7b764590cfed58bfe9dfd2acf/media3-decoder-1.11.0.aar",
+    "bytes": 19422,
+    "sha256": "c3bcd704959026e0d644b0260f9e682a2e26e7357c2cf82d990bcb323f800d49"
+  },
+  {
+    "file": "androidx.media3/media3-decoder/1.11.0/3c24408236bea0fab6ee6264aa901522723eb5e3/media3-decoder-1.11.0.module",
+    "bytes": 3264,
+    "sha256": "c24001d6d098ea5bbe2ea1558ddd7d8b59ddc5e32ab2ca3ea867a5ab133215dc"
+  },
+  {
+    "file": "androidx.media3/media3-decoder/1.11.0/743a3bcc5330ac7269efb84dc63fc3c94747aa93/media3-decoder-1.11.0.pom",
+    "bytes": 1721,
+    "sha256": "f1af02b4a8aaef146a7a38a2a40b3e24fa68b6abeb5759e4437bb837c4384df2"
+  },
+  {
+    "file": "androidx.media3/media3-exoplayer/1.11.0/2a4be076d06f18fe440a3d8d56a0120f5f04a27f/media3-exoplayer-1.11.0.pom",
+    "bytes": 2974,
+    "sha256": "512bbc61741043aa72b9c2d9309ba70eaff2e835102be39b02431e78ffe3c7e5"
+  },
+  {
+    "file": "androidx.media3/media3-exoplayer/1.11.0/5209960a3d64005f6c5ea00748b1a69cd78afcb6/media3-exoplayer-1.11.0.aar",
+    "bytes": 1703240,
+    "sha256": "29d4827d9bcf5316b9c69821453a67ad83b7a3bd928ef17eaedc0c97e63df8e8"
+  },
+  {
+    "file": "androidx.media3/media3-exoplayer/1.11.0/defb5f5ae888132679ec55f959342cf968a8342e/media3-exoplayer-1.11.0.module",
+    "bytes": 5120,
+    "sha256": "ebd5412fbfd2b8fabf2d2fe3e85f926b742b574a3ece6e191c98aec5c3383104"
+  },
+  {
+    "file": "androidx.media3/media3-extractor/1.11.0/36e2f021bcc7e3e5223a846a7c80ad0d5e23a813/media3-extractor-1.11.0.aar",
+    "bytes": 822728,
+    "sha256": "f1bf2e5a74dc232941c36ca6565226861992b30708866227f199d11df650bd8a"
+  },
+  {
+    "file": "androidx.media3/media3-extractor/1.11.0/57eaacc2f48452854ce41e100d7cffb1e18178ae/media3-extractor-1.11.0.pom",
+    "bytes": 2139,
+    "sha256": "f0f68398875088676404b6643773ba3c534a5edf68f12c2c9e73c27210752e05"
+  },
+  {
+    "file": "androidx.media3/media3-extractor/1.11.0/6ad41d7b26e45cd4decf57950f3c36d0a43cc8ec/media3-extractor-1.11.0.module",
+    "bytes": 3780,
+    "sha256": "5bb34495183b0c42ddcb218c54d8610938d03ba7779fe3685c91c4a0d133a3e8"
+  }
+]

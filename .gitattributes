@@ -1,0 +1,5 @@
+# Frozen evidence hashes refer to exact bytes. Do not apply platform EOL conversion.
+* -text
+*.wav binary
+*.png binary
+*.ico binary

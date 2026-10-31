@@ -1,0 +1,6 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Analyzing flutter...                                            
+
+   info - The private field _backendEpoch could be 'final'. Try making the field 'final' - lib\application\playback\playback_coordinator.dart:28:19 - prefer_final_fields
+
+1 issue found. (ran in 5.1s)

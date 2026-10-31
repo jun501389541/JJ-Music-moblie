@@ -1,0 +1,44 @@
+{
+  "device": "35a63609",
+  "model": "2211133C",
+  "entrypoint": "lib/p1_focus_probe.dart",
+  "apkSha256": "1bf579197f2ce6f34c30db40c27518a66ef069d84287ade7dd9ec3338e0ca1d4",
+  "proof": {
+    "stage": "focus-passed",
+    "checks": [
+      "os-transient-loss-pauses-without-auto-resume",
+      "explicit-resume-same-confirmation",
+      "injected-stale-listener-ignored",
+      "stop-during-interruption-remains-stopped",
+      "natural-end-final-release-abandons-focus"
+    ],
+    "consumers": 0,
+    "focusHeld": false,
+    "events": [
+      "engine-create",
+      "activity-create",
+      "prepare-native-1",
+      "focus-acquired",
+      "service-create",
+      "focus--2",
+      "focus-abandoned",
+      "focus-acquired",
+      "focus-abandoned",
+      "focus-acquired",
+      "focus-stale-ignored",
+      "focus--2",
+      "focus-abandoned",
+      "released-native-1",
+      "service-destroy",
+      "prepare-native-2",
+      "focus-acquired",
+      "service-create",
+      "released-native-2",
+      "focus-abandoned",
+      "service-destroy"
+    ],
+    "pid": 30887,
+    "probeToken": "e9f2f9da851048049783a10ba36c603d",
+    "releaseMode": true
+  }
+}

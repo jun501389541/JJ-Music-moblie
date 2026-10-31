@@ -1,0 +1,58 @@
+{
+  "contract": "p1-a02-v1",
+  "protocolVersion": 1,
+  "snapshotFormatVersion": 1,
+  "authorityContractSha256": "4ceb24ee1a16c8b1c37dc6deef431ee14679857613ebcb828bc3c5c0283dae17",
+  "files": [
+    {
+      "path": "clients/flutter/lib/domain/playback/contracts.dart",
+      "sha256": "d70b904fdd82d0ff17179992df923475df6317e7f97f192d6d402075896c3099",
+      "bytes": 5467
+    },
+    {
+      "path": "clients/flutter/lib/domain/playback/recovery_snapshot.dart",
+      "sha256": "d5764066df152f22e7ced421d42e22a3c49e57bf75f7375a72a4e3e7f82a1839",
+      "bytes": 3276
+    },
+    {
+      "path": "clients/flutter/lib/application/playback/playback_coordinator.dart",
+      "sha256": "de83797e6234f5780656c4b0c01b4492525dfa6dbbc2ff92be4295ea6254e8a8",
+      "bytes": 20828
+    },
+    {
+      "path": "clients/flutter/lib/data/prototype_recovery/file_snapshot_store.dart",
+      "sha256": "34bcd439135725cde8107adb7d3c447e51870ae18a67c1bb649c2bf4cea4d946",
+      "bytes": 4856
+    },
+    {
+      "path": "clients/flutter/integration_test/support/controlled_backend.dart",
+      "sha256": "d0fe80c1c8857dc35b76e54170f299d23fae5c4f1d291ba689bcd0939e52a9ff",
+      "bytes": 2518
+    },
+    {
+      "path": "clients/flutter/integration_test/support/local_playback_contract.dart",
+      "sha256": "b0a1ab724058caafbd50ec1a2b2a88f23a9b9716e2910bc00ac0fa965c6c91db",
+      "bytes": 5819
+    },
+    {
+      "path": "clients/flutter/fixtures/local_playback/README.md",
+      "sha256": "d5c8939af0c0357bca1a2b93d970a93b11fce46cfcd22a80e069e98abc48fe8c",
+      "bytes": 639
+    },
+    {
+      "path": "clients/flutter/fixtures/local_playback/SHA256SUMS",
+      "sha256": "6e02d390b6251360a3d7ce73a757011eda1b605882553631845e1e3773d0b95f",
+      "bytes": 156
+    },
+    {
+      "path": "clients/flutter/fixtures/local_playback/tone-a.wav",
+      "sha256": "e7f5e0c48bc0a088e5c26273ea995869125bb663201e1cc61dedf6b80a336512",
+      "bytes": 8044
+    },
+    {
+      "path": "clients/flutter/fixtures/local_playback/tone-b.wav",
+      "sha256": "6fde56220d24f304bd37270879473bcdf775b9968df2d7a4e4e679bd504c38e7",
+      "bytes": 8044
+    }
+  ]
+}

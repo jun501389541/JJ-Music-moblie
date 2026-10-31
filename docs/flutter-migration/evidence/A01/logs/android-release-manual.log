@@ -1,0 +1,4 @@
+Android release APK / emulator-5554 / actual input and UI checks
+入口检查通过: True
+共享合同检查通过: True
+快照写读检查通过: True

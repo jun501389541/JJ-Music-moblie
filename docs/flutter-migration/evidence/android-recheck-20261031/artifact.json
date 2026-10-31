@@ -1,0 +1,11 @@
+{
+  "path": "clients/flutter/build/app/outputs/flutter-apk/app-release.apk",
+  "entrypoint": "lib/main.dart",
+  "device": "35a63609",
+  "model": "2211133C",
+  "system": "Android13/API33",
+  "sha256": "dd724416c04ddade769d96f0610b21df12a8163ee10e9277fb4c0d87f9cb5eb1",
+  "bytes": 48509302,
+  "signing": "internal template debug signing",
+  "test": "A01 native smoke1 passed including3 checks; ordinary release rebuilt and installed separately"
+}

@@ -1,0 +1,16 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_media_test.dart
+Building Windows application...                                    16.3s
+√ Built build\windows\x64\runner\Debug\jj_music_mobile.exe
+00:00 +0: Windows OS SMTC pause/play/seek/next route to shared authority
+SMTC_OS_pause={"found":true,"accepted":true,"positionTicks":2790000,"endTicks":120000000}
+
+SMTC_OS_play={"found":true,"accepted":true,"positionTicks":5000000,"endTicks":120000000}
+
+SMTC_OS_seek={"found":true,"accepted":true,"positionTicks":6790000,"endTicks":120000000}
+
+SMTC_OS_next={"found":true,"accepted":true,"positionTicks":31790000,"endTicks":120000000}
+
+SMTC_NATIVE_JSON={"commands":[],"lastNativeError":"","mirrorStage":"complete","mirroredDuration":12000,"mirroredStatus":"stopped","osResult":{},"samples":[],"smtcEnabled":true}
+00:02 +1: (tearDownAll)
+00:02 +1: All tests passed!

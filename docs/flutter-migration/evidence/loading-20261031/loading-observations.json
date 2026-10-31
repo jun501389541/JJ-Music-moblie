@@ -1,0 +1,104 @@
+[
+  {
+    "scenario": "pause",
+    "pid": 2333,
+    "beforeControl": {
+      "blocked": true,
+      "readers": 1,
+      "closed": false,
+      "cancelled": false,
+      "bytesRead": 0,
+      "waitedMs": 0
+    },
+    "commitMs": 7,
+    "readerClosedMs": 1338,
+    "finalGate": {
+      "blocked": false,
+      "readers": 0,
+      "closed": true,
+      "cancelled": true,
+      "bytesRead": 384044,
+      "waitedMs": 837
+    },
+    "rawNativeStates": [
+      2,
+      3
+    ]
+  },
+  {
+    "scenario": "stop",
+    "pid": 2333,
+    "beforeControl": {
+      "blocked": true,
+      "readers": 1,
+      "closed": false,
+      "cancelled": false,
+      "bytesRead": 0,
+      "waitedMs": 0
+    },
+    "commitMs": 25,
+    "readerClosedMs": 129,
+    "finalGate": {
+      "blocked": false,
+      "readers": 0,
+      "closed": true,
+      "cancelled": true,
+      "bytesRead": 0,
+      "waitedMs": 895
+    },
+    "rawNativeStates": [
+      2
+    ]
+  },
+  {
+    "scenario": "cancel",
+    "pid": 2333,
+    "beforeControl": {
+      "blocked": true,
+      "readers": 1,
+      "closed": false,
+      "cancelled": false,
+      "bytesRead": 0,
+      "waitedMs": 0
+    },
+    "commitMs": 4,
+    "readerClosedMs": 110,
+    "finalGate": {
+      "blocked": false,
+      "readers": 0,
+      "closed": true,
+      "cancelled": true,
+      "bytesRead": 0,
+      "waitedMs": 859
+    },
+    "rawNativeStates": [
+      2
+    ]
+  },
+  {
+    "scenario": "new-play",
+    "pid": 2333,
+    "beforeControl": {
+      "blocked": true,
+      "readers": 1,
+      "closed": false,
+      "cancelled": false,
+      "bytesRead": 0,
+      "waitedMs": 0
+    },
+    "commitMs": 8,
+    "readerClosedMs": 431,
+    "finalGate": {
+      "blocked": false,
+      "readers": 0,
+      "closed": true,
+      "cancelled": true,
+      "bytesRead": 0,
+      "waitedMs": 863
+    },
+    "rawNativeStates": [
+      2,
+      3
+    ]
+  }
+]

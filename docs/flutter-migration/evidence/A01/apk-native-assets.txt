@@ -1,0 +1,6 @@
+lib/arm64-v8a/libapp.so 4260744
+lib/arm64-v8a/libflutter.so 11763360
+lib/armeabi-v7a/libapp.so 4719176
+lib/armeabi-v7a/libflutter.so 8625652
+lib/x86_64/libapp.so 4457352
+lib/x86_64/libflutter.so 13074608

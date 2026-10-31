@@ -1,0 +1,11 @@
+Formatted lib\platform\local\native_evidence.dart
+Formatted lib\platform\local\native_local_backend.dart
+Formatted lib\app\runtime\local_runtime.dart
+Formatted lib/app/local_diagnostic_page.dart
+Formatted lib/main.dart
+Formatted test\platform\native_evidence_test.dart
+Formatted test\platform\native_release_test.dart
+Formatted integration_test/android_local_playback_test.dart
+Formatted integration_test/windows_local_playback_test.dart
+Formatted tool/generate_long_fixture.dart
+Formatted 10 files (10 changed) in 0.04 seconds.

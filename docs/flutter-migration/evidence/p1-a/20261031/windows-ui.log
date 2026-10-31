@@ -1,0 +1,8 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/local_diagnostic_ui_test.dart
+Building Windows application...                                    11.8s
+√ Built build\windows\x64\runner\Debug\jj_music_mobile.exe
+00:00 +0: actual diagnostic buttons and route reconstruction retain playback
+DIAGNOSTIC_UI_windows: buttons, real route replacement, saved revision 1, consumers0
+00:02 +1: (tearDownAll)
+00:02 +1: All tests passed!

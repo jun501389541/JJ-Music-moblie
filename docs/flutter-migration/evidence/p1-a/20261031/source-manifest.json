@@ -1,0 +1,472 @@
+[
+  {
+    "path": ".gitignore",
+    "bytes": 89,
+    "sha256": "1810900db2265eed68b8b7b82f470d494e430ac3ebaaad0be89d4ab2f321ae8f"
+  },
+  {
+    "path": "clients/flutter/.gitignore",
+    "bytes": 815,
+    "sha256": "b3d6d50e108f5c06e222f0109751ecae25f9ddc154b3b53c9947d115ad91d7dc"
+  },
+  {
+    "path": "clients/flutter/.metadata",
+    "bytes": 1118,
+    "sha256": "5a1b22663045ff9e27d58171ee993d0f12eb6734ec0a72e45cfd27949e612306"
+  },
+  {
+    "path": "clients/flutter/README.md",
+    "bytes": 3750,
+    "sha256": "9aae41cda7067f2dd6978f47d95d9750b6e158ac0b4a4082509ed62a237dda6e"
+  },
+  {
+    "path": "clients/flutter/analysis_options.yaml",
+    "bytes": 1525,
+    "sha256": "fc302dc92270b006a98a89de02cf931fd347ceccd3b32ea5400a6cec72aa6171"
+  },
+  {
+    "path": "clients/flutter/android/.gitignore",
+    "bytes": 267,
+    "sha256": "c9af75dbc2c8aa867476a09426c80b178c4aeed8b9393ae48503eedfa3273d71"
+  },
+  {
+    "path": "clients/flutter/android/app/build.gradle.kts",
+    "bytes": 1937,
+    "sha256": "54738822412b11759fb01fad8cf462809db0a2cb97c5db8d3c2692a375051049"
+  },
+  {
+    "path": "clients/flutter/android/app/src/debug/AndroidManifest.xml",
+    "bytes": 385,
+    "sha256": "b01a4541a8144c15bc617bab7eb267c99fa1476368fbbda5a12cdbf4e316a34c"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/AndroidManifest.xml",
+    "bytes": 2692,
+    "sha256": "47705e077a5e7956f2f2663ed52a0b13f1b90343544f7317f600aba93f180cef"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/FixtureProvider.kt",
+    "bytes": 1255,
+    "sha256": "1a1c21f17604fa49ca7b9aecd91380124ac0f49652d413f3d10b0cde56e06ef7"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt",
+    "bytes": 10645,
+    "sha256": "d2618043baedd827841112096c7a9c97aaa78b4adac2c97af063f7bfe0ee1763"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/MainActivity.kt",
+    "bytes": 1009,
+    "sha256": "0a14b2be5d228355c2d2bfcbe9b6487de8bae5e76604ddbb124b0814c33491b0"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/PlaybackService.kt",
+    "bytes": 2002,
+    "sha256": "566027ee5098db06b0140b39f16ec400b7e52c97107b625bfc23e6cc85421fca"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/res/drawable-v21/launch_background.xml",
+    "bytes": 450,
+    "sha256": "dca312ec77de83e43ef70a825c299b51451247286c29167d62f19165750b8793"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/res/drawable/launch_background.xml",
+    "bytes": 446,
+    "sha256": "2df60e2cfbee873ce2858088cf003e6b93498f2f568476da437610467ea1a9d7"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+    "bytes": 544,
+    "sha256": "6a7c8f0d703e3682108f9662f813302236240d3f8f638bb391e32bfb96055fef"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+    "bytes": 442,
+    "sha256": "c7c0c0189145e4e32a401c61c9bdc615754b0264e7afae24e834bb81049eaf81"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+    "bytes": 721,
+    "sha256": "e14aa40904929bf313fded22cf7e7ffcbf1d1aac4263b5ef1be8bfce650397aa"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+    "bytes": 1031,
+    "sha256": "4d470bf22d5c17d84edc5f82516d1ba8a1c09559cd761cefb792f86d9f52b540"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+    "bytes": 1443,
+    "sha256": "3c34e1f298d0c9ea3455d46db6b7759c8211a49e9ec6e44b635fc5c87dfb4180"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/res/values-night/styles.xml",
+    "bytes": 1013,
+    "sha256": "ea763597dc1a84c8034251caee98d7753e0fbf57340ffc94677427de4b537516"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/res/values/styles.xml",
+    "bytes": 1014,
+    "sha256": "cca15a99b59380a548bf6a890f7ca5380ee509b1f9bbb2f5f9ec3589fa25c2f7"
+  },
+  {
+    "path": "clients/flutter/android/app/src/profile/AndroidManifest.xml",
+    "bytes": 385,
+    "sha256": "b01a4541a8144c15bc617bab7eb267c99fa1476368fbbda5a12cdbf4e316a34c"
+  },
+  {
+    "path": "clients/flutter/android/build.gradle.kts",
+    "bytes": 561,
+    "sha256": "218f400e3fff31c9c986a2535dfb974560e1b4d33cc27b7c1fee96a2b7e44454"
+  },
+  {
+    "path": "clients/flutter/android/build/reports/problems/problems-report.html",
+    "bytes": 135958,
+    "sha256": "fba00cf7e115aeb7a4aab73cf516c34f2ee7979f1f624f079a64d70d4dc8433f"
+  },
+  {
+    "path": "clients/flutter/android/gradle.properties",
+    "bytes": 306,
+    "sha256": "7714698de712a7872e371f0dbae626c255fc83ac1c15e52e7cd9fcaa241b5092"
+  },
+  {
+    "path": "clients/flutter/android/gradle/wrapper/gradle-wrapper.properties",
+    "bytes": 298,
+    "sha256": "27b60181eaa94c21d16f2fccb9afecebc42036e2cc6b60acb9113d98b6bfad2a"
+  },
+  {
+    "path": "clients/flutter/android/settings.gradle.kts",
+    "bytes": 796,
+    "sha256": "092ba880c8d4a07591aafc082f45deedc9afcf60c113a4bb3d13cbe1a1fce9de"
+  },
+  {
+    "path": "clients/flutter/fixtures/local_playback/README.md",
+    "bytes": 831,
+    "sha256": "f51f5aa05de163d28c411f3b47fb4a8a7d94a35429bc6035914a86a23474cdc6"
+  },
+  {
+    "path": "clients/flutter/fixtures/local_playback/SHA256SUMS",
+    "bytes": 237,
+    "sha256": "41e44d8e88a6663e6964103e2100f25b2a4f029c2ce23a940aee6b4afc49f6eb"
+  },
+  {
+    "path": "clients/flutter/fixtures/local_playback/tone-a.wav",
+    "bytes": 8044,
+    "sha256": "e7f5e0c48bc0a088e5c26273ea995869125bb663201e1cc61dedf6b80a336512"
+  },
+  {
+    "path": "clients/flutter/fixtures/local_playback/tone-b.wav",
+    "bytes": 8044,
+    "sha256": "6fde56220d24f304bd37270879473bcdf775b9968df2d7a4e4e679bd504c38e7"
+  },
+  {
+    "path": "clients/flutter/fixtures/local_playback/tone-long.wav",
+    "bytes": 384044,
+    "sha256": "38288bb41430cef5d69b99ecbc356d3a6bd9db2ffa6d907156ba8a825bfbd094"
+  },
+  {
+    "path": "clients/flutter/integration_test/android_background_probe_test.dart",
+    "bytes": 1543,
+    "sha256": "163562c5f67bd8e24a22770b31b09a58d0af175e68a3574a0bf2b82e9e1a091c"
+  },
+  {
+    "path": "clients/flutter/integration_test/android_lifecycle_test.dart",
+    "bytes": 3024,
+    "sha256": "9026596fc6c8e344b8524329d2d449f64a71295d7d657a54d0e644995c7cc819"
+  },
+  {
+    "path": "clients/flutter/integration_test/android_local_playback_test.dart",
+    "bytes": 3065,
+    "sha256": "0c5ecad54244df2ee141616469a4b8faef6f2999598650dc4f9052754eb4f68f"
+  },
+  {
+    "path": "clients/flutter/integration_test/diagnostic_smoke_test.dart",
+    "bytes": 2098,
+    "sha256": "c5e0d6d3dacef11804679c942c86fd0ca167344b45a07ddf6da216e9e51164ab"
+  },
+  {
+    "path": "clients/flutter/integration_test/local_diagnostic_ui_test.dart",
+    "bytes": 3762,
+    "sha256": "34d5fc989e230f0111749a322913d66f3d8cd571d06f35ac3479e4f1ea2a2525"
+  },
+  {
+    "path": "clients/flutter/integration_test/runtime_recovery_test.dart",
+    "bytes": 3307,
+    "sha256": "20df5b6252a2eb16d714e09b45d78627acc1ad07c9e87272e2f5e2575a1fa867"
+  },
+  {
+    "path": "clients/flutter/integration_test/support/controlled_backend.dart",
+    "bytes": 2518,
+    "sha256": "d0fe80c1c8857dc35b76e54170f299d23fae5c4f1d291ba689bcd0939e52a9ff"
+  },
+  {
+    "path": "clients/flutter/integration_test/support/local_playback_contract.dart",
+    "bytes": 5819,
+    "sha256": "b0a1ab724058caafbd50ec1a2b2a88f23a9b9716e2910bc00ac0fa965c6c91db"
+  },
+  {
+    "path": "clients/flutter/integration_test/support/native_failure_cases.dart",
+    "bytes": 4950,
+    "sha256": "d98c6eec32e54ec8b51075b562dab064fb3581498127847765c8626311783957"
+  },
+  {
+    "path": "clients/flutter/integration_test/windows_local_playback_test.dart",
+    "bytes": 3986,
+    "sha256": "8fa6b36d0bb94fba46c6c815f3de0bfce953c5aa9725cc6fe1b0862574326c74"
+  },
+  {
+    "path": "clients/flutter/integration_test/windows_media_test.dart",
+    "bytes": 2230,
+    "sha256": "3deb75663f328a601c54f9017f07c758ebb24c7b0605b8281e885c391ac99604"
+  },
+  {
+    "path": "clients/flutter/lib/app/diagnostic_checks.dart",
+    "bytes": 4374,
+    "sha256": "b046c40ae3b0dc5abb378a03a445637f7d022c7e974e950120200af1e144d0e8"
+  },
+  {
+    "path": "clients/flutter/lib/app/local_diagnostic_page.dart",
+    "bytes": 3340,
+    "sha256": "3ffcb762e7e7957f5f55ac1fcc5486382addbde72ba621b4f08ff420281a9ce2"
+  },
+  {
+    "path": "clients/flutter/lib/app/runtime/local_runtime.dart",
+    "bytes": 7911,
+    "sha256": "64fff1fb8d862e30fd821b96e0e0e6f30ec6edc52e91c33c400274eadb419b44"
+  },
+  {
+    "path": "clients/flutter/lib/application/playback/playback_coordinator.dart",
+    "bytes": 24457,
+    "sha256": "0e0ab46e28e2581870e23acb4bc46fea0f77723fb22f58878d7231d25fb09bba"
+  },
+  {
+    "path": "clients/flutter/lib/data/prototype_recovery/file_snapshot_store.dart",
+    "bytes": 4856,
+    "sha256": "34bcd439135725cde8107adb7d3c447e51870ae18a67c1bb649c2bf4cea4d946"
+  },
+  {
+    "path": "clients/flutter/lib/domain/playback/contracts.dart",
+    "bytes": 5585,
+    "sha256": "4fab29f819df6b1a7988bdb732c9ff3e9fa66462f541be5d5407ceb3421971cb"
+  },
+  {
+    "path": "clients/flutter/lib/domain/playback/recovery_snapshot.dart",
+    "bytes": 3276,
+    "sha256": "d5764066df152f22e7ced421d42e22a3c49e57bf75f7375a72a4e3e7f82a1839"
+  },
+  {
+    "path": "clients/flutter/lib/main.dart",
+    "bytes": 2677,
+    "sha256": "56bbf4c4fc9d1270a573866aad49d5b5533e6a727b0393d0e46d1b8f17d4ea94"
+  },
+  {
+    "path": "clients/flutter/lib/p1_process_probe.dart",
+    "bytes": 3081,
+    "sha256": "3f09b4caed5adc6e02f8bd27807a0831a945b1c67f751af322591553fca0fd7c"
+  },
+  {
+    "path": "clients/flutter/lib/platform/local/native_evidence.dart",
+    "bytes": 729,
+    "sha256": "47b7680be58a42412f7ed6e4e18df2f8293514bfdcf4461f47ced75264cc7625"
+  },
+  {
+    "path": "clients/flutter/lib/platform/local/native_local_backend.dart",
+    "bytes": 8149,
+    "sha256": "e7377c37eb12924525f13ef0e0685715ca4406fa9e37ce8148dff88445423ad4"
+  },
+  {
+    "path": "clients/flutter/pubspec.lock",
+    "bytes": 7812,
+    "sha256": "167b4fcb24ec1c6f3b1ae0954638ba122cd8e7f435be286f737c0be6720a2729"
+  },
+  {
+    "path": "clients/flutter/pubspec.yaml",
+    "bytes": 412,
+    "sha256": "10a969b4406cd71276beaf6ca0ae2564dce715af0b3c5693a32b514311f58be7"
+  },
+  {
+    "path": "clients/flutter/test/app_bootstrap_test.dart",
+    "bytes": 634,
+    "sha256": "f18fd5a018c2b998726facc642c484083473352423f29ea168ae742d4ea85f7c"
+  },
+  {
+    "path": "clients/flutter/test/diagnostic_checks_test.dart",
+    "bytes": 540,
+    "sha256": "975357632f1aaadc296f19187cfac73cae1a7861e7f4a4706676351e856ba1ce"
+  },
+  {
+    "path": "clients/flutter/test/platform/native_evidence_test.dart",
+    "bytes": 1727,
+    "sha256": "e364ae233694e4ad1cc7acd9ec3557301a052792dc150b9c6f1bbefb321997e2"
+  },
+  {
+    "path": "clients/flutter/test/platform/native_release_test.dart",
+    "bytes": 2130,
+    "sha256": "c231e301a2054b72560f371541d97b5d6da1651c5ddcab013ae08271a654f458"
+  },
+  {
+    "path": "clients/flutter/test/playback/ownership_resources_test.dart",
+    "bytes": 8875,
+    "sha256": "b4a7a2162fa86353ec1d9d7c34e24d1cf0f3fb6c6a54c949b3d28543a382944b"
+  },
+  {
+    "path": "clients/flutter/test/playback/playback_contract_test.dart",
+    "bytes": 119,
+    "sha256": "9546f3e1d8936773c2b84d8acbe87ead47278bebcf2e1c5833714cb4d89ed60c"
+  },
+  {
+    "path": "clients/flutter/test/playback/preconfirmation_rollback_test.dart",
+    "bytes": 1663,
+    "sha256": "977a17cc0463e55998b403aec8ba6493a0251b27446ccf969891abe606faa0cb"
+  },
+  {
+    "path": "clients/flutter/test/playback/recovery_restore_test.dart",
+    "bytes": 3089,
+    "sha256": "0c79c8762ff23d32fed4bb1bb361cb2d61f8f80e6a8566eac879d6e548c0a4f6"
+  },
+  {
+    "path": "clients/flutter/test/playback/recovery_snapshot_store_test.dart",
+    "bytes": 3999,
+    "sha256": "7224fc7a00fb884d0b0c81b87751eeef64b8f5cb383a7d4ae8a533e87124cabd"
+  },
+  {
+    "path": "clients/flutter/tool/fetch_gradle.ps1",
+    "bytes": 2275,
+    "sha256": "ddf34c033a628dbc11bacfff605f61d99f2705d90354a7555515880135d99ee9"
+  },
+  {
+    "path": "clients/flutter/tool/flutter_with_proxy.ps1",
+    "bytes": 2204,
+    "sha256": "842282794a19a541dd55af706e4b38f1e5b1ff3b33d0d912dec9a089c7b8d1a0"
+  },
+  {
+    "path": "clients/flutter/tool/generate_fixtures.dart",
+    "bytes": 1354,
+    "sha256": "854c094e9ca2a945edb81c94f0294734062327f1496cb9576d133800b02ee53f"
+  },
+  {
+    "path": "clients/flutter/tool/generate_long_fixture.dart",
+    "bytes": 1010,
+    "sha256": "3e72ff3fa1cecef3759fdea6a9137d80f5463866cf61acb50b5e4602e279bde7"
+  },
+  {
+    "path": "clients/flutter/tool/gradle_repositories.init.gradle",
+    "bytes": 1073,
+    "sha256": "2caaf5cd3f6b820a5c47d82c91bf5cc81e0eda20c858dfe2340c8264d8873d8f"
+  },
+  {
+    "path": "clients/flutter/tool/run_android_recovery_probe.ps1",
+    "bytes": 2567,
+    "sha256": "7663563b4ae7001a777c1953e02574fdfd9d1ac933adaa4c45846d802e67a9b6"
+  },
+  {
+    "path": "clients/flutter/tool/run_windows_recovery_probe.ps1",
+    "bytes": 2950,
+    "sha256": "6bde71a2977762d6fda5bc10da124c098006e52e1121725fa827cd30998d8079"
+  },
+  {
+    "path": "clients/flutter/windows/.gitignore",
+    "bytes": 308,
+    "sha256": "955e3110cb16494ee76e1cd5df47e2c212309eb94a49a123fe87f718de413cb8"
+  },
+  {
+    "path": "clients/flutter/windows/CMakeLists.txt",
+    "bytes": 4274,
+    "sha256": "f6b7eab0f9fc3301853f2a2bda54e6aff2eb6894b559b96dabe927cebf99bc49"
+  },
+  {
+    "path": "clients/flutter/windows/flutter/CMakeLists.txt",
+    "bytes": 3851,
+    "sha256": "bd05e3268b2f246bcbafdb778165fe67a7bafdba04eb73599502563a67b8ae7e"
+  },
+  {
+    "path": "clients/flutter/windows/flutter/generated_plugin_registrant.cc",
+    "bytes": 164,
+    "sha256": "82e02567f2faf5e732dc92a2fb0d01104f7ba8c48973f8cfd41a860b4fac3f3b"
+  },
+  {
+    "path": "clients/flutter/windows/flutter/generated_plugin_registrant.h",
+    "bytes": 302,
+    "sha256": "dbc11635d7b1ba1887adf40df5b83d634e9c3ab0bee34510c71528bb4d73602a"
+  },
+  {
+    "path": "clients/flutter/windows/flutter/generated_plugins.cmake",
+    "bytes": 743,
+    "sha256": "286346b0d5303dc6b41072f9582d4c52bca35255b85b27b310f858e264dfdc56"
+  },
+  {
+    "path": "clients/flutter/windows/runner/CMakeLists.txt",
+    "bytes": 2456,
+    "sha256": "9c140c8309450ca98d83a4301c966ba3865f325b7564006b2e1a361134f456a1"
+  },
+  {
+    "path": "clients/flutter/windows/runner/Runner.rc",
+    "bytes": 3202,
+    "sha256": "2af5d123eb7cd9a14ee475dedf3e15ffb88bd335a079b07a7c49c6f916300813"
+  },
+  {
+    "path": "clients/flutter/windows/runner/flutter_window.cpp",
+    "bytes": 2342,
+    "sha256": "fe47a016c32ce4486a033820e0403ed889e95530c84276d0849097dc7bfcf0c5"
+  },
+  {
+    "path": "clients/flutter/windows/runner/flutter_window.h",
+    "bytes": 1041,
+    "sha256": "b16d095758a3fb310d07835c2dcccaff2e0c2cf765857e2f247034ec31ca88f0"
+  },
+  {
+    "path": "clients/flutter/windows/runner/local_playback.cpp",
+    "bytes": 12514,
+    "sha256": "421cbf6a0f014d8b465087df9c8a61bc37a200dcf9f03e965bfcc349dc71971f"
+  },
+  {
+    "path": "clients/flutter/windows/runner/local_playback.h",
+    "bytes": 268,
+    "sha256": "5bb077e72d086945eff377a006a73c37316798e7f56d8d9c8a4868d36249618b"
+  },
+  {
+    "path": "clients/flutter/windows/runner/main.cpp",
+    "bytes": 1408,
+    "sha256": "9f57884829bf6cf1cca2e35a1664e36a4d544e9ef9c8801805ee0bde02246999"
+  },
+  {
+    "path": "clients/flutter/windows/runner/resource.h",
+    "bytes": 448,
+    "sha256": "d0e8bf7835468b4b6b1f8f0747f2e8f25c19841f2df2ac60aaa584ddae3aa7c6"
+  },
+  {
+    "path": "clients/flutter/windows/runner/resources/app_icon.ico",
+    "bytes": 33772,
+    "sha256": "c098d3fc85cacff98b8e69811b48e9f0d852fcee278132d794411d978869cbf8"
+  },
+  {
+    "path": "clients/flutter/windows/runner/runner.exe.manifest",
+    "bytes": 616,
+    "sha256": "639a56233fcd8cbcb8bbefcd93e4680ec2664f32d9acfb3d2ec1d8726a96e090"
+  },
+  {
+    "path": "clients/flutter/windows/runner/smtc_probe.cpp",
+    "bytes": 1712,
+    "sha256": "cdc3243c3fdb246a8ab9e5d97571f2b904293ae1b70d8f641703f1e618477570"
+  },
+  {
+    "path": "clients/flutter/windows/runner/utils.cpp",
+    "bytes": 2237,
+    "sha256": "a128b67b9f3c2579e2ecef5b0dde2c33f222a097cdfe5da2a3067c73d1485b39"
+  },
+  {
+    "path": "clients/flutter/windows/runner/utils.h",
+    "bytes": 691,
+    "sha256": "832e246b6758253f89016fb0374b30791242e97ad950d27fc678b3d9feacfdc4"
+  },
+  {
+    "path": "clients/flutter/windows/runner/win32_window.cpp",
+    "bytes": 8822,
+    "sha256": "4e4f4dcf8e86ea6e097562cb3476039e693449bd8045367538afee579c017511"
+  },
+  {
+    "path": "clients/flutter/windows/runner/win32_window.h",
+    "bytes": 3624,
+    "sha256": "d154cf89ba85f820631a9b5bedacbe64fc5815e428fe6bc5da579ce649f69841"
+  }
+]

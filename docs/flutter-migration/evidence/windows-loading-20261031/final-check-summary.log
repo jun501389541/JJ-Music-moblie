@@ -1,0 +1,14 @@
+pub-get passed
+contract hashes passed
+format passed
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Analyzing flutter...                                            
+
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - integration_test\android_service_registration_test.dart:26:9 - curly_braces_in_flow_control_structures
+
+1 issue found. (ran in 14.9s)
+Write-Error: 
+Line |
+   2 |  … ck passed'; .\tool\check.ps1 -Mode All -EvidenceDirectory "$e/final-c …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | analyze failed (exit 1); see E:\Workspace\project\JJ-Music-mobile\docs\flutter-migration\evidence\windows-loading-20261031\final-checks

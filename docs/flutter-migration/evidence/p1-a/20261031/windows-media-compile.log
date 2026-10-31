@@ -1,0 +1,45 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_media_test.dart
+Building Windows application...                                 
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,60): error C3779: “winrt::impl::consume_Windows_Foundation_Collections_IIterable<D,T>::begin”: 要使用将会返回“auto”的函数，必须首先定义此函数 [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,60): error C3779:         with [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,60): error C3779:         [ [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,60): error C3779:             D=winrt::Windows::Foundation::Collections::IVectorView<winrt::Windows::Media::Control::GlobalSystemMediaTransportControlsSession>, [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,60): error C3779:             T=winrt::Windows::Media::Control::GlobalSystemMediaTransportControlsSession [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,60): error C3779:         ] [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,60): error C3779: “winrt::impl::consume_Windows_Foundation_Collections_IIterable<D,T>::end”: 要使用将会返回“auto”的函数，必须首先定义此函数 [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,60): error C3779:         with [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,60): error C3779:         [ [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,60): error C3779:             D=winrt::Windows::Foundation::Collections::IVectorView<winrt::Windows::Media::Control::GlobalSystemMediaTransportControlsSession>, [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,60): error C3779:             T=winrt::Windows::Media::Control::GlobalSystemMediaTransportControlsSession [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,60): error C3779:         ] [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,60): error C3536: “<begin>$L0”: 初始化之前无法使用 [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,60): error C3536: “<end>$L0”: 初始化之前无法使用 [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(152,62): error C2100: 无法取消引用类型为“<错误>”的操作数 [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(92,14): error C2664: “void flutter::MethodChannel<flutter::EncodableValue>::SetMethodCallHandler(const std::function<void (const flutter::MethodCall<T> &,std::unique_ptr<flutter::MethodResult<T>,std::default_delete<flutter::MethodResult<T>>>)> &) const”: 无法将参数 1 从“LocalPlayback::Impl::{ctor}::<lambda_3>”转换为“const std::function<void (const flutter::MethodCall<T> &,std::unique_ptr<flutter::MethodResult<T>,std::default_delete<flutter::MethodResult<T>>>)> &” [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(92,14): error C2664:         with [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(92,14): error C2664:         [ [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(92,14): error C2664:             T=flutter::EncodableValue [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+E:\Workspace\project\JJ-Music-mobile\clients\flutter\windows\runner\local_playback.cpp(92,14): error C2664:         ] [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+Building Windows application...                                    15.3s
+00:00 +0 -1: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_media_test.dart [E]
+  Failed to load "E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_media_test.dart": Build process failed.
+  package:flutter_tools/src/base/common.dart 34:3                    throwToolExit
+  package:flutter_tools/src/windows/build_windows.dart 262:5         _runBuild
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/windows/build_windows.dart 118:5         buildWindows
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/windows/windows_device.dart 60:5         WindowsDevice.buildForDevice
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/desktop_device.dart 108:7                DesktopDevice.startApp
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/test/integration_test_device.dart 59:39  IntegrationTestTestDevice.start
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/test/flutter_platform.dart 679:51        FlutterPlatform._startTest.<fn>
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/base/async_guard.dart 108:24             asyncGuard.<fn>
+  
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_media_test.dart: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_media_test.dart

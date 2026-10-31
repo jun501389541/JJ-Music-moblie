@@ -1,0 +1,97 @@
+[
+  {
+    "path": "docs/flutter-migration/05-architecture-contracts.md",
+    "sha256": "15002f2ae22e360d9675c1105454ded1a289b05d7899d14ba5e8f87073bdd8ab",
+    "bytes": 19782
+  },
+  {
+    "path": "docs/flutter-migration/06-audio-backends.md",
+    "sha256": "6b770cc2d206e8104d971a77da0c0d95005f5c77cb7105380651ee66dc1c1b8d",
+    "bytes": 5706
+  },
+  {
+    "path": "docs/flutter-migration/beginner-guide.md",
+    "sha256": "d5f0f09c30b66d9f689ffa14c0944efdcf3aa90578f61aac6e2e5821872acbe7",
+    "bytes": 3252
+  },
+  {
+    "path": "docs/flutter-migration/decisions/ADR-0002-runtime.md",
+    "sha256": "87339d603e6a4592904aaed9d9ce8e238016593af4690a55e0d1f858d4d822ac",
+    "bytes": 2809
+  },
+  {
+    "path": "docs/flutter-migration/decisions/ADR-0003-backends.md",
+    "sha256": "5a16b9b413af9281499838418eab8f7e35c24f2a0e0070df173d90a507c14ab2",
+    "bytes": 2561
+  },
+  {
+    "path": "docs/flutter-migration/decisions/ADR-0004-data.md",
+    "sha256": "da8d73eca1350a50f86e7f7acb3ff3dd79f65ff4efdf8d2c4972ca305189b0da",
+    "bytes": 1985
+  },
+  {
+    "path": "docs/flutter-migration/evidence/A02/20261031-freeze.md",
+    "sha256": "c5f0a92c2ee8d0a5f5342359565eff898de4c55b5bf465f26fa23ba8cd491772",
+    "bytes": 1612
+  },
+  {
+    "path": "docs/flutter-migration/evidence/p1-a/20261031/acceptance.md",
+    "sha256": "c2daaede0b992b87d5bb58d5f898dacf9464b019023e37457f024897819bfd2e",
+    "bytes": 2353
+  },
+  {
+    "path": "docs/flutter-migration/evidence/p1-a/20261031/android-event-mapping.md",
+    "sha256": "1aad8088db523871beb6de0553901daff2203a9cd4a7f575e6183ea5b884595b",
+    "bytes": 3346
+  },
+  {
+    "path": "docs/flutter-migration/evidence/p1-a/20261031/ledger.md",
+    "sha256": "072992e0053a9869b8d1cced4f43d8cfa9c5efe81df503e83564129d2687f4c9",
+    "bytes": 6614
+  },
+  {
+    "path": "docs/flutter-migration/evidence/p1-a/20261031/report.md",
+    "sha256": "ba85da47bce534eb5ebc2e4956d2deaccc4967acc24e629dabfb0ee56c9bb986",
+    "bytes": 7275
+  },
+  {
+    "path": "docs/flutter-migration/evidence/p1-a/20261031/windows-event-mapping.md",
+    "sha256": "3ab558040e4b5567b3bb0d971df970c34d99085cbfc73a31860e279ec8034f85",
+    "bytes": 3243
+  },
+  {
+    "path": "docs/flutter-migration/handoff.md",
+    "sha256": "212d3baee56fe16215e8b1edc2fe36ce3c3f5fc721d9279366ad67089046f4f4",
+    "bytes": 4351
+  },
+  {
+    "path": "docs/flutter-migration/README.md",
+    "sha256": "8dc32e26596e78283755035fbd4f7e6127d1c18089ed71b3871f6fdb435dbe1a",
+    "bytes": 7338
+  },
+  {
+    "path": "docs/flutter-migration/status.md",
+    "sha256": "8e4d72e120361cc84faf61344f7dddbe707b9fddf8e6861a6274df57b0dc43cd",
+    "bytes": 18475
+  },
+  {
+    "path": "docs/flutter-migration/tasks/conditional-branches.md",
+    "sha256": "7fb9358ff6c9c850fa54e00e6c6fb4e392f88e6e56602a472ee1095fa4abeae4",
+    "bytes": 7202
+  },
+  {
+    "path": "docs/flutter-migration/tasks/contracts-ownership.md",
+    "sha256": "b1f53ffc57ed739dcbc52a98014258e720a49dca23a262ddc03180f5dfc32b48",
+    "bytes": 6904
+  },
+  {
+    "path": "docs/flutter-migration/tasks/phase-1a.md",
+    "sha256": "89ff6469ea6b707981149beb62b40781d1c098098024a3371f14612c9c392ca8",
+    "bytes": 51682
+  },
+  {
+    "path": "docs/flutter-migration/tasks/prep-01-local-plan.md",
+    "sha256": "1248997dcba4abc54a5ae77a72361442cf6931bb7c8197fcdb75a939f08383b0",
+    "bytes": 14810
+  }
+]

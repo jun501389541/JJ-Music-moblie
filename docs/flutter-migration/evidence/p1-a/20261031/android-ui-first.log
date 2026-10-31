@@ -1,0 +1,17 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/local_diagnostic_ui_test.dart
+Running Gradle task 'assembleDebug'...                          
+Picked up JAVA_TOOL_OPTIONS: -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=7897 -Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=7897 -Dhttp.nonProxyHosts=localhost|127.*|[::1]
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Running Gradle task 'assembleDebug'...                             11.4s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           3.8s
+00:00 +0: actual diagnostic buttons and route reconstruction retain playback
+00:14 +0: actual diagnostic buttons and route reconstruction retain playback - did not complete [E]
+00:14 +0: (tearDownAll) - did not complete [E]
+00:14 +0: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/local_diagnostic_ui_test.dart: (tearDownAll) (did not complete)
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/local_diagnostic_ui_test.dart: actual diagnostic buttons and route reconstruction retain playback (did not complete)
+No tests were found.

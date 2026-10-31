@@ -1,0 +1,42 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart
+00:00 +0: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +1: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +2: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +3: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +4: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +5: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +6: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +7: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +8: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +9: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +10: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +11: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +12: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +13: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +14: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +15: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +16: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +17: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +18: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +19: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +20: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +21: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +22: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +23: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +24: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +25: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +26: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +27: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +28: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +29: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +30: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +31: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_restore_test.dart: valid empty persisted snapshot restores safe paused empty state
+00:00 +32: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_restore_test.dart: confirmed backend destruction advances only backend epoch and rejects stale events
+00:00 +33: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_restore_test.dart: R3 restore stays paused without native handles and resumes at saved position
+00:00 +34: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: TC-05 saved receipt means real bytes and a fresh store reads the same revision paused
+00:01 +35: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: concurrent out-of-order writes cannot replace a higher saved revision
+00:01 +36: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: missing, corrupt, oversized, unknown version and unavailable fixture are safe
+00:01 +37: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: interrupted temporary write and corrupt newest slot retain a last valid snapshot
+00:01 +38: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: forbidden runtime fields and oversized queues cannot be persisted
+00:01 +39: All tests passed!

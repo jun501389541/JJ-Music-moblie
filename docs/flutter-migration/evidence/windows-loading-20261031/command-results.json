@@ -1,0 +1,74 @@
+[
+  {
+    "log": "windows-red.log",
+    "exitCode": 1
+  },
+  {
+    "log": "windows-initial.log",
+    "exitCode": 0
+  },
+  {
+    "log": "windows-gate-final.log",
+    "exitCode": 0
+  },
+  {
+    "log": "windows-final.log",
+    "exitCode": 1
+  },
+  {
+    "log": "windows-local-isolated.log",
+    "exitCode": 0
+  },
+  {
+    "log": "close-error-red.log",
+    "exitCode": 1
+  },
+  {
+    "log": "close-error-green-suite.log",
+    "exitCode": 0
+  },
+  {
+    "log": "close-error-final.log",
+    "exitCode": 0
+  },
+  {
+    "log": "windows-local-final.log",
+    "exitCode": 0
+  },
+  {
+    "log": "windows-media-final.log",
+    "exitCode": 0
+  },
+  {
+    "log": "windows-runtime-final.log",
+    "exitCode": 0
+  },
+  {
+    "log": "android-final.log",
+    "exitCode": 1
+  },
+  {
+    "log": "android-service-red.log",
+    "exitCode": 1
+  },
+  {
+    "log": "android-repaired.log",
+    "exitCode": 0
+  },
+  {
+    "log": "final-check-summary.log",
+    "exitCode": 1
+  },
+  {
+    "log": "verified-summary.log",
+    "exitCode": 0
+  },
+  {
+    "log": "normal-install.log",
+    "exitCode": 0
+  },
+  {
+    "log": "normal-start.log",
+    "exitCode": 0
+  }
+]

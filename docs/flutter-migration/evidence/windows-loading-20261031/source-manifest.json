@@ -1,0 +1,56 @@
+[
+  {
+    "path": ".gitignore",
+    "bytes": 191,
+    "sha256": "a7f2fb23a667744a4d646f6fddf98d73222c945e604abe211f5fc9aedff64d9e",
+    "beforeSha256": "c3b649a0fba9709249c16555fc0f9efe30ddc74c6b77b0f7cc896bceaf578f70"
+  },
+  {
+    "path": "clients/flutter/windows/runner/local_playback.cpp",
+    "bytes": 18985,
+    "sha256": "18970c3f81956100d695fde1e16e7daa5c289d3a0fc948d9cc401287defa3848",
+    "beforeSha256": "421cbf6a0f014d8b465087df9c8a61bc37a200dcf9f03e965bfcc349dc71971f"
+  },
+  {
+    "path": "clients/flutter/windows/runner/owned_gate_stream.h",
+    "bytes": 4964,
+    "sha256": "55ba7f558abeb035e2782b93d02afc1bc5a51347429ae9d054e7458d2eabc845",
+    "beforeSha256": null
+  },
+  {
+    "path": "clients/flutter/integration_test/windows_loading_test.dart",
+    "bytes": 9838,
+    "sha256": "d3a88c9bc08859837c4d36385d9c39440b56dd4f3746ceed4d29533c76d5d491",
+    "beforeSha256": null
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt",
+    "bytes": 17404,
+    "sha256": "3da84464d6b6e523e309a11a8b6c385439b4aaf068b71293ab361bcc9b8c6b4e",
+    "beforeSha256": "46a144e9c64260b20a8bdb98ca1a051cef521e0cf5a9879ce1a483d1e1059497"
+  },
+  {
+    "path": "clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/PlaybackService.kt",
+    "bytes": 2317,
+    "sha256": "d99338c2e43d14cb3bdd43370c2d5793615232a3e1207318533bc7bb2d41d66d",
+    "beforeSha256": "566027ee5098db06b0140b39f16ec400b7e52c97107b625bfc23e6cc85421fca"
+  },
+  {
+    "path": "clients/flutter/integration_test/android_service_registration_test.dart",
+    "bytes": 1889,
+    "sha256": "836d4b43a23d34783bcf92c1493f5a09d09026c61c3ad3f5b0704acd53a550be",
+    "beforeSha256": null
+  },
+  {
+    "path": "docs/flutter-migration/status.md",
+    "bytes": 25656,
+    "sha256": "1837af1b4dd7b81f69d5c19f0df79a8781ebd244711b0febf6bfb3826887d150",
+    "beforeSha256": "cdcd1f454218d07750a92a8b50786eaa890344c070da1381d4fb36c3381a7cfa"
+  },
+  {
+    "path": "docs/flutter-migration/handoff.md",
+    "bytes": 16222,
+    "sha256": "4680a06327a862254d3c7c5d882cd6ef9e146ec08aec6a7a48450b1ad2f1f93a",
+    "beforeSha256": "6b4ef9e0403bdd5272822358954d8225af40c6edc82ae78ebfbbddefbf1dffc1"
+  }
+]

@@ -1,0 +1,14 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_restore_test.dart
+00:00 +0: R3 restore stays paused without native handles and resumes at saved position
+00:00 +0 -1: R3 restore stays paused without native handles and resumes at saved position [E]
+  NoSuchMethodError: Class 'PlaybackCoordinator' has no instance method 'restoreSnapshot'.
+  Receiver: Instance of 'PlaybackCoordinator'
+  Tried calling: restoreSnapshot(Instance of 'RecoverySnapshot')
+  dart:core                                       Object.noSuchMethod
+  test\playback\recovery_restore_test.dart 14:12  main.<fn>
+  
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_restore_test.dart: R3 restore stays paused without native handles and resumes at saved position

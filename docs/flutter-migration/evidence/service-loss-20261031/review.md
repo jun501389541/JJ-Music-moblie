@@ -1,0 +1,14 @@
+# 限定审阅及修复
+
+2026-10-31，按executing-plans/requesting-code-review使用一次只读reviewer service_loss_review。没有委派实现，没有审阅者写文件/代跑测试/提交。对比before完整路径下LocalHost.kt、PlaybackService.kt，以及新增android_service_loss_test.dart；仓库无HEAD，使用副本基线。
+
+初始顺序修复green.log的2/2通过后，审阅发现两个Important：
+
+1. serviceRegistrationRequested和activeTransportRevision均为最新全局值；旧服务stopService已请求但onDestroy未回调时，新登记可先置true。旧onDestroy会误消费新注册并以新fence暂停。不能仅靠focusEpoch/transportRevision过滤。
+2. 普通commands满32项时，安全pause入队被跳过，物理已停而共享desired仍playing。
+
+执行者补restartServiceProbe（同一平台回调内stop/start，真实旧实例销毁/新实例创建）和destroyServiceFullQueueProbe（32个seek后真实stopService）；review-red.log两项均失败：restart-race多出service-loss-paused；full-queue-loss物理暂停但desired仍playing。这些为真实onDestroy边界，不冒充OS低内存杀进程。
+
+在同一修复批完成：具体currentService实例及PlaybackService.expectedStop在真正stopService/stopSelf前标记；预期旧销毁不清最新登记、不暂停；非预期损失以现有focus/transport fence生成独立pendingSafetyPause单槽，poll才取出，不受普通队列容量限制。pending slot有界且后续新focus/transport仍可使旧事件过期；未改共享冻结合同。最终四场景及相关回归以final-android.log为准。
+
+修复后由执行者核对并跑红绿回归，没有再次派独立审阅。未审整个项目/正式后台恢复或通用命令溢出策略；不把审阅或真机单例当完整G-L通过。

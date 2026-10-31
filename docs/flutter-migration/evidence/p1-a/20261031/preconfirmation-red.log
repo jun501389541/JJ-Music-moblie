@@ -1,0 +1,25 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/preconfirmation_rollback_test.dart
+00:00 +0: preconfirmation cancel resumes still-valid old physical track
+00:00 +0 -1: preconfirmation cancel resumes still-valid old physical track [E]
+  Expected: <2>
+    Actual: <1>
+  
+  package:matcher                                        expect
+  package:flutter_test/src/widget_tester.dart 473:18     expect
+  test\playback\preconfirmation_rollback_test.dart 21:7  main.<fn>
+  
+00:00 +0 -1: preconfirmation error resumes still-valid old physical track
+00:00 +0 -2: preconfirmation error resumes still-valid old physical track [E]
+  Expected: <2>
+    Actual: <1>
+  
+  package:matcher                                        expect
+  package:flutter_test/src/widget_tester.dart 473:18     expect
+  test\playback\preconfirmation_rollback_test.dart 21:7  main.<fn>
+  
+00:00 +0 -2: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/preconfirmation_rollback_test.dart: preconfirmation cancel resumes still-valid old physical track
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/preconfirmation_rollback_test.dart: preconfirmation error resumes still-valid old physical track

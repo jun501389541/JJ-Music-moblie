@@ -1,0 +1,113 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_rebuffer_test.dart
+Building Windows application...                                    13.7s
+√ Built build\windows\x64\runner\Debug\jj_music_mobile.exe
+00:00 +0: Windows actual post-start rebuffer: recover
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following MissingPluginException was thrown running a test:
+MissingPluginException(No implementation found for method registerOwnedPcm on channel
+jj_music/local)
+
+When the exception was thrown, this was the stack:
+#0      MethodChannel._invokeMethod (package:flutter/src/services/platform_channel.dart:364:7)
+<asynchronous suspension>
+#1      main.<anonymous closure> (file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_rebuffer_test.dart:20:21)
+<asynchronous suspension>
+#2      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  Windows actual post-start rebuffer: recover
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -1: Windows actual post-start rebuffer: recover [E]
+  Test failed. See exception logs above.
+  The test description was: Windows actual post-start rebuffer: recover
+  
+00:00 +0 -1: Windows actual post-start rebuffer: pause
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following MissingPluginException was thrown running a test:
+MissingPluginException(No implementation found for method registerOwnedPcm on channel
+jj_music/local)
+
+When the exception was thrown, this was the stack:
+#0      MethodChannel._invokeMethod (package:flutter/src/services/platform_channel.dart:364:7)
+<asynchronous suspension>
+#1      main.<anonymous closure> (file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_rebuffer_test.dart:20:21)
+<asynchronous suspension>
+#2      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  Windows actual post-start rebuffer: pause
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -2: Windows actual post-start rebuffer: pause [E]
+  Test failed. See exception logs above.
+  The test description was: Windows actual post-start rebuffer: pause
+  
+00:00 +0 -2: Windows actual post-start rebuffer: stop
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following MissingPluginException was thrown running a test:
+MissingPluginException(No implementation found for method registerOwnedPcm on channel
+jj_music/local)
+
+When the exception was thrown, this was the stack:
+#0      MethodChannel._invokeMethod (package:flutter/src/services/platform_channel.dart:364:7)
+<asynchronous suspension>
+#1      main.<anonymous closure> (file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_rebuffer_test.dart:20:21)
+<asynchronous suspension>
+#2      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  Windows actual post-start rebuffer: stop
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -3: Windows actual post-start rebuffer: stop [E]
+  Test failed. See exception logs above.
+  The test description was: Windows actual post-start rebuffer: stop
+  
+00:00 +0 -3: Windows actual post-start rebuffer: new-play
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following MissingPluginException was thrown running a test:
+MissingPluginException(No implementation found for method registerOwnedPcm on channel
+jj_music/local)
+
+When the exception was thrown, this was the stack:
+#0      MethodChannel._invokeMethod (package:flutter/src/services/platform_channel.dart:364:7)
+<asynchronous suspension>
+#1      main.<anonymous closure> (file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_rebuffer_test.dart:20:21)
+<asynchronous suspension>
+#2      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  Windows actual post-start rebuffer: new-play
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -4: Windows actual post-start rebuffer: new-play [E]
+  Test failed. See exception logs above.
+  The test description was: Windows actual post-start rebuffer: new-play
+  
+00:00 +0 -4: (tearDownAll)
+00:00 +0 -4: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_rebuffer_test.dart: Windows actual post-start rebuffer: new-play
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_rebuffer_test.dart: Windows actual post-start rebuffer: pause
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_rebuffer_test.dart: Windows actual post-start rebuffer: recover
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_rebuffer_test.dart: Windows actual post-start rebuffer: stop
+EXIT=1

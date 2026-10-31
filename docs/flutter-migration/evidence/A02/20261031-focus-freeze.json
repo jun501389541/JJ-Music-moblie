@@ -1,0 +1,110 @@
+{
+  "contract": "p1-a02-v2.2",
+  "supersedes": "p1-a02-v2.1",
+  "protocolVersion": 1,
+  "snapshotFormatVersion": 1,
+  "authorityContractSha256": "15002f2ae22e360d9675c1105454ded1a289b05d7899d14ba5e8f87073bdd8ab",
+  "files": [
+    {
+      "path": "clients/flutter/fixtures/local_playback/README.md",
+      "bytes": 831,
+      "sha256": "f51f5aa05de163d28c411f3b47fb4a8a7d94a35429bc6035914a86a23474cdc6"
+    },
+    {
+      "path": "clients/flutter/fixtures/local_playback/SHA256SUMS",
+      "bytes": 237,
+      "sha256": "41e44d8e88a6663e6964103e2100f25b2a4f029c2ce23a940aee6b4afc49f6eb"
+    },
+    {
+      "path": "clients/flutter/fixtures/local_playback/tone-a.wav",
+      "bytes": 8044,
+      "sha256": "e7f5e0c48bc0a088e5c26273ea995869125bb663201e1cc61dedf6b80a336512"
+    },
+    {
+      "path": "clients/flutter/fixtures/local_playback/tone-b.wav",
+      "bytes": 8044,
+      "sha256": "6fde56220d24f304bd37270879473bcdf775b9968df2d7a4e4e679bd504c38e7"
+    },
+    {
+      "path": "clients/flutter/fixtures/local_playback/tone-long.wav",
+      "bytes": 384044,
+      "sha256": "38288bb41430cef5d69b99ecbc356d3a6bd9db2ffa6d907156ba8a825bfbd094"
+    },
+    {
+      "path": "clients/flutter/integration_test/support/controlled_backend.dart",
+      "bytes": 2518,
+      "sha256": "d0fe80c1c8857dc35b76e54170f299d23fae5c4f1d291ba689bcd0939e52a9ff"
+    },
+    {
+      "path": "clients/flutter/integration_test/support/local_playback_contract.dart",
+      "bytes": 5819,
+      "sha256": "b0a1ab724058caafbd50ec1a2b2a88f23a9b9716e2910bc00ac0fa965c6c91db"
+    },
+    {
+      "path": "clients/flutter/integration_test/support/native_failure_cases.dart",
+      "bytes": 5114,
+      "sha256": "2bed5fc5803b8d622b281544528fd5652b8520f93380fba936a7402872d43684"
+    },
+    {
+      "path": "clients/flutter/lib/application/playback/playback_coordinator.dart",
+      "bytes": 24457,
+      "sha256": "0e0ab46e28e2581870e23acb4bc46fea0f77723fb22f58878d7231d25fb09bba"
+    },
+    {
+      "path": "clients/flutter/lib/data/prototype_recovery/file_snapshot_store.dart",
+      "bytes": 4856,
+      "sha256": "34bcd439135725cde8107adb7d3c447e51870ae18a67c1bb649c2bf4cea4d946"
+    },
+    {
+      "path": "clients/flutter/lib/domain/playback/contracts.dart",
+      "bytes": 5585,
+      "sha256": "4fab29f819df6b1a7988bdb732c9ff3e9fa66462f541be5d5407ceb3421971cb"
+    },
+    {
+      "path": "clients/flutter/lib/domain/playback/recovery_snapshot.dart",
+      "bytes": 3276,
+      "sha256": "d5764066df152f22e7ced421d42e22a3c49e57bf75f7375a72a4e3e7f82a1839"
+    },
+    {
+      "path": "clients/flutter/lib/platform/local/native_evidence.dart",
+      "bytes": 729,
+      "sha256": "47b7680be58a42412f7ed6e4e18df2f8293514bfdcf4461f47ced75264cc7625"
+    },
+    {
+      "path": "clients/flutter/lib/platform/local/native_local_backend.dart",
+      "bytes": 8793,
+      "sha256": "591180b551499daed476f433ad23ab10385240834c0ef68470f234029f0cf678"
+    },
+    {
+      "path": "clients/flutter/test/platform/native_evidence_test.dart",
+      "bytes": 1727,
+      "sha256": "e364ae233694e4ad1cc7acd9ec3557301a052792dc150b9c6f1bbefb321997e2"
+    },
+    {
+      "path": "clients/flutter/test/platform/native_release_test.dart",
+      "bytes": 2130,
+      "sha256": "c231e301a2054b72560f371541d97b5d6da1651c5ddcab013ae08271a654f458"
+    },
+    {
+      "path": "clients/flutter/test/playback/preconfirmation_rollback_test.dart",
+      "bytes": 1663,
+      "sha256": "977a17cc0463e55998b403aec8ba6493a0251b27446ccf969891abe606faa0cb"
+    },
+    {
+      "path": "clients/flutter/test/playback/recovery_restore_test.dart",
+      "bytes": 3089,
+      "sha256": "0c79c8762ff23d32fed4bb1bb361cb2d61f8f80e6a8566eac879d6e548c0a4f6"
+    },
+    {
+      "path": "clients/flutter/tool/generate_long_fixture.dart",
+      "bytes": 1010,
+      "sha256": "3e72ff3fa1cecef3759fdea6a9137d80f5463866cf61acb50b5e4602e279bde7"
+    },
+    {
+      "path": "clients/flutter/test/platform/native_focus_command_test.dart",
+      "bytes": 3535,
+      "sha256": "b63db39c5d96eb2fe8cff9b729c2de6f3f32578b0c492f3da36a496a8b58856b"
+    }
+  ],
+  "changeKind": "Focus transport revision fencing; public protocol and snapshot unchanged"
+}

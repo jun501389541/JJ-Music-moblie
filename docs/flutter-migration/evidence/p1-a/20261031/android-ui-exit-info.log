@@ -1,0 +1,20 @@
+ACTIVITY MANAGER PROCESS EXIT INFO (dumpsys activity exit-info)
+Last Timestamp of Persistence Into Persistent Storage: 2026-10-31 10:18:06.452
+  package: dev.jjmusic.diagnostics.jj_music_mobile
+    Historical Process Exit for uid=10357
+        ApplicationExitInfo #0:
+          timestamp=2026-10-31 10:23:36.231 pid=29643 realUid=10357 packageUid=10357 definingUid=10357 user=0
+          process=dev.jjmusic.diagnostics.jj_music_mobile reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=325 pss=0.00 rss=0.00 description=stop dev.jjmusic.diagnostics.jj_music_mobile due to from process:29711 state=empty trace=null
+        ApplicationExitInfo #1:
+          timestamp=2026-10-31 10:22:28.126 pid=29447 realUid=10357 packageUid=10357 definingUid=10357 user=0
+          process=dev.jjmusic.diagnostics.jj_music_mobile reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=325 pss=0.00 rss=0.00 description=stop dev.jjmusic.diagnostics.jj_music_mobile due to from process:29499 state=empty trace=null
+        ApplicationExitInfo #2:
+          timestamp=2026-10-31 10:22:26.526 pid=29354 realUid=10357 packageUid=10357 definingUid=10357 user=0
+          process=dev.jjmusic.diagnostics.jj_music_mobile reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=300 pss=0.00 rss=0.00 description=stop dev.jjmusic.diagnostics.jj_music_mobile due to from process:29432 state=empty trace=null
+        ApplicationExitInfo #3:
+          timestamp=2026-10-31 10:22:24.080 pid=28915 realUid=10357 packageUid=10357 definingUid=10357 user=0
+          process=dev.jjmusic.diagnostics.jj_music_mobile reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=125 pss=82MB rss=196MB description=stop dev.jjmusic.diagnostics.jj_music_mobile due to installPackageLI state=empty trace=null

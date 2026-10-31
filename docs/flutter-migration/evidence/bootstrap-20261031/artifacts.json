@@ -1,0 +1,20 @@
+[
+  {
+    "path": "clients/flutter/build/app/outputs/flutter-apk/app-release.apk",
+    "entrypoint": "lib/main.dart",
+    "bytes": 48509302,
+    "sha256": "dd724416c04ddade769d96f0610b21df12a8163ee10e9277fb4c0d87f9cb5eb1"
+  },
+  {
+    "path": "clients/flutter/build/windows/x64/runner/Release/jj_music_mobile.exe",
+    "entrypoint": "lib/main.dart",
+    "bytes": 253440,
+    "sha256": "4389c187b32c3a2d5ff64d25517545a9c4ea79047b897d472fab8936c2ed67bc"
+  },
+  {
+    "path": "clients/flutter/build/windows/x64/runner/Release/data/app.so",
+    "entrypoint": "lib/main.dart",
+    "bytes": 4866952,
+    "sha256": "308a18d8e498fc456b1c1e68278ecfc495c3c2c8bb3f6f285747a7305bc49284"
+  }
+]

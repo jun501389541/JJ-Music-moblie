@@ -1,0 +1,60 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_local_playback_test.dart
+Building Windows application...                                    21.7s
+√ Built build\windows\x64\runner\Debug\jj_music_mobile.exe
+00:00 +0: Windows native local transport uses shared identities and releases
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: prepare-cancelled
+
+When the exception was thrown, this was the stack:
+#4      NativeLocalBackend.cancelPrepare (package:jj_music_mobile/platform/local/native_local_backend.dart:125:20)
+#5      PlaybackCoordinator._invalidatePrepare.<anonymous closure> (package:jj_music_mobile/application/playback/playback_coordinator.dart:297:31)
+#6      PlaybackCoordinator._dispatch (package:jj_music_mobile/application/playback/playback_coordinator.dart:154:18)
+#7      PlaybackCoordinator._invalidatePrepare (package:jj_music_mobile/application/playback/playback_coordinator.dart:297:7)
+#8      PlaybackCoordinator.stop (package:jj_music_mobile/application/playback/playback_coordinator.dart:385:5)
+#9      main.<anonymous closure> (file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_local_playback_test.dart:46:19)
+#11     main.<anonymous closure> (file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_local_playback_test.dart:21:17)
+#12     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:29)
+#14     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:189:25)
+#15     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:19)
+#17     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1942:5)
+#20     TestWidgetsFlutterBinding._runTest (package:flutter_test/src/binding.dart:1927:10)
+#21     LiveTestWidgetsFlutterBinding.runTest (package:flutter_test/src/binding.dart:3060:12)
+#22     IntegrationTestWidgetsFlutterBinding.runTest (package:integration_test/integration_test.dart:237:17)
+#23     testWidgets.<anonymous closure> (package:flutter_test/src/widget_tester.dart:184:24)
+#24     Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:253:25)
+#26     Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:252:15)
+#31     Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:250:17)
+#32     Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:318:17)
+#37     Invoker._waitForOutstandingCallbacks (package:test_api/src/backend/invoker.dart:314:5)
+#38     Invoker._onRun.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:457:21)
+#40     Invoker._onRun.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:455:15)
+#45     Invoker._onRun.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:445:11)
+#46     Invoker._guardIfGuarded (package:test_api/src/backend/invoker.dart:500:15)
+#47     Invoker._onRun.<anonymous closure> (package:test_api/src/backend/invoker.dart:444:9)
+#54     Invoker._onRun (package:test_api/src/backend/invoker.dart:442:11)
+#55     LiveTestController.run (package:test_api/src/backend/live_test_controller.dart:161:11)
+#56     RemoteListener._runLiveTest.<anonymous closure> (package:test_api/src/backend/remote_listener.dart:320:16)
+#61     RemoteListener._runLiveTest (package:test_api/src/backend/remote_listener.dart:319:5)
+#62     RemoteListener._serializeTest.<anonymous closure> (package:test_api/src/backend/remote_listener.dart:261:7)
+#80     _GuaranteeSink.add (package:stream_channel/src/guarantee_channel.dart:125:12)
+#81     new _MultiChannel.<anonymous closure> (package:stream_channel/src/multi_channel.dart:159:31)
+#83     CastStreamSubscription._onData (dart:_internal/async_cast.dart:95:11)
+#97     _GuaranteeSink.add (package:stream_channel/src/guarantee_channel.dart:125:12)
+#98     main.<anonymous closure> (file:///C:/Users/50138/AppData/Local/Temp/flutter_tools.fc38b451/flutter_test_listener.d0f98c9a/listener.dart:56:22)
+#101    _runExtension (dart:developer-patch/developer.dart:113:23)
+(elided 65 frames from dart:async and package:stack_trace)
+
+The test description was:
+  Windows native local transport uses shared identities and releases
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +0 -1: Windows native local transport uses shared identities and releases [E]
+  Test failed. See exception logs above.
+  The test description was: Windows native local transport uses shared identities and releases
+  
+00:02 +0 -1: (tearDownAll)
+00:02 +0 -1: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_local_playback_test.dart: Windows native local transport uses shared identities and releases

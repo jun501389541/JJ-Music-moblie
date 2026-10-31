@@ -1,0 +1,8 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/runtime_recovery_test.dart
+Building Windows application...                                    23.8s
+√ Built build\windows\x64\runner\Debug\jj_music_mobile.exe
+00:00 +0: R1 widget replacement, exclusive ownership, native destruction and paused resume
+RUNTIME_RECOVERY={"platform":"windows","pid":16236,"oldHandle":"native-1","coordinatorEpoch":1793433219985362,"backendEpoch":2,"confirmations":["local-16236-1793433219985:1","local-16236-1793433219985:2"]}
+00:01 +1: (tearDownAll)
+00:01 +1: All tests passed!

@@ -1,0 +1,150 @@
+[
+  {
+    "scenario": "pause",
+    "commitMs": 0,
+    "drainedMs": 1283,
+    "beforeControl": {
+      "blocked": true,
+      "bytesRead": 0,
+      "cancelled": false,
+      "closed": false,
+      "readers": 1,
+      "sourceClosed": false,
+      "streamClosed": false,
+      "waitedMs": 0,
+      "nativeState": 1
+    },
+    "finalGate": {
+      "blocked": false,
+      "bytesRead": 646248,
+      "cancelled": true,
+      "closed": true,
+      "readers": 0,
+      "sourceClosed": true,
+      "streamClosed": true,
+      "waitedMs": 697
+    },
+    "nativeStates": [
+      1,
+      3,
+      4
+    ]
+  },
+  {
+    "scenario": "stop",
+    "commitMs": 1,
+    "drainedMs": 102,
+    "beforeControl": {
+      "blocked": true,
+      "bytesRead": 0,
+      "cancelled": false,
+      "closed": false,
+      "readers": 1,
+      "sourceClosed": false,
+      "streamClosed": false,
+      "waitedMs": 0,
+      "nativeState": 1
+    },
+    "finalGate": {
+      "blocked": false,
+      "bytesRead": 0,
+      "cancelled": true,
+      "closed": true,
+      "readers": 0,
+      "sourceClosed": true,
+      "streamClosed": true,
+      "waitedMs": 833
+    },
+    "nativeStates": [
+      1
+    ]
+  },
+  {
+    "scenario": "cancel",
+    "commitMs": 0,
+    "drainedMs": 102,
+    "beforeControl": {
+      "blocked": true,
+      "bytesRead": 0,
+      "cancelled": false,
+      "closed": false,
+      "readers": 1,
+      "sourceClosed": false,
+      "streamClosed": false,
+      "waitedMs": 0,
+      "nativeState": 1
+    },
+    "finalGate": {
+      "blocked": false,
+      "bytesRead": 0,
+      "cancelled": true,
+      "closed": true,
+      "readers": 0,
+      "sourceClosed": true,
+      "streamClosed": true,
+      "waitedMs": 829
+    },
+    "nativeStates": [
+      1
+    ]
+  },
+  {
+    "scenario": "new-play",
+    "commitMs": 0,
+    "drainedMs": 406,
+    "beforeControl": {
+      "blocked": true,
+      "bytesRead": 0,
+      "cancelled": false,
+      "closed": false,
+      "readers": 1,
+      "sourceClosed": false,
+      "streamClosed": false,
+      "waitedMs": 0,
+      "nativeState": 1
+    },
+    "finalGate": {
+      "blocked": false,
+      "bytesRead": 0,
+      "cancelled": true,
+      "closed": true,
+      "readers": 0,
+      "sourceClosed": true,
+      "streamClosed": true,
+      "waitedMs": 724
+    },
+    "nativeStates": [
+      1,
+      3,
+      4
+    ]
+  },
+  {
+    "scenario": "no-poll-release",
+    "elapsedMs": 7,
+    "gate": {
+      "blocked": false,
+      "bytesRead": 0,
+      "cancelled": true,
+      "closed": true,
+      "readers": 0,
+      "sourceClosed": true,
+      "streamClosed": true,
+      "waitedMs": 1
+    }
+  },
+  {
+    "scenario": "close-error-retry",
+    "gate": {
+      "blocked": false,
+      "bytesRead": 0,
+      "cancelled": true,
+      "closed": true,
+      "readers": 0,
+      "sourceClosed": true,
+      "streamClosed": true,
+      "waitedMs": 5
+    },
+    "lastNativeError": "owned-injected-source-close"
+  }
+]

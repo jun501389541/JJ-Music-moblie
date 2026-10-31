@@ -1,0 +1,22 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Running Gradle task 'assembleRelease'...                        
+Picked up project-scoped Java proxy options (address omitted)
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Settings file 'E:\Workspace\project\JJ-Music-mobile\clients\flutter\android\settings.gradle.kts' line: 20
+
+* What went wrong:
+Error resolving plugin [id: 'dev.flutter.flutter-plugin-loader', version: '1.0.0']
+> Build was configured to prefer settings repositories over project repositories but repository 'maven' was added by settings file 'settings.gradle.kts'
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 15s
+Running Gradle task 'assembleRelease'...                           15.9s
+Gradle task assembleRelease failed with exit code 1

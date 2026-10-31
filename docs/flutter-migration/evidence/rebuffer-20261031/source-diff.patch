@@ -1,0 +1,364 @@
+diff --git a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+--- a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
++++ b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+@@ -13,6 +13,7 @@
+ import androidx.media3.common.AudioAttributes
+ import androidx.media3.common.C
+ import androidx.media3.exoplayer.ExoPlayer
++import androidx.media3.exoplayer.DefaultLoadControl
+ import androidx.media3.datasource.DataSource
+ import androidx.media3.datasource.DefaultDataSource
+ import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
+@@ -40,6 +41,7 @@
+     private var focusEpoch = 0L
+     private var pendingServiceStarts = 0
+     private var serviceRegistrationRequested = false
++    private var lastNativeFailure = ""
+     private var capturedFocusCallback: ((Int) -> Unit)? = null
+     private var currentFocusCallback: ((Int) -> Unit)? = null
+     private val life = arrayListOf<Map<String, Any>>()
+@@ -69,19 +71,34 @@
+                         result.success((context.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive)
+                         return@setMethodCallHandler
+                     }
++                    "diagnosticForeground" -> {
++                        val interactive = (context.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive
++                        val locked = (context.getSystemService(Context.KEYGUARD_SERVICE) as android.app.KeyguardManager).isKeyguardLocked
++                        result.success(interactive && !locked && activity?.hasWindowFocus() == true)
++                        return@setMethodCallHandler
++                    }
+                     "proof" -> android.util.Log.i("JJOwnedProbe", call.argument<String>("json") ?: "{}")
+                     "prepare" -> {
++                        lastNativeFailure = ""
+                         check(players.size < 2 && id != null && !players.containsKey(id))
+                         val uri = Uri.parse(call.argument<String>("path")!!)
+                         val ownFile = uri.scheme == "file" && (File(uri.path!!).canonicalPath.startsWith(context.cacheDir.canonicalPath + "/") || File(uri.path!!).canonicalPath.startsWith(context.codeCacheDir.canonicalPath + "/"))
+                         val ownContent = uri.scheme == "content" && uri.authority == "${context.packageName}.fixture"
+                         check(ownFile || ownContent) { "only-owned-fixtures" }
+-                        val gated = ownContent && uri.getQueryParameter("gate") == "initial"
++                        val gateMode = uri.getQueryParameter("gate")
++                        val rebuffer = ownContent && gateMode == "rebuffer"
++                        val gated = ownContent && (gateMode == "initial" || rebuffer)
+                         val builder = ExoPlayer.Builder(context)
+                         if (gated) {
+                             // Only the explicit owned fixture can select the gate.
+                             check(uri.path == "/tone-long")
+-                            val gate = OwnedReadGate()
++                            // Frozen PCM16 mono/16kHz fixture: header + 2s.
++                            val gate = OwnedReadGate(if (rebuffer) 64044L else 0L)
++                            if (rebuffer) {
++                                // Diagnostic-only, not ordinary playback tuning.
++                                builder.setLoadControl(DefaultLoadControl.Builder()
++                                    .setBufferDurationsMs(500, 1000, 250, 250).build())
++                            }
+                             readGates.remove(id)
+                             if (readGates.size >= 8) {
+                                 val old = readGates.keys.firstOrNull { !players.containsKey(it) }
+@@ -161,10 +178,14 @@
+                             stopPlaybackService()
+                         }
+                     }
+-                    "fixtureUri", "gatedFixtureUri" -> {
++                    "fixtureUri", "gatedFixtureUri", "rebufferFixtureUri" -> {
+                         val target = File(context.cacheDir, "owned-tone-long.wav")
+                         context.assets.open("flutter_assets/fixtures/local_playback/tone-long.wav").use { source -> target.outputStream().use { source.copyTo(it) } }
+-                        val query = if (call.method == "gatedFixtureUri") "?gate=initial" else ""
++                        val query = when (call.method) {
++                            "gatedFixtureUri" -> "?gate=initial"
++                            "rebufferFixtureUri" -> "?gate=rebuffer"
++                            else -> ""
++                        }
+                         result.success("content://${context.packageName}.fixture/tone-long$query"); return@setMethodCallHandler
+                     }
+                     "allowOwnedRead" -> readGates[id]?.allow()
+@@ -204,13 +225,17 @@
+                             "position" to p.currentPosition, "duration" to if (p.duration == C.TIME_UNSET) 0L else p.duration,
+                             "ended" to (p.playbackState == Player.STATE_ENDED), "error" to (p.playerError != null)) }
+                         val validCommands = commands.filter { it["focusEpoch"] == null || it["focusEpoch"] == focusEpoch }
+-                        result.success(mapOf("samples" to samples, "commands" to validCommands, "lifecycle" to life.toList(), "host" to instance, "pid" to Process.myPid(), "focusHeld" to (focus != null), "focusEpoch" to focusEpoch, "readGates" to readGates.mapValues { it.value.snapshot() }, "pendingServiceStarts" to pendingServiceStarts, "servicePresent" to (session != null), "screenInteractive" to (context.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive))
++                        result.success(mapOf("samples" to samples, "commands" to validCommands, "lifecycle" to life.toList(), "host" to instance, "pid" to Process.myPid(), "focusHeld" to (focus != null), "focusEpoch" to focusEpoch, "readGates" to readGates.mapValues { it.value.snapshot() }, "pendingServiceStarts" to pendingServiceStarts, "servicePresent" to (session != null), "lastNativeError" to lastNativeFailure, "screenInteractive" to (context.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive))
+                         commands.clear(); return@setMethodCallHandler
+                     }
+                     else -> { result.notImplemented(); return@setMethodCallHandler }
+                 }
+                 result.success(null)
+-            } catch (e: Exception) { result.error("android-local", e.javaClass.simpleName, null) }
++            } catch (e: Exception) {
++                // Whitelisted stage/class, never dump paths, URIs or sources.
++                lastNativeFailure = "${call.method}:${e.javaClass.simpleName}" + if (e.message == "focus-denied") ":focus-denied" else ""
++                result.error("android-local", e.javaClass.simpleName, null)
++            }
+         }
+         engine.dartExecutor.executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault())
+         timeline("engine-create")
+diff --git a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/OwnedReadGate.kt b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/OwnedReadGate.kt
+--- a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/OwnedReadGate.kt
++++ b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/OwnedReadGate.kt
+@@ -6,7 +6,7 @@
+ import java.io.InterruptedIOException
+ 
+ /** Test-only local byte-read gate. Never blocks the platform/control thread. */
+-class OwnedReadGate {
++class OwnedReadGate(private val prefixBytes: Long = 0) {
+     private val lock = Object()
+     private var allowed = false
+     private var cancelled = false
+@@ -15,6 +15,7 @@
+     private var closes = 0
+     private var bytesRead = 0L
+     private var waitedMs = 0L
++    private var furthestPosition = 0L
+ 
+     fun allow() = synchronized(lock) {
+         if (!cancelled) allowed = true
+@@ -27,23 +28,26 @@
+     fun snapshot(): Map<String, Any> = synchronized(lock) {
+         mapOf("blocked" to (waiting > 0), "readers" to readers,
+             "closed" to (closes > 0 && readers == 0), "cancelled" to cancelled,
+-            "bytesRead" to bytesRead, "waitedMs" to waitedMs)
++            "bytesRead" to bytesRead, "waitedMs" to waitedMs,
++            "prefixBytes" to prefixBytes, "furthestPosition" to furthestPosition)
+     }
+     fun wrap(upstream: DataSource): DataSource = object : DataSource by upstream {
+         private var opened = false
++        private var position = 0L
+         override fun open(dataSpec: DataSpec): Long {
+             val length = upstream.open(dataSpec)
+-            synchronized(lock) { readers++; opened = true }
++            synchronized(lock) { readers++; opened = true; position = dataSpec.position }
+             return length
+         }
+         override fun read(buffer: ByteArray, offset: Int, length: Int): Int {
+             if (length == 0) return 0
+-            synchronized(lock) {
++            val permitted = synchronized(lock) {
+                 val started = SystemClock.elapsedRealtime()
+                 val deadline = started + 15000
+-                waiting++
++                val blocks = !allowed && !cancelled && position >= prefixBytes
++                if (blocks) waiting++
+                 try {
+-                    while (!allowed && !cancelled) {
++                    while (!allowed && !cancelled && position >= prefixBytes) {
+                         val remaining = deadline - SystemClock.elapsedRealtime()
+                         if (remaining <= 0) {
+                             cancelled = true
+@@ -52,16 +56,23 @@
+                         lock.wait(remaining)
+                     }
+                     if (cancelled) throw InterruptedIOException("owned-gate-cancelled")
++                    if (allowed) length else minOf(length.toLong(), prefixBytes - position).toInt()
+                 } catch (e: InterruptedException) {
+                     Thread.currentThread().interrupt()
+                     throw InterruptedIOException("owned-gate-interrupted")
+                 } finally {
+-                    waiting--
+-                    waitedMs += SystemClock.elapsedRealtime() - started
++                    if (blocks) {
++                        waiting--
++                        waitedMs += SystemClock.elapsedRealtime() - started
++                    }
+                 }
+             }
+-            val count = upstream.read(buffer, offset, length)
+-            if (count > 0) synchronized(lock) { bytesRead += count }
++            val count = upstream.read(buffer, offset, permitted)
++            if (count > 0) synchronized(lock) {
++                bytesRead += count
++                position += count
++                furthestPosition = maxOf(furthestPosition, position)
++            }
+             return count
+         }
+         override fun close() {
+diff --git a/clients/flutter/integration_test/android_rebuffer_test.dart b/clients/flutter/integration_test/android_rebuffer_test.dart
+--- /dev/null
++++ b/clients/flutter/integration_test/android_rebuffer_test.dart
+@@ -0,0 +1,187 @@
++import 'dart:convert';
++
++import 'package:flutter/material.dart';
++import 'package:flutter_test/flutter_test.dart';
++import 'package:integration_test/integration_test.dart';
++import 'package:jj_music_mobile/application/playback/playback_coordinator.dart';
++import 'package:jj_music_mobile/domain/playback/contracts.dart';
++import 'package:jj_music_mobile/platform/local/native_local_backend.dart';
++
++import 'support/local_playback_contract.dart' show expectControlApplied;
++import 'windows_local_playback_test.dart' show until;
++
++const a = QueueEntry(
++  entryId: 'rebuffer-a',
++  trackKey: 'owned',
++  fixtureId: 'gated',
++);
++const b = QueueEntry(
++  entryId: 'normal-b',
++  trackKey: 'owned',
++  fixtureId: 'normal',
++);
++
++void main() {
++  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
++  setUpAll(() async {
++    await NativeLocalBackend.channel.invokeMethod<bool>('diagnosticScreen', {
++      'keepOn': true,
++    });
++  });
++  tearDownAll(() async {
++    await NativeLocalBackend.channel.invokeMethod<bool>('diagnosticScreen', {
++      'keepOn': false,
++    });
++  });
++  for (final control in ['recover', 'pause', 'stop', 'new-play']) {
++    testWidgets('Android confirmed playback then actual rebuffer: $control', (
++      tester,
++    ) async {
++      // Produce the first real frame before asking whether this Activity owns
++      // window focus; setUpAll can still be behind Android's launch window.
++      await tester.pumpWidget(
++        const MaterialApp(home: Scaffold(body: Text('自有样本再缓冲自动验证'))),
++      );
++      await tester.pumpAndSettle();
++      var foreground = false;
++      for (var i = 0; i < 20; i++) {
++        foreground =
++            await NativeLocalBackend.channel.invokeMethod<bool>(
++              'diagnosticForeground',
++            ) ??
++            false;
++        if (foreground) {
++          break;
++        }
++        await tester.runAsync(
++          () => Future<void>.delayed(const Duration(milliseconds: 100)),
++        );
++        await tester.pump();
++      }
++      expect(
++        foreground,
++        isTrue,
++        reason: 'Unlock selected phone and keep diagnostic Activity visible; background FGS starts are separate',
++      );
++      final uri = await NativeLocalBackend.channel.invokeMethod<String>(
++        'rebufferFixtureUri',
++      );
++      final normalUri = await NativeLocalBackend.channel.invokeMethod<String>(
++        'fixtureUri',
++      );
++      final backend = NativeLocalBackend({'gated': uri!, 'normal': normalUri!});
++      final c = PlaybackCoordinator(backend);
++      CommandContext cmd(String id) => CommandContext(id, c.claim);
++      final transitions = backend.events.listen((event) {
++        if (event.kind == BackendEventKind.playing &&
++            c.snapshot.currentEntryId == b.entryId) {
++          c.completeTransition(
++            event.trackHandleId,
++            transitionId: event.transitionId,
++          );
++        }
++      });
++      Map<String, dynamic> gate() => Map<String, dynamic>.from(
++        ((backend.lastHost['readGates'] as Map?)?['native-1'] as Map?) ?? {},
++      );
++      Map<String, dynamic>? beforeControl;
++      List<String>? firstConfirmation;
++      int? controlMs, settledMs;
++      try {
++        expectControlApplied(
++          c.play(cmd('a'), PlayIntent(entries: [a, b], entryId: a.entryId)),
++        );
++        await until(() => c.snapshot.currentEntryId == a.entryId);
++        await until(() => c.snapshot.positionMs > 300);
++        firstConfirmation = c.snapshot.confirmations;
++        expect(firstConfirmation, hasLength(1));
++        await until(
++          () =>
++              gate()['blocked'] == true &&
++              (backend.lastHost['samples'] as List).any(
++                (s) => s['id'] == 'native-1' && s['state'] == 2,
++              ),
++        );
++        await Future<void>.delayed(const Duration(milliseconds: 400));
++        final buffered = (backend.lastHost['samples'] as List).single as Map;
++        expect(buffered['state'], 2);
++        expect(buffered['nativePlaying'], isFalse);
++        expect(buffered['position'], greaterThan(300));
++        expect(gate()['bytesRead'], greaterThan(0));
++        expect(gate()['furthestPosition'], lessThanOrEqualTo(64044));
++        expect(c.snapshot.confirmations, firstConfirmation);
++        beforeControl = {'gate': gate(), 'sample': buffered};
++        final timer = Stopwatch()..start();
++        if (control == 'pause') {
++          expectControlApplied(c.pause(cmd('pause')));
++        } else if (control == 'stop') {
++          expectControlApplied(c.stop(cmd('stop')));
++        } else if (control == 'new-play') {
++          expectControlApplied(
++            c.play(cmd('b'), PlayIntent(entries: [a, b], entryId: b.entryId)),
++          );
++        }
++        controlMs = timer.elapsedMilliseconds;
++        expect(controlMs, lessThan(500));
++        if (control == 'recover' || control == 'pause') {
++          final pausedAt = c.snapshot.positionMs;
++          await NativeLocalBackend.channel.invokeMethod<void>(
++            'allowOwnedRead',
++            {'id': 'native-1'},
++          );
++          if (control == 'pause') {
++            await until(
++              () => (backend.lastHost['samples'] as List).any(
++                (s) => s['state'] == 3,
++              ),
++            );
++            await Future<void>.delayed(const Duration(milliseconds: 500));
++            expect(c.snapshot.desired, DesiredTransport.paused);
++            expect((c.snapshot.positionMs - pausedAt).abs(), lessThan(150));
++            expect(
++              (backend.lastHost['samples'] as List).single['nativePlaying'],
++              isFalse,
++            );
++            expect(c.snapshot.confirmations, firstConfirmation);
++            expectControlApplied(c.resume(cmd('resume')));
++          }
++          await until(() => c.snapshot.positionMs > pausedAt + 400);
++          expect(c.snapshot.currentEntryId, a.entryId);
++          expect(c.snapshot.tracks.single.trackHandleId, 'native-1');
++          expect(c.snapshot.confirmations, firstConfirmation);
++          settledMs = timer.elapsedMilliseconds;
++          c.stop(cmd('finish'));
++        } else {
++          if (control == 'new-play') {
++            await until(() => c.snapshot.currentEntryId == b.entryId);
++            expect(c.snapshot.confirmations.length, 2);
++          }
++          await until(() => gate()['readers'] == 0 && gate()['closed'] == true);
++          settledMs = timer.elapsedMilliseconds;
++          expect(settledMs, lessThan(2500));
++          expect(gate()['cancelled'], isTrue);
++          await NativeLocalBackend.channel.invokeMethod<void>(
++            'allowOwnedRead',
++            {'id': 'native-1'},
++          );
++          await Future<void>.delayed(const Duration(milliseconds: 300));
++          expect(
++            c.snapshot.confirmations.length,
++            control == 'new-play' ? 2 : 1,
++          );
++          c.stop(cmd('cleanup'));
++        }
++        await until(() => backend.consumers == 0);
++        expect(c.failures, isEmpty);
++      } finally {
++        await transitions.cancel();
++        await c.dispose();
++        await backend.close();
++        // ignore: avoid_print
++        print(
++          'REBUFFER_$control=${jsonEncode({'controlMs': controlMs, 'settledMs': settledMs, 'confirmation': firstConfirmation, 'beforeControl': beforeControl, 'failures': c.failures.map((f) => '${f.code}:${f.stage}').toList(), 'host': backend.lastHost, 'raw': backend.raw})}',
++        );
++      }
++    });
++  }
++}

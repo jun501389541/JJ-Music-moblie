@@ -1,0 +1,12 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/android_lifecycle_test.dart
+Running Gradle task 'assembleDebug'...                          
+Picked up JAVA_TOOL_OPTIONS: -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=7897 -Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=7897 -Dhttp.nonProxyHosts=localhost|127.*|[::1]
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Running Gradle task 'assembleDebug'...                             13.1s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           3.7s
+00:00 +0: Android Activity recreation preserves engine authority and resource
+ANDROID_LIFECYCLE_JSON={"samples":[],"commands":[],"lifecycle":[{"event":"engine-create","time":60835256,"pid":23749,"host":"host-23749-60834889","engine":192633113,"activity":0},{"event":"activity-create","time":60835283,"pid":23749,"host":"host-23749-60834889","engine":192633113,"activity":26135275},{"event":"prepare-native-1","time":60838562,"pid":23749,"host":"host-23749-60834889","engine":192633113,"activity":26135275},{"event":"service-create","time":60838923,"pid":23749,"host":"host-23749-60834889","engine":192633113,"activity":26135275},{"event":"activity-destroy","time":60839093,"pid":23749,"host":"host-23749-60834889","engine":192633113,"activity":26135275},{"event":"activity-create","time":60839117,"pid":23749,"host":"host-23749-60834889","engine":192633113,"activity":206224976},{"event":"released-native-1","time":60843228,"pid":23749,"host":"host-23749-60834889","engine":192633113,"activity":206224976},{"event":"service-destroy","time":60843233,"pid":23749,"host":"host-23749-60834889","engine":192633113,"activity":206224976}],"host":"host-23749-60834889","pid":23749}
+00:06 +1: (tearDownAll)
+00:07 +1: All tests passed!

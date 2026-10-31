@@ -1,0 +1,17 @@
+{
+  "android": {
+    "normalEntry": "lib/main.dart",
+    "rebuiltThisBatch": true,
+    "bytes": 48509302,
+    "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\app\\outputs\\flutter-apk\\app-release.apk",
+    "sha256": "34eb2add5319b6ca4905dc18bf71cdfa233c54e3d85941375da8921110bfb687",
+    "installedOn": "35a63609"
+  },
+  "windows": {
+    "runtimeThisBatch": false,
+    "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\jj_music_mobile.exe",
+    "sha256": "b625c2ec731e86efe6fa453d392215ee25e4eac085cb2be575c1d6d9af37c3aa",
+    "bytes": 340992,
+    "rebuiltThisBatch": false
+  }
+}

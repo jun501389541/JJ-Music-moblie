@@ -1,0 +1,7 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_restore_test.dart
+00:00 +0: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_restore_test.dart: R3 restore stays paused without native handles and resumes at saved position
+00:00 +1: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_evidence_test.dart: native confirmation requires observed running and advancing samples
+00:00 +2: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_evidence_test.dart: ready/intent/buffering/paused/seek jumps cannot alone confirm
+00:00 +3: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_release_test.dart: duplicate release waits for same physical close
+00:00 +4: All tests passed!

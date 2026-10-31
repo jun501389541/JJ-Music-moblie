@@ -1,0 +1,38 @@
+{
+  "platform": "android",
+  "device": "35a63609",
+  "apkSha256": "230474aa8a1e38f17bcf9a0bdf21ba2f1a189501385844a791b06386ffac4ffa",
+  "forcedTermination": true,
+  "saved": {
+    "stage": "saved",
+    "pid": 32114,
+    "coordinatorEpoch": 1793414714602784,
+    "session": "local-32114-1793414714602",
+    "revision": 1,
+    "position": 2345,
+    "desired": "paused",
+    "consumers": 1,
+    "fixture": "tone-long",
+    "confirmations": [
+      "local-32114-1793414714602:1"
+    ],
+    "directory": "/data/user/0/dev.jjmusic.diagnostics.jj_music_mobile/code_cache/jj-owned-p1/recovery/process-proof",
+    "probeToken": "e030cad8d04749aeb803a0d7d4ccf0fb"
+  },
+  "loaded": {
+    "stage": "loaded",
+    "pid": 32235,
+    "coordinatorEpoch": 1793414716639171,
+    "session": "local-32114-1793414714602",
+    "revision": 1,
+    "position": 2345,
+    "desired": "paused",
+    "consumers": 0,
+    "fixture": "tone-long",
+    "confirmations": [
+      "local-32114-1793414714602:1"
+    ],
+    "directory": "/data/user/0/dev.jjmusic.diagnostics.jj_music_mobile/code_cache/jj-owned-p1/recovery/process-proof",
+    "probeToken": "627d9d5a64fc4f84ae1b9971e3eade8b"
+  }
+}

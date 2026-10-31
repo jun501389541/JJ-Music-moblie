@@ -1,0 +1,6 @@
+{
+  "candidateFileCount": 362,
+  "unexpectedPaths": [],
+  "secretPatternHits": [],
+  "limitation": "Pattern scan only, not full security audit. Historical logs contain local paths and selected device IDs. Public visibility/license/data disclosure remain user decisions."
+}

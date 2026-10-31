@@ -1,0 +1,15 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/ownership_resources_test.dart
+00:00 +0: TC-08 stale transition completion cannot release a valid outgoing track
+00:00 +0 -1: TC-08 stale transition completion cannot release a valid outgoing track [E]
+  Expected: not contains 'release:ha'
+    Actual: ['prepare:a', 'play:ha', 'prepare:b', 'play:hb', 'release:ha']
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\ownership_resources_test.dart 68:5    main.<fn>
+  
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/ownership_resources_test.dart: TC-08 stale transition completion cannot release a valid outgoing track

@@ -1,0 +1,57 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart
+00:00 +0: TC-05 saved receipt means real bytes and a fresh store reads the same revision paused
+00:00 +0 -1: TC-05 saved receipt means real bytes and a fresh store reads the same revision paused [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                       expect
+  package:flutter_test/src/widget_tester.dart 473:18    expect
+  test\playback\recovery_snapshot_store_test.dart 18:5  main.<fn>
+  
+00:00 +0 -1: concurrent out-of-order writes cannot replace a higher saved revision
+00:00 +0 -2: concurrent out-of-order writes cannot replace a higher saved revision [E]
+  Expected: throws <Instance of 'StateError'>
+    Actual: <Instance of 'Future<SnapshotSaveReceipt>'>
+     Which: emitted <Instance of 'SnapshotSaveReceipt'>
+  
+  package:matcher                                        expectLater
+  package:flutter_test/src/widget_tester.dart 507:8      expectLater
+  test\playback\recovery_snapshot_store_test.dart 26:11  main.<fn>
+  
+00:00 +0 -2: missing, corrupt, oversized, unknown version and unavailable fixture are safe
+00:00 +0 -3: missing, corrupt, oversized, unknown version and unavailable fixture are safe [E]
+  Expected: non-empty
+    Actual: []
+  
+  package:matcher                                        expect
+  package:flutter_test/src/widget_tester.dart 473:18     expect
+  test\playback\recovery_snapshot_store_test.dart 35:72  main.<fn>
+  
+00:00 +0 -3: interrupted temporary write and corrupt newest slot retain a last valid snapshot
+00:00 +0 -4: interrupted temporary write and corrupt newest slot retain a last valid snapshot [E]
+  PathNotFoundException: Cannot open file, path = 'C:\Users\50138\AppData\Local\Temp\jj-music-prototype-a0e8d44c/run-a/snapshot-a.json' (OS Error: 系统找不到指定的路径。, errno = 3)
+  dart:io                                                _File.writeAsString
+  test\playback\recovery_snapshot_store_test.dart 41:47  main.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                             _CustomZone.registerUnaryCallback
+  test\playback\recovery_snapshot_store_test.dart 39:21  main.<fn>
+  
+00:00 +0 -4: forbidden runtime fields and oversized queues cannot be persisted
+00:00 +0 -5: forbidden runtime fields and oversized queues cannot be persisted [E]
+  Expected: throws <Instance of 'FormatException'>
+    Actual: <Instance of 'Future<SnapshotSaveReceipt>'>
+     Which: emitted <Instance of 'SnapshotSaveReceipt'>
+  
+  package:matcher                                        expectLater
+  package:flutter_test/src/widget_tester.dart 507:8      expectLater
+  test\playback\recovery_snapshot_store_test.dart 46:11  main.<fn>
+  
+00:00 +0 -5: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: TC-05 saved receipt means real bytes and a fresh store reads the same revision paused
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: concurrent out-of-order writes cannot replace a higher saved revision
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: forbidden runtime fields and oversized queues cannot be persisted
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: interrupted temporary write and corrupt newest slot retain a last valid snapshot
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: missing, corrupt, oversized, unknown version and unavailable fixture are safe

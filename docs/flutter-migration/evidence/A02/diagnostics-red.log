@@ -1,0 +1,25 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart
+00:00 +0: manual control diagnostic verifies dispatch and late consumer cleanup
+00:00 +0 -1: manual control diagnostic verifies dispatch and late consumer cleanup [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\diagnostic_checks_test.dart 6:51               main.<fn>
+  
+00:00 +0 -1: manual recovery diagnostic actually writes then reads through a new store
+00:00 +0 -2: manual recovery diagnostic actually writes then reads through a new store [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\diagnostic_checks_test.dart 9:52               main.<fn>
+  
+00:00 +0 -2: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual recovery diagnostic actually writes then reads through a new store

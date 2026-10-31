@@ -1,0 +1,13 @@
+diff --git a/docs/flutter-migration/evidence/windows-rebuffer-20261031/before/clients/flutter/windows/runner/owned_gate_stream.h b/clients/flutter/windows/runner/owned_gate_stream.h
+index bbe0e4c..b213b63 100644
+--- a/docs/flutter-migration/evidence/windows-rebuffer-20261031/before/clients/flutter/windows/runner/owned_gate_stream.h
++++ b/clients/flutter/windows/runner/owned_gate_stream.h
+@@ -26,6 +26,8 @@ struct GateState {
+   const uint64_t size;
+   bool allowed=false, cancelled=false, claimed=false, closed=false;
+   bool sourceClosed=false, streamClosed=false;
++  bool pcm=false;
++  uint64_t pcmPosition=0;
+   int64_t readers=0, waiting=0, bytesRead=0, waitedMs=0;
+   void Allow() {
+     std::lock_guard lock(mutex);

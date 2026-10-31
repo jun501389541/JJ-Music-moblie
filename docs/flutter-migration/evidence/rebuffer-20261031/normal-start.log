@@ -1,0 +1,7 @@
+Starting: Intent { cmp=dev.jjmusic.diagnostics.jj_music_mobile/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: dev.jjmusic.diagnostics.jj_music_mobile/.MainActivity
+TotalTime: 414
+WaitTime: 420
+Complete

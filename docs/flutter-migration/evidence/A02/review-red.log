@@ -1,0 +1,45 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/ownership_resources_test.dart
+00:00 +0: superseding a ready but unconfirmed prepare releases its consumer
+00:00 +1: cancel after prepare but before confirmation cannot later commit playing
+00:00 +2: pause and resume keep one confirmation even when play Future stays pending
+00:00 +3: authority CAS rejects old owner and invalidates its pending completion
+00:00 +4: R1 UI reconnect does not reload handles or change epochs and confirmation
+00:00 +5: queue revision conflicts and same request id with changed payload are rejected
+00:00 +6: two live tracks forbid a third and old outgoing release still works across generations
+00:00 +7: revocation wins over rollback without erasing already confirmed history
+00:00 +8: TC-08 stale transition completion cannot release a valid outgoing track
+00:00 +9: TC-31 preview natural end stops without changing the selected mode
+00:00 +10: removing a pending entry fences and releases its later completion
+00:00 +10 -1: removing a pending entry fences and releases its later completion [E]
+  Expected: null
+    Actual: 'occurrence-a'
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\ownership_resources_test.dart 177:5   main.<fn>
+  
+00:00 +10 -1: late retiring allocation reserves a slot before the next prepare
+00:00 +10 -2: late retiring allocation reserves a slot before the next prepare [E]
+  Expected: <2>
+    Actual: <1>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\ownership_resources_test.dart 185:5   main.<fn>
+  
+00:00 +10 -2: first confirmation is independent from transition policy
+00:00 +10 -3: first confirmation is independent from transition policy [E]
+  Expected: <2>
+    Actual: <1>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\ownership_resources_test.dart 199:5   main.<fn>
+  
+00:00 +10 -3: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/ownership_resources_test.dart: first confirmation is independent from transition policy
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/ownership_resources_test.dart: late retiring allocation reserves a slot before the next prepare
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/ownership_resources_test.dart: removing a pending entry fences and releases its later completion

@@ -1,0 +1,9 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_loading_test.dart
+Building Windows application...                                    19.1s
+√ Built build\windows\x64\runner\Debug\jj_music_mobile.exe
+00:00 +0: Windows close error cannot turn retry into false release success
+WIN_LOADING_CLOSE_ERROR_FIRST={"commands":[],"lastNativeError":"owned-injected-source-close","mirrorStage":"","mirroredDuration":0,"mirroredStatus":"","osResult":{},"samples":[],"smtcEnabled":true,"streamGates":{"close-error-native":{"blocked":false,"bytesRead":0,"cancelled":true,"closed":false,"readers":0,"sourceClosed":false,"streamClosed":true,"waitedMs":2}}}
+WIN_LOADING_CLOSE_ERROR={"commands":[],"lastNativeError":"owned-injected-source-close","mirrorStage":"","mirroredDuration":0,"mirroredStatus":"","osResult":{},"samples":[],"smtcEnabled":true,"streamGates":{"close-error-native":{"blocked":false,"bytesRead":0,"cancelled":true,"closed":true,"readers":0,"sourceClosed":true,"streamClosed":true,"waitedMs":2}}}
+00:00 +1: (tearDownAll)
+00:00 +1: All tests passed!

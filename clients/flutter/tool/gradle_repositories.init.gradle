@@ -1,0 +1,24 @@
+// Project-scoped download fallback. Never changes repositoriesMode or global init scripts.
+def mirrors = [
+    'https://maven.aliyun.com/repository/gradle-plugin',
+    'https://maven.aliyun.com/repository/google',
+    'https://maven.aliyun.com/repository/central'
+]
+beforeSettings { settings ->
+    settings.pluginManagement.repositories {
+        mirrors.each { address -> maven { url = uri(address) } }
+    }
+}
+settingsEvaluated { settings ->
+    def repositories = settings.dependencyResolutionManagement.repositories
+    def originals = repositories.toList()
+    repositories.clear()
+    mirrors.each { address -> repositories.maven { url = address } }
+    originals.each { repository -> repositories.add(repository) }
+    // Respect included builds that require all dependencies in settings repositories.
+    if (settings.dependencyResolutionManagement.repositoriesMode.get().name() != 'FAIL_ON_PROJECT_REPOS') {
+        gradle.beforeProject { project ->
+            project.repositories { mirrors.each { address -> maven { url = uri(address) } } }
+        }
+    }
+}

@@ -1,0 +1,213 @@
+[
+  {
+    "filePath": "clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\android\\app\\src\\main\\kotlin\\dev\\jjmusic\\diagnostics\\jj_music_mobile\\LocalHost.kt"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "clients/flutter/lib/platform/local/native_local_backend.dart",
+    "result": {
+      "indexedFiles": 1,
+      "indexedSymbols": 22,
+      "indexedReferences": 36,
+      "skipped": false,
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\lib\\platform\\local\\native_local_backend.dart"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "clients/flutter/integration_test/android_audio_focus_test.dart",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\integration_test\\android_audio_focus_test.dart"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "clients/flutter/integration_test/windows_local_playback_test.dart",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\integration_test\\windows_local_playback_test.dart"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "clients/flutter/test/platform/native_focus_command_test.dart",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\test\\platform\\native_focus_command_test.dart"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "clients/flutter/lib/p1_focus_probe.dart",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\lib\\p1_focus_probe.dart"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "clients/flutter/tool/run_android_focus_probe.ps1",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "extension not in includeExtensions",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\tool\\run_android_focus_probe.ps1"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "clients/flutter/tool/check.ps1",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "extension not in includeExtensions",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\tool\\check.ps1"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "clients/flutter/README.md",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\README.md"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "docs/flutter-migration/README.md",
+    "result": {
+      "indexedFiles": 1,
+      "indexedSymbols": 14,
+      "indexedReferences": 8,
+      "skipped": false,
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\README.md"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "docs/flutter-migration/status.md",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\status.md"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "docs/flutter-migration/handoff.md",
+    "result": {
+      "indexedFiles": 1,
+      "indexedSymbols": 6,
+      "indexedReferences": 57,
+      "skipped": false,
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\handoff.md"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "docs/flutter-migration/evidence/A02/20261031-focus-freeze.md",
+    "result": {
+      "indexedFiles": 1,
+      "indexedSymbols": 2,
+      "indexedReferences": 29,
+      "skipped": false,
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\evidence\\A02\\20261031-focus-freeze.md"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "docs/flutter-migration/evidence/A02/20261031-focus-freeze.json",
+    "result": {
+      "indexedFiles": 1,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": false,
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\evidence\\A02\\20261031-focus-freeze.json"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "docs/flutter-migration/evidence/focus-20261031/report.md",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\evidence\\focus-20261031\\report.md"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "docs/flutter-migration/evidence/focus-20261031/plan.md",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\evidence\\focus-20261031\\plan.md"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "docs/flutter-migration/evidence/focus-20261031/review.md",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\evidence\\focus-20261031\\review.md"
+    },
+    "isError": false
+  },
+  {
+    "filePath": "docs/flutter-migration/evidence/focus-20261031/commands.md",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\evidence\\focus-20261031\\commands.md"
+    },
+    "isError": false
+  }
+]

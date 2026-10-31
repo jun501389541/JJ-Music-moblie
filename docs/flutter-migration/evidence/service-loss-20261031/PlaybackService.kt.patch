@@ -1,0 +1,30 @@
+diff --git a/docs/flutter-migration/evidence/service-loss-20261031/before/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/PlaybackService.kt b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/PlaybackService.kt
+index a797970..021b8ef 100644
+--- a/docs/flutter-migration/evidence/service-loss-20261031/before/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/PlaybackService.kt
++++ b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/PlaybackService.kt
+@@ -6,6 +6,9 @@ import android.media.session.MediaSession
+ import android.os.IBinder
+ 
+ class PlaybackService : Service() {
++    var expectedStop = false
++        private set
++    fun expectStop() { expectedStop = true }
+     override fun onBind(intent: Intent?): IBinder? = null
+     override fun onCreate() {
+         super.onCreate()
+@@ -23,6 +26,7 @@ class PlaybackService : Service() {
+         })
+         session.isActive = true
+         LocalHost.session = session
++        LocalHost.serviceCreated(this)
+         promote()
+     }
+     private fun promote() {
+@@ -41,6 +45,7 @@ class PlaybackService : Service() {
+     }
+     override fun onDestroy() {
+         LocalHost.timeline("service-destroy")
++        LocalHost.serviceDestroyed(this)
+         LocalHost.session?.release(); LocalHost.session = null
+         stopForeground(STOP_FOREGROUND_REMOVE)
+         super.onDestroy()

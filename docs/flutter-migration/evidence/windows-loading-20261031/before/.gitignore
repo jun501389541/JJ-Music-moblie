@@ -1,0 +1,15 @@
+.graphflow-cache/
+graphflow-out/
+*.zip
+*.zip.sha256
+*.keystore
+*.jks
+**/local.properties
+.ci-cache/
+.superpowers/
+**/.env
+**/.env.*
+!**/.env.example
+**/key.properties
+*.p12
+*.pfx

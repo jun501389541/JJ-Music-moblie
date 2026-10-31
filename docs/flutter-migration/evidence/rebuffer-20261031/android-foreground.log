@@ -1,0 +1,23 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/android_rebuffer_test.dart
+Running Gradle task 'assembleDebug'...                          
+Picked up JAVA_TOOL_OPTIONS: -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=7897 -Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=7897 -Dhttp.nonProxyHosts=localhost|127.*|[::1]
+Warning: SDK processing. This version only understands SDK XML versions up to 3 but an SDK XML file of version 4 was encountered. This can happen if you use versions of Android Studio and the command-line tools that were released at different times.
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Running Gradle task 'assembleDebug'...                             28.1s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           3.5s
+00:00 +0: (setUpAll)
+00:00 +0 -1: (setUpAll) [E]
+  Unlock the selected phone and keep this diagnostic Activity visible; background FGS starts are a separate acceptance scenario.
+  package:matcher                                                                                              fail
+  e:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/android_rebuffer_test.dart 36:7        main.<fn>
+  ===== asynchronous gap ===========================
+  package:stream_channel                                                                                       _GuaranteeSink.add
+  c:/Users/50138/AppData/Local/Temp/flutter_tools.891e8717/flutter_test_listener.c826f2b7/listener.dart 56:22  main.<fn>
+  
+00:00 +0 -1: (tearDownAll)
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/android_rebuffer_test.dart: (setUpAll)

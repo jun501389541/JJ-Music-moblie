@@ -1,0 +1,3626 @@
+[
+  {
+    "case": "ANDROID_SERVICE_service-loss",
+    "result": {
+      "before": {
+        "samples": [
+          {
+            "id": "native-1",
+            "platform": "android",
+            "state": 3,
+            "ready": true,
+            "nativePlaying": true,
+            "playWhenReady": true,
+            "suppression": 0,
+            "position": 380,
+            "duration": 12000,
+            "ended": false,
+            "error": false
+          }
+        ],
+        "commands": [],
+        "lifecycle": [
+          {
+            "event": "engine-create",
+            "time": 103012192,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 0
+          },
+          {
+            "event": "activity-create",
+            "time": 103012218,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103013339,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103013410,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103013411,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103013416,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          }
+        ],
+        "host": "host-31363-103011774",
+        "pid": 31363,
+        "focusHeld": true,
+        "focusEpoch": 2,
+        "readGates": {},
+        "pendingServiceStarts": 0,
+        "servicePresent": true,
+        "lastNativeError": "",
+        "screenInteractive": true
+      },
+      "afterLoss": {
+        "samples": [
+          {
+            "id": "native-1",
+            "platform": "android",
+            "state": 3,
+            "ready": true,
+            "nativePlaying": false,
+            "playWhenReady": false,
+            "suppression": 0,
+            "position": 447,
+            "duration": 12000,
+            "ended": false,
+            "error": false
+          }
+        ],
+        "commands": [],
+        "lifecycle": [
+          {
+            "event": "engine-create",
+            "time": 103012192,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 0
+          },
+          {
+            "event": "activity-create",
+            "time": 103012218,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103013339,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103013410,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103013411,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103013416,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103013914,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          }
+        ],
+        "host": "host-31363-103011774",
+        "pid": 31363,
+        "focusHeld": false,
+        "focusEpoch": 4,
+        "readGates": {},
+        "pendingServiceStarts": 0,
+        "servicePresent": false,
+        "lastNativeError": "",
+        "screenInteractive": true
+      },
+      "host": {
+        "samples": [],
+        "commands": [],
+        "lifecycle": [
+          {
+            "event": "engine-create",
+            "time": 103012192,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 0
+          },
+          {
+            "event": "activity-create",
+            "time": 103012218,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103013339,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103013410,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103013411,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103013416,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103013914,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103014825,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103014826,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103014831,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103015129,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103015132,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103015134,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          }
+        ],
+        "host": "host-31363-103011774",
+        "pid": 31363,
+        "focusHeld": false,
+        "focusEpoch": 8,
+        "readGates": {},
+        "pendingServiceStarts": 0,
+        "servicePresent": false,
+        "lastNativeError": "",
+        "screenInteractive": true
+      },
+      "raw": [
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 0,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 0,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 93,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 105,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 105,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 380,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "systemCommand": {
+            "command": "pause",
+            "position": 0,
+            "focusEpoch": 3,
+            "transportRevision": 2,
+            "cause": "service-destroy"
+          }
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 447,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 447,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 447,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 447,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 447,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 447,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 447,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 447,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 447,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 584,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 696,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 705,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        }
+      ]
+    }
+  },
+  {
+    "case": "ANDROID_SERVICE_full-queue-loss",
+    "result": {
+      "before": {
+        "samples": [
+          {
+            "id": "native-1",
+            "platform": "android",
+            "state": 3,
+            "ready": true,
+            "nativePlaying": true,
+            "playWhenReady": true,
+            "suppression": 0,
+            "position": 567,
+            "duration": 12000,
+            "ended": false,
+            "error": false
+          }
+        ],
+        "commands": [],
+        "lifecycle": [
+          {
+            "event": "engine-create",
+            "time": 103012192,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 0
+          },
+          {
+            "event": "activity-create",
+            "time": 103012218,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103013339,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103013410,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103013411,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103013416,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103013914,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103014825,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103014826,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103014831,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103015129,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103015132,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103015134,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103015802,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103015902,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103015903,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103015910,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          }
+        ],
+        "host": "host-31363-103011774",
+        "pid": 31363,
+        "focusHeld": true,
+        "focusEpoch": 10,
+        "readGates": {},
+        "pendingServiceStarts": 0,
+        "servicePresent": true,
+        "lastNativeError": "",
+        "screenInteractive": true
+      },
+      "afterLoss": {
+        "samples": [
+          {
+            "id": "native-1",
+            "platform": "android",
+            "state": 3,
+            "ready": true,
+            "nativePlaying": false,
+            "playWhenReady": false,
+            "suppression": 0,
+            "position": 3000,
+            "duration": 12000,
+            "ended": false,
+            "error": false
+          }
+        ],
+        "commands": [],
+        "lifecycle": [
+          {
+            "event": "engine-create",
+            "time": 103012192,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 0
+          },
+          {
+            "event": "activity-create",
+            "time": 103012218,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103013339,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103013410,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103013411,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103013416,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103013914,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103014825,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103014826,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103014831,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103015129,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103015132,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103015134,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103015802,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103015902,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103015903,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103015910,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103016608,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103016609,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103016609,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          }
+        ],
+        "host": "host-31363-103011774",
+        "pid": 31363,
+        "focusHeld": false,
+        "focusEpoch": 12,
+        "readGates": {},
+        "pendingServiceStarts": 0,
+        "servicePresent": false,
+        "lastNativeError": "",
+        "screenInteractive": true
+      },
+      "host": {
+        "samples": [],
+        "commands": [],
+        "lifecycle": [
+          {
+            "event": "engine-create",
+            "time": 103012192,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 0
+          },
+          {
+            "event": "activity-create",
+            "time": 103012218,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103013339,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103013410,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103013411,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103013416,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103013914,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103014825,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103014826,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103014831,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103015129,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103015132,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103015134,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103015802,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103015902,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103015903,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103015910,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103016608,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103016609,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103016609,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103017515,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103017517,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103017522,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103018022,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103018025,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103018026,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          }
+        ],
+        "host": "host-31363-103011774",
+        "pid": 31363,
+        "focusHeld": false,
+        "focusEpoch": 16,
+        "readGates": {},
+        "pendingServiceStarts": 0,
+        "servicePresent": false,
+        "lastNativeError": "",
+        "screenInteractive": true
+      },
+      "raw": [
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 0,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 0,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 88,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 88,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 88,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 317,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 317,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 567,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "seek",
+            "position": 3000
+          }
+        },
+        {
+          "systemCommand": {
+            "command": "pause",
+            "position": 0,
+            "focusEpoch": 11,
+            "transportRevision": 2,
+            "cause": "service-destroy"
+          }
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 584,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 3000,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 3000,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 3000,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 3000,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 3000,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 3000,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 3000,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 3000,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 3000,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 3047,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 3076,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 3076,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 3310,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        }
+      ]
+    }
+  },
+  {
+    "case": "ANDROID_SERVICE_restart-race",
+    "result": {
+      "before": {
+        "samples": [
+          {
+            "id": "native-1",
+            "platform": "android",
+            "state": 3,
+            "ready": true,
+            "nativePlaying": true,
+            "playWhenReady": true,
+            "suppression": 0,
+            "position": 560,
+            "duration": 12000,
+            "ended": false,
+            "error": false
+          }
+        ],
+        "commands": [],
+        "lifecycle": [
+          {
+            "event": "engine-create",
+            "time": 103012192,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 0
+          },
+          {
+            "event": "activity-create",
+            "time": 103012218,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103013339,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103013410,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103013411,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103013416,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103013914,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103014825,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103014826,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103014831,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103015129,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103015132,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103015134,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103015802,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103015902,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103015903,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103015910,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103016608,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103016609,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103016609,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103017515,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103017517,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103017522,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103018022,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103018025,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103018026,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103018643,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103018747,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103018748,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103018753,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          }
+        ],
+        "host": "host-31363-103011774",
+        "pid": 31363,
+        "focusHeld": true,
+        "focusEpoch": 18,
+        "readGates": {},
+        "pendingServiceStarts": 0,
+        "servicePresent": true,
+        "lastNativeError": "",
+        "screenInteractive": true
+      },
+      "afterLoss": null,
+      "host": {
+        "samples": [],
+        "commands": [],
+        "lifecycle": [
+          {
+            "event": "engine-create",
+            "time": 103012192,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 0
+          },
+          {
+            "event": "activity-create",
+            "time": 103012218,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103013339,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103013410,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103013411,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103013416,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103013914,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103014825,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103014826,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103014831,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103015129,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103015132,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103015134,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103015802,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103015902,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103015903,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103015910,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103016608,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103016609,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103016609,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103017515,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103017517,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103017522,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103018022,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103018025,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103018026,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103018643,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103018747,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103018748,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103018753,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103019557,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103019558,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103019562,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103020570,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103020573,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103020574,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          }
+        ],
+        "host": "host-31363-103011774",
+        "pid": 31363,
+        "focusHeld": false,
+        "focusEpoch": 20,
+        "readGates": {},
+        "pendingServiceStarts": 0,
+        "servicePresent": false,
+        "lastNativeError": "",
+        "screenInteractive": true
+      },
+      "raw": [
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 0,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 0,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 45,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 76,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 76,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 310,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 310,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 310,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 560,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 560,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 811,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 811,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 811,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1061,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1061,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1311,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1311,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1311,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1561,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        }
+      ]
+    }
+  },
+  {
+    "case": "ANDROID_SERVICE_background-controls",
+    "result": {
+      "before": {
+        "samples": [
+          {
+            "id": "native-1",
+            "platform": "android",
+            "state": 3,
+            "ready": true,
+            "nativePlaying": true,
+            "playWhenReady": true,
+            "suppression": 0,
+            "position": 559,
+            "duration": 12000,
+            "ended": false,
+            "error": false
+          }
+        ],
+        "commands": [],
+        "lifecycle": [
+          {
+            "event": "engine-create",
+            "time": 103012192,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 0
+          },
+          {
+            "event": "activity-create",
+            "time": 103012218,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103013339,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103013410,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103013411,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103013416,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103013914,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103014825,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103014826,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103014831,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103015129,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103015132,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103015134,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103015802,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103015902,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103015903,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103015910,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103016608,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103016609,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103016609,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103017515,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103017517,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103017522,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103018022,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103018025,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103018026,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103018643,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103018747,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103018748,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103018753,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103019557,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103019558,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103019562,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103020570,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103020573,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103020574,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103021191,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103021294,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103021296,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103021301,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          }
+        ],
+        "host": "host-31363-103011774",
+        "pid": 31363,
+        "focusHeld": true,
+        "focusEpoch": 22,
+        "readGates": {},
+        "pendingServiceStarts": 0,
+        "servicePresent": true,
+        "lastNativeError": "",
+        "screenInteractive": true
+      },
+      "afterLoss": null,
+      "host": {
+        "samples": [],
+        "commands": [],
+        "lifecycle": [
+          {
+            "event": "engine-create",
+            "time": 103012192,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 0
+          },
+          {
+            "event": "activity-create",
+            "time": 103012218,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103013339,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103013410,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103013411,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103013416,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103013914,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103013915,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103014825,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103014826,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103014831,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103015129,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103015132,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103015134,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103015802,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103015902,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103015903,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103015910,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103016608,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103016609,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-loss-paused",
+            "time": 103016609,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103017515,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103017517,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103017522,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103018022,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103018025,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103018026,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103018643,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103018747,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103018748,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103018753,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103019557,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103019558,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103019562,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103020570,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103020573,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103020574,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 103021191,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103021294,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-create",
+            "time": 103021296,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103021301,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103023009,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-acquired",
+            "time": 103023112,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-start-ack",
+            "time": 103023121,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 103023562,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "released-native-1",
+            "time": 103023570,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          },
+          {
+            "event": "service-destroy",
+            "time": 103023574,
+            "pid": 31363,
+            "host": "host-31363-103011774",
+            "engine": 192633113,
+            "activity": 153406044
+          }
+        ],
+        "host": "host-31363-103011774",
+        "pid": 31363,
+        "focusHeld": false,
+        "focusEpoch": 27,
+        "readGates": {},
+        "pendingServiceStarts": 0,
+        "servicePresent": false,
+        "lastNativeError": "",
+        "screenInteractive": true
+      },
+      "raw": [
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 0,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 0,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 77,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 77,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 77,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 308,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 308,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 559,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 559,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 559,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 808,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 808,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1062,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1062,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1062,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1311,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1311,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "systemCommand": {
+            "command": "pause",
+            "position": 0
+          }
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1561,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "systemCommand": {
+            "command": "play",
+            "position": 0
+          }
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "position": 1581,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1765,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1765,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 1765,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "position": 2016,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        }
+      ]
+    }
+  }
+]

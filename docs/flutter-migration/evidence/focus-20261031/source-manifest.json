@@ -1,0 +1,100 @@
+[
+  {
+    "path": "clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt",
+    "beforeSha256": "d2618043baedd827841112096c7a9c97aaa78b4adac2c97af063f7bfe0ee1763",
+    "sha256": "a1f83bdf8d85cabb92ef35ba035d5ce9ca1d91288f8d1541d4b5388b6e8adc51",
+    "bytes": 14524,
+    "new": false
+  },
+  {
+    "path": "clients/flutter/lib/platform/local/native_local_backend.dart",
+    "beforeSha256": "e7377c37eb12924525f13ef0e0685715ca4406fa9e37ce8148dff88445423ad4",
+    "sha256": "591180b551499daed476f433ad23ab10385240834c0ef68470f234029f0cf678",
+    "bytes": 8793,
+    "new": false
+  },
+  {
+    "path": "clients/flutter/integration_test/android_audio_focus_test.dart",
+    "beforeSha256": null,
+    "sha256": "933f519bd9ca7c493f78d8fb32951f996dc2f0d0fb15f77b043791b5cb331a0d",
+    "bytes": 5724,
+    "new": true
+  },
+  {
+    "path": "clients/flutter/integration_test/windows_local_playback_test.dart",
+    "beforeSha256": "8fa6b36d0bb94fba46c6c815f3de0bfce953c5aa9725cc6fe1b0862574326c74",
+    "sha256": "aa57cea439474cb30a4874a2e4975a55bbfb61647ba51e9ccc661b80192d0c54",
+    "bytes": 4145,
+    "new": false
+  },
+  {
+    "path": "clients/flutter/test/platform/native_focus_command_test.dart",
+    "beforeSha256": null,
+    "sha256": "b63db39c5d96eb2fe8cff9b729c2de6f3f32578b0c492f3da36a496a8b58856b",
+    "bytes": 3535,
+    "new": true
+  },
+  {
+    "path": "clients/flutter/lib/p1_focus_probe.dart",
+    "beforeSha256": null,
+    "sha256": "04ac468ea26997a645aabbe01eb3b54f8de4ca241ec617461b9077962ba8692c",
+    "bytes": 4891,
+    "new": true
+  },
+  {
+    "path": "clients/flutter/tool/run_android_focus_probe.ps1",
+    "beforeSha256": null,
+    "sha256": "c574da910e8bc3934ed0acaabcd7c314e406277c78deae5dcd15ae90d59df338",
+    "bytes": 2306,
+    "new": true
+  },
+  {
+    "path": "clients/flutter/tool/check.ps1",
+    "beforeSha256": "0cad9c69fc595561f577d3eb4a50377a09745e01a2e809a195cd1e0a10b3efa9",
+    "sha256": "33e01cffeb97722728fa1aa467c87d4941e731f6813157223a79d71bac2025d1",
+    "bytes": 2817,
+    "new": false
+  },
+  {
+    "path": "clients/flutter/README.md",
+    "beforeSha256": "9aae41cda7067f2dd6978f47d95d9750b6e158ac0b4a4082509ed62a237dda6e",
+    "sha256": "d2985e2aca07e88f0c8f34d5a0c1c36662431b17c4c5c0622feb61157feadd70",
+    "bytes": 4252,
+    "new": false
+  },
+  {
+    "path": "docs/flutter-migration/README.md",
+    "beforeSha256": "21aaa0371053a3801a5b805f27607cfa01e36cc587d4a17d941ff68635347a5e",
+    "sha256": "815624cbe4cf8c81ebbfe082dd73b939d74730700f856054908ba44eaa584ef4",
+    "bytes": 7361,
+    "new": false
+  },
+  {
+    "path": "docs/flutter-migration/status.md",
+    "beforeSha256": "0ee391ef4d458eaf33119a581e6b19eea51adcaab1d2e67a8f6d9cee80982347",
+    "sha256": "ab9300ef7d4ba44a7734c916963afe7758f3eb736d29aca86b928450430e2e9f",
+    "bytes": 22194,
+    "new": false
+  },
+  {
+    "path": "docs/flutter-migration/handoff.md",
+    "beforeSha256": "bafc72dc5b2a87835b3d19759b78bf7777cdfadac0cbf414ba4491b21cf9d746",
+    "sha256": "b76fa1a7228f5a9f6c2c4b9c1cdac0e7ba5c270e999b91ffe0e5d09c26e1a9b1",
+    "bytes": 10064,
+    "new": false
+  },
+  {
+    "path": "docs/flutter-migration/evidence/A02/20261031-focus-freeze.json",
+    "beforeSha256": null,
+    "sha256": "cf4ab7a29d7521788df33984b54601a20e8e7f4daaae8c3bcd477c3b9fd67716",
+    "bytes": 4277,
+    "new": true
+  },
+  {
+    "path": "docs/flutter-migration/evidence/A02/20261031-focus-freeze.md",
+    "beforeSha256": null,
+    "sha256": "92ae1438498c6c40b384b7dfcf2b02cfff3c73fd344d805ef0272df50ec437af",
+    "bytes": 1253,
+    "new": true
+  }
+]

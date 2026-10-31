@@ -1,0 +1,54 @@
+[
+  {
+    "log": "android-red.log",
+    "exitCode": 1
+  },
+  {
+    "log": "android-green-initial.log",
+    "exitCode": 0
+  },
+  {
+    "log": "android-final.log",
+    "exitCode": 0
+  },
+  {
+    "log": "android-release-tests.log",
+    "exitCode": 64
+  },
+  {
+    "log": "late-poll-red.log",
+    "exitCode": 1
+  },
+  {
+    "log": "late-poll-green.log",
+    "exitCode": 0
+  },
+  {
+    "log": "release-probe-build.log",
+    "exitCode": 0
+  },
+  {
+    "log": "release-probe-run.log",
+    "exitCode": 0
+  },
+  {
+    "log": "android-v22-final.log",
+    "exitCode": 0
+  },
+  {
+    "log": "windows-final.log",
+    "exitCode": 0
+  },
+  {
+    "log": "final-check-summary.log",
+    "exitCode": 0
+  },
+  {
+    "log": "normal-install.log",
+    "exitCode": 0
+  },
+  {
+    "log": "normal-start.log",
+    "exitCode": 0
+  }
+]

@@ -1,0 +1,12 @@
+Formatted lib\app\local_diagnostic_page.dart
+Formatted lib\app\runtime\local_runtime.dart
+Formatted lib\application\playback\playback_coordinator.dart
+Formatted lib\p1_process_probe.dart
+Formatted lib\platform\local\native_local_backend.dart
+Formatted test\platform\native_release_test.dart
+Formatted test/playback/recovery_restore_test.dart
+Formatted integration_test/runtime_recovery_test.dart
+Formatted integration_test/windows_media_test.dart
+Formatted integration_test/android_background_probe_test.dart
+Formatted integration_test/android_lifecycle_test.dart
+Formatted 18 files (11 changed) in 0.06 seconds.

@@ -1,0 +1,101 @@
+diff --git a/docs/flutter-migration/evidence/service-loss-20261031/before/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+index 62bfe2f..e48153c 100644
+--- a/docs/flutter-migration/evidence/service-loss-20261031/before/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
++++ b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+@@ -41,6 +41,9 @@ object LocalHost {
+     private var focusEpoch = 0L
+     private var pendingServiceStarts = 0
+     private var serviceRegistrationRequested = false
++    private var activeTransportRevision = 0L
++    private var currentService: PlaybackService? = null
++    private var pendingSafetyPause: Map<String, Any>? = null
+     private var lastNativeFailure = ""
+     private var capturedFocusCallback: ((Int) -> Unit)? = null
+     private var currentFocusCallback: ((Int) -> Unit)? = null
+@@ -125,6 +128,7 @@ object LocalHost {
+                         // Hard switch only; old physical resource is closed by shared release.
+                         players.filterKeys { it != id }.values.forEach { it.pause() }
+                         if (failNextPlay) { failNextPlay=false; error("owned-injected-play-failure") }
++                        activeTransportRevision = call.argument<Number>("transportRevision")!!.toLong()
+                         startPlaybackService()
+                         try {
+                             requestFocus(call.argument<Number>("transportRevision")!!.toLong())
+@@ -193,6 +197,21 @@ object LocalHost {
+                         repeat(3) { startPlaybackService() }
+                         stopPlaybackService()
+                     }
++                    // Explicit lifecycle probe: real Service.onDestroy, not an
++                    // OS eviction/process-kill simulation or a transport stop.
++                    "destroyServiceProbe" -> {
++                        result.success(context.stopService(Intent(context, PlaybackService::class.java)))
++                        return@setMethodCallHandler
++                    }
++                    "restartServiceProbe" -> {
++                        stopPlaybackService()
++                        startPlaybackService()
++                    }
++                    "destroyServiceFullQueueProbe" -> {
++                        repeat(32) { command("seek", 3000) }
++                        result.success(context.stopService(Intent(context, PlaybackService::class.java)))
++                        return@setMethodCallHandler
++                    }
+                     "revokeFixture" -> revoked = call.argument<Boolean>("revoked") == true
+                     "recreateActivity" -> activity?.recreate()
+                     "backgroundActivity" -> activity?.moveTaskToBack(true)
+@@ -224,9 +243,12 @@ object LocalHost {
+                             "playWhenReady" to p.playWhenReady, "suppression" to p.playbackSuppressionReason,
+                             "position" to p.currentPosition, "duration" to if (p.duration == C.TIME_UNSET) 0L else p.duration,
+                             "ended" to (p.playbackState == Player.STATE_ENDED), "error" to (p.playerError != null)) }
+-                        val validCommands = commands.filter { it["focusEpoch"] == null || it["focusEpoch"] == focusEpoch }
++                        // Safety pause has a bounded independent slot; a full
++                        // ordinary-command queue must not lose service loss.
++                        val allCommands = commands.toList() + listOfNotNull(pendingSafetyPause)
++                        val validCommands = allCommands.filter { it["focusEpoch"] == null || it["focusEpoch"] == focusEpoch }
+                         result.success(mapOf("samples" to samples, "commands" to validCommands, "lifecycle" to life.toList(), "host" to instance, "pid" to Process.myPid(), "focusHeld" to (focus != null), "focusEpoch" to focusEpoch, "readGates" to readGates.mapValues { it.value.snapshot() }, "pendingServiceStarts" to pendingServiceStarts, "servicePresent" to (session != null), "lastNativeError" to lastNativeFailure, "screenInteractive" to (context.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive))
+-                        commands.clear(); return@setMethodCallHandler
++                        commands.clear(); pendingSafetyPause = null; return@setMethodCallHandler
+                     }
+                     else -> { result.notImplemented(); return@setMethodCallHandler }
+                 }
+@@ -256,12 +278,39 @@ object LocalHost {
+     private fun stopPlaybackService() {
+         serviceRegistrationRequested = false
+         // Never tear down a just-requested FGS before it has promoted itself.
+-        if (pendingServiceStarts == 0) context.stopService(Intent(context, PlaybackService::class.java))
++        if (pendingServiceStarts == 0) {
++            currentService?.expectStop()
++            context.stopService(Intent(context, PlaybackService::class.java))
++        }
+     }
++    fun serviceCreated(service: PlaybackService) { currentService = service }
+     fun serviceStartAcknowledged(service: PlaybackService, startId: Int) {
+         if (pendingServiceStarts > 0) pendingServiceStarts--
+         timeline("service-start-ack")
+-        if (pendingServiceStarts == 0 && !serviceRegistrationRequested) service.stopSelf(startId)
++        if (pendingServiceStarts == 0 && !serviceRegistrationRequested) {
++            service.expectStop()
++            service.stopSelf(startId)
++        }
++    }
++    fun serviceDestroyed(service: PlaybackService) {
++        // An explicit transport Stop/release already owns its desired state.
++        // Only an unrequested service loss needs this safety pause. It is NOT
++        // an OS audio-focus callback and never restarts a service or playback.
++        if (currentService !== service) return
++        currentService = null
++        // Expected stop belongs to THIS instance, not the latest start request.
++        // A newer registration may already be waiting for its own onCreate.
++        if (service.expectedStop) return
++        serviceRegistrationRequested = false
++        players.values.forEach { it.pause() }
++        abandonFocus()
++        if (players.isNotEmpty()) pendingSafetyPause = mapOf(
++            "command" to "pause", "position" to 0L,
++            // Reuse the existing focus/transport fence: a newer intent or
++            // focus request invalidates this queued physical-safety command.
++            "focusEpoch" to focusEpoch, "transportRevision" to activeTransportRevision,
++            "cause" to "service-destroy")
++        timeline("service-loss-paused")
+     }
+     private fun requestFocus(transportRevision: Long) {
+         // A fresh request fences callbacks belonging to a released/paused track.

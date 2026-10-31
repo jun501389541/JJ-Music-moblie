@@ -1,0 +1,833 @@
+diff --git a/.gitignore b/.gitignore
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,4 +1,5 @@
+ .graphflow-cache/
++.graphflow/
+ graphflow-out/
+ *.zip
+ *.zip.sha256
+diff --git a/clients/flutter/windows/runner/local_playback.cpp b/clients/flutter/windows/runner/local_playback.cpp
+--- a/clients/flutter/windows/runner/local_playback.cpp
++++ b/clients/flutter/windows/runner/local_playback.cpp
+@@ -1,4 +1,5 @@
+ #include "local_playback.h"
++#include "owned_gate_stream.h"
+ #include <flutter/method_channel.h>
+ #include <flutter/standard_method_codec.h>
+ #include <winrt/Windows.Foundation.h>
+@@ -34,21 +35,52 @@
+ }
+ struct Track {
+   MediaPlayer player{nullptr};
++  std::shared_ptr<owned_loading::GateState> gate;
++  Windows::Storage::Streams::IRandomAccessStream stream{nullptr};
++  MediaSource source{nullptr};
+   std::atomic_bool opened{false}, ended{false}, failed{false};
+   event_token openedToken{}, endedToken{}, failedToken{};
+   bool intended = false;
+   bool closed = false;
++  bool closeRequested = false;
++  bool playerClosed = false, sourceClosed = false, streamClosed = false;
++  bool hooksRegistered = false;
++  bool failSourceCloseOnce = false;
+   void Close() {
+     if(closed) return;
+-    closed=true;
+-    if (player) {
+-      player.MediaOpened(openedToken);
+-      player.MediaEnded(endedToken);
+-      player.MediaFailed(failedToken);
+-      player.Close();
++    closeRequested=true;
++    if(gate) gate->Cancel();
++    std::exception_ptr failure;
++    auto attempt=[&](auto operation) {
++      try { operation(); } catch(...) { if(!failure) failure=std::current_exception(); }
++    };
++    if(player && !playerClosed) {
++      if(hooksRegistered) {
++        attempt([&] {player.MediaOpened(openedToken);});
++        attempt([&] {player.MediaEnded(endedToken);});
++        attempt([&] {player.MediaFailed(failedToken);});
++      }
++      attempt([&] {player.Close(); playerClosed=true;});
++    } else if(!player) playerClosed=true;
++    if(!sourceClosed) {
++      attempt([&] {
++        if(failSourceCloseOnce) {failSourceCloseOnce=false; throw hresult_error(E_FAIL,L"owned-injected-source-close");}
++        if(source) source.Close();
++        sourceClosed=true;
++        if(gate) {std::lock_guard lock(gate->mutex); gate->sourceClosed=true;}
++      });
+     }
+-  }
+-  ~Track() { Close(); }
++    if(!streamClosed) {
++      attempt([&] {
++        if(stream) stream.Close();
++        streamClosed=true;
++        if(gate) {std::lock_guard lock(gate->mutex); gate->streamClosed=true;}
++      });
++    }
++    closed=playerClosed && sourceClosed && streamClosed;
++    if(failure) std::rethrow_exception(failure);
++  }
++  ~Track() noexcept { try {Close();} catch(...) {} }
+ };
+ struct Commands {
+   std::mutex mutex;
+@@ -74,6 +106,41 @@
+   std::string mirroredStatus;
+   int64_t mirroredDuration=0;
+   bool failNextPlay=false;
++  std::map<std::string,std::shared_ptr<owned_loading::GateState>> registeredGates, streamGates;
++  std::map<std::string,std::vector<std::unique_ptr<flutter::MethodResult<EncodableValue>>>> closing;
++  uint64_t nextGate=0;
++  UINT_PTR closeTimer=0;
++  static auto& Timers() {
++    static std::map<UINT_PTR,Impl*> values;
++    return values;
++  }
++  static void CALLBACK TimerProc(HWND,UINT,UINT_PTR id,DWORD) {
++    // Registry lookup makes an already-queued timer harmless after teardown.
++    const auto it=Timers().find(id);
++    if(it!=Timers().end()) it->second->FinishClosures();
++  }
++  void StartCloseTimer() {
++    if(closeTimer) return;
++    closeTimer=::SetTimer(nullptr,0,10,TimerProc);
++    if(!closeTimer) throw hresult_error(HRESULT_FROM_WIN32(GetLastError()));
++    Timers().emplace(closeTimer,this);
++  }
++  void StopCloseTimer() {
++    Timers().erase(closeTimer);
++    if(closeTimer) ::KillTimer(nullptr,closeTimer);
++    closeTimer=0;
++  }
++  void FinishClosures() {
++    for(auto it=closing.begin();it!=closing.end();) {
++      auto t=tracks.at(it->first);
++      if(t->gate && !t->gate->FinishClose()) { ++it; continue; }
++      auto results=std::move(it->second);
++      tracks.erase(it->first);
++      it=closing.erase(it);
++      for(auto& result:results) result->Success();
++    }
++    if(closing.empty()) StopCloseTimer();
++  }
+   explicit Impl(flutter::BinaryMessenger* messenger, HWND window) {
+     auto interop = get_activation_factory<SystemMediaTransportControls,
+       ISystemMediaTransportControlsInterop>();
+@@ -105,13 +172,52 @@
+         const auto* args = std::get_if<EncodableMap>(call.arguments());
+         const auto& m = args ? *args : empty;
+         const auto& method = call.method_name();
+-        if (method == "prepare") {
++        if(method=="registerOwnedGate") {
++          const auto* bytes=std::get_if<std::vector<uint8_t>>(&m.at(EncodableValue("bytes")));
++          if(!bytes || bytes->size()<44 || bytes->size()>2*1024*1024 ||
++             std::memcmp(bytes->data(),"RIFF",4)!=0 || std::memcmp(bytes->data()+8,"WAVE",4)!=0)
++            throw hresult_invalid_argument();
++          if(registeredGates.size()>=8) {
++            auto old=std::find_if(registeredGates.begin(),registeredGates.end(),[](auto const& entry) {
++              std::lock_guard lock(entry.second->mutex);
++              return !entry.second->claimed || (entry.second->cancelled && entry.second->readers==0);
++            });
++            if(old==registeredGates.end()) throw hresult_invalid_argument();
++            registeredGates.erase(old);
++          }
++          const auto token="owned-gate:"+std::to_string(++nextGate);
++          registeredGates.emplace(token,std::make_shared<owned_loading::GateState>(*bytes));
++          result->Success(EncodableValue(token)); return;
++        } else if(method=="failOwnedClose") {
++          auto t=tracks.at(Text(m,"id"));
++          if(!t->gate) throw hresult_invalid_argument();
++          t->failSourceCloseOnce=true;
++        } else if(method=="allowOwnedRead") {
++          const auto it=streamGates.find(Text(m,"id"));
++          if(it!=streamGates.end()) it->second->Allow();
++        } else if (method == "prepare") {
+           if (tracks.size() >= 2) throw hresult_invalid_argument();
+           const auto id = Text(m,"id"), path = Text(m,"path");
+           if (id.empty() || tracks.contains(id)) throw hresult_invalid_argument();
+           // Only explicit local file URI generated by the fixture-only Dart resolver.
+-          if (path.rfind("file:",0) != 0) throw hresult_invalid_argument();
++          const auto gated=registeredGates.find(path);
++          if (path.rfind("file:",0) != 0 && gated==registeredGates.end()) throw hresult_invalid_argument();
+           auto t = std::make_shared<Track>(); t->player = MediaPlayer();
++          if(gated!=registeredGates.end()) {
++            {
++              std::lock_guard lock(gated->second->mutex);
++              if(gated->second->claimed) throw hresult_invalid_argument();
++              gated->second->claimed=true;
++            }
++            t->gate=gated->second;
++            t->stream=make<owned_loading::GateStream>(t->gate);
++            if(streamGates.size()>=8 && !streamGates.contains(id)) {
++              auto old=std::find_if(streamGates.begin(),streamGates.end(),[this](auto const& entry) {return !tracks.contains(entry.first);});
++              if(old==streamGates.end()) throw hresult_invalid_argument();
++              streamGates.erase(old);
++            }
++            streamGates[id]=t->gate;
++          } else streamGates.erase(id);
+           t->player.AutoPlay(false);
+           t->player.CommandManager().IsEnabled(false);
+           t->player.SystemMediaTransportControls().IsEnabled(false);
+@@ -125,8 +231,12 @@
+           t->failedToken = t->player.MediaFailed([weak](auto const&, auto const&) {
+             if (auto v=weak.lock()) v->failed=true;
+           });
++          t->hooksRegistered=true;
+           tracks.emplace(id,t);
+-          t->player.Source(MediaSource::CreateFromUri(Uri(to_hstring(path))));
++          if(t->gate) {
++            t->source=MediaSource::CreateFromStream(t->stream,L"audio/wav");
++            t->player.Source(t->source);
++          } else t->player.Source(MediaSource::CreateFromUri(Uri(to_hstring(path))));
+         } else if (method == "play") {
+           for (auto const& entry: tracks) {
+             if (entry.first != Text(m,"id")) { entry.second->intended=false; entry.second->player.Pause(); }
+@@ -141,7 +251,17 @@
+         } else if (method == "release") {
+           // Destruction revokes callbacks and Close finishes before returning receipt.
+           const auto id=Text(m,"id");
+-          if(auto it=tracks.find(id);it!=tracks.end()) {it->second->Close(); tracks.erase(it);}
++          if(auto it=tracks.find(id);it!=tracks.end()) {
++            if(it->second->gate) StartCloseTimer();
++            it->second->Close();
++            if(it->second->gate) {
++              closing[id].push_back(std::move(result));
++              // WM_TIMER completes replies only on this platform thread, after
++              // all async reads drain. No dependence on a Dart polling timer.
++              FinishClosures(); return;
++            }
++            tracks.erase(it);
++          }
+         } else if (method == "mirror") {
+           mirrorStage="enabled";
+           smtc.IsEnabled(true);
+@@ -199,6 +319,7 @@
+           }
+           EncodableList samples;
+           for (auto const& entry: tracks) {
++            if(entry.second->closeRequested) continue;
+             auto t=entry.second; auto s=t->player.PlaybackSession();
+             auto state=s.PlaybackState();
+             samples.emplace_back(EncodableMap{
+@@ -215,8 +336,22 @@
+               {EncodableValue("error"),EncodableValue(t->failed.load())}});
+           }
+           EncodableList actions;
++          EncodableMap gates;
++          for(auto const& entry:streamGates) {
++            const auto& g=entry.second; std::lock_guard lock(g->mutex);
++            gates.emplace(EncodableValue(entry.first),EncodableMap{
++              {EncodableValue("blocked"),EncodableValue(g->waiting>0)},
++              {EncodableValue("readers"),EncodableValue(g->readers)},
++              {EncodableValue("bytesRead"),EncodableValue(g->bytesRead)},
++              {EncodableValue("waitedMs"),EncodableValue(g->waitedMs)},
++              {EncodableValue("closed"),EncodableValue(g->closed)},
++              {EncodableValue("sourceClosed"),EncodableValue(g->sourceClosed)},
++              {EncodableValue("streamClosed"),EncodableValue(g->streamClosed)},
++              {EncodableValue("cancelled"),EncodableValue(g->cancelled)}});
++          }
+           { std::lock_guard<std::mutex> lock(commands->mutex); actions.swap(commands->pending); }
+           result->Success(EncodableMap{{EncodableValue("samples"),EncodableValue(samples)},
++            {EncodableValue("streamGates"),EncodableValue(gates)},
+             {EncodableValue("osResult"),EncodableValue(probeResult)},
+             {EncodableValue("smtcEnabled"),EncodableValue(smtc.IsEnabled())},
+             {EncodableValue("mirrorStage"),EncodableValue(mirrorStage)},
+@@ -233,6 +368,7 @@
+     });
+   }
+   ~Impl() {
++    StopCloseTimer();
+     channel->SetMethodCallHandler(nullptr);
+     smtc.ButtonPressed(buttonToken); smtc.PlaybackPositionChangeRequested(seekToken);
+     smtc.IsEnabled(false); smtc.DisplayUpdater().ClearAll();
+diff --git a/clients/flutter/windows/runner/owned_gate_stream.h b/clients/flutter/windows/runner/owned_gate_stream.h
+--- /dev/null
++++ b/clients/flutter/windows/runner/owned_gate_stream.h
+@@ -0,0 +1,139 @@
++#pragma once
++#include <winrt/Windows.Foundation.h>
++#include <winrt/Windows.Storage.Streams.h>
++#include <algorithm>
++#include <atomic>
++#include <chrono>
++#include <condition_variable>
++#include <cstring>
++#include <memory>
++#include <mutex>
++#include <vector>
++
++// Explicit diagnostic-only input, backed solely by bounded owned fixture bytes.
++// No file discovery, network, queue policy, or platform-thread wait.
++namespace owned_loading {
++using namespace winrt;
++using namespace Windows::Foundation;
++using namespace Windows::Storage::Streams;
++
++struct GateState {
++  explicit GateState(std::vector<uint8_t> value)
++      : bytes(std::move(value)), size(bytes.size()) {}
++  std::mutex mutex;
++  std::condition_variable changed;
++  std::vector<uint8_t> bytes;
++  const uint64_t size;
++  bool allowed=false, cancelled=false, claimed=false, closed=false;
++  bool sourceClosed=false, streamClosed=false;
++  int64_t readers=0, waiting=0, bytesRead=0, waitedMs=0;
++  void Allow() {
++    std::lock_guard lock(mutex);
++    if(!cancelled) allowed=true;
++    changed.notify_all();
++  }
++  void Cancel() {
++    std::lock_guard lock(mutex);
++    cancelled=true;
++    changed.notify_all();
++  }
++  bool FinishClose() {
++    std::lock_guard lock(mutex);
++    if(readers!=0 || !sourceClosed || !streamClosed) return false;
++    closed=true;
++    std::vector<uint8_t>().swap(bytes);
++    return true;
++  }
++};
++
++struct ReadGuard {
++  std::shared_ptr<GateState> gate;
++  explicit ReadGuard(std::shared_ptr<GateState> state) : gate(std::move(state)) {
++    std::lock_guard lock(gate->mutex);
++    if(gate->cancelled) throw hresult_canceled();
++    if(gate->readers>=16) throw hresult_error(E_BOUNDS);
++    ++gate->readers;
++  }
++  ~ReadGuard() {
++    std::lock_guard lock(gate->mutex);
++    --gate->readers;
++    gate->changed.notify_all();
++  }
++};
++
++struct GateStream : implements<GateStream, IRandomAccessStream, IInputStream,
++                               IOutputStream, IClosable> {
++  explicit GateStream(std::shared_ptr<GateState> state, uint64_t position=0)
++      : gate_(std::move(state)), position_(position) {}
++  void Close() noexcept { closed_=true; gate_->changed.notify_all(); }
++  ~GateStream() { Close(); }
++  bool CanRead() const { return !closed_; }
++  bool CanWrite() const { return false; }
++  uint64_t Size() const { Check(); return gate_->size; }
++  void Size(uint64_t) { throw hresult_access_denied(); }
++  uint64_t Position() const {
++    Check(); std::lock_guard lock(positionMutex_); return position_;
++  }
++  void Seek(uint64_t value) {
++    Check();
++    if(value>gate_->size) throw hresult_error(E_BOUNDS);
++    std::lock_guard lock(positionMutex_); position_=value;
++  }
++  IRandomAccessStream CloneStream() {
++    return make<GateStream>(gate_, Position());
++  }
++  IInputStream GetInputStreamAt(uint64_t position) {
++    Check();
++    if(position>gate_->size) throw hresult_error(E_BOUNDS);
++    return make<GateStream>(gate_, position).as<IInputStream>();
++  }
++  IOutputStream GetOutputStreamAt(uint64_t) { throw hresult_access_denied(); }
++  IAsyncOperationWithProgress<uint32_t,uint32_t> WriteAsync(IBuffer const&) {
++    throw hresult_access_denied();
++  }
++  IAsyncOperation<bool> FlushAsync() { co_return true; }
++
++  IAsyncOperationWithProgress<IBuffer,uint32_t> ReadAsync(
++      IBuffer buffer, uint32_t count, InputStreamOptions) {
++    [[maybe_unused]] auto lifetime=get_strong();
++    Check();
++    // Count BEFORE the first suspension: queued reads also delay release receipt.
++    ReadGuard reading(gate_);
++    auto cancel=co_await get_cancellation_token();
++    const auto start=std::chrono::steady_clock::now();
++    co_await resume_background();
++    {
++      std::unique_lock lock(gate_->mutex);
++      ++gate_->waiting;
++      try {
++        while(!gate_->allowed && !gate_->cancelled && !closed_ && !cancel()) {
++          if(std::chrono::steady_clock::now()-start>=std::chrono::seconds(15)) {
++            gate_->cancelled=true;
++            gate_->changed.notify_all();
++            throw hresult_error(HRESULT_FROM_WIN32(ERROR_TIMEOUT));
++          }
++          gate_->changed.wait_for(lock,std::chrono::milliseconds(20));
++        }
++        --gate_->waiting;
++      } catch(...) { --gate_->waiting; throw; }
++      gate_->waitedMs+=std::chrono::duration_cast<std::chrono::milliseconds>(
++          std::chrono::steady_clock::now()-start).count();
++      if(gate_->cancelled || closed_ || cancel()) throw hresult_canceled();
++      std::lock_guard positionLock(positionMutex_);
++      const auto length=static_cast<uint32_t>(std::min<uint64_t>(
++          std::min(count,buffer.Capacity()),gate_->size-position_));
++      if(length>0) std::memcpy(buffer.data(),gate_->bytes.data()+position_,length);
++      buffer.Length(length);
++      position_+=length;
++      gate_->bytesRead+=length;
++    }
++    co_return buffer;
++  }
++ private:
++  void Check() const { if(closed_) throw hresult_error(RO_E_CLOSED); }
++  std::shared_ptr<GateState> gate_;
++  mutable std::mutex positionMutex_;
++  uint64_t position_;
++  std::atomic_bool closed_{false};
++};
++}
+diff --git a/clients/flutter/integration_test/windows_loading_test.dart b/clients/flutter/integration_test/windows_loading_test.dart
+--- /dev/null
++++ b/clients/flutter/integration_test/windows_loading_test.dart
+@@ -0,0 +1,258 @@
++import 'dart:convert';
++import 'dart:io';
++
++import 'package:flutter/services.dart';
++import 'package:flutter_test/flutter_test.dart';
++import 'package:integration_test/integration_test.dart';
++import 'package:jj_music_mobile/application/playback/playback_coordinator.dart';
++import 'package:jj_music_mobile/domain/playback/contracts.dart';
++import 'package:jj_music_mobile/platform/local/native_local_backend.dart';
++
++import 'support/local_playback_contract.dart' show expectControlApplied;
++import 'windows_local_playback_test.dart' show until;
++
++const slow = QueueEntry(entryId: 'slow', trackKey: 'owned', fixtureId: 'slow');
++const normal = QueueEntry(
++  entryId: 'normal',
++  trackKey: 'owned',
++  fixtureId: 'normal',
++);
++
++void main() {
++  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
++  for (final control in ['pause', 'stop', 'cancel', 'new-play']) {
++    testWidgets('Windows actual pending stream read: $control', (tester) async {
++      final asset = await rootBundle.load(
++        'fixtures/local_playback/tone-long.wav',
++      );
++      final bytes = asset.buffer.asUint8List(
++        asset.offsetInBytes,
++        asset.lengthInBytes,
++      );
++      final token = await NativeLocalBackend.channel.invokeMethod<String>(
++        'registerOwnedGate',
++        {'bytes': bytes},
++      );
++      final dir = await Directory.systemTemp.createTemp('jj-owned-win-stream-');
++      final file = File('${dir.path}/tone.wav');
++      await file.writeAsBytes(bytes, flush: true);
++      final backend = NativeLocalBackend({
++        'slow': token!,
++        'normal': file.uri.toString(),
++      });
++      final c = PlaybackCoordinator(backend);
++      int? commitMs, drainedMs;
++      Map<String, dynamic>? beforeControl;
++      CommandContext cmd(String id) => CommandContext(id, c.claim);
++      Map<String, dynamic> gate() => Map<String, dynamic>.from(
++        ((backend.lastHost['streamGates'] as Map?)?['native-1'] as Map?) ?? {},
++      );
++      try {
++        expectControlApplied(
++          c.play(
++            cmd('old'),
++            PlayIntent(entries: [slow, normal], entryId: slow.entryId),
++          ),
++        );
++        await until(() => gate()['blocked'] == true);
++        await Future<void>.delayed(const Duration(milliseconds: 650));
++        expect(gate()['readers'], greaterThan(0));
++        expect(gate()['bytesRead'], 0);
++        final sample = (backend.lastHost['samples'] as List).single as Map;
++        // Native WinRT enum verified against the installed SDK: Opening=1,
++        // Buffering=2. Initial Opening is not yet a buffering-recovery proof.
++        expect(sample['nativeState'], anyOf(1, 2));
++        expect(sample['ready'], isFalse);
++        expect(c.snapshot.confirmations, isEmpty);
++        beforeControl = {...gate(), 'nativeState': sample['nativeState']};
++        final timer = Stopwatch()..start();
++        final ack = switch (control) {
++          'pause' => c.pause(cmd('control')),
++          'stop' => c.stop(cmd('control')),
++          'cancel' => c.cancel(cmd('control'), 'old'),
++          _ => c.play(
++            cmd('control'),
++            PlayIntent(entries: [slow, normal], entryId: normal.entryId),
++          ),
++        };
++        expectControlApplied(ack);
++        commitMs = timer.elapsedMilliseconds;
++        expect(commitMs, lessThan(500));
++        if (control == 'pause') {
++          expect(gate()['blocked'], isTrue);
++          await NativeLocalBackend.channel.invokeMethod<void>(
++            'allowOwnedRead',
++            {'id': 'native-1'},
++          );
++          await until(
++            () => (backend.lastHost['samples'] as List).any(
++              (s) => s['ready'] == true,
++            ),
++          );
++          await Future<void>.delayed(const Duration(milliseconds: 350));
++          expect(c.snapshot.desired, DesiredTransport.paused);
++          expect(c.snapshot.confirmations, isEmpty);
++          expect(
++            (backend.lastHost['samples'] as List).single['nativePlaying'],
++            isFalse,
++          );
++          expectControlApplied(c.resume(cmd('resume')));
++          await until(() => c.snapshot.currentEntryId == slow.entryId);
++          expect(c.snapshot.confirmations.length, 1);
++          c.pause(cmd('pause-again'));
++          c.resume(cmd('resume-again'));
++          await until(() => c.snapshot.positionMs > 350);
++          expect(c.snapshot.confirmations.length, 1);
++          c.stop(cmd('finish'));
++        } else if (control == 'new-play') {
++          await until(() => c.snapshot.currentEntryId == normal.entryId);
++          expect(c.snapshot.confirmations.length, 1);
++        }
++        await until(() => gate()['readers'] == 0 && gate()['closed'] == true);
++        drainedMs = timer.elapsedMilliseconds;
++        if (control != 'pause') {
++          expect(gate()['cancelled'], isTrue);
++          expect(drainedMs, lessThan(2500));
++          await NativeLocalBackend.channel.invokeMethod<void>(
++            'allowOwnedRead',
++            {'id': 'native-1'},
++          );
++          await Future<void>.delayed(const Duration(milliseconds: 300));
++          expect(
++            c.snapshot.confirmations.length,
++            control == 'new-play' ? 1 : 0,
++          );
++        }
++        c.stop(cmd('cleanup'));
++        await until(() => backend.consumers == 0);
++        expect(c.failures, isEmpty);
++      } finally {
++        await c.dispose();
++        await backend.close();
++        // ignore: avoid_print
++        print(
++          'WIN_LOADING_$control=${jsonEncode({'commitMs': commitMs, 'drainedMs': drainedMs, 'beforeControl': beforeControl, 'host': backend.lastHost, 'raw': backend.raw})}',
++        );
++      }
++    });
++  }
++  testWidgets('Windows gated release completes without a Dart polling timer', (
++    tester,
++  ) async {
++    final asset = await rootBundle.load(
++      'fixtures/local_playback/tone-long.wav',
++    );
++    final token = await NativeLocalBackend.channel.invokeMethod<String>(
++      'registerOwnedGate',
++      {
++        'bytes': asset.buffer.asUint8List(
++          asset.offsetInBytes,
++          asset.lengthInBytes,
++        ),
++      },
++    );
++    const id = 'direct-native-release';
++    Map<String, dynamic> host = {};
++    try {
++      await NativeLocalBackend.channel.invokeMethod<void>('prepare', {
++        'id': id,
++        'path': token,
++      });
++      for (var i = 0; i < 60; i++) {
++        host = Map<String, dynamic>.from(
++          await NativeLocalBackend.channel.invokeMapMethod<String, dynamic>(
++                'poll',
++              ) ??
++              {},
++        );
++        if ((host['streamGates'] as Map)[id]['blocked'] == true) break;
++        await Future<void>.delayed(const Duration(milliseconds: 50));
++      }
++      expect((host['streamGates'] as Map)[id]['blocked'], isTrue);
++      // There is no NativeLocalBackend and no further poll until release replies.
++      final timer = Stopwatch()..start();
++      await NativeLocalBackend.channel
++          .invokeMethod<void>('release', {'id': id})
++          .timeout(const Duration(seconds: 2));
++      host = Map<String, dynamic>.from(
++        await NativeLocalBackend.channel.invokeMapMethod<String, dynamic>(
++              'poll',
++            ) ??
++            {},
++      );
++      expect((host['streamGates'] as Map)[id]['readers'], 0);
++      expect((host['streamGates'] as Map)[id]['closed'], isTrue);
++      expect(host['samples'], isEmpty);
++      // ignore: avoid_print
++      print(
++        'WIN_LOADING_NO_POLL=${jsonEncode({'elapsedMs': timer.elapsedMilliseconds, 'host': host})}',
++      );
++    } finally {
++      await NativeLocalBackend.channel.invokeMethod<void>('release', {
++        'id': id,
++      });
++    }
++  });
++  testWidgets(
++    'Windows close error cannot turn retry into false release success',
++    (tester) async {
++      final asset = await rootBundle.load(
++        'fixtures/local_playback/tone-long.wav',
++      );
++      final token = await NativeLocalBackend.channel.invokeMethod<String>(
++        'registerOwnedGate',
++        {
++          'bytes': asset.buffer.asUint8List(
++            asset.offsetInBytes,
++            asset.lengthInBytes,
++          ),
++        },
++      );
++      const id = 'close-error-native';
++      try {
++        await NativeLocalBackend.channel.invokeMethod<void>('prepare', {
++          'id': id,
++          'path': token,
++        });
++        await NativeLocalBackend.channel.invokeMethod<void>('failOwnedClose', {
++          'id': id,
++        });
++        await expectLater(
++          NativeLocalBackend.channel.invokeMethod<void>('release', {'id': id}),
++          throwsA(isA<PlatformException>()),
++        );
++        final firstFailure = await NativeLocalBackend.channel
++            .invokeMapMethod<String, dynamic>('poll');
++        final partial = (firstFailure!['streamGates'] as Map)[id] as Map;
++        expect(partial['sourceClosed'], isFalse);
++        expect(
++          partial['streamClosed'],
++          isTrue,
++          reason: 'Source failure must not skip the later stream cleanup',
++        );
++        // ignore: avoid_print
++        print('WIN_LOADING_CLOSE_ERROR_FIRST=${jsonEncode(firstFailure)}');
++        await NativeLocalBackend.channel
++            .invokeMethod<void>('release', {'id': id})
++            .timeout(const Duration(seconds: 2));
++        final host = await NativeLocalBackend.channel
++            .invokeMapMethod<String, dynamic>('poll');
++        final closed = (host!['streamGates'] as Map)[id] as Map;
++        expect(
++          closed['sourceClosed'],
++          isTrue,
++          reason: 'A retry must actually finish the skipped source.Close',
++        );
++        expect(closed['streamClosed'], isTrue);
++        expect(closed['closed'], isTrue);
++        expect(closed['readers'], 0);
++        // ignore: avoid_print
++        print('WIN_LOADING_CLOSE_ERROR=${jsonEncode(host)}');
++      } finally {
++        await NativeLocalBackend.channel.invokeMethod<void>('release', {
++          'id': id,
++        });
++      }
++    },
++  );
++}
+diff --git a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+--- a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
++++ b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+@@ -38,6 +38,8 @@
+     private var focus: AudioFocusRequest? = null
+     private var focusProbe: AudioFocusRequest? = null
+     private var focusEpoch = 0L
++    private var pendingServiceStarts = 0
++    private var serviceRegistrationRequested = false
+     private var capturedFocusCallback: ((Int) -> Unit)? = null
+     private var currentFocusCallback: ((Int) -> Unit)? = null
+     private val life = arrayListOf<Map<String, Any>>()
+@@ -106,14 +108,13 @@
+                         // Hard switch only; old physical resource is closed by shared release.
+                         players.filterKeys { it != id }.values.forEach { it.pause() }
+                         if (failNextPlay) { failNextPlay=false; error("owned-injected-play-failure") }
+-                        val intent = Intent(context, PlaybackService::class.java)
+-                        context.startForegroundService(intent)
++                        startPlaybackService()
+                         try {
+                             requestFocus(call.argument<Number>("transportRevision")!!.toLong())
+                             players.getValue(id!!).play()
+                         } catch (e: Exception) {
+                             abandonFocus()
+-                            context.stopService(intent)
++                            stopPlaybackService()
+                             throw e
+                         }
+                     }
+@@ -148,7 +149,7 @@
+                     }
+                     "stop" -> {
+                         players.values.forEach { it.stop() }
+-                        context.stopService(Intent(context, PlaybackService::class.java))
++                        stopPlaybackService()
+                         abandonFocus()
+                     }
+                     "seek" -> players.getValue(id!!).seekTo(call.argument<Number>("position")!!.toLong())
+@@ -157,7 +158,7 @@
+                         players.remove(id)?.release(); timeline("released-$id")
+                         if (players.isEmpty()) {
+                             abandonFocus()
+-                            context.stopService(Intent(context, PlaybackService::class.java))
++                            stopPlaybackService()
+                         }
+                     }
+                     "fixtureUri", "gatedFixtureUri" -> {
+@@ -167,6 +168,10 @@
+                         result.success("content://${context.packageName}.fixture/tone-long$query"); return@setMethodCallHandler
+                     }
+                     "allowOwnedRead" -> readGates[id]?.allow()
++                    "serviceRegistrationProbe" -> {
++                        repeat(3) { startPlaybackService() }
++                        stopPlaybackService()
++                    }
+                     "revokeFixture" -> revoked = call.argument<Boolean>("revoked") == true
+                     "recreateActivity" -> activity?.recreate()
+                     "backgroundActivity" -> activity?.moveTaskToBack(true)
+@@ -199,7 +204,7 @@
+                             "position" to p.currentPosition, "duration" to if (p.duration == C.TIME_UNSET) 0L else p.duration,
+                             "ended" to (p.playbackState == Player.STATE_ENDED), "error" to (p.playerError != null)) }
+                         val validCommands = commands.filter { it["focusEpoch"] == null || it["focusEpoch"] == focusEpoch }
+-                        result.success(mapOf("samples" to samples, "commands" to validCommands, "lifecycle" to life.toList(), "host" to instance, "pid" to Process.myPid(), "focusHeld" to (focus != null), "focusEpoch" to focusEpoch, "readGates" to readGates.mapValues { it.value.snapshot() }, "screenInteractive" to (context.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive))
++                        result.success(mapOf("samples" to samples, "commands" to validCommands, "lifecycle" to life.toList(), "host" to instance, "pid" to Process.myPid(), "focusHeld" to (focus != null), "focusEpoch" to focusEpoch, "readGates" to readGates.mapValues { it.value.snapshot() }, "pendingServiceStarts" to pendingServiceStarts, "servicePresent" to (session != null), "screenInteractive" to (context.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive))
+                         commands.clear(); return@setMethodCallHandler
+                     }
+                     else -> { result.notImplemented(); return@setMethodCallHandler }
+@@ -210,6 +215,28 @@
+         engine.dartExecutor.executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault())
+         timeline("engine-create")
+         return engine
++    }
++    private fun startPlaybackService() {
++        // Registration bookkeeping only; playback intent remains in Dart.
++        serviceRegistrationRequested = true
++        pendingServiceStarts++
++        try {
++            context.startForegroundService(Intent(context, PlaybackService::class.java))
++        } catch (e: Exception) {
++            pendingServiceStarts--
++            serviceRegistrationRequested = false
++            throw e
++        }
++    }
++    private fun stopPlaybackService() {
++        serviceRegistrationRequested = false
++        // Never tear down a just-requested FGS before it has promoted itself.
++        if (pendingServiceStarts == 0) context.stopService(Intent(context, PlaybackService::class.java))
++    }
++    fun serviceStartAcknowledged(service: PlaybackService, startId: Int) {
++        if (pendingServiceStarts > 0) pendingServiceStarts--
++        timeline("service-start-ack")
++        if (pendingServiceStarts == 0 && !serviceRegistrationRequested) service.stopSelf(startId)
+     }
+     private fun requestFocus(transportRevision: Long) {
+         // A fresh request fences callbacks belonging to a released/paused track.
+diff --git a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/PlaybackService.kt b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/PlaybackService.kt
+--- a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/PlaybackService.kt
++++ b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/PlaybackService.kt
+@@ -23,13 +23,22 @@
+         })
+         session.isActive = true
+         LocalHost.session = session
++        promote()
++    }
++    private fun promote() {
++        val session = LocalHost.session ?: error("owned-service-session-missing")
+         val launch = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
+         startForeground(41, Notification.Builder(this,"owned_playback")
+             .setSmallIcon(android.R.drawable.ic_media_play).setContentTitle("JJ-Music 自有样本诊断")
+             .setContentText("仅本地测试媒体").setContentIntent(launch)
+             .setStyle(Notification.MediaStyle().setMediaSession(session.sessionToken)).build())
+     }
+-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int) = START_NOT_STICKY
++    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
++        // A reused service must also acknowledge each new foreground request.
++        promote()
++        LocalHost.serviceStartAcknowledged(this, startId)
++        return START_NOT_STICKY
++    }
+     override fun onDestroy() {
+         LocalHost.timeline("service-destroy")
+         LocalHost.session?.release(); LocalHost.session = null
+diff --git a/clients/flutter/integration_test/android_service_registration_test.dart b/clients/flutter/integration_test/android_service_registration_test.dart
+--- /dev/null
++++ b/clients/flutter/integration_test/android_service_registration_test.dart
+@@ -0,0 +1,53 @@
++import 'dart:convert';
++
++import 'package:flutter_test/flutter_test.dart';
++import 'package:integration_test/integration_test.dart';
++import 'package:jj_music_mobile/platform/local/native_local_backend.dart';
++
++void main() {
++  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
++  testWidgets('Android stop waits for all requested foreground registrations', (
++    tester,
++  ) async {
++    // Real start requests and stop in ONE platform callback, before the service
++    // can receive onCreate/onStartCommand. No audio or personal media involved.
++    await NativeLocalBackend.channel.invokeMethod<void>(
++      'serviceRegistrationProbe',
++    );
++    Map<String, dynamic> host = {};
++    for (var i = 0; i < 80; i++) {
++      host = Map<String, dynamic>.from(
++        await NativeLocalBackend.channel.invokeMapMethod<String, dynamic>(
++              'poll',
++            ) ??
++            {},
++      );
++      if (host['pendingServiceStarts'] == 0 &&
++          host['servicePresent'] == false) {
++        break;
++      }
++      await Future<void>.delayed(const Duration(milliseconds: 100));
++    }
++    expect(host['pendingServiceStarts'], 0);
++    expect(host['servicePresent'], isFalse);
++    expect(
++      (host['lifecycle'] as List)
++          .where((e) => e['event'] == 'service-start-ack')
++          .length,
++      3,
++    );
++    // Also wait beyond the normal system promotion deadline to catch delayed
++    // process termination, rather than exiting immediately after native return.
++    await Future<void>.delayed(const Duration(seconds: 7));
++    host = Map<String, dynamic>.from(
++      await NativeLocalBackend.channel.invokeMapMethod<String, dynamic>(
++            'poll',
++          ) ??
++          {},
++    );
++    expect(host['pendingServiceStarts'], 0);
++    expect(host['servicePresent'], isFalse);
++    // ignore: avoid_print
++    print('ANDROID_SERVICE_REGISTRATION=${jsonEncode(host)}');
++  });
++}
