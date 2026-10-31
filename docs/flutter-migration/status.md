@@ -238,4 +238,6 @@ AUTH-P1-SEEK-20261031：领取A02/TC57共享定位能力增量。owner Codex串�
 
 AUTH-P1-SEEK-20261031限定目标完成：当前v2.3/21文件冻结及05摘要，旧v2.2保留。42共同/格式/analyze/锁/新冻结通过；Windows2+local3、Android3共8项通过。两端普通Release构建成功并恢复入口，实际进程见本批normal-artifacts.json。能力unknown/false无副作用拒绝，动态变化不保证，G-L未过；无提交推送，既有差异保留。见evidence/seek-capability-20261031/report.md。
 
+2026-11-01发布收尾已完成：用户明确只发源码预发布；b502240已提交推送，PR #1合并main为f05a23b，两轮双端云端CI成功，tag v0.1.0-dev.1=f05a23b，公开prerelease且手动附件0，不含APK/Windows包。候选包本地忽略保存，未改正式身份/签名/默认分支/全局。详见[evidence/source-release-20261101.md](evidence/source-release-20261101.md)。此文档记录随后推送main，不移动标签；本地当前main。历史未提交状态被本次Git授权替代，功能范围/G-L缺口不变。
+
 AUTH-GIT-MERGE-RELEASE-20261031：用户授权提交推送合并发布。合并到从86053e5建立的main，普通PR/merge不强推，保留分支。发布候选0.1.0-dev.1仅技术诊断，G-L未通过/Android调试签名/P1身份；当前候选包和摘要留graphflow-out/release-candidate，不自动对外发布未经确认身份的二进制。历史CI因SDK浅克隆识别0.0.0-unknown失败，补SDK checkout fetch-depth0；本地质量42/21冻结/分析格式本轮复验通过。

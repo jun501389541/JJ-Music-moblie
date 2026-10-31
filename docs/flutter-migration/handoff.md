@@ -1,5 +1,7 @@
 # 当前交接：A02 v2.3共享定位能力与拒绝回执（2026-10-31）
 
+2026-11-01 Git/发布收尾：用户授权提交推送合并，并明确选择仅源码预发布。功能b502240经PR #1合并main，merge f05a23b；两端云端CI成功；v0.1.0-dev.1已发布且tag=f05a23b，prerelease/无APK或Windows附件。详见[证据](evidence/source-release-20261101.md)。本地已切main；发布后文档另提交main，不移动tag。旧“不提交/未推送/未发布”是各开发批当时状态。默认分支设置未改，原feature保留；后续开发应新建feature分支，保留v2.3冻结与下方缺口，不把源码预发布当正式产品或G-L通过。
+
 本批限定目标完成：[报告](evidence/seek-capability-20261031/report.md)、[v2.3冻结](evidence/A02/20261031-seek-freeze.md)。当前21文件/05摘要见20261031-seek-freeze.json，check.ps1已切换；下面v2.2均为历史。PreparedTrack必填bool? canSeek，native ready真实取值，缺失null；共享seek false/null分别拒绝unsupported/unknown，检查先于全部副作用。fake明确支持；原生二次检查保留，能力动态变化及定位完成回执非本批。
 
 42共同测试/格式/分析/21冻结/05/锁通过；Windows未知输入2+普通local3、Android unknown/stop/known3共8项实际通过。Android曾等待息屏首帧，用户解锁后原运行通过，非后台启动证明。两端普通Release重建，Android重装冷启动、Windows8秒启动观测见本批日志和normal-artifacts.json，按钮/听感未人工代验。
