@@ -1,5 +1,7 @@
 # 当前交接：A04 Android服务销毁安全退路（2026-10-31）
 
+最新Git状态：用户新增提交/推送授权，指定现有仓库[jun501389541/JJ-Music-moblie](https://github.com/jun501389541/JJ-Music-moblie)。首次源码/证据提交b4e01705fac7208702bb967164757fcce5a1e91f已推送origin/feat/flutter-a01-a02并读回一致；该分支设upstream。此文档更新另作一笔文档提交一起推送，最终HEAD以Git为准。[提交证据](evidence/git-first-20261031.md)。下方“无HEAD/远端/不提交”均为开发批当时事实，不再是当前Git状态。未合并/发行/改全局/旧仓库；GitHub CI尚未验证。
+
 Git操作新增授权：用户已明确要求首次提交并推送，见status的AUTH-GIT-FIRST-20261031。现有源码/锁/自有夹具/文档证据可本地提交，历史不提交为旧授权状态；仍不发行/改全局/新建未指定远端。两个历史下载probe.bin仅新增忽略、原文件保留；私有GraphFlow及构建缓存不纳入。远端尚未配置，待用户提供准确仓库URL后核实并普通推送，不强推或覆盖其他历史。实际提交SHA/推送结果以Git和本轮交付为准，本段不预填未发生成功。
 
 AUTH-P1-SERVICELOSS-20261031限定目标完成：[报告](evidence/service-loss-20261031/report.md)、[命令](evidence/service-loss-20261031/commands.md)、[观测](evidence/service-loss-20261031/observations.json)、[审阅及修复](evidence/service-loss-20261031/review.md)。用户上一批简单验收反馈正常，只记用户报告，不扩大到听感/G-L。独立mobile分支feat/flutter-a01-a02仍无HEAD/暂存/远端，旧Electron只读，无提交/推送/发布/全局变化。
