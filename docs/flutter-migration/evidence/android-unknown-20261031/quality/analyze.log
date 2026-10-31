@@ -1,0 +1,7 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Analyzing flutter...                                            
+
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - integration_test\android_unknown_duration_test.dart:104:11 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - integration_test\android_unknown_duration_test.dart:111:11 - curly_braces_in_flow_control_structures
+
+2 issues found. (ran in 6.3s)

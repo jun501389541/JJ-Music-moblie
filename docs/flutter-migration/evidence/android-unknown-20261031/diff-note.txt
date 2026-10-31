@@ -1,0 +1,1 @@
+diff --no-index exits1 for actual differences; not a product test failure.

@@ -1,4 +1,37 @@
-# 当前交接：A04 Android服务销毁安全退路（2026-10-31）
+# 当前交接：A02 v2.3共享定位能力与拒绝回执（2026-10-31）
+
+本批限定目标完成：[报告](evidence/seek-capability-20261031/report.md)、[v2.3冻结](evidence/A02/20261031-seek-freeze.md)。当前21文件/05摘要见20261031-seek-freeze.json，check.ps1已切换；下面v2.2均为历史。PreparedTrack必填bool? canSeek，native ready真实取值，缺失null；共享seek false/null分别拒绝unsupported/unknown，检查先于全部副作用。fake明确支持；原生二次检查保留，能力动态变化及定位完成回执非本批。
+
+42共同测试/格式/分析/21冻结/05/锁通过；Windows未知输入2+普通local3、Android unknown/stop/known3共8项实际通过。Android曾等待息屏首帧，用户解锁后原运行通过，非后台启动证明。两端普通Release重建，Android重装冷启动、Windows8秒启动观测见本批日志和normal-artifacts.json，按钮/听感未人工代验。
+
+保留前批所有未提交差异，本批不提交推送/改全局/旧仓库/UI。限定审阅无Critical/Important；没有第二轨/待prepare拒绝和缺字段独立桥接反例，代码顺序与单轨证据不冒充这些动态场景。G-L仍未过，下一批建议补上述并发/缺能力反例，再推进超时/恢复矩阵。
+
+---
+# 历史交接：A03 Android未知时长/不可定位PCM（2026-10-31）
+
+AUTH-P1-ANDROIDUNKNOWN-20261031限定目标完成：[报告](evidence/android-unknown-20261031/report.md)、[命令](evidence/android-unknown-20261031/commands.md)、[观测](evidence/android-unknown-20261031/observations.json)、[审阅](evidence/android-unknown-20261031/review.md)。HEAD86053e5，前批Windows未提交工作完整保留，本批不提交/推送/发布，旧Electron和全局不动。
+
+新增专用OwnedPcmStream：固定自有WAV去44头后按无长度/只读顺序PCM供给，Media3专属Extractor100ms framing、SeekMap.Unseekable(TIME_UNSET)，原ExoPlayer renderer；诊断2秒门控防EOF前就推导时长，ordinaryWAV保留。真实原生canSeek/nativeDuration观测及seekguard；共享v2.2/20冻结/05/协议快照1、依赖/UI不变，不称共享seek能力协商/ack拒绝已完成。
+
+选定小米35a63609/2211133C/API33：新3/原local3/service-loss4/rebuffer4合计14通过；共享39、格式44文件0变更/analyze/20冻结+05/锁通过；普通AndroidRelease构建15.7秒安装Success、COLD启动ok/PID14824。首次Quality两处if花括号lint已修、失败保留quality/，最终quality-final过；14项真机在纯样式修正前，之后未重复全套。Windows本批不改、不构建或运行，保留前批EXE及证据。
+
+未知首次播放nativeDuration TIME_UNSET、duration0/canSeekfalse、位置推进；已知对照12000/canSeektrue可定位。未知natural真实EOF后Media3推导11910ms，不能说永远未知或推算精度已验。unknown-stop在loader等待读取时Stop取消，PCM/gate关闭归零；<500ms仅同步意图接受，不是释放延迟证明。独立审阅无Critical/Important、计时Minor按边界记明。整体A03—A08仍review/G-L未过。
+
+下一批建议A02/TC57共享定位能力与明确拒绝回执，先按05/归属界定冻结增量/消费者回归，不静默改公共端口。自然超时/压力/长Doze/engine或系统杀进程/外设听感仍缺；不P2/正式UI/网络下载。以下保留历史，当前以本节及status为准。
+
+---
+# 历史交接：A05 Windows未知时长/不可定位输入（2026-10-31）
+
+AUTH-P1-UNKNOWN-20261031限定目标完成：[报告](evidence/unknown-duration-20261031/report.md)、[命令](evidence/unknown-duration-20261031/commands.md)、[观测](evidence/unknown-duration-20261031/observations.json)、[审阅](evidence/unknown-duration-20261031/review.md)。基线86053e5已推送，本批未提交/推送，不把首次Git授权扩大为自动提交以后开发。旧Electron只读、全局/依赖/UI/公共冻结未改。
+
+MSS诊断显式未知profile省略Duration，实际NaturalDuration0且位置增长；对照仍12000；两者真实CanSeek=false，native seek写Position前拒绝。共享真实确认/暂停恢复不重复、unknown自然EOS及资源关闭2项通过；原rebuffer4/gate6/local3/SMTC1共16不同用例通过，共享39/格式43文件0变更/analyze/20冻结及05/锁一致。仅原生能力观测/拒绝，未完成共享seek能力协商或命令ack拒绝，A03—A08整体review/G-L仍未过。
+
+SMTC回归先因本app候选属性ERROR_NOT_READY失败，补受控stage/HRESULT并让探针仅对该错误跳过候选、有限次数发现扫描；命令绝不重试。最终四命令通过；另用未播放普通窗口做候选对照，具体计数看windows-media-candidate.log。首次Release被前批agent启动的PID46856/47532占用，核路径后正常关闭；最终release-final构建通过，普通入口8秒观测PID49240。各失败保留、非降验收。API调用自身无严格2秒超时；外部探针修复不改生产系统会话规则。
+
+Android本批未改/构建/运行，仍以前批service-loss-20261031为最新证据；现有WAV已知长度，不能代未知时长。下一批优先A03该端自有未知/不可定位输入及实际API，长期后台/系统杀进程/输出听感等仍缺。下面保留历史，当前以本节/status为准。
+
+---
+# 历史交接：A04 Android服务销毁安全退路（2026-10-31）
 
 最新Git状态：用户新增提交/推送授权，指定现有仓库[jun501389541/JJ-Music-moblie](https://github.com/jun501389541/JJ-Music-moblie)。首次源码/证据提交b4e01705fac7208702bb967164757fcce5a1e91f已推送origin/feat/flutter-a01-a02并读回一致；该分支设upstream。此文档更新另作一笔文档提交一起推送，最终HEAD以Git为准。[提交证据](evidence/git-first-20261031.md)。下方“无HEAD/远端/不提交”均为开发批当时事实，不再是当前Git状态。未合并/发行/改全局/旧仓库；GitHub CI尚未验证。
 

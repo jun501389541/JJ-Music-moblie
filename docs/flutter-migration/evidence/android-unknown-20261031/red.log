@@ -1,0 +1,67 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/android_unknown_duration_test.dart
+Running Gradle task 'assembleDebug'...                          
+Picked up JAVA_TOOL_OPTIONS: -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=7897 -Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=7897 -Dhttp.nonProxyHosts=localhost|127.*|[::1]
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Running Gradle task 'assembleDebug'...                             12.6s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           3.7s
+00:00 +0: Android real unknown PCM versus known WAV: true
+ANDROID_UNKNOWN_true={"advancing":null,"afterSeek":null,"host":null,"raw":null}
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following MissingPluginException was thrown running a test:
+MissingPluginException(No implementation found for method unknownPcmFixtureUri on channel
+jj_music/local)
+
+When the exception was thrown, this was the stack:
+#0      MethodChannel._invokeMethod (package:flutter/src/services/platform_channel.dart:364:7)
+<asynchronous suspension>
+#1      main.<anonymous closure> (file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/android_unknown_duration_test.dart:49:21)
+<asynchronous suspension>
+#2      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  Android real unknown PCM versus known WAV: true
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:23 +0 -1: Android real unknown PCM versus known WAV: true [E]
+  Test failed. See exception logs above.
+  The test description was: Android real unknown PCM versus known WAV: true
+  
+00:23 +0 -1: Android real unknown PCM versus known WAV: false
+ANDROID_UNKNOWN_false={"advancing":{"id":"native-1","platform":"android","state":3,"ready":true,"nativePlaying":true,"playWhenReady":true,"suppression":0,"position":386,"duration":12000,"ended":false,"error":false},"afterSeek":null,"host":{"samples":[{"id":"native-1","platform":"android","state":3,"ready":true,"nativePlaying":true,"playWhenReady":true,"suppression":0,"position":386,"duration":12000,"ended":false,"error":false}],"commands":[],"lifecycle":[{"event":"engine-create","time":104672010,"pid":9654,"host":"host-9654-104671675","engine":192633113,"activity":0},{"event":"activity-create","time":104672035,"pid":9654,"host":"host-9654-104671675","engine":192633113,"activity":120597296},{"event":"prepare-native-1","time":104696958,"pid":9654,"host":"host-9654-104671675","engine":192633113,"activity":120597296},{"event":"focus-acquired","time":104697103,"pid":9654,"host":"host-9654-104671675","engine":192633113,"activity":120597296},{"event":"service-create","time":104697107,"pid":9654,"host":"host-9654-104671675","engine":192633113,"activity":120597296},{"event":"service-start-ack","time":104697118,"pid":9654,"host":"host-9654-104671675","engine":192633113,"activity":120597296}],"host":"host-9654-104671675","pid":9654,"focusHeld":true,"focusEpoch":2,"readGates":{},"pendingServiceStarts":0,"servicePresent":true,"lastNativeError":"","screenInteractive":true},"raw":[{"id":"native-1","platform":"android","state":2,"ready":false,"nativePlaying":false,"playWhenReady":false,"suppression":0,"position":0,"duration":0,"ended":false,"error":false},{"id":"native-1","platform":"android","state":3,"ready":true,"nativePlaying":false,"playWhenReady":false,"suppression":0,"position":0,"duration":12000,"ended":false,"error":false},{"id":"native-1","platform":"android","state":3,"ready":true,"nativePlaying":true,"playWhenReady":true,"suppression":0,"position":0,"duration":12000,"ended":false,"error":false},{"id":"native-1","platform":"android","state":3,"ready":true,"nativePlaying":true,"playWhenReady":true,"suppression":0,"position":52,"duration":12000,"ended":false,"error":false},{"id":"native-1","platform":"android","state":3,"ready":true,"nativePlaying":true,"playWhenReady":true,"suppression":0,"position":109,"duration":12000,"ended":false,"error":false},{"id":"native-1","platform":"android","state":3,"ready":true,"nativePlaying":true,"playWhenReady":true,"suppression":0,"position":109,"duration":12000,"ended":false,"error":false},{"id":"native-1","platform":"android","state":3,"ready":true,"nativePlaying":true,"playWhenReady":true,"suppression":0,"position":386,"duration":12000,"ended":false,"error":false}]}
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: <true>
+  Actual: <null>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/android_unknown_duration_test.dart:72:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/android_unknown_duration_test.dart line 72
+The test description was:
+  Android real unknown PCM versus known WAV: false
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:24 +0 -2: Android real unknown PCM versus known WAV: false [E]
+  Test failed. See exception logs above.
+  The test description was: Android real unknown PCM versus known WAV: false
+  
+00:24 +0 -2: (tearDownAll)
+00:24 +0 -2: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/android_unknown_duration_test.dart: Android real unknown PCM versus known WAV: false
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/android_unknown_duration_test.dart: Android real unknown PCM versus known WAV: true
+EXIT=1

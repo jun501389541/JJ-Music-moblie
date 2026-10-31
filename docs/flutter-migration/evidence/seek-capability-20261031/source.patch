@@ -1,0 +1,115 @@
+diff --git a/clients/flutter/integration_test/support/controlled_backend.dart b/clients/flutter/integration_test/support/controlled_backend.dart
+index eceb3dc..40f35ab 100644
+--- a/clients/flutter/integration_test/support/controlled_backend.dart
++++ b/clients/flutter/integration_test/support/controlled_backend.dart
+@@ -21,13 +21,15 @@ class ControlledBackend implements PlaybackBackend {
+     return (pending[request.requestId] = Completer<PreparedTrack>()).future;
+   }
+ 
+-  void ready(String id, String handle) => pending[id]!.complete(
+-    PreparedTrack(
+-      handle,
+-      consumerId: 'consumer-$handle',
+-      resourceRevision: 'fixture-v1',
+-    ),
+-  );
++  void ready(String id, String handle, {bool? canSeek = true}) =>
++      pending[id]!.complete(
++        PreparedTrack(
++          handle,
++          consumerId: 'consumer-$handle',
++          resourceRevision: 'fixture-v1',
++          canSeek: canSeek,
++        ),
++      );
+   void emit(
+     String id,
+     String handle,
+diff --git a/clients/flutter/lib/app/diagnostic_checks.dart b/clients/flutter/lib/app/diagnostic_checks.dart
+index 335470d..d581ea9 100644
+--- a/clients/flutter/lib/app/diagnostic_checks.dart
++++ b/clients/flutter/lib/app/diagnostic_checks.dart
+@@ -35,6 +35,7 @@ class DiagnosticChecks {
+           'late-diagnostic',
+           consumerId: 'diagnostic-reader',
+           resourceRevision: 'tone-v1',
++          canSeek: true,
+         ),
+       );
+       await Future<void>.delayed(Duration.zero);
+diff --git a/clients/flutter/lib/application/playback/playback_coordinator.dart b/clients/flutter/lib/application/playback/playback_coordinator.dart
+index c20771e..dc5b137 100644
+--- a/clients/flutter/lib/application/playback/playback_coordinator.dart
++++ b/clients/flutter/lib/application/playback/playback_coordinator.dart
+@@ -548,6 +548,13 @@ class PlaybackCoordinator {
+     if (positionMs < 0 || _active == null) {
+       return _reject(c, 'invalid-seek');
+     }
++    final capability = _tracks[_active]?.resource.canSeek;
++    if (capability != true) {
++      return _reject(
++        c,
++        capability == false ? 'seek-unsupported' : 'seek-capability-unknown',
++      );
++    }
+     _invalidatePrepare();
+     _generation++;
+     _currentRequest = null;
+diff --git a/clients/flutter/lib/domain/playback/contracts.dart b/clients/flutter/lib/domain/playback/contracts.dart
+index 8c25be1..c78db8c 100644
+--- a/clients/flutter/lib/domain/playback/contracts.dart
++++ b/clients/flutter/lib/domain/playback/contracts.dart
+@@ -111,8 +111,12 @@ class PreparedTrack {
+     this.trackHandleId, {
+     required this.consumerId,
+     required this.resourceRevision,
++    required this.canSeek,
+   });
+   final String trackHandleId, consumerId, resourceRevision;
++
++  /// Null means unknown, never permission to seek. Bound to this resource.
++  final bool? canSeek;
+ }
+ 
+ class ReleaseReceipt {
+diff --git a/clients/flutter/lib/platform/local/native_local_backend.dart b/clients/flutter/lib/platform/local/native_local_backend.dart
+index 1f100ad..b50a813 100644
+--- a/clients/flutter/lib/platform/local/native_local_backend.dart
++++ b/clients/flutter/lib/platform/local/native_local_backend.dart
+@@ -118,6 +118,7 @@ class NativeLocalBackend implements PlaybackBackend {
+               h.id,
+               consumerId: 'consumer-${h.id}',
+               resourceRevision: 'owned-fixture-v2',
++              canSeek: s['canSeek'] as bool?,
+             ),
+           );
+           _emit(h, BackendEventKind.ready, s);
+diff --git a/clients/flutter/tool/check.ps1 b/clients/flutter/tool/check.ps1
+index ef9d5f9..0fe76b3 100644
+--- a/clients/flutter/tool/check.ps1
++++ b/clients/flutter/tool/check.ps1
+@@ -23,7 +23,7 @@ try {
+   if($Mode -in @('Quality','All')){
+     & flutter pub get --enforce-lockfile *> (Join-Path $logs 'pub-get.log')
+     Assert-Result 'pub-get'
+-    $freeze=Get-Content (Join-Path $client '../../docs/flutter-migration/evidence/A02/20261031-focus-freeze.json') -Raw | ConvertFrom-Json
++    $freeze=Get-Content (Join-Path $client '../../docs/flutter-migration/evidence/A02/20261031-seek-freeze.json') -Raw | ConvertFrom-Json
+     $workspace=[IO.Path]::GetFullPath((Join-Path $client '../..'))
+     foreach($entry in $freeze.files){
+       if((Get-FileHash (Join-Path $workspace $entry.path) -Algorithm SHA256).Hash.ToLower() -ne $entry.sha256){
+@@ -58,3 +58,4 @@ try {
+   exit 1
+ } finally { Pop-Location }
+ exit 0
++
+diff --git a/docs/flutter-migration/05-architecture-contracts.md b/docs/flutter-migration/05-architecture-contracts.md
+index e7ccce4..09e6114 100644
+--- a/docs/flutter-migration/05-architecture-contracts.md
++++ b/docs/flutter-migration/05-architecture-contracts.md
+@@ -181,3 +181,6 @@ RuntimeHost分别登记playbackRef、downloadRef和系统运行资格。引用
+ A02维护者在AUTH-A03-A08范围内串行补冻结p1-a02-v2：PlayIntent/PrepareRequest增加可选startPositionMs（默认0，非负，参与请求签名）；真正播放前由后端派发定位，项目确认仍须原生实际运行证据。fresh-authority的restoreSnapshot只消费已校验隔离RecoverySnapshot，恢复队列/确认记录/位置为paused，不恢复handle/运行epoch、不自动prepare/play；空队列/-1安全空态。backendReleased只接受可信宿主逐轨物理释放凭据，保持协调器与Broker epoch，递增backendEpoch并暂停；超时不是销毁证据。恢复后新命令须本运行epoch，重复resume仍幂等。
+ 
+ P1具体原生映射与限制见evidence/p1-a/20261031/android-event-mapping.md及windows-event-mapping.md；真实样本的原生准备/运行状态加直接位置推进，结合本章身份/代次/意图才形成首次确认，不能把API布尔/ready直接当项目playing。硬切在新轨确认前失败或取消时，只在旧active仍有效且desired仍playing时恢复其物理播放；paused意图不得被回滚覆盖。未完成的持续缓冲/未知时长等维度不得据此宣布通过。
++
++### P1 A02 v2.3 定位能力增量（2026-10-31）
++PreparedTrack新增必填可空canSeek：true明确支持、false明确不支持、null尚未知。它绑定当前资源，当前诊断适配只使用准备完成时的原生能力；后续动态能力变更不在本批保证。共享seek在改变generation/position、取消准备/释放音轨或派发原生前检查，false拒绝seek-unsupported，null拒绝seek-capability-unknown；拒绝不制造播放确认。applied仍表示短提交，不是定位已完成。能力不持久化进恢复快照；重新prepare须再取。协议/快照格式仍1，旧v2.2冻结保留，新源码消费者必须使用v2.3。不支持的恢复定位仍由原生失败退路处理，不自动忽略目标位置。

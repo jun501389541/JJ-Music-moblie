@@ -192,6 +192,8 @@ struct LocalPlayback::Impl {
           const auto token="owned-gate:"+std::to_string(++nextGate);
           auto gate=std::make_shared<owned_loading::GateState>(*bytes);
           gate->pcm=method=="registerOwnedPcm";
+          const auto unknown=m.find(EncodableValue("unknownDuration"));
+          gate->unknownDuration=gate->pcm && unknown!=m.end() && std::get<bool>(unknown->second);
           registeredGates.emplace(token,gate);
           result->Success(EncodableValue(token)); return;
         } else if(method=="failOwnedClose") {
@@ -254,8 +256,9 @@ struct LocalPlayback::Impl {
         } else if (method == "pause" || method == "stop") {
           for (auto const& entry: tracks) { entry.second->intended=false; entry.second->player.Pause(); }
         } else if (method == "seek") {
-          tracks.at(Text(m,"id"))->player.PlaybackSession().Position(
-            TimeSpan{Number(m,"position")*10000});
+          auto session=tracks.at(Text(m,"id"))->player.PlaybackSession();
+          if(!session.CanSeek()) throw hresult_error(E_NOTIMPL,L"seek-unsupported");
+          session.Position(TimeSpan{Number(m,"position")*10000});
         } else if (method == "release") {
           // Destruction revokes callbacks and Close finishes before returning receipt.
           const auto id=Text(m,"id");
@@ -334,6 +337,7 @@ struct LocalPlayback::Impl {
               {EncodableValue("id"),EncodableValue(entry.first)},
               {EncodableValue("platform"),EncodableValue("windows")},
               {EncodableValue("nativeState"),EncodableValue(static_cast<int32_t>(state))},
+              {EncodableValue("canSeek"),EncodableValue(s.CanSeek())},
               {EncodableValue("state"),EncodableValue(state==MediaPlaybackState::Playing ? 3 : state==MediaPlaybackState::Buffering ? 2 : 1)},
               {EncodableValue("ready"),EncodableValue(t->opened.load())},
               {EncodableValue("nativePlaying"),EncodableValue(state==MediaPlaybackState::Playing)},

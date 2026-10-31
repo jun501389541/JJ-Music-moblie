@@ -83,7 +83,9 @@ struct PcmSource {
   event_token requested{}, starting{};
   explicit PcmSource(std::shared_ptr<GateState> gate) {
     source=MediaStreamSource(AudioStreamDescriptor(AudioEncodingProperties::CreatePcm(16000,1,16)));
-    source.Duration(TimeSpan{120000000});
+    // Unspecified duration is an explicit diagnostic source profile. The
+    // payload still ends normally; never replace PlaybackSession observations.
+    if(!gate->unknownDuration) source.Duration(TimeSpan{120000000});
     source.CanSeek(false);
     source.BufferTime(TimeSpan{2500000});
     starting=source.Starting([](auto const&, auto const& args) {

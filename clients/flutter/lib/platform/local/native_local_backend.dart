@@ -118,6 +118,7 @@ class NativeLocalBackend implements PlaybackBackend {
               h.id,
               consumerId: 'consumer-${h.id}',
               resourceRevision: 'owned-fixture-v2',
+              canSeek: s['canSeek'] as bool?,
             ),
           );
           _emit(h, BackendEventKind.ready, s);

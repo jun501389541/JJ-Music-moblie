@@ -26,7 +26,7 @@ AUTH-ENV本批执行者/协调者：Codex；环境准备已完成。Flutter3.47.
 
 ## 任务状态
 
-依赖与详细说明只看tasks索引；状态含义只在workflow。owner=-表示未领取。文档历史done只证明对应文档验收；A01/A02已完成首批范围，当前共享冻结已更新p1-a02-v2.2（焦点命令迟到围栏），A03—A08为review（见20261031实际证据与缺口），其余保持proposed。分支证据不等于集成，done须实际必需验收与目标工作区集成证据；单agent同工作区也记录。
+依赖与详细说明只看tasks索引；状态含义只在workflow。owner=-表示未领取。文档历史done只证明对应文档验收；A01/A02已完成首批范围，当前共享冻结已更新p1-a02-v2.3（单轨定位能力/拒绝回执），当前21文件清单为evidence/A02/20261031-seek-freeze.json；后文旧版本均是历史记录，A03—A08为review（见20261031实际证据与缺口），其余保持proposed。分支证据不等于集成，done须实际必需验收与目标工作区集成证据；单agent同工作区也记录。
 
 | 任务 | 状态 | owner | 分支/任务证据或阻塞 | 目标工作区集成结果 |
 | --- | --- | --- | --- | --- |
@@ -40,7 +40,7 @@ AUTH-ENV本批执行者/协调者：Codex；环境准备已完成。Flutter3.47.
 | V01 | proposed | - | 无对应范围授权或前置证据 | 未运行 |
 | V02 | needs-user | - | 无具体稿件确认 | 未运行 |
 | A01 | done | Codex / ConfigIntegrator | [实际证据](evidence/A01/20261030-batch.md)：双端release构建与native烟测通过，Android release三按钮通过 | mobile目标工作区已集成；仅诊断工程，无提交 |
-| A02 | done | Codex / 合同及夹具维护 | 首批合同已完成；[当前冻结v2.2](evidence/A02/20261031-focus-freeze.md)、[原始证据](evidence/A02/20261030-batch.md)；累计39项共享测试及双端消费回归 | 合同/夹具/最小文件store已集成；不等于完整G-L或生产存储 |
+| A02 | done（本批最小增量） | Codex串行合同维护 | [v2.3冻结](evidence/A02/20261031-seek-freeze.md)、[本批证据](evidence/seek-capability-20261031/report.md)，42共同测试；双端消费验证 | 已集成mobile当前工作区；不等于完整G-L |
 | A03 | review | Codex / 本批串行维护 | [20261031证据](evidence/A03/20261031-batch.md)：真机file/content URI、3项本地验证；[本批Android初始加载4反例](evidence/loading-20261031/report.md)已补，[本批Android再缓冲4项](evidence/rebuffer-20261031/report.md)已补；未知时长/完整后台等未齐 | mobile目标已集成主路径，完整任务验收未宣称；无提交 |
 | A04 | review | Codex / 本批串行维护 | [20261031证据](evidence/A04/20261031-batch.md)：Activity重建、后台/实际关屏、系统控制通过；[本批焦点安全修复及release实测](evidence/focus-20261031/report.md)已补；独立engine/服务回收/完整焦点矩阵未齐 | mobile目标已集成主路径，完整任务验收未宣称；无提交 |
 | A05 | review | Codex / 本批串行维护 | [20261031证据](evidence/A05/20261031-batch.md)：WinRT3项本地验证/释放与真实回滚；[本批Windows初始加载及关闭异常](evidence/windows-loading-20261031/report.md)已补，输出失效/播放后再缓冲等未齐 | mobile目标已集成主路径，完整任务验收未宣称；无提交 |
@@ -220,3 +220,22 @@ AUTH-P1-SERVICELOSS-20261031限定目标完成：[报告](evidence/service-loss-
 AUTH-GIT-FIRST-20261031：用户明确“先提交并推送吧”，新增授权当前独立Flutter工作区的首次本地提交及推送；替代历史“本次不提交”的本次操作限制，不扩大开发/发行/全局配置或新建远端授权。owner Codex串行ConfigIntegrator/文档协调。提交范围为既有源码/配置/依赖锁/自有夹具、迁移文档和必要证据；现有署名jun/已配置邮箱沿用，不修改身份配置。排除构建/SDK/Gradle与Dart缓存/私有GraphFlow/ZIP/密钥/本地环境以及两份下载probe.bin（原文件保留）。常见私钥及令牌格式扫描未命中，不保证识别全部秘密；原证据含已登记设备编号、本机路径等诊断元数据，远端可见性待目标地址核实。当前无远端，已请求准确URL，不猜测、不新建、不强推。基础验证引用刚完成service-loss-20261031的39共享/格式/分析/冻结及两端分批证据，不把Git操作当功能或CI通过。
 
 实际结果：用户指定现有jun501389541/JJ-Music-moblie（按原拼写）；首次提交b4e01705fac7208702bb967164757fcce5a1e91f已普通推送origin/feat/flutter-a01-a02，远端SHA及HEAD独立读回一致，上游已设置。详见[首次Git证据](evidence/git-first-20261031.md)。本记录作为后续文档提交一起推送，最终SHA看Git；无强推/合并/发行，未修改旧仓库。历史“无HEAD/远端”“不提交”为各批当时状态，当前以本节为准；云端CI尚未验收。
+
+## 当前Windows未知时长/不可定位子批
+AUTH-P1-UNKNOWN-20261031：用户继续开发；owner Codex串行Windows/ConfigIntegrator/文档协调，消费R4/v2.2的20冻结摘要、协议快照1。基线86053e5干净。领取A05真实MediaStreamSource未知时长/不可定位诊断输入。allowlist owned_gate_stream.h/owned_pcm_source.h/local_playback.cpp、新integration_test/windows_unknown_duration_test.dart及evidence/unknown-duration-20261031、status/handoff。仅已有PCM固定WAV载荷，不改普通路径/共享冻结/依赖/UI/全局/旧仓库，不P2/网络。本次开发不自动再次提交推送；上一条首次提交授权已完成。Android已有WAV明确长度，不能当未知时长输入；本批该端保留缺口。进行中。
+
+本批验证范围补记：Windows SMTC外部探针首步返回error:true而无错误码；allowlist增加windows/runner/smtc_probe.cpp仅记录受控stage/HRESULT，不输出其他应用媒体信息、不启动/修改系统服务。用于分辨环境阻塞/回归，不降验收。
+
+AUTH-P1-UNKNOWN-20261031限定目标完成：[报告](evidence/unknown-duration-20261031/report.md)。Windows未知0/对照12000、实际不可定位、native拒绝seek/暂停恢复/未知自然EOS/资源归零2项通过；旧rebuffer4/gate6/local3/SMTC1合计16不同用例通过；共享39/格式43文件/analyze/20冻结+05/锁通过。SMTC候选属性0x80070015先失败后补有限发现扫描，命令不重试；保留错误及候选对照日志。原Release因旧诊断进程占用失败，核路径后正常关闭旧两窗口，最终release-final构建及8秒启动观测PID49240通过。Android本批不改不验，共享v2.2不变，仍未实现共享seek能力协商/ack拒绝；G-L保持未过。基线86053e5，本批不自动提交推送。下一批A03 Android自有未知时长/不可定位输入；GraphFlow定向结果见本批index.log。
+
+## 当前Android未知时长/不可定位子批
+AUTH-P1-ANDROIDUNKNOWN-20261031：用户继续执行，领取A03。owner Codex串行Android/ConfigIntegrator/文档协调，消费v2.2/20冻结/协议快照1。保留Windows上一批全部未提交工作；allowlist LocalHost.kt、新OwnedPcmStream.kt、integration_test/android_unknown_duration_test.dart及evidence/android-unknown-20261031、status/handoff。仅冻结自有WAV载荷的无长度顺序PCM输入、专用Media3 framing extractor和原生能力观测/拒绝seek，不改普通路径、共享合同、夹具、依赖、全局、正式UI、旧仓库，不P2/网络/提交推送。设备35a63609身份已核。进行中。
+
+本批限定目标完成：[报告](evidence/android-unknown-20261031/report.md)。Android未知natural/等待中stop/knownWAV共3与旧local3/service-loss4/rebuffer4合计14通过；共享39/格式44文件/analyze/20冻结+05/锁通过，普通Release构建安装COLD启动ok/PID14824。首次Quality花括号lint修正后最终quality-final通过，原失败保留；14项真机在纯样式修正前、不重复运行。Windows本批不改不验；全部前批未提交差异保留。共享v2.2仍不变，仅native seek能力guard，不等于共享能力协商/明确拒绝ack。EOF前真实TIME_UNSET，EOF后11910推导时长；关闭计数和短提交各按边界说明，G-L未过。下一批先界定A02/TC57定位能力与拒绝回执的最小合同增量/冻结及双端验证。GraphFlow见index.log。
+
+AUTH-P1-SEEK-20261031：领取A02/TC57共享定位能力增量。owner Codex串行A02维护/双端消费者/ConfigIntegrator/文档协调；allowlist contracts.dart、playback_coordinator.dart、native_local_backend.dart、diagnostic_checks.dart、controlled_backend.dart、两端unknown测试、新共享seek测试、05增量、新v2.3冻结、check.ps1及本批证据/status/handoff。保留旧v2.2及所有前批差异。无UI/全局/提交推送，进行中。
+
+
+AUTH-P1-SEEK-20261031限定目标完成：当前v2.3/21文件冻结及05摘要，旧v2.2保留。42共同/格式/analyze/锁/新冻结通过；Windows2+local3、Android3共8项通过。两端普通Release构建成功并恢复入口，实际进程见本批normal-artifacts.json。能力unknown/false无副作用拒绝，动态变化不保证，G-L未过；无提交推送，既有差异保留。见evidence/seek-capability-20261031/report.md。
+
+AUTH-GIT-MERGE-RELEASE-20261031：用户授权提交推送合并发布。合并到从86053e5建立的main，普通PR/merge不强推，保留分支。发布候选0.1.0-dev.1仅技术诊断，G-L未通过/Android调试签名/P1身份；当前候选包和摘要留graphflow-out/release-candidate，不自动对外发布未经确认身份的二进制。历史CI因SDK浅克隆识别0.0.0-unknown失败，补SDK checkout fetch-depth0；本地质量42/21冻结/分析格式本轮复验通过。

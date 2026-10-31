@@ -1,0 +1,28 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_unknown_duration_test.dart
+Building Windows application...                                 
+integration_test/windows_unknown_duration_test.dart(83,13): error GC6690633: No named parameter with the name 'timeout'. [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\flutter\flutter_assemble.vcxproj]
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(254,5): error MSB8066: “E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\CMakeFiles\983c4bad56a22f03a49a93ebd4b4c6a6\flutter_windows.dll.rule;E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\CMakeFiles\591bc70bf31834bfb739fc8a62460841\flutter_assemble.rule”的自定义生成已退出，代码为 1。 [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\flutter\flutter_assemble.vcxproj]
+Building Windows application...                                    11.2s
+00:00 +0 -1: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_unknown_duration_test.dart [E]
+  Failed to load "E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_unknown_duration_test.dart": Build process failed.
+  package:flutter_tools/src/base/common.dart 34:3                    throwToolExit
+  package:flutter_tools/src/windows/build_windows.dart 262:5         _runBuild
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/windows/build_windows.dart 118:5         buildWindows
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/windows/windows_device.dart 60:5         WindowsDevice.buildForDevice
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/desktop_device.dart 108:7                DesktopDevice.startApp
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/test/integration_test_device.dart 59:39  IntegrationTestTestDevice.start
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/test/flutter_platform.dart 679:51        FlutterPlatform._startTest.<fn>
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/base/async_guard.dart 108:24             asyncGuard.<fn>
+  
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_unknown_duration_test.dart: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_unknown_duration_test.dart
+EXIT=1

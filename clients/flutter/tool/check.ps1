@@ -23,7 +23,7 @@ try {
   if($Mode -in @('Quality','All')){
     & flutter pub get --enforce-lockfile *> (Join-Path $logs 'pub-get.log')
     Assert-Result 'pub-get'
-    $freeze=Get-Content (Join-Path $client '../../docs/flutter-migration/evidence/A02/20261031-focus-freeze.json') -Raw | ConvertFrom-Json
+    $freeze=Get-Content (Join-Path $client '../../docs/flutter-migration/evidence/A02/20261031-seek-freeze.json') -Raw | ConvertFrom-Json
     $workspace=[IO.Path]::GetFullPath((Join-Path $client '../..'))
     foreach($entry in $freeze.files){
       if((Get-FileHash (Join-Path $workspace $entry.path) -Algorithm SHA256).Hash.ToLower() -ne $entry.sha256){
@@ -58,3 +58,4 @@ try {
   exit 1
 } finally { Pop-Location }
 exit 0
+
