@@ -111,8 +111,12 @@ class PreparedTrack {
     this.trackHandleId, {
     required this.consumerId,
     required this.resourceRevision,
+    required this.canSeek,
   });
   final String trackHandleId, consumerId, resourceRevision;
+
+  /// Null means unknown, never permission to seek. Bound to this resource.
+  final bool? canSeek;
 }
 
 class ReleaseReceipt {

@@ -1,0 +1,5 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Building Windows application...                                 
+LINK : fatal error LNK1104: 无法打开文件“E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\Release\jj_music_mobile.exe” [E:\Workspace\project\JJ-Music-mobile\clients\flutter\build\windows\x64\runner\jj_music_mobile.vcxproj]
+Building Windows application...                                    18.2s
+Build process failed.

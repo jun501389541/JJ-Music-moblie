@@ -1,0 +1,63 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_unknown_duration_test.dart
+Building Windows application...                                    13.3s
+√ Built build\windows\x64\runner\Debug\jj_music_mobile.exe
+00:00 +0: Windows actual unseekable PCM, unknown duration=true
+WIN_UNKNOWN_true={"advancing":{"canSeek":false,"duration":0,"ended":false,"error":false,"id":"native-1","nativePlaying":true,"nativeState":3,"platform":"windows","playWhenReady":true,"position":383,"ready":true,"state":3},"afterSeek":null,"host":{"commands":[],"lastNativeError":"","mirrorStage":"","mirroredDuration":0,"mirroredStatus":"","osResult":{},"samples":[{"canSeek":false,"duration":0,"ended":false,"error":false,"id":"native-1","nativePlaying":true,"nativeState":3,"platform":"windows","playWhenReady":true,"position":383,"ready":true,"state":3}],"smtcEnabled":true,"streamGates":{"native-1":{"blocked":false,"bytesRead":64000,"cancelled":false,"closed":false,"inputKind":"pcm-sample-request","readers":0,"sourceClosed":false,"streamClosed":false,"waitedMs":0}}},"raw":[{"canSeek":false,"duration":0,"ended":false,"error":false,"id":"native-1","nativePlaying":false,"nativeState":4,"platform":"windows","playWhenReady":false,"position":0,"ready":true,"state":1},{"canSeek":false,"duration":0,"ended":false,"error":false,"id":"native-1","nativePlaying":true,"nativeState":3,"platform":"windows","playWhenReady":true,"position":83,"ready":true,"state":3},{"canSeek":false,"duration":0,"ended":false,"error":false,"id":"native-1","nativePlaying":true,"nativeState":3,"platform":"windows","playWhenReady":true,"position":183,"ready":true,"state":3},{"canSeek":false,"duration":0,"ended":false,"error":false,"id":"native-1","nativePlaying":true,"nativeState":3,"platform":"windows","playWhenReady":true,"position":283,"ready":true,"state":3},{"canSeek":false,"duration":0,"ended":false,"error":false,"id":"native-1","nativePlaying":true,"nativeState":3,"platform":"windows","playWhenReady":true,"position":383,"ready":true,"state":3}]}
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: false
+  Actual: <true>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_unknown_duration_test.dart:54:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_unknown_duration_test.dart line 54
+The test description was:
+  Windows actual unseekable PCM, unknown duration=true
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -1: Windows actual unseekable PCM, unknown duration=true [E]
+  Test failed. See exception logs above.
+  The test description was: Windows actual unseekable PCM, unknown duration=true
+  
+00:00 +0 -1: Windows actual unseekable PCM, unknown duration=false
+WIN_UNKNOWN_false={"advancing":{"canSeek":false,"duration":12000,"ended":false,"error":false,"id":"native-1","nativePlaying":true,"nativeState":3,"platform":"windows","playWhenReady":true,"position":377,"ready":true,"state":3},"afterSeek":null,"host":{"commands":[],"lastNativeError":"seek-unsupported","mirrorStage":"","mirroredDuration":0,"mirroredStatus":"","osResult":{},"samples":[{"canSeek":false,"duration":12000,"ended":false,"error":false,"id":"native-1","nativePlaying":true,"nativeState":3,"platform":"windows","playWhenReady":true,"position":377,"ready":true,"state":3}],"smtcEnabled":true,"streamGates":{"native-1":{"blocked":false,"bytesRead":64000,"cancelled":false,"closed":false,"inputKind":"pcm-sample-request","readers":0,"sourceClosed":false,"streamClosed":false,"waitedMs":0}}},"raw":[{"canSeek":false,"duration":12000,"ended":false,"error":false,"id":"native-1","nativePlaying":false,"nativeState":4,"platform":"windows","playWhenReady":false,"position":0,"ready":true,"state":1},{"canSeek":false,"duration":12000,"ended":false,"error":false,"id":"native-1","nativePlaying":true,"nativeState":3,"platform":"windows","playWhenReady":true,"position":78,"ready":true,"state":3},{"canSeek":false,"duration":12000,"ended":false,"error":false,"id":"native-1","nativePlaying":true,"nativeState":3,"platform":"windows","playWhenReady":true,"position":177,"ready":true,"state":3},{"canSeek":false,"duration":12000,"ended":false,"error":false,"id":"native-1","nativePlaying":true,"nativeState":3,"platform":"windows","playWhenReady":true,"position":277,"ready":true,"state":3},{"canSeek":false,"duration":12000,"ended":false,"error":false,"id":"native-1","nativePlaying":true,"nativeState":3,"platform":"windows","playWhenReady":true,"position":377,"ready":true,"state":3}]}
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: false
+  Actual: <true>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_unknown_duration_test.dart:54:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_unknown_duration_test.dart line 54
+The test description was:
+  Windows actual unseekable PCM, unknown duration=false
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -2: Windows actual unseekable PCM, unknown duration=false [E]
+  Test failed. See exception logs above.
+  The test description was: Windows actual unseekable PCM, unknown duration=false
+  
+00:01 +0 -2: (tearDownAll)
+00:01 +0 -2: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_unknown_duration_test.dart: Windows actual unseekable PCM, unknown duration=false
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/windows_unknown_duration_test.dart: Windows actual unseekable PCM, unknown duration=true
+EXIT=1

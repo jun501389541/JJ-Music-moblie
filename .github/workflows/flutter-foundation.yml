@@ -42,6 +42,9 @@ jobs:
         with:
           repository: flutter/flutter
           ref: c197ca5199e9ee5661e865596c9c07294dfab51c
+          # Flutter derives its version from Git tags; a shallow SHA-only clone
+          # reports 0.0.0-unknown and rejects the SDK's own test dependencies.
+          fetch-depth: 0
           path: .ci-cache/flutter
           persist-credentials: false
       - name: Add Flutter to this job PATH

@@ -27,6 +27,7 @@ struct GateState {
   bool allowed=false, cancelled=false, claimed=false, closed=false;
   bool sourceClosed=false, streamClosed=false;
   bool pcm=false;
+  bool unknownDuration=false;
   uint64_t pcmPosition=0;
   int64_t readers=0, waiting=0, bytesRead=0, waitedMs=0;
   void Allow() {

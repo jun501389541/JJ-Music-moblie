@@ -21,13 +21,15 @@ class ControlledBackend implements PlaybackBackend {
     return (pending[request.requestId] = Completer<PreparedTrack>()).future;
   }
 
-  void ready(String id, String handle) => pending[id]!.complete(
-    PreparedTrack(
-      handle,
-      consumerId: 'consumer-$handle',
-      resourceRevision: 'fixture-v1',
-    ),
-  );
+  void ready(String id, String handle, {bool? canSeek = true}) =>
+      pending[id]!.complete(
+        PreparedTrack(
+          handle,
+          consumerId: 'consumer-$handle',
+          resourceRevision: 'fixture-v1',
+          canSeek: canSeek,
+        ),
+      );
   void emit(
     String id,
     String handle,

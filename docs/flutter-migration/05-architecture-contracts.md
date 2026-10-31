@@ -181,3 +181,6 @@ RuntimeHost分别登记playbackRef、downloadRef和系统运行资格。引用�
 A02维护者在AUTH-A03-A08范围内串行补冻结p1-a02-v2：PlayIntent/PrepareRequest增加可选startPositionMs（默认0，非负，参与请求签名）；真正播放前由后端派发定位，项目确认仍须原生实际运行证据。fresh-authority的restoreSnapshot只消费已校验隔离RecoverySnapshot，恢复队列/确认记录/位置为paused，不恢复handle/运行epoch、不自动prepare/play；空队列/-1安全空态。backendReleased只接受可信宿主逐轨物理释放凭据，保持协调器与Broker epoch，递增backendEpoch并暂停；超时不是销毁证据。恢复后新命令须本运行epoch，重复resume仍幂等。
 
 P1具体原生映射与限制见evidence/p1-a/20261031/android-event-mapping.md及windows-event-mapping.md；真实样本的原生准备/运行状态加直接位置推进，结合本章身份/代次/意图才形成首次确认，不能把API布尔/ready直接当项目playing。硬切在新轨确认前失败或取消时，只在旧active仍有效且desired仍playing时恢复其物理播放；paused意图不得被回滚覆盖。未完成的持续缓冲/未知时长等维度不得据此宣布通过。
+
+### P1 A02 v2.3 定位能力增量（2026-10-31）
+PreparedTrack新增必填可空canSeek：true明确支持、false明确不支持、null尚未知。它绑定当前资源，当前诊断适配只使用准备完成时的原生能力；后续动态能力变更不在本批保证。共享seek在改变generation/position、取消准备/释放音轨或派发原生前检查，false拒绝seek-unsupported，null拒绝seek-capability-unknown；拒绝不制造播放确认。applied仍表示短提交，不是定位已完成。能力不持久化进恢复快照；重新prepare须再取。协议/快照格式仍1，旧v2.2冻结保留，新源码消费者必须使用v2.3。不支持的恢复定位仍由原生失败退路处理，不自动忽略目标位置。

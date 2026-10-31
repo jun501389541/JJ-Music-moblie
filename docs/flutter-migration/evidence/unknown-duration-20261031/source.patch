@@ -1,0 +1,122 @@
+diff --git a/clients/flutter/windows/runner/local_playback.cpp b/clients/flutter/windows/runner/local_playback.cpp
+index cc9805e..b521ce1 100644
+--- a/clients/flutter/windows/runner/local_playback.cpp
++++ b/clients/flutter/windows/runner/local_playback.cpp
+@@ -192,6 +192,8 @@ struct LocalPlayback::Impl {
+           const auto token="owned-gate:"+std::to_string(++nextGate);
+           auto gate=std::make_shared<owned_loading::GateState>(*bytes);
+           gate->pcm=method=="registerOwnedPcm";
++          const auto unknown=m.find(EncodableValue("unknownDuration"));
++          gate->unknownDuration=gate->pcm && unknown!=m.end() && std::get<bool>(unknown->second);
+           registeredGates.emplace(token,gate);
+           result->Success(EncodableValue(token)); return;
+         } else if(method=="failOwnedClose") {
+@@ -254,8 +256,9 @@ struct LocalPlayback::Impl {
+         } else if (method == "pause" || method == "stop") {
+           for (auto const& entry: tracks) { entry.second->intended=false; entry.second->player.Pause(); }
+         } else if (method == "seek") {
+-          tracks.at(Text(m,"id"))->player.PlaybackSession().Position(
+-            TimeSpan{Number(m,"position")*10000});
++          auto session=tracks.at(Text(m,"id"))->player.PlaybackSession();
++          if(!session.CanSeek()) throw hresult_error(E_NOTIMPL,L"seek-unsupported");
++          session.Position(TimeSpan{Number(m,"position")*10000});
+         } else if (method == "release") {
+           // Destruction revokes callbacks and Close finishes before returning receipt.
+           const auto id=Text(m,"id");
+@@ -334,6 +337,7 @@ struct LocalPlayback::Impl {
+               {EncodableValue("id"),EncodableValue(entry.first)},
+               {EncodableValue("platform"),EncodableValue("windows")},
+               {EncodableValue("nativeState"),EncodableValue(static_cast<int32_t>(state))},
++              {EncodableValue("canSeek"),EncodableValue(s.CanSeek())},
+               {EncodableValue("state"),EncodableValue(state==MediaPlaybackState::Playing ? 3 : state==MediaPlaybackState::Buffering ? 2 : 1)},
+               {EncodableValue("ready"),EncodableValue(t->opened.load())},
+               {EncodableValue("nativePlaying"),EncodableValue(state==MediaPlaybackState::Playing)},
+diff --git a/clients/flutter/windows/runner/owned_gate_stream.h b/clients/flutter/windows/runner/owned_gate_stream.h
+index b213b63..2df15d7 100644
+--- a/clients/flutter/windows/runner/owned_gate_stream.h
++++ b/clients/flutter/windows/runner/owned_gate_stream.h
+@@ -27,6 +27,7 @@ struct GateState {
+   bool allowed=false, cancelled=false, claimed=false, closed=false;
+   bool sourceClosed=false, streamClosed=false;
+   bool pcm=false;
++  bool unknownDuration=false;
+   uint64_t pcmPosition=0;
+   int64_t readers=0, waiting=0, bytesRead=0, waitedMs=0;
+   void Allow() {
+diff --git a/clients/flutter/windows/runner/owned_pcm_source.h b/clients/flutter/windows/runner/owned_pcm_source.h
+index 7f51855..59213ad 100644
+--- a/clients/flutter/windows/runner/owned_pcm_source.h
++++ b/clients/flutter/windows/runner/owned_pcm_source.h
+@@ -83,7 +83,9 @@ struct PcmSource {
+   event_token requested{}, starting{};
+   explicit PcmSource(std::shared_ptr<GateState> gate) {
+     source=MediaStreamSource(AudioStreamDescriptor(AudioEncodingProperties::CreatePcm(16000,1,16)));
+-    source.Duration(TimeSpan{120000000});
++    // Unspecified duration is an explicit diagnostic source profile. The
++    // payload still ends normally; never replace PlaybackSession observations.
++    if(!gate->unknownDuration) source.Duration(TimeSpan{120000000});
+     source.CanSeek(false);
+     source.BufferTime(TimeSpan{2500000});
+     starting=source.Starting([](auto const&, auto const& args) {
+diff --git a/clients/flutter/windows/runner/smtc_probe.cpp b/clients/flutter/windows/runner/smtc_probe.cpp
+index 795840e..e0e7b8d 100644
+--- a/clients/flutter/windows/runner/smtc_probe.cpp
++++ b/clients/flutter/windows/runner/smtc_probe.cpp
+@@ -1,32 +1,54 @@
+ // Test controller: queries only our explicit app ID/title marker, no other metadata.
++#include <windows.h>
+ #include <winrt/Windows.Foundation.h>
+ #include <winrt/Windows.Foundation.Collections.h>
+ #include <winrt/Windows.Media.Control.h>
+ #include <iostream>
+ #include <string>
++#include <thread>
++#include <chrono>
+ int main(int argc,char** argv) {
+   if(argc!=3) return 2;
+   winrt::init_apartment(winrt::apartment_type::multi_threaded);
+   const auto marker=winrt::to_hstring(std::string("pid-")+argv[1]);
+   const std::string command=argv[2];
++  const char* stage="request-manager";
+   try {
+     auto manager=winrt::Windows::Media::Control::GlobalSystemMediaTransportControlsSessionManager::RequestAsync().get();
++    stage="enumerate";
++    unsigned notReady=0;
++    // Sessions can outlive their media properties briefly. Retry discovery,
++    // never an issued transport command (next is not idempotent).
++    for(unsigned attempt=0;attempt<20;++attempt) {
++    stage="enumerate";
+     for(auto const& session:manager.GetSessions()) {
++      stage="source-id";
+       const auto source=std::wstring(session.SourceAppUserModelId());
+       if(source!=L"JJMusic.OwnedDiagnostic" && source.find(L"jj_music_mobile")==std::wstring::npos) continue;
+-      const auto title=std::wstring(session.TryGetMediaPropertiesAsync().get().Title());
++      stage="owned-properties";
++      std::wstring title;
++      try {title=std::wstring(session.TryGetMediaPropertiesAsync().get().Title());}
++      catch(winrt::hresult_error const& error) {
++        if(error.code().value!=HRESULT_FROM_WIN32(ERROR_NOT_READY)) throw;
++        ++notReady; continue;
++      }
+       if(title.find(marker.c_str())==std::wstring::npos) continue;
+       bool ok=false;
++      stage="owned-command";
+       if(command=="pause") ok=session.TryPauseAsync().get();
+       if(command=="play") ok=session.TryPlayAsync().get();
+       if(command=="next") ok=session.TrySkipNextAsync().get();
+       if(command=="seek") ok=session.TryChangePlaybackPositionAsync(3000*10000LL).get();
++      stage="owned-timeline";
+       const auto timeline=session.GetTimelineProperties();
+       std::cout<<"{\"found\":true,\"accepted\":"<<(ok?"true":"false")
++        <<",\"skippedNotReady\":"<<notReady
+         <<",\"positionTicks\":"<<timeline.Position().count()<<",\"endTicks\":"<<timeline.EndTime().count()<<"}"<<std::endl;
+       return ok?0:3;
+     }
+-    std::cout<<"{\"found\":false}"<<std::endl;
+-  }catch(winrt::hresult_error const&){std::cout<<"{\"error\":true}"<<std::endl;}
++    if(attempt+1<20) std::this_thread::sleep_for(std::chrono::milliseconds(100));
++    }
++    std::cout<<"{\"found\":false,\"skippedNotReady\":"<<notReady<<"}"<<std::endl;
++  }catch(winrt::hresult_error const& error){std::cout<<"{\"error\":true,\"stage\":\""<<stage<<"\",\"hresult\":\"0x"<<std::hex<<static_cast<uint32_t>(error.code().value)<<"\"}"<<std::endl;}
+   return 1;
+ }

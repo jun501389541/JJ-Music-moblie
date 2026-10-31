@@ -1,0 +1,99 @@
+diff --git a/docs/flutter-migration/evidence/android-unknown-20261031/before/LocalHost.kt b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+index e48153c..f52204f 100644
+--- a/docs/flutter-migration/evidence/android-unknown-20261031/before/LocalHost.kt
++++ b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+@@ -29,6 +29,7 @@ object LocalHost {
+     lateinit var context: Context
+     private val players = linkedMapOf<String, ExoPlayer>()
+     private val readGates = linkedMapOf<String, OwnedReadGate>()
++    private val pcmStreams = linkedMapOf<String, OwnedPcmState>()
+     private val commands = arrayListOf<Map<String, Any>>()
+     val instance = "host-${Process.myPid()}-${SystemClock.elapsedRealtime()}"
+     var revoked = false
+@@ -91,8 +92,32 @@ object LocalHost {
+                         val gateMode = uri.getQueryParameter("gate")
+                         val rebuffer = ownContent && gateMode == "rebuffer"
+                         val gated = ownContent && (gateMode == "initial" || rebuffer)
++                        val rawPcm = ownContent && uri.path == "/tone-pcm"
+                         val builder = ExoPlayer.Builder(context)
+-                        if (gated) {
++                        if (rawPcm) {
++                            check(!gated)
++                            if (pcmStreams.size >= 8 && !pcmStreams.containsKey(id)) {
++                                val old = pcmStreams.keys.firstOrNull { !players.containsKey(it) }
++                                check(old != null) { "owned-pcm-history-full" }
++                                pcmStreams.remove(old)
++                            }
++                            val stream = OwnedPcmState()
++                            pcmStreams[id] = stream
++                            if (readGates.size >= 8 && !readGates.containsKey(id)) {
++                                val old = readGates.keys.firstOrNull { !players.containsKey(it) }
++                                check(old != null) { "owned-gate-history-full" }
++                                readGates.remove(old)
++                            }
++                            // Prevent EOF-derived duration before first proof.
++                            val gate = OwnedReadGate(64000)
++                            readGates[id] = gate
++                            builder.setLoadControl(DefaultLoadControl.Builder()
++                                .setBufferDurationsMs(500, 1000, 250, 250).build())
++                            builder.setMediaSourceFactory(DefaultMediaSourceFactory(
++                                DataSource.Factory { gate.wrap(OwnedPcmDataSource(context, stream)) },
++                                androidx.media3.extractor.ExtractorsFactory { arrayOf(OwnedPcmExtractor()) }))
++                        } else if (gated) {
++                            pcmStreams.remove(id)
+                             // Only the explicit owned fixture can select the gate.
+                             check(uri.path == "/tone-long")
+                             // Frozen PCM16 mono/16kHz fixture: header + 2s.
+@@ -114,6 +139,7 @@ object LocalHost {
+                                 .setDataSourceFactory(DataSource.Factory { gate.wrap(upstream.createDataSource()) }))
+                         } else {
+                             readGates.remove(id)
++                            pcmStreams.remove(id)
+                         }
+                         val player = builder.build()
+                         player.setAudioAttributes(AudioAttributes.Builder().setUsage(C.USAGE_MEDIA).setContentType(C.AUDIO_CONTENT_TYPE_MUSIC).build(), false)
+@@ -173,7 +199,11 @@ object LocalHost {
+                         stopPlaybackService()
+                         abandonFocus()
+                     }
+-                    "seek" -> players.getValue(id!!).seekTo(call.argument<Number>("position")!!.toLong())
++                    "seek" -> {
++                        val player = players.getValue(id!!)
++                        if (!player.isCurrentMediaItemSeekable) throw UnsupportedOperationException("seek-unsupported")
++                        player.seekTo(call.argument<Number>("position")!!.toLong())
++                    }
+                     "release" -> {
+                         readGates[id]?.cancel()
+                         players.remove(id)?.release(); timeline("released-$id")
+@@ -182,6 +212,10 @@ object LocalHost {
+                             stopPlaybackService()
+                         }
+                     }
++                    "unknownPcmFixtureUri" -> {
++                        result.success("content://${context.packageName}.fixture/tone-pcm")
++                        return@setMethodCallHandler
++                    }
+                     "fixtureUri", "gatedFixtureUri", "rebufferFixtureUri" -> {
+                         val target = File(context.cacheDir, "owned-tone-long.wav")
+                         context.assets.open("flutter_assets/fixtures/local_playback/tone-long.wav").use { source -> target.outputStream().use { source.copyTo(it) } }
+@@ -241,13 +275,14 @@ object LocalHost {
+                             "id" to key, "platform" to "android", "state" to p.playbackState,
+                             "ready" to (p.playbackState == Player.STATE_READY), "nativePlaying" to p.isPlaying,
+                             "playWhenReady" to p.playWhenReady, "suppression" to p.playbackSuppressionReason,
++                            "canSeek" to p.isCurrentMediaItemSeekable, "nativeDuration" to p.duration,
+                             "position" to p.currentPosition, "duration" to if (p.duration == C.TIME_UNSET) 0L else p.duration,
+                             "ended" to (p.playbackState == Player.STATE_ENDED), "error" to (p.playerError != null)) }
+                         // Safety pause has a bounded independent slot; a full
+                         // ordinary-command queue must not lose service loss.
+                         val allCommands = commands.toList() + listOfNotNull(pendingSafetyPause)
+                         val validCommands = allCommands.filter { it["focusEpoch"] == null || it["focusEpoch"] == focusEpoch }
+-                        result.success(mapOf("samples" to samples, "commands" to validCommands, "lifecycle" to life.toList(), "host" to instance, "pid" to Process.myPid(), "focusHeld" to (focus != null), "focusEpoch" to focusEpoch, "readGates" to readGates.mapValues { it.value.snapshot() }, "pendingServiceStarts" to pendingServiceStarts, "servicePresent" to (session != null), "lastNativeError" to lastNativeFailure, "screenInteractive" to (context.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive))
++                        result.success(mapOf("samples" to samples, "commands" to validCommands, "lifecycle" to life.toList(), "host" to instance, "pid" to Process.myPid(), "focusHeld" to (focus != null), "focusEpoch" to focusEpoch, "readGates" to readGates.mapValues { it.value.snapshot() }, "pcmStreams" to pcmStreams.mapValues { it.value.snapshot() }, "pendingServiceStarts" to pendingServiceStarts, "servicePresent" to (session != null), "lastNativeError" to lastNativeFailure, "screenInteractive" to (context.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive))
+                         commands.clear(); pendingSafetyPause = null; return@setMethodCallHandler
+                     }
+                     else -> { result.notImplemented(); return@setMethodCallHandler }
+@@ -354,3 +389,4 @@ object LocalHost {
+         }
+     }
+ }
++

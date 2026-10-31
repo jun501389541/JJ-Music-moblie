@@ -1,0 +1,5 @@
+Formatted lib\application\playback\playback_coordinator.dart
+Formatted lib\domain\playback\contracts.dart
+Formatted test\playback\seek_capability_test.dart
+Formatted integration_test\support\controlled_backend.dart
+Formatted 43 files (4 changed) in 0.10 seconds.

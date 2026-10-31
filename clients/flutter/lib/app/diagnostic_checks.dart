@@ -35,6 +35,7 @@ class DiagnosticChecks {
           'late-diagnostic',
           consumerId: 'diagnostic-reader',
           resourceRevision: 'tone-v1',
+          canSeek: true,
         ),
       );
       await Future<void>.delayed(Duration.zero);

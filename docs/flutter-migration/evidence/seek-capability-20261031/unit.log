@@ -1,0 +1,45 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart
+00:00 +0: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:00 +1: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:00 +2: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:00 +3: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:00 +4: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:00 +5: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:00 +6: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:00 +7: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:00 +8: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:00 +9: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:00 +10: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:00 +11: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:00 +12: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:01 +13: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:01 +14: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:01 +15: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:01 +16: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:01 +17: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual control diagnostic verifies dispatch and late consumer cleanup
+00:01 +18: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_release_test.dart: duplicate release waits for same physical close
+00:01 +19: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_checks_test.dart: manual recovery diagnostic actually writes then reads through a new store
+00:01 +20: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/playback_contract_test.dart: TC-56 stop is dispatched before an old prepare Future completes
+00:01 +21: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/preconfirmation_rollback_test.dart: preconfirmation cancel resumes still-valid old physical track
+00:01 +22: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/preconfirmation_rollback_test.dart: preconfirmation cancel resumes still-valid old physical track
+00:01 +23: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/playback_contract_test.dart: TC-56 cancel is dispatched before an old prepare Future completes
+00:01 +24: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/preconfirmation_rollback_test.dart: preconfirmation error resumes still-valid old physical track
+00:01 +25: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/playback_contract_test.dart: TC-56 new-play is dispatched before an old prepare Future completes
+00:01 +26: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/playback_contract_test.dart: TC-57 raw playing, ready and buffering do not confirm; normalized confirmation deduplicates
+00:01 +27: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/playback_contract_test.dart: TC-03/32 stale epoch, generation and duplicate events never commit identity
+00:01 +28: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/playback_contract_test.dart: TC-06/07 incoming failure preserves outgoing resource and rollback retains confirmed history
+00:01 +29: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/playback_contract_test.dart: TC-09 stop applied is separate from physical release receipt
+00:01 +30: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:01 +31: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:01 +32: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:01 +33: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:01 +34: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:01 +35: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:01 +36: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:01 +37: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:01 +38: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:01 +39: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:01 +40: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:01 +41: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:02 +42: All tests passed!

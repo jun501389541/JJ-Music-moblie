@@ -1,0 +1,13 @@
+{
+  "windows": {
+    "sha256": "aa78e3708c8b9a9363d89a371703d416b8f9bd4c52530c51fe303bcea3ea54a9",
+    "exited": false,
+    "pid": 44068,
+    "window": 600186,
+    "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\jj_music_mobile.exe"
+  },
+  "android": {
+    "sha256": "84732716da464fa10f3bee2fde475415ceef2e07da10b05d66617b60abcb946f",
+    "installedOn": "35a63609"
+  }
+}

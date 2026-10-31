@@ -1,0 +1,23 @@
+ M clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+ M clients/flutter/integration_test/support/controlled_backend.dart
+ M clients/flutter/lib/app/diagnostic_checks.dart
+ M clients/flutter/lib/application/playback/playback_coordinator.dart
+ M clients/flutter/lib/domain/playback/contracts.dart
+ M clients/flutter/lib/platform/local/native_local_backend.dart
+ M clients/flutter/tool/check.ps1
+ M clients/flutter/windows/runner/local_playback.cpp
+ M clients/flutter/windows/runner/owned_gate_stream.h
+ M clients/flutter/windows/runner/owned_pcm_source.h
+ M clients/flutter/windows/runner/smtc_probe.cpp
+ M docs/flutter-migration/05-architecture-contracts.md
+ M docs/flutter-migration/handoff.md
+ M docs/flutter-migration/status.md
+?? clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/OwnedPcmStream.kt
+?? clients/flutter/integration_test/android_unknown_duration_test.dart
+?? clients/flutter/integration_test/windows_unknown_duration_test.dart
+?? clients/flutter/test/playback/seek_capability_test.dart
+?? docs/flutter-migration/evidence/A02/20261031-seek-freeze.json
+?? docs/flutter-migration/evidence/A02/20261031-seek-freeze.md
+?? docs/flutter-migration/evidence/android-unknown-20261031/
+?? docs/flutter-migration/evidence/seek-capability-20261031/
+?? docs/flutter-migration/evidence/unknown-duration-20261031/

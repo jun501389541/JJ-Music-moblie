@@ -548,6 +548,13 @@ class PlaybackCoordinator {
     if (positionMs < 0 || _active == null) {
       return _reject(c, 'invalid-seek');
     }
+    final capability = _tracks[_active]?.resource.canSeek;
+    if (capability != true) {
+      return _reject(
+        c,
+        capability == false ? 'seek-unsupported' : 'seek-capability-unknown',
+      );
+    }
     _invalidatePrepare();
     _generation++;
     _currentRequest = null;
