@@ -1,0 +1,184 @@
+{
+  "platform": "windows",
+  "sameBinarySha256": "aa78e3708c8b9a9363d89a371703d416b8f9bd4c52530c51fe303bcea3ea54a9",
+  "dartAssetSha256": "04aa1ba01420f78259d4fa5695dc3254c6bb01d134db79de8f90e5255fb9e0dc",
+  "forcedTermination": true,
+  "saved": {
+    "stage": "saved",
+    "pid": 35900,
+    "coordinatorEpoch": 1793493690593138,
+    "session": "local-35900-1793493690593",
+    "revision": 1,
+    "position": 2345,
+    "desired": "paused",
+    "consumers": 1,
+    "fixture": "tone-long",
+    "confirmations": [
+      "local-35900-1793493690593:1"
+    ],
+    "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\p1-process-recovery-20261101-w2/jj-owned-p1/recovery\\recovery-20261101-w2",
+    "runId": "recovery-20261101-w2",
+    "diskSnapshot": {
+      "formatVersion": 1,
+      "runId": "recovery-20261101-w2",
+      "revision": 1,
+      "playbackSessionId": "local-35900-1793493690593",
+      "entries": [
+        {
+          "entryId": "owned-a",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        },
+        {
+          "entryId": "owned-b",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        }
+      ],
+      "currentIndex": 0,
+      "positionMs": 2345,
+      "mode": "sequence",
+      "preview": false,
+      "confirmations": [
+        "local-35900-1793493690593:1"
+      ]
+    },
+    "runtimeSnapshot": {
+      "formatVersion": 1,
+      "runId": "recovery-20261101-w2",
+      "revision": 1,
+      "playbackSessionId": "local-35900-1793493690593",
+      "entries": [
+        {
+          "entryId": "owned-a",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        },
+        {
+          "entryId": "owned-b",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        }
+      ],
+      "currentIndex": 0,
+      "positionMs": 2345,
+      "mode": "sequence",
+      "preview": false,
+      "confirmations": [
+        "local-35900-1793493690593:1"
+      ]
+    }
+  },
+  "loaded": {
+    "stage": "loaded",
+    "pid": 44572,
+    "coordinatorEpoch": 1793493692660475,
+    "session": "local-35900-1793493690593",
+    "revision": 1,
+    "position": 2345,
+    "desired": "paused",
+    "consumers": 0,
+    "fixture": "tone-long",
+    "confirmations": [
+      "local-35900-1793493690593:1"
+    ],
+    "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\p1-process-recovery-20261101-w2/jj-owned-p1/recovery\\recovery-20261101-w2",
+    "runId": "recovery-20261101-w2",
+    "diskSnapshot": {
+      "formatVersion": 1,
+      "runId": "recovery-20261101-w2",
+      "revision": 1,
+      "playbackSessionId": "local-35900-1793493690593",
+      "entries": [
+        {
+          "entryId": "owned-a",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        },
+        {
+          "entryId": "owned-b",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        }
+      ],
+      "currentIndex": 0,
+      "positionMs": 2345,
+      "mode": "sequence",
+      "preview": false,
+      "confirmations": [
+        "local-35900-1793493690593:1"
+      ]
+    },
+    "runtimeSnapshot": {
+      "formatVersion": 1,
+      "runId": "recovery-20261101-w2",
+      "revision": 1,
+      "playbackSessionId": "local-35900-1793493690593",
+      "entries": [
+        {
+          "entryId": "owned-a",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        },
+        {
+          "entryId": "owned-b",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        }
+      ],
+      "currentIndex": 0,
+      "positionMs": 2345,
+      "mode": "sequence",
+      "preview": false,
+      "confirmations": [
+        "local-35900-1793493690593:1"
+      ]
+    },
+    "staleClaimRejected": "stale-controller",
+    "pausedObservationMs": 700,
+    "resumedPosition": 2723,
+    "resumedConfirmations": [
+      "local-35900-1793493690593:1",
+      "local-35900-1793493690593:2"
+    ],
+    "resumeHost": {
+      "commands": [],
+      "lastNativeError": "",
+      "mirrorStage": "complete",
+      "mirroredDuration": 12000,
+      "mirroredStatus": "playing",
+      "osResult": {},
+      "samples": [
+        {
+          "canSeek": true,
+          "duration": 12000,
+          "ended": false,
+          "error": false,
+          "id": "native-1",
+          "nativePlaying": true,
+          "nativeState": 3,
+          "platform": "windows",
+          "playWhenReady": true,
+          "position": 2723,
+          "ready": true,
+          "state": 3
+        }
+      ],
+      "smtcEnabled": true,
+      "streamGates": {}
+    },
+    "repeatResumeDeduplicated": true,
+    "stoppedConsumers": 0,
+    "stopHost": {
+      "commands": [],
+      "lastNativeError": "",
+      "mirrorStage": "complete",
+      "mirroredDuration": 12000,
+      "mirroredStatus": "stopped",
+      "osResult": {},
+      "samples": [],
+      "smtcEnabled": true,
+      "streamGates": {}
+    }
+  }
+}

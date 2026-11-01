@@ -1,0 +1,7 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Analyzing flutter...                                            
+
+  error - The getter 'cursor' isn't defined for the type 'PlaybackSnapshot'. Try importing the library that defines 'cursor', correcting the name to the name of an existing getter, or defining a getter or field named 'cursor' - lib\p1_process_probe.dart:107:22 - undefined_getter
+  error - The getter 'cursor' isn't defined for the type 'PlaybackSnapshot'. Try importing the library that defines 'cursor', correcting the name to the name of an existing getter, or defining a getter or field named 'cursor' - lib\p1_process_probe.dart:107:39 - undefined_getter
+
+2 issues found. (ran in 7.3s)

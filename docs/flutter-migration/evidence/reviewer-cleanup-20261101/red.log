@@ -1,0 +1,46 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_cleanup_test.dart
+test/diagnostic_cleanup_test.dart:4:8: Error: Error when reading 'integration_test/support/diagnostic_cleanup.dart': 系统找不到指定的文件。
+import '../integration_test/support/diagnostic_cleanup.dart';
+       ^
+test/diagnostic_cleanup_test.dart:10:23: Error: Undefined name 'DiagnosticCleanup'.
+    await expectLater(DiagnosticCleanup.run<void>((scope) async {
+                      ^^^^^^^^^^^^^^^^^
+test/diagnostic_cleanup_test.dart:18:23: Error: Undefined name 'DiagnosticCleanup'.
+    await expectLater(DiagnosticCleanup.run<void>((scope) async {
+                      ^^^^^^^^^^^^^^^^^
+test/diagnostic_cleanup_test.dart:29:23: Error: Undefined name 'DiagnosticCleanup'.
+    await expectLater(DiagnosticCleanup.run<void>((scope) async {
+                      ^^^^^^^^^^^^^^^^^
+test/diagnostic_cleanup_test.dart:40:23: Error: Undefined name 'DiagnosticCleanup'.
+    await expectLater(DiagnosticCleanup.run<void>((scope) async {
+                      ^^^^^^^^^^^^^^^^^
+test/diagnostic_cleanup_test.dart:49:21: Error: Undefined name 'DiagnosticCleanup'.
+    final pending = DiagnosticCleanup.run<int>((scope) async {
+                    ^^^^^^^^^^^^^^^^^
+00:00 +0 -1: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_cleanup_test.dart [E]
+  Failed to load "E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_cleanup_test.dart":
+  Compilation failed for testPath=E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_cleanup_test.dart: test/diagnostic_cleanup_test.dart:4:8: Error: Error when reading 'integration_test/support/diagnostic_cleanup.dart': 系统找不到指定的文件。
+  import '../integration_test/support/diagnostic_cleanup.dart';
+         ^
+  test/diagnostic_cleanup_test.dart:10:23: Error: Undefined name 'DiagnosticCleanup'.
+      await expectLater(DiagnosticCleanup.run<void>((scope) async {
+                        ^^^^^^^^^^^^^^^^^
+  test/diagnostic_cleanup_test.dart:18:23: Error: Undefined name 'DiagnosticCleanup'.
+      await expectLater(DiagnosticCleanup.run<void>((scope) async {
+                        ^^^^^^^^^^^^^^^^^
+  test/diagnostic_cleanup_test.dart:29:23: Error: Undefined name 'DiagnosticCleanup'.
+      await expectLater(DiagnosticCleanup.run<void>((scope) async {
+                        ^^^^^^^^^^^^^^^^^
+  test/diagnostic_cleanup_test.dart:40:23: Error: Undefined name 'DiagnosticCleanup'.
+      await expectLater(DiagnosticCleanup.run<void>((scope) async {
+                        ^^^^^^^^^^^^^^^^^
+  test/diagnostic_cleanup_test.dart:49:21: Error: Undefined name 'DiagnosticCleanup'.
+      final pending = DiagnosticCleanup.run<int>((scope) async {
+                      ^^^^^^^^^^^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_cleanup_test.dart: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_cleanup_test.dart
+EXIT=1

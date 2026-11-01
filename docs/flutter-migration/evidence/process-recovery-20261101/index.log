@@ -1,0 +1,77 @@
+[
+  {
+    "filePath": "clients/flutter/lib/p1_process_probe.dart",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\lib\\p1_process_probe.dart"
+    }
+  },
+  {
+    "filePath": "clients/flutter/tool/run_android_recovery_probe.ps1",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "extension not in includeExtensions",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\tool\\run_android_recovery_probe.ps1"
+    }
+  },
+  {
+    "filePath": "clients/flutter/tool/run_windows_recovery_probe.ps1",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "extension not in includeExtensions",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\tool\\run_windows_recovery_probe.ps1"
+    }
+  },
+  {
+    "filePath": "docs/flutter-migration/status.md",
+    "result": {
+      "indexedFiles": 1,
+      "indexedSymbols": 32,
+      "indexedReferences": 140,
+      "skipped": false,
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\status.md"
+    }
+  },
+  {
+    "filePath": "docs/flutter-migration/handoff.md",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\handoff.md"
+    }
+  },
+  {
+    "filePath": "docs/flutter-migration/evidence/process-recovery-20261101/report.md",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\evidence\\process-recovery-20261101\\report.md"
+    }
+  },
+  {
+    "filePath": "docs/flutter-migration/evidence/process-recovery-20261101/review.md",
+    "result": {
+      "indexedFiles": 1,
+      "indexedSymbols": 2,
+      "indexedReferences": 44,
+      "skipped": false,
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\evidence\\process-recovery-20261101\\review.md"
+    }
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-01 Asia/Shanghai",
+  "androidFinalBuildExit": 0,
+  "androidFinalRunExit": 0,
+  "windowsFinalBuildExit": 0,
+  "windowsFinalRunExit": 0,
+  "qualityFinalExit": 0,
+  "sharedTests": 58,
+  "formattedFiles": 52,
+  "formatChanges": 0,
+  "frozenFiles": 21,
+  "authorityContractUnchanged": true,
+  "ordinaryArtifactsRestored": true,
+  "androidReviewedRunExit": 1,
+  "androidReviewedFailure": "logcat truncated oversized JSON; final recompiled a3 passed",
+  "initialAnalyzeIssues": 2,
+  "initialAnalyzeCause": "diagnostic cursor getter corrected to eventCursor",
+  "productionRuntimeChanged": false,
+  "commitPushPublish": false
+}

@@ -1,0 +1,319 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:jj_music_mobile/application/playback/playback_coordinator.dart';
+import 'package:jj_music_mobile/domain/playback/contracts.dart';
+import 'package:jj_music_mobile/platform/local/native_local_backend.dart';
+
+import 'support/diagnostic_cleanup.dart';
+import 'support/local_playback_contract.dart' show expectControlApplied;
+import 'windows_local_playback_test.dart' show until;
+
+class _OwnedInput {
+  _OwnedInput(this.normal, this.gateUri, this.bytes);
+  final String normal;
+  final String? gateUri;
+  final Uint8List? bytes;
+  static Future<_OwnedInput> create(DiagnosticCleanup cleanup) async {
+    if (Platform.isAndroid) {
+      final normal = (await NativeLocalBackend.channel.invokeMethod<String>(
+        'fixtureUri',
+      ))!;
+      final slow = (await NativeLocalBackend.channel.invokeMethod<String>(
+        'gatedFixtureUri',
+      ))!;
+      return _OwnedInput(normal, slow, null);
+    }
+    final data = await rootBundle.load('fixtures/local_playback/tone-long.wav');
+    final bytes = data.buffer.asUint8List(
+      data.offsetInBytes,
+      data.lengthInBytes,
+    );
+    final dir = await Directory.systemTemp.createTemp('jj-capacity-owned-');
+    cleanup.add(() async {
+      await dir.delete(recursive: true);
+    });
+    final file = await File('${dir.path}/tone.wav').writeAsBytes(bytes);
+    return _OwnedInput(file.uri.toString(), null, bytes);
+  }
+
+  Future<String> gated() async =>
+      gateUri ??
+      (await NativeLocalBackend.channel.invokeMethod<String>(
+        'registerOwnedGate',
+        {'bytes': bytes},
+      ))!;
+}
+
+Future<Map> _poll() async =>
+    (await NativeLocalBackend.channel.invokeMapMethod('poll'))!;
+Map _gates(Map host) =>
+    (host[Platform.isAndroid ? 'readGates' : 'streamGates'] as Map?) ?? {};
+
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  testWidgets(
+    'Native capacity rejects third reader, then admits after release',
+    (tester) => DiagnosticCleanup.run((cleanup) async {
+      final input = await _OwnedInput.create(cleanup);
+      final paths = [
+        await input.gated(),
+        await input.gated(),
+        await input.gated(),
+      ];
+      final ids = ['capacity-a', 'capacity-b', 'capacity-c'];
+      for (final id in ids) {
+        cleanup.add(
+          () => NativeLocalBackend.channel.invokeMethod<void>('release', {
+            'id': id,
+          }),
+        );
+      }
+      Map host = {};
+      Future<void> refreshUntil(bool Function() check) async {
+        for (var n = 0; n < 100; n++) {
+          host = await _poll();
+          if (check()) return;
+          await Future<void>.delayed(const Duration(milliseconds: 50));
+        }
+        expect(check(), isTrue);
+      }
+
+      try {
+        for (var i = 0; i < 2; i++) {
+          await NativeLocalBackend.channel.invokeMethod<void>('prepare', {
+            'id': ids[i],
+            'path': paths[i],
+          });
+        }
+        await refreshUntil(
+          () => ids
+              .take(2)
+              .every((id) => (_gates(host)[id] as Map?)?['blocked'] == true),
+        );
+        expect(
+          (host['samples'] as List).map((s) => s['id']).toSet(),
+          ids.take(2).toSet(),
+        );
+        await expectLater(
+          NativeLocalBackend.channel.invokeMethod<void>('prepare', {
+            'id': ids[2],
+            'path': paths[2],
+          }),
+          throwsA(isA<PlatformException>()),
+        );
+        host = await _poll();
+        expect(
+          (host['samples'] as List).map((s) => s['id']).toSet(),
+          ids.take(2).toSet(),
+        );
+        expect(_gates(host).containsKey(ids[2]), isFalse);
+        await NativeLocalBackend.channel.invokeMethod<void>('release', {
+          'id': ids[0],
+        });
+        await refreshUntil(
+          () =>
+              (_gates(host)[ids[0]] as Map)['closed'] == true &&
+              (_gates(host)[ids[0]] as Map)['readers'] == 0,
+        );
+        expect((_gates(host)[ids[1]] as Map)['blocked'], isTrue);
+        expect((_gates(host)[ids[1]] as Map)['cancelled'], isFalse);
+        await NativeLocalBackend.channel.invokeMethod<void>('prepare', {
+          'id': ids[2],
+          'path': paths[2],
+        });
+        await refreshUntil(
+          () => (_gates(host)[ids[2]] as Map?)?['blocked'] == true,
+        );
+        expect(
+          (host['samples'] as List).map((s) => s['id']).toSet(),
+          ids.skip(1).toSet(),
+        );
+        for (final id in ids.skip(1)) {
+          await NativeLocalBackend.channel.invokeMethod<void>('release', {
+            'id': id,
+          });
+        }
+        await refreshUntil(
+          () =>
+              (host['samples'] as List).isEmpty &&
+              ids.every(
+                (id) =>
+                    (_gates(host)[id] as Map)['closed'] == true &&
+                    (_gates(host)[id] as Map)['readers'] == 0,
+              ),
+        );
+      } finally {
+        // ignore: avoid_print
+        print('CAPACITY_${Platform.operatingSystem}=${jsonEncode(host)}');
+      }
+    }),
+  );
+
+  testWidgets(
+    'Twelve pending play-stop cycles drain then ordinary playback works',
+    (tester) => DiagnosticCleanup.run((cleanup) async {
+      if (Platform.isAndroid) {
+        cleanup.add(() async {
+          await NativeLocalBackend.channel.invokeMethod<bool>(
+            'diagnosticScreen',
+            {'keepOn': false},
+          );
+        });
+        await NativeLocalBackend.channel.invokeMethod<bool>(
+          'diagnosticScreen',
+          {'keepOn': true},
+        );
+      }
+      final input = await _OwnedInput.create(cleanup);
+      final files = {'slow': await input.gated(), 'normal': input.normal};
+      final backend = NativeLocalBackend(files);
+      cleanup.add(backend.close);
+      final c = PlaybackCoordinator(backend);
+      cleanup.add(c.dispose);
+      final rounds = <Map>[];
+      const slow = QueueEntry(
+        entryId: 'slow',
+        trackKey: 'owned',
+        fixtureId: 'slow',
+      );
+      const normal = QueueEntry(
+        entryId: 'normal',
+        trackKey: 'owned',
+        fixtureId: 'normal',
+      );
+      CommandContext cmd(String id) => CommandContext(id, c.claim);
+      try {
+        for (var i = 0; i < 12; i++) {
+          if (i != 0) files['slow'] = await input.gated();
+          final id = 'native-${i + 1}';
+          Map gate() => _gates(backend.lastHost)[id] as Map? ?? {};
+          expectControlApplied(
+            c.play(
+              cmd('load-$i'),
+              PlayIntent(entries: [slow, normal], entryId: 'slow'),
+            ),
+          );
+          await until(() => gate()['blocked'] == true);
+          expect(backend.consumers, 1);
+          expect(gate()['bytesRead'], 0);
+          expect(c.snapshot.confirmations, isEmpty);
+          expectControlApplied(c.stop(cmd('stop-$i')));
+          await until(
+            () =>
+                backend.consumers == 0 &&
+                gate()['closed'] == true &&
+                gate()['readers'] == 0,
+          );
+          expect(gate()['cancelled'], isTrue);
+          expect(_gates(backend.lastHost).length, lessThanOrEqualTo(8));
+          await NativeLocalBackend.channel.invokeMethod<void>(
+            'allowOwnedRead',
+            {'id': id},
+          );
+          // At most one poll may predate allow; observe two later snapshots.
+          for (var poll = 0; poll < 2; poll++) {
+            final previous = backend.lastHost;
+            await until(() => !identical(backend.lastHost, previous));
+          }
+          expect(gate()['closed'], isTrue);
+          expect(gate()['cancelled'], isTrue);
+          expect(gate()['readers'], 0);
+          expect(gate()['bytesRead'], 0);
+          expect(c.snapshot.confirmations, isEmpty);
+          rounds.add({
+            'round': i,
+            'gate': {...gate()},
+            'history': _gates(backend.lastHost).length,
+          });
+        }
+        if (Platform.isAndroid) {
+          await tester.pumpWidget(
+            const MaterialApp(home: Scaffold(body: Text('自有容量验证'))),
+          );
+          await tester.pumpAndSettle();
+          expect(
+            await NativeLocalBackend.channel.invokeMethod<bool>(
+              'diagnosticForeground',
+            ),
+            isTrue,
+          );
+        }
+        expectControlApplied(
+          c.play(
+            cmd('ordinary'),
+            PlayIntent(entries: [slow, normal], entryId: 'normal'),
+          ),
+        );
+        await until(
+          () =>
+              c.snapshot.currentEntryId == 'normal' &&
+              c.snapshot.positionMs > 300,
+        );
+        expect(c.snapshot.confirmations.length, 1);
+        expect(backend.consumers, 1);
+        expectControlApplied(c.stop(cmd('finish')));
+        await until(() => backend.consumers == 0);
+        expect(c.failures, isEmpty);
+      } finally {
+        // ignore: avoid_print
+        print(
+          'CYCLES_${Platform.operatingSystem}=${jsonEncode({'rounds': rounds, 'host': backend.lastHost, 'raw': backend.raw})}',
+        );
+      }
+    }),
+  );
+  testWidgets(
+    'Setup failure after native allocation still closes reader and input',
+    (tester) async {
+      final primary = StateError('owned-injected-setup-failure');
+      String? normal;
+      Map host = {};
+      const id = 'setup-fault';
+      await expectLater(
+        DiagnosticCleanup.run<void>((cleanup) async {
+          final input = await _OwnedInput.create(cleanup);
+          normal = input.normal;
+          final path = await input.gated();
+          cleanup.add(
+            () => NativeLocalBackend.channel.invokeMethod<void>('release', {
+              'id': id,
+            }),
+          );
+          await NativeLocalBackend.channel.invokeMethod<void>('prepare', {
+            'id': id,
+            'path': path,
+          });
+          for (var i = 0; i < 100; i++) {
+            host = await _poll();
+            if ((_gates(host)[id] as Map?)?['blocked'] == true) break;
+            await Future<void>.delayed(const Duration(milliseconds: 50));
+          }
+          expect((_gates(host)[id] as Map)['blocked'], isTrue);
+          throw primary;
+        }),
+        throwsA(same(primary)),
+      );
+      for (var i = 0; i < 100; i++) {
+        host = await _poll();
+        if ((_gates(host)[id] as Map)['closed'] == true &&
+            (_gates(host)[id] as Map)['readers'] == 0) {
+          break;
+        }
+        await Future<void>.delayed(const Duration(milliseconds: 50));
+      }
+      expect(host['samples'], isEmpty);
+      expect((_gates(host)[id] as Map)['closed'], isTrue);
+      expect((_gates(host)[id] as Map)['readers'], 0);
+      if (!Platform.isAndroid) {
+        expect(await File.fromUri(Uri.parse(normal!)).exists(), isFalse);
+      }
+      // ignore: avoid_print
+      print('SETUP_CLEANUP_${Platform.operatingSystem}=${jsonEncode(host)}');
+    },
+  );
+}

@@ -1,0 +1,1 @@
+diff --no-index exit1 indicates captured differences.

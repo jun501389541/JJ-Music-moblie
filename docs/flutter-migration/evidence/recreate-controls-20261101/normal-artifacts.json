@@ -1,0 +1,12 @@
+{
+  "android": {
+    "reusedVerified": true,
+    "sha256": "84732716da464fa10f3bee2fde475415ceef2e07da10b05d66617b60abcb946f",
+    "installedOn": "35a63609",
+    "rebuilt": false
+  },
+  "windows": {
+    "runThisBatch": false,
+    "rebuilt": false
+  }
+}

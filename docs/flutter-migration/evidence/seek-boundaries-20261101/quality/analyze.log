@@ -1,0 +1,9 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Analyzing flutter...                                            
+
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\platform\native_seek_capability_test.dart:21:13 - curly_braces_in_flow_control_structures
+   info - Use the null-aware marker '?' rather than a null check via an 'if'. Try using '?' - test\platform\native_seek_capability_test.dart:30:21 - use_null_aware_elements
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\playback\seek_concurrency_test.dart:28:13 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\playback\seek_concurrency_test.dart:78:13 - curly_braces_in_flow_control_structures
+
+4 issues found. (ran in 6.1s)

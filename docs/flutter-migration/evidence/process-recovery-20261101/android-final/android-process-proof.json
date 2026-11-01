@@ -1,0 +1,193 @@
+{
+  "platform": "android",
+  "device": "35a63609",
+  "apkSha256": "f07562019d5dbfcbf2e5a1cb889f0660b153aecf5ddae5b125bdb8f6b17563dd",
+  "forcedTermination": true,
+  "saved": {
+    "stage": "saved",
+    "pid": 12576,
+    "coordinatorEpoch": 1793493640495578,
+    "session": "local-12576-1793493640495",
+    "revision": 1,
+    "position": 2345,
+    "desired": "paused",
+    "consumers": 1,
+    "fixture": "tone-long",
+    "confirmations": [
+      "local-12576-1793493640495:1"
+    ],
+    "directory": "/data/user/0/dev.jjmusic.diagnostics.jj_music_mobile/code_cache/jj-owned-p1/recovery/recovery-20261101-a3",
+    "runId": "recovery-20261101-a3",
+    "diskSnapshot": {
+      "formatVersion": 1,
+      "runId": "recovery-20261101-a3",
+      "revision": 1,
+      "playbackSessionId": "local-12576-1793493640495",
+      "entries": [
+        {
+          "entryId": "owned-a",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        },
+        {
+          "entryId": "owned-b",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        }
+      ],
+      "currentIndex": 0,
+      "positionMs": 2345,
+      "mode": "sequence",
+      "preview": false,
+      "confirmations": [
+        "local-12576-1793493640495:1"
+      ]
+    },
+    "runtimeSnapshot": {
+      "formatVersion": 1,
+      "runId": "recovery-20261101-a3",
+      "revision": 1,
+      "playbackSessionId": "local-12576-1793493640495",
+      "entries": [
+        {
+          "entryId": "owned-a",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        },
+        {
+          "entryId": "owned-b",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        }
+      ],
+      "currentIndex": 0,
+      "positionMs": 2345,
+      "mode": "sequence",
+      "preview": false,
+      "confirmations": [
+        "local-12576-1793493640495:1"
+      ]
+    },
+    "probeToken": "4b31cb326ec348eca02d9fa7650b9a0b"
+  },
+  "loaded": {
+    "stage": "loaded",
+    "pid": 12739,
+    "coordinatorEpoch": 1793493642174154,
+    "session": "local-12576-1793493640495",
+    "revision": 1,
+    "position": 2345,
+    "desired": "paused",
+    "consumers": 0,
+    "fixture": "tone-long",
+    "confirmations": [
+      "local-12576-1793493640495:1"
+    ],
+    "directory": "/data/user/0/dev.jjmusic.diagnostics.jj_music_mobile/code_cache/jj-owned-p1/recovery/recovery-20261101-a3",
+    "runId": "recovery-20261101-a3",
+    "diskSnapshot": {
+      "formatVersion": 1,
+      "runId": "recovery-20261101-a3",
+      "revision": 1,
+      "playbackSessionId": "local-12576-1793493640495",
+      "entries": [
+        {
+          "entryId": "owned-a",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        },
+        {
+          "entryId": "owned-b",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        }
+      ],
+      "currentIndex": 0,
+      "positionMs": 2345,
+      "mode": "sequence",
+      "preview": false,
+      "confirmations": [
+        "local-12576-1793493640495:1"
+      ]
+    },
+    "runtimeSnapshot": {
+      "formatVersion": 1,
+      "runId": "recovery-20261101-a3",
+      "revision": 1,
+      "playbackSessionId": "local-12576-1793493640495",
+      "entries": [
+        {
+          "entryId": "owned-a",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        },
+        {
+          "entryId": "owned-b",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        }
+      ],
+      "currentIndex": 0,
+      "positionMs": 2345,
+      "mode": "sequence",
+      "preview": false,
+      "confirmations": [
+        "local-12576-1793493640495:1"
+      ]
+    },
+    "staleClaimRejected": "stale-controller",
+    "pausedObservationMs": 700,
+    "resumedPosition": 2780,
+    "resumedConfirmations": [
+      "local-12576-1793493640495:1",
+      "local-12576-1793493640495:2"
+    ],
+    "resumeHost": {
+      "samples": [
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "canSeek": true,
+          "nativeDuration": 12000,
+          "position": 2780,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        }
+      ],
+      "commands": [],
+      "host": "host-12739-142587035",
+      "pid": 12739,
+      "focusHeld": true,
+      "focusEpoch": 2,
+      "readGates": {},
+      "pcmStreams": {},
+      "pendingServiceStarts": 0,
+      "servicePresent": true,
+      "lastNativeError": "",
+      "screenInteractive": true
+    },
+    "repeatResumeDeduplicated": true,
+    "stoppedConsumers": 0,
+    "stopHost": {
+      "samples": [],
+      "commands": [],
+      "host": "host-12739-142587035",
+      "pid": 12739,
+      "focusHeld": false,
+      "focusEpoch": 7,
+      "readGates": {},
+      "pcmStreams": {},
+      "pendingServiceStarts": 0,
+      "servicePresent": false,
+      "lastNativeError": "",
+      "screenInteractive": true
+    },
+    "probeToken": "2a5b6463a2a340388e29ba3d2bee3511"
+  }
+}

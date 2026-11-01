@@ -1,0 +1,6 @@
+{
+  "pid": 12160,
+  "aliveAfter2Seconds": true,
+  "executable": "clients/flutter/build/windows/x64/runner/Release/jj_music_mobile.exe",
+  "scope": "restored original ordinary binary startup only, no playback acceptance"
+}

@@ -1,5 +1,7 @@
 # 当前状态、授权与证据索引
 
+AUTH-P1-PROCESS-20261101：用户手机验收正常后继续开发，领取A07当前v2.3全进程恢复子项。owner Codex串行A07/ConfigIntegrator/证据维护；allowlist lib/p1_process_probe.dart、tool/run_android_recovery_probe.ps1、tool/run_windows_recovery_probe.ps1（均相对clients/flutter）、evidence/process-recovery-20261101、status/handoff。前置A02真实文件和21冻结、两端本地播放已有实际证据；新运行独立核对。旧claim仅测试sidecar不进持久合同；新runId防旧产物误判，证据目录参数化防覆盖历史。保存完成后真实强杀重启，读回默认暂停、旧控制器拒绝、显式恢复再停止。手机35a63609已核2211133C/fuxi/Awake；Windows单独执行。保留全部未提交工作，普通产物先备份；不改共享冻结/正式UI/全局/旧库/P2，不提交推送发布。进行中。
+
 更新日期2026-10-31；文档R4、PREP-01及A01/A02实际实施。**双端自有本地播放/系统基础/恢复原型主路径已验证；完整G-L暂不通过，不代表播放器完成。** 开发根为`E:\Workspace\project\JJ-Music-mobile`，旧`JJ-Music`只读参考。本文件是任务状态、实际owner、授权和门结果的唯一维护处。
 
 ## 授权记录
@@ -40,12 +42,12 @@ AUTH-ENV本批执行者/协调者：Codex；环境准备已完成。Flutter3.47.
 | V01 | proposed | - | 无对应范围授权或前置证据 | 未运行 |
 | V02 | needs-user | - | 无具体稿件确认 | 未运行 |
 | A01 | done | Codex / ConfigIntegrator | [实际证据](evidence/A01/20261030-batch.md)：双端release构建与native烟测通过，Android release三按钮通过 | mobile目标工作区已集成；仅诊断工程，无提交 |
-| A02 | done（本批最小增量） | Codex串行合同维护 | [v2.3冻结](evidence/A02/20261031-seek-freeze.md)、[本批证据](evidence/seek-capability-20261031/report.md)，42共同测试；双端消费验证 | 已集成mobile当前工作区；不等于完整G-L |
+| A02 | done（本批最小增量） | Codex串行合同维护 | [v2.3冻结](evidence/A02/20261031-seek-freeze.md)、[本批证据](evidence/seek-capability-20261031/report.md)，58共同测试（含20261101并发/桥接及清理故障验证）；双端真实消费仍以前批证据为准 | 已集成mobile当前工作区；不等于完整G-L |
 | A03 | review | Codex / 本批串行维护 | [20261031证据](evidence/A03/20261031-batch.md)：真机file/content URI、3项本地验证；[本批Android初始加载4反例](evidence/loading-20261031/report.md)已补，[本批Android再缓冲4项](evidence/rebuffer-20261031/report.md)已补；未知时长/完整后台等未齐 | mobile目标已集成主路径，完整任务验收未宣称；无提交 |
 | A04 | review | Codex / 本批串行维护 | [20261031证据](evidence/A04/20261031-batch.md)：Activity重建、后台/实际关屏、系统控制通过；[本批焦点安全修复及release实测](evidence/focus-20261031/report.md)已补；独立engine/服务回收/完整焦点矩阵未齐 | mobile目标已集成主路径，完整任务验收未宣称；无提交 |
 | A05 | review | Codex / 本批串行维护 | [20261031证据](evidence/A05/20261031-batch.md)：WinRT3项本地验证/释放与真实回滚；[本批Windows初始加载及关闭异常](evidence/windows-loading-20261031/report.md)已补，输出失效/播放后再缓冲等未齐 | mobile目标已集成主路径，完整任务验收未宣称；无提交 |
 | A06 | review | Codex / 本批串行维护 | [20261031证据](evidence/A06/20261031-batch.md)：真实OS pause/play/seek/next与timeline通过；物理媒体键/可见系统面板尚未验 | mobile目标已集成主路径，完整任务验收未宣称；无提交 |
-| A07 | review | Codex / 本批串行维护 | [20261031证据](evidence/A07/20261031-batch.md)：双端组件/CAS/原生资源销毁与两进程R3通过；死engine原生独存接管未证 | mobile目标已集成主路径，完整任务验收未宣称；无提交 |
+| A07 | review | Codex / 本批串行维护 | [20261031证据](evidence/A07/20261031-batch.md)；[20261101当前v2.3双进程复验](evidence/process-recovery-20261101/report.md)：双端真实保存/强杀/完整运行快照读回默认暂停、旧claim拒绝、显式恢复去重及原生释放通过；死engine独存接管/新进程损坏退路等未齐 | mobile目标已集成限定主路径，完整任务验收未宣称；无提交 |
 | A08 | review | Codex / 本批串行维护 | [20261031证据](evidence/A08/20261031-batch.md)：G-L实际证据及缺口报告已交；缺口保留，不放行P2 | mobile目标已集成主路径，完整任务验收未宣称；无提交 |
 | PREP-03 | proposed | - | 无对应范围授权或前置证据 | 未运行 |
 | B01 | proposed | - | 无对应范围授权或前置证据 | 未运行 |
@@ -241,3 +243,29 @@ AUTH-P1-SEEK-20261031限定目标完成：当前v2.3/21文件冻结及05摘要�
 2026-11-01发布收尾已完成：用户明确只发源码预发布；b502240已提交推送，PR #1合并main为f05a23b，两轮双端云端CI成功，tag v0.1.0-dev.1=f05a23b，公开prerelease且手动附件0，不含APK/Windows包。候选包本地忽略保存，未改正式身份/签名/默认分支/全局。详见[evidence/source-release-20261101.md](evidence/source-release-20261101.md)。此文档记录随后推送main，不移动标签；本地当前main。历史未提交状态被本次Git授权替代，功能范围/G-L缺口不变。
 
 AUTH-GIT-MERGE-RELEASE-20261031：用户授权提交推送合并发布。合并到从86053e5建立的main，普通PR/merge不强推，保留分支。发布候选0.1.0-dev.1仅技术诊断，G-L未通过/Android调试签名/P1身份；当前候选包和摘要留graphflow-out/release-candidate，不自动对外发布未经确认身份的二进制。历史CI因SDK浅克隆识别0.0.0-unknown失败，补SDK checkout fetch-depth0；本地质量42/21冻结/分析格式本轮复验通过。
+
+AUTH-P1-SEEKBOUND-20261101：用户按文档继续，领取A02/TC57补充并发/桥接验证，Codex串行A02/文档维护。基线4b5d4b8干净，分支codex/seek-boundaries；allowlist新test/playback/seek_concurrency_test.dart、test/platform/native_seek_capability_test.dart及evidence/seek-boundaries-20261101、status/handoff。消费v2.3/21冻结，新增验证非公共接口/夹具冻结增量，不重写历史哈希。无生产逻辑变化时不制造红色失败，不改UI/原生/全局/旧仓库，不提交推送发布。进行中。
+
+限定目标完成：[报告](evidence/seek-boundaries-20261101/report.md)。新增6并发+3mock桥接，最终共同51项/格式47文件0变更/analyze/21冻结+05/锁通过；生产源码/依赖/合同/夹具无变化。独立审阅的释放时序覆盖漏洞已补交接前0后1断言；首次lint失败保留，完整复验通过。不称生产缺陷/平台运行，Android/Windows均未重新构建或运行、原产物不变。codex/seek-boundaries未提交推送发布，下一批真实门控自然超时/恢复，G-L未过。GraphFlow见本批index.log。
+
+
+AUTH-P1-TIMEOUT-20261101：用户继续开发，A03/A05真实读取超时及恢复验证。owner Codex串行双端/文档维护；allowlist新integration_test/read_timeout_recovery_test.dart及evidence/read-timeout-20261101、status/handoff；若实际原生失败需修，先登记扩展。保留前批未提交测试，v2.3/21冻结不变。设备35a63609用户已连接，先核身份；不模拟超时、不UI/全局/新依赖/旧仓库/提交推送发布。进行中。
+
+限定目标完成：[报告](evidence/read-timeout-20261101/report.md)。Windows/Android真实超时恢复各1通过，初次均通过、无生产修复；共同51/格式48文件0变更/analyze/21冻结+05/锁通过。首轮清理if风格lint失败保留，纯语句块修正后quality-final过。两端普通Release未重建；Android原已验APK哈希核对后重装冷启动ok/PID22482，Windows普通窗口未动。具体输入/通用error归因与350ms短窗/关闭计数边界见报告；G-L未过。全部前批未提交工作保留，不推送发布，下一批重复加载停止/容量压力，GraphFlow见本批index.log。
+
+AUTH-P1-CAPACITY-20261101：用户继续开发，A03/A05容量与重复加载停止验证。owner Codex串行双端/文档维护；allowlist新integration_test/resource_capacity_test.dart及evidence/resource-capacity-20261101、status/handoff。当前codex/seek-boundaries未提交工作全部保留，v2.3/21冻结不变；真实native2槽拒绝3/释放重入、12轮pending停止与8历史边界，再真实普通样本。非长期压力/OS堆泄漏证明；如实际原生缺陷需修先登记。手机35a63609已核在线，不改UI/全局/旧库/依赖，不提交推送发布。进行中。
+
+限定目标完成：[报告](evidence/resource-capacity-20261101/report.md)。Windows2/Android2最终通过，双槽拒绝/释放重入及12轮加载停止真实读数归零、history<=8、晚allow新快照仍闭合、普通样本可确认；共同51/格式49文件0变化/analyze/21冻结+05/锁通过。首轮多余import失败保留，修正并加强断言后重跑两端通过；无生产修改，非长期内存/句柄泄漏证明。两端普通Release未重建，Android原已验APK恢复COLD启动ok/PID25080，Windows窗口不动。前批未提交工作均保留，不提交推送发布，下一批A04重建与媒体控制并发，G-L未过。GraphFlow见本批index.log。
+
+AUTH-REVIEW-CLEANUP-20261101：用户要求先落实reviewer修复。领取capacity setup失败清理弱项，已修late-allow快照/提前释放断言保留。Codex串行测试/文档维护，allowlist integration_test/resource_capacity_test.dart、新support/diagnostic_cleanup.dart、新test/diagnostic_cleanup_test.dart、evidence/reviewer-cleanup-20261101及status/handoff。仅测试生命周期，v2.3/21冻结不变，保留先前未提交修改；无生产/native/UI/全局/提交推送。进行中。
+
+修复完成：[报告](evidence/reviewer-cleanup-20261101/report.md)。setup整体进入test-only清理scope，逆序await/抛错继续/原异常优先，7故障单测及两端各3实际场景通过；共同58/格式51文件0变化/analyze/21冻结+05/锁通过（quality-complete）。复核无Critical/Important，补两个轻微单测后全部通过。先前lint/编辑编码失败按证据保留或说明，不作生产缺陷。原APK哈希核对后恢复冷启动ok/PID28127，无普通Release重建/生产修改；前批未提交修改保留，无提交推送发布，G-L仍未过。旧review记录不改，当前修复以本报告为准。
+
+
+AUTH-P1-RECREATE-20261101：用户按文档继续，A04重建/媒体暂停交错提交验证。owner Codex串行Android/文档维护；allowlist新integration_test/android_recreate_controls_test.dart及evidence/recreate-controls-20261101、status/handoff。复用review后DiagnosticCleanup，保留当前全部未提交工作、v2.3/21冻结；设备35a63609在线Awake。不同提交顺序非严格物理同时/系统杀进程，不改UI/生产逻辑除非实际回归需登记，不提交推送发布/全局/旧库。进行中。
+
+限定目标完成：[报告](evidence/recreate-controls-20261101/report.md)。手机两顺序2项通过，实际Activity变更/engine会话handle保留/媒体暂停及显式恢复；reviewer位置断言P2补原生新采样和双绝对差后复验通过。共同58/格式52文件0变更/analyze/21冻结+05/锁通过（android-reviewed、quality-reviewed）。生产未改、普通包不重建；手机原APK恢复COLD启动ok/PID31159，Windows未验证/未动。前批全部修改保留，无提交推送发布，G-L未过；下一批A07独立进程恢复/默认暂停/旧控制器失效，先核入口前置。GraphFlow见index.log。
+
+AUTH-P1-PROCESS-20261101限定目标完成：[报告](evidence/process-recovery-20261101/report.md)。最终Android/Windows各一组真实两进程通过，完整runtime读回、默认暂停、旧claim拒绝、显式恢复/去重、原生释放已验；审阅两项P2已修复复核。quality-final共同58、格式52文件0变更、analyze、21冻结及05/锁通过。普通APK/Windows整目录核哈希后恢复，手机COLD启动ok，Windows普通启动2秒后关闭。a2日志截断失败保留，a3重跑通过。无生产修复/提交推送发布；旧修改保留，A07/G-L仍review，下一批自有快照异常/中断新进程退路。GraphFlow见本批index.log。
+
+AUTH-GIT-PUSH-20261101：用户明确要求先提交并推送当前开发成果。允许把codex/seek-boundaries内已验A02并发/桥接、A03/A05超时容量、reviewer清理、A04重建及A07进程恢复的代码/证据/status/handoff提交，并推送origin同名分支。旧批次不提交约束保留为历史；本次不合并、不发布、不上传安装包、不修改全局配置。

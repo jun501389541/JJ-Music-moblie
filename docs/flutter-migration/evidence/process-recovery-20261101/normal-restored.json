@@ -1,0 +1,75 @@
+{
+  "androidSha256": "84732716da464fa10f3bee2fde475415ceef2e07da10b05d66617b60abcb946f",
+  "windowsFiles": [
+    {
+      "path": "flutter_windows.dll",
+      "sha256": "30494fb08f9f101a8fbe42568110aaa160efbd7341f3cfe877dc14214be3a233"
+    },
+    {
+      "path": "jj_music_mobile.exe",
+      "sha256": "aa78e3708c8b9a9363d89a371703d416b8f9bd4c52530c51fe303bcea3ea54a9"
+    },
+    {
+      "path": "native_assets.json",
+      "sha256": "9548a31e4a048135c1d94f919328bfb62ae2c7bb3cab96557c7941daa97776cb"
+    },
+    {
+      "path": "data\\app.so",
+      "sha256": "b2c3ef8ff2c60a7b99d8137d9293d2f081f7125a22c75ae62ee3b4dd5a7dda7c"
+    },
+    {
+      "path": "data\\icudtl.dat",
+      "sha256": "325a86063d26334c2eabe1743cea073b612540fbf3d8fc2ef0b5708e3763a8c7"
+    },
+    {
+      "path": "data\\flutter_assets\\AssetManifest.bin",
+      "sha256": "422d5312425fdcaeee26d4e683d1a3dba74022284fdd91ff66c009a28f64de2c"
+    },
+    {
+      "path": "data\\flutter_assets\\FontManifest.json",
+      "sha256": "28b1eb2b3d2e1ad60b8c8b0f9100b1ccbf492f7fa97f5bebb51ea97e73926e7d"
+    },
+    {
+      "path": "data\\flutter_assets\\NativeAssetsManifest.json",
+      "sha256": "9548a31e4a048135c1d94f919328bfb62ae2c7bb3cab96557c7941daa97776cb"
+    },
+    {
+      "path": "data\\flutter_assets\\NOTICES.Z",
+      "sha256": "e6727abeb5b9c52cd511308b6c3da8befd130249ada005085ab50e82453fece4"
+    },
+    {
+      "path": "data\\flutter_assets\\fixtures\\local_playback\\README.md",
+      "sha256": "f51f5aa05de163d28c411f3b47fb4a8a7d94a35429bc6035914a86a23474cdc6"
+    },
+    {
+      "path": "data\\flutter_assets\\fixtures\\local_playback\\SHA256SUMS",
+      "sha256": "41e44d8e88a6663e6964103e2100f25b2a4f029c2ce23a940aee6b4afc49f6eb"
+    },
+    {
+      "path": "data\\flutter_assets\\fixtures\\local_playback\\tone-a.wav",
+      "sha256": "e7f5e0c48bc0a088e5c26273ea995869125bb663201e1cc61dedf6b80a336512"
+    },
+    {
+      "path": "data\\flutter_assets\\fixtures\\local_playback\\tone-b.wav",
+      "sha256": "6fde56220d24f304bd37270879473bcdf775b9968df2d7a4e4e679bd504c38e7"
+    },
+    {
+      "path": "data\\flutter_assets\\fixtures\\local_playback\\tone-long.wav",
+      "sha256": "38288bb41430cef5d69b99ecbc356d3a6bd9db2ffa6d907156ba8a825bfbd094"
+    },
+    {
+      "path": "data\\flutter_assets\\fonts\\MaterialIcons-Regular.otf",
+      "sha256": "ced99e203d4268bda1e4396794f7544a1d4db0b6cad196bc9ba37d4d7b36e3be"
+    },
+    {
+      "path": "data\\flutter_assets\\shaders\\ink_sparkle.frag",
+      "sha256": "1fe8436a743884cb65078fe8c7b38e18f5365f2a2961270916f426fd13c604af"
+    },
+    {
+      "path": "data\\flutter_assets\\shaders\\stretch_effect.frag",
+      "sha256": "bc7599dbbbaab310efe41520574138d21fb18a88c8fe4495ed79315309336f6f"
+    }
+  ],
+  "windowsRebuiltOrdinary": false,
+  "androidRebuiltOrdinary": false
+}

@@ -1,0 +1,179 @@
+{
+  "platform": "android",
+  "device": "35a63609",
+  "apkSha256": "905af319f82a0fafc766c40a76f3994a402e801917b519c4814ecd9fce361ce1",
+  "forcedTermination": true,
+  "saved": {
+    "stage": "saved",
+    "pid": 11328,
+    "coordinatorEpoch": 1793493498891839,
+    "session": "local-11328-1793493498891",
+    "revision": 1,
+    "position": 2345,
+    "desired": "paused",
+    "consumers": 1,
+    "fixture": "tone-long",
+    "confirmations": [
+      "local-11328-1793493498891:1"
+    ],
+    "directory": "/data/user/0/dev.jjmusic.diagnostics.jj_music_mobile/code_cache/jj-owned-p1/recovery/recovery-20261101-a1",
+    "runId": "recovery-20261101-a1",
+    "diskSnapshot": {
+      "formatVersion": 1,
+      "runId": "recovery-20261101-a1",
+      "revision": 1,
+      "playbackSessionId": "local-11328-1793493498891",
+      "entries": [
+        {
+          "entryId": "owned-a",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        },
+        {
+          "entryId": "owned-b",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        }
+      ],
+      "currentIndex": 0,
+      "positionMs": 2345,
+      "mode": "sequence",
+      "preview": false,
+      "confirmations": [
+        "local-11328-1793493498891:1"
+      ]
+    },
+    "probeToken": "57208840ef414fb08caf8f85ed873670"
+  },
+  "loaded": {
+    "stage": "loaded",
+    "pid": 11510,
+    "coordinatorEpoch": 1793493500550863,
+    "session": "local-11328-1793493498891",
+    "revision": 1,
+    "position": 2345,
+    "desired": "paused",
+    "consumers": 0,
+    "fixture": "tone-long",
+    "confirmations": [
+      "local-11328-1793493498891:1"
+    ],
+    "directory": "/data/user/0/dev.jjmusic.diagnostics.jj_music_mobile/code_cache/jj-owned-p1/recovery/recovery-20261101-a1",
+    "runId": "recovery-20261101-a1",
+    "diskSnapshot": {
+      "formatVersion": 1,
+      "runId": "recovery-20261101-a1",
+      "revision": 1,
+      "playbackSessionId": "local-11328-1793493498891",
+      "entries": [
+        {
+          "entryId": "owned-a",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        },
+        {
+          "entryId": "owned-b",
+          "trackKey": "owned-tone",
+          "fixtureId": "tone-long"
+        }
+      ],
+      "currentIndex": 0,
+      "positionMs": 2345,
+      "mode": "sequence",
+      "preview": false,
+      "confirmations": [
+        "local-11328-1793493498891:1"
+      ]
+    },
+    "staleClaimRejected": "stale-controller",
+    "pausedObservationMs": 700,
+    "resumedPosition": 2791,
+    "resumedConfirmations": [
+      "local-11328-1793493498891:1",
+      "local-11328-1793493498891:2"
+    ],
+    "resumeHost": {
+      "samples": [
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "canSeek": true,
+          "nativeDuration": 12000,
+          "position": 2791,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        }
+      ],
+      "commands": [],
+      "lifecycle": [
+        {
+          "event": "engine-create",
+          "time": 142445446,
+          "pid": 11510,
+          "host": "host-11510-142445404",
+          "engine": 26135275,
+          "activity": 0
+        },
+        {
+          "event": "activity-create",
+          "time": 142445456,
+          "pid": 11510,
+          "host": "host-11510-142445404",
+          "engine": 26135275,
+          "activity": 83406126
+        },
+        {
+          "event": "prepare-native-1",
+          "time": 142446210,
+          "pid": 11510,
+          "host": "host-11510-142445404",
+          "engine": 26135275,
+          "activity": 83406126
+        },
+        {
+          "event": "focus-acquired",
+          "time": 142446308,
+          "pid": 11510,
+          "host": "host-11510-142445404",
+          "engine": 26135275,
+          "activity": 83406126
+        },
+        {
+          "event": "service-create",
+          "time": 142446309,
+          "pid": 11510,
+          "host": "host-11510-142445404",
+          "engine": 26135275,
+          "activity": 83406126
+        },
+        {
+          "event": "service-start-ack",
+          "time": 142446312,
+          "pid": 11510,
+          "host": "host-11510-142445404",
+          "engine": 26135275,
+          "activity": 83406126
+        }
+      ],
+      "host": "host-11510-142445404",
+      "pid": 11510,
+      "focusHeld": true,
+      "focusEpoch": 2,
+      "readGates": {},
+      "pcmStreams": {},
+      "pendingServiceStarts": 0,
+      "servicePresent": true,
+      "lastNativeError": "",
+      "screenInteractive": true
+    },
+    "repeatResumeDeduplicated": true,
+    "stoppedConsumers": 0,
+    "probeToken": "f46563cd100a4ac4878fcc4df7c848cf"
+  }
+}

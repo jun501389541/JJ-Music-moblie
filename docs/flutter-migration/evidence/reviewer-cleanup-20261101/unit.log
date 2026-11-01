@@ -1,0 +1,9 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/diagnostic_cleanup_test.dart
+00:00 +0: setup failure removes an already-created temporary directory
+00:00 +1: partial initialization unwinds all acquired resources in reverse order
+00:00 +2: one failing release cannot skip remaining releases or temp cleanup
+00:00 +3: cleanup failures preserve the primary failure and report secondary types
+00:00 +4: scope waits for asynchronous cleanup before returning its result
+00:00 +5: All tests passed!
+EXIT=0

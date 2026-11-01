@@ -1,0 +1,2155 @@
+[
+  {
+    "case": "CAPACITY_windows",
+    "result": {
+      "commands": [],
+      "lastNativeError": "参数错误。",
+      "mirrorStage": "",
+      "mirroredDuration": 0,
+      "mirroredStatus": "",
+      "osResult": {},
+      "samples": [],
+      "smtcEnabled": true,
+      "streamGates": {
+        "capacity-a": {
+          "blocked": false,
+          "bytesRead": 0,
+          "cancelled": true,
+          "closed": true,
+          "inputKind": "random-access-read",
+          "readers": 0,
+          "sourceClosed": true,
+          "streamClosed": true,
+          "waitedMs": 28
+        },
+        "capacity-b": {
+          "blocked": false,
+          "bytesRead": 0,
+          "cancelled": true,
+          "closed": true,
+          "inputKind": "random-access-read",
+          "readers": 0,
+          "sourceClosed": true,
+          "streamClosed": true,
+          "waitedMs": 36
+        },
+        "capacity-c": {
+          "blocked": false,
+          "bytesRead": 0,
+          "cancelled": true,
+          "closed": true,
+          "inputKind": "random-access-read",
+          "readers": 0,
+          "sourceClosed": true,
+          "streamClosed": true,
+          "waitedMs": 5
+        }
+      }
+    }
+  },
+  {
+    "case": "CYCLES_windows",
+    "result": {
+      "rounds": [
+        {
+          "round": 0,
+          "gate": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 84
+          },
+          "history": 4
+        },
+        {
+          "round": 1,
+          "gate": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 84
+          },
+          "history": 5
+        },
+        {
+          "round": 2,
+          "gate": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 84
+          },
+          "history": 6
+        },
+        {
+          "round": 3,
+          "gate": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 82
+          },
+          "history": 7
+        },
+        {
+          "round": 4,
+          "gate": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 84
+          },
+          "history": 8
+        },
+        {
+          "round": 5,
+          "gate": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 72
+          },
+          "history": 8
+        },
+        {
+          "round": 6,
+          "gate": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 79
+          },
+          "history": 8
+        },
+        {
+          "round": 7,
+          "gate": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 82
+          },
+          "history": 8
+        },
+        {
+          "round": 8,
+          "gate": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 83
+          },
+          "history": 8
+        },
+        {
+          "round": 9,
+          "gate": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 84
+          },
+          "history": 8
+        },
+        {
+          "round": 10,
+          "gate": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 85
+          },
+          "history": 8
+        },
+        {
+          "round": 11,
+          "gate": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 85
+          },
+          "history": 8
+        }
+      ],
+      "host": {
+        "commands": [],
+        "lastNativeError": "参数错误。",
+        "mirrorStage": "",
+        "mirroredDuration": 0,
+        "mirroredStatus": "",
+        "osResult": {},
+        "samples": [],
+        "smtcEnabled": true,
+        "streamGates": {
+          "native-12": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 85
+          },
+          "native-3": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 84
+          },
+          "native-4": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 82
+          },
+          "native-5": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 84
+          },
+          "native-6": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 72
+          },
+          "native-7": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 79
+          },
+          "native-8": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 82
+          },
+          "native-9": {
+            "blocked": false,
+            "bytesRead": 0,
+            "cancelled": true,
+            "closed": true,
+            "inputKind": "random-access-read",
+            "readers": 0,
+            "sourceClosed": true,
+            "streamClosed": true,
+            "waitedMs": 83
+          }
+        }
+      },
+      "raw": [
+        {
+          "canSeek": true,
+          "duration": 0,
+          "ended": false,
+          "error": false,
+          "id": "native-1",
+          "nativePlaying": false,
+          "nativeState": 1,
+          "platform": "windows",
+          "playWhenReady": false,
+          "position": 0,
+          "ready": false,
+          "state": 1
+        },
+        {
+          "canSeek": true,
+          "duration": 0,
+          "ended": false,
+          "error": false,
+          "id": "native-2",
+          "nativePlaying": false,
+          "nativeState": 1,
+          "platform": "windows",
+          "playWhenReady": false,
+          "position": 0,
+          "ready": false,
+          "state": 1
+        },
+        {
+          "canSeek": true,
+          "duration": 0,
+          "ended": false,
+          "error": false,
+          "id": "native-3",
+          "nativePlaying": false,
+          "nativeState": 1,
+          "platform": "windows",
+          "playWhenReady": false,
+          "position": 0,
+          "ready": false,
+          "state": 1
+        },
+        {
+          "canSeek": true,
+          "duration": 0,
+          "ended": false,
+          "error": false,
+          "id": "native-4",
+          "nativePlaying": false,
+          "nativeState": 1,
+          "platform": "windows",
+          "playWhenReady": false,
+          "position": 0,
+          "ready": false,
+          "state": 1
+        },
+        {
+          "canSeek": true,
+          "duration": 0,
+          "ended": false,
+          "error": false,
+          "id": "native-5",
+          "nativePlaying": false,
+          "nativeState": 1,
+          "platform": "windows",
+          "playWhenReady": false,
+          "position": 0,
+          "ready": false,
+          "state": 1
+        },
+        {
+          "canSeek": true,
+          "duration": 0,
+          "ended": false,
+          "error": false,
+          "id": "native-6",
+          "nativePlaying": false,
+          "nativeState": 1,
+          "platform": "windows",
+          "playWhenReady": false,
+          "position": 0,
+          "ready": false,
+          "state": 1
+        },
+        {
+          "canSeek": true,
+          "duration": 0,
+          "ended": false,
+          "error": false,
+          "id": "native-7",
+          "nativePlaying": false,
+          "nativeState": 1,
+          "platform": "windows",
+          "playWhenReady": false,
+          "position": 0,
+          "ready": false,
+          "state": 1
+        },
+        {
+          "canSeek": true,
+          "duration": 0,
+          "ended": false,
+          "error": false,
+          "id": "native-8",
+          "nativePlaying": false,
+          "nativeState": 1,
+          "platform": "windows",
+          "playWhenReady": false,
+          "position": 0,
+          "ready": false,
+          "state": 1
+        },
+        {
+          "canSeek": true,
+          "duration": 0,
+          "ended": false,
+          "error": false,
+          "id": "native-9",
+          "nativePlaying": false,
+          "nativeState": 1,
+          "platform": "windows",
+          "playWhenReady": false,
+          "position": 0,
+          "ready": false,
+          "state": 1
+        },
+        {
+          "canSeek": true,
+          "duration": 0,
+          "ended": false,
+          "error": false,
+          "id": "native-10",
+          "nativePlaying": false,
+          "nativeState": 1,
+          "platform": "windows",
+          "playWhenReady": false,
+          "position": 0,
+          "ready": false,
+          "state": 1
+        },
+        {
+          "canSeek": true,
+          "duration": 0,
+          "ended": false,
+          "error": false,
+          "id": "native-11",
+          "nativePlaying": false,
+          "nativeState": 1,
+          "platform": "windows",
+          "playWhenReady": false,
+          "position": 0,
+          "ready": false,
+          "state": 1
+        },
+        {
+          "canSeek": true,
+          "duration": 0,
+          "ended": false,
+          "error": false,
+          "id": "native-12",
+          "nativePlaying": false,
+          "nativeState": 1,
+          "platform": "windows",
+          "playWhenReady": false,
+          "position": 0,
+          "ready": false,
+          "state": 1
+        },
+        {
+          "canSeek": true,
+          "duration": 0,
+          "ended": false,
+          "error": false,
+          "id": "native-13",
+          "nativePlaying": false,
+          "nativeState": 1,
+          "platform": "windows",
+          "playWhenReady": false,
+          "position": 0,
+          "ready": false,
+          "state": 1
+        },
+        {
+          "canSeek": true,
+          "duration": 12000,
+          "ended": false,
+          "error": false,
+          "id": "native-13",
+          "nativePlaying": false,
+          "nativeState": 4,
+          "platform": "windows",
+          "playWhenReady": false,
+          "position": 0,
+          "ready": true,
+          "state": 1
+        },
+        {
+          "canSeek": true,
+          "duration": 12000,
+          "ended": false,
+          "error": false,
+          "id": "native-13",
+          "nativePlaying": true,
+          "nativeState": 3,
+          "platform": "windows",
+          "playWhenReady": true,
+          "position": 83,
+          "ready": true,
+          "state": 3
+        },
+        {
+          "canSeek": true,
+          "duration": 12000,
+          "ended": false,
+          "error": false,
+          "id": "native-13",
+          "nativePlaying": true,
+          "nativeState": 3,
+          "platform": "windows",
+          "playWhenReady": true,
+          "position": 182,
+          "ready": true,
+          "state": 3
+        },
+        {
+          "canSeek": true,
+          "duration": 12000,
+          "ended": false,
+          "error": false,
+          "id": "native-13",
+          "nativePlaying": true,
+          "nativeState": 3,
+          "platform": "windows",
+          "playWhenReady": true,
+          "position": 282,
+          "ready": true,
+          "state": 3
+        },
+        {
+          "canSeek": true,
+          "duration": 12000,
+          "ended": false,
+          "error": false,
+          "id": "native-13",
+          "nativePlaying": true,
+          "nativeState": 3,
+          "platform": "windows",
+          "playWhenReady": true,
+          "position": 383,
+          "ready": true,
+          "state": 3
+        }
+      ]
+    }
+  },
+  {
+    "case": "SETUP_CLEANUP_windows",
+    "result": {
+      "commands": [],
+      "lastNativeError": "参数错误。",
+      "mirrorStage": "",
+      "mirroredDuration": 0,
+      "mirroredStatus": "",
+      "osResult": {},
+      "samples": [],
+      "smtcEnabled": true,
+      "streamGates": {
+        "native-3": {
+          "blocked": false,
+          "bytesRead": 0,
+          "cancelled": true,
+          "closed": true,
+          "inputKind": "random-access-read",
+          "readers": 0,
+          "sourceClosed": true,
+          "streamClosed": true,
+          "waitedMs": 84
+        },
+        "native-4": {
+          "blocked": false,
+          "bytesRead": 0,
+          "cancelled": true,
+          "closed": true,
+          "inputKind": "random-access-read",
+          "readers": 0,
+          "sourceClosed": true,
+          "streamClosed": true,
+          "waitedMs": 82
+        },
+        "native-5": {
+          "blocked": false,
+          "bytesRead": 0,
+          "cancelled": true,
+          "closed": true,
+          "inputKind": "random-access-read",
+          "readers": 0,
+          "sourceClosed": true,
+          "streamClosed": true,
+          "waitedMs": 84
+        },
+        "native-6": {
+          "blocked": false,
+          "bytesRead": 0,
+          "cancelled": true,
+          "closed": true,
+          "inputKind": "random-access-read",
+          "readers": 0,
+          "sourceClosed": true,
+          "streamClosed": true,
+          "waitedMs": 72
+        },
+        "native-7": {
+          "blocked": false,
+          "bytesRead": 0,
+          "cancelled": true,
+          "closed": true,
+          "inputKind": "random-access-read",
+          "readers": 0,
+          "sourceClosed": true,
+          "streamClosed": true,
+          "waitedMs": 79
+        },
+        "native-8": {
+          "blocked": false,
+          "bytesRead": 0,
+          "cancelled": true,
+          "closed": true,
+          "inputKind": "random-access-read",
+          "readers": 0,
+          "sourceClosed": true,
+          "streamClosed": true,
+          "waitedMs": 82
+        },
+        "native-9": {
+          "blocked": false,
+          "bytesRead": 0,
+          "cancelled": true,
+          "closed": true,
+          "inputKind": "random-access-read",
+          "readers": 0,
+          "sourceClosed": true,
+          "streamClosed": true,
+          "waitedMs": 83
+        },
+        "setup-fault": {
+          "blocked": false,
+          "bytesRead": 0,
+          "cancelled": true,
+          "closed": true,
+          "inputKind": "random-access-read",
+          "readers": 0,
+          "sourceClosed": true,
+          "streamClosed": true,
+          "waitedMs": 1
+        }
+      }
+    }
+  },
+  {
+    "case": "CAPACITY_android",
+    "result": {
+      "samples": [],
+      "commands": [],
+      "lifecycle": [
+        {
+          "event": "engine-create",
+          "time": 136582566,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 0
+        },
+        {
+          "event": "activity-create",
+          "time": 136582591,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-capacity-a",
+          "time": 136583260,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-capacity-b",
+          "time": 136583266,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-capacity-a",
+          "time": 136583335,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-capacity-c",
+          "time": 136583338,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-capacity-b",
+          "time": 136583393,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-capacity-c",
+          "time": 136583394,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        }
+      ],
+      "host": "host-27365-136582141",
+      "pid": 27365,
+      "focusHeld": false,
+      "focusEpoch": 1,
+      "readGates": {
+        "capacity-a": {
+          "blocked": false,
+          "readers": 0,
+          "closed": true,
+          "cancelled": true,
+          "bytesRead": 0,
+          "waitedMs": 42,
+          "prefixBytes": 0,
+          "furthestPosition": 0
+        },
+        "capacity-b": {
+          "blocked": false,
+          "readers": 0,
+          "closed": true,
+          "cancelled": true,
+          "bytesRead": 0,
+          "waitedMs": 101,
+          "prefixBytes": 0,
+          "furthestPosition": 0
+        },
+        "capacity-c": {
+          "blocked": false,
+          "readers": 0,
+          "closed": true,
+          "cancelled": true,
+          "bytesRead": 0,
+          "waitedMs": 54,
+          "prefixBytes": 0,
+          "furthestPosition": 0
+        }
+      },
+      "pcmStreams": {},
+      "pendingServiceStarts": 0,
+      "servicePresent": false,
+      "lastNativeError": "",
+      "screenInteractive": true
+    }
+  },
+  {
+    "case": "CYCLES_android",
+    "result": {
+      "rounds": [
+        {
+          "round": 0,
+          "gate": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 101,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "history": 4
+        },
+        {
+          "round": 1,
+          "gate": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 97,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "history": 5
+        },
+        {
+          "round": 2,
+          "gate": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 97,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "history": 6
+        },
+        {
+          "round": 3,
+          "gate": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 97,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "history": 7
+        },
+        {
+          "round": 4,
+          "gate": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 98,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "history": 8
+        },
+        {
+          "round": 5,
+          "gate": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 97,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "history": 8
+        },
+        {
+          "round": 6,
+          "gate": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 96,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "history": 8
+        },
+        {
+          "round": 7,
+          "gate": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 98,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "history": 8
+        },
+        {
+          "round": 8,
+          "gate": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 96,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "history": 8
+        },
+        {
+          "round": 9,
+          "gate": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 97,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "history": 8
+        },
+        {
+          "round": 10,
+          "gate": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 97,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "history": 8
+        },
+        {
+          "round": 11,
+          "gate": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 97,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "history": 8
+        }
+      ],
+      "host": {
+        "samples": [],
+        "commands": [],
+        "lifecycle": [
+          {
+            "event": "engine-create",
+            "time": 136582566,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 0
+          },
+          {
+            "event": "activity-create",
+            "time": 136582591,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-capacity-a",
+            "time": 136583260,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-capacity-b",
+            "time": 136583266,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-capacity-a",
+            "time": 136583335,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-capacity-c",
+            "time": 136583338,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-capacity-b",
+            "time": 136583393,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-capacity-c",
+            "time": 136583394,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-capacity-c",
+            "time": 136583399,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-capacity-b",
+            "time": 136583399,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-capacity-a",
+            "time": 136583400,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-native-1",
+            "time": 136583446,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-native-1",
+            "time": 136583549,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-native-2",
+            "time": 136583854,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-native-2",
+            "time": 136583954,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-native-3",
+            "time": 136584260,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-native-3",
+            "time": 136584361,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-native-4",
+            "time": 136584666,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-native-4",
+            "time": 136584766,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-native-5",
+            "time": 136585074,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-native-5",
+            "time": 136585174,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-native-6",
+            "time": 136585481,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-native-6",
+            "time": 136585581,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-native-7",
+            "time": 136585887,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-native-7",
+            "time": 136585986,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-native-8",
+            "time": 136586293,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-native-8",
+            "time": 136586392,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-native-9",
+            "time": 136586698,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-native-9",
+            "time": 136586799,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-native-10",
+            "time": 136587106,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-native-10",
+            "time": 136587206,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-native-11",
+            "time": 136587512,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-native-11",
+            "time": 136587611,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-native-12",
+            "time": 136587921,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-native-12",
+            "time": 136588021,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "prepare-native-13",
+            "time": 136588723,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "focus-acquired",
+            "time": 136588848,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "service-create",
+            "time": 136588850,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "service-start-ack",
+            "time": 136588860,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "focus-abandoned",
+            "time": 136589435,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "released-native-13",
+            "time": 136589438,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          },
+          {
+            "event": "service-destroy",
+            "time": 136589440,
+            "pid": 27365,
+            "host": "host-27365-136582141",
+            "engine": 192633113,
+            "activity": 37351631
+          }
+        ],
+        "host": "host-27365-136582141",
+        "pid": 27365,
+        "focusHeld": false,
+        "focusEpoch": 32,
+        "readGates": {
+          "native-5": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 98,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "native-6": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 97,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "native-7": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 96,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "native-8": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 98,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "native-9": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 96,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "native-10": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 97,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "native-11": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 97,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          },
+          "native-12": {
+            "blocked": false,
+            "readers": 0,
+            "closed": true,
+            "cancelled": true,
+            "bytesRead": 0,
+            "waitedMs": 97,
+            "prefixBytes": 0,
+            "furthestPosition": 0
+          }
+        },
+        "pcmStreams": {},
+        "pendingServiceStarts": 0,
+        "servicePresent": false,
+        "lastNativeError": "",
+        "screenInteractive": true
+      },
+      "raw": [
+        {
+          "id": "native-1",
+          "platform": "android",
+          "state": 2,
+          "ready": false,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "canSeek": false,
+          "nativeDuration": -9223372036854775807,
+          "position": 0,
+          "duration": 0,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-2",
+          "platform": "android",
+          "state": 2,
+          "ready": false,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "canSeek": false,
+          "nativeDuration": -9223372036854775807,
+          "position": 0,
+          "duration": 0,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-3",
+          "platform": "android",
+          "state": 2,
+          "ready": false,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "canSeek": false,
+          "nativeDuration": -9223372036854775807,
+          "position": 0,
+          "duration": 0,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-4",
+          "platform": "android",
+          "state": 2,
+          "ready": false,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "canSeek": false,
+          "nativeDuration": -9223372036854775807,
+          "position": 0,
+          "duration": 0,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-5",
+          "platform": "android",
+          "state": 2,
+          "ready": false,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "canSeek": false,
+          "nativeDuration": -9223372036854775807,
+          "position": 0,
+          "duration": 0,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-6",
+          "platform": "android",
+          "state": 2,
+          "ready": false,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "canSeek": false,
+          "nativeDuration": -9223372036854775807,
+          "position": 0,
+          "duration": 0,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-7",
+          "platform": "android",
+          "state": 2,
+          "ready": false,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "canSeek": false,
+          "nativeDuration": -9223372036854775807,
+          "position": 0,
+          "duration": 0,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-8",
+          "platform": "android",
+          "state": 2,
+          "ready": false,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "canSeek": false,
+          "nativeDuration": -9223372036854775807,
+          "position": 0,
+          "duration": 0,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-9",
+          "platform": "android",
+          "state": 2,
+          "ready": false,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "canSeek": false,
+          "nativeDuration": -9223372036854775807,
+          "position": 0,
+          "duration": 0,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-10",
+          "platform": "android",
+          "state": 2,
+          "ready": false,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "canSeek": false,
+          "nativeDuration": -9223372036854775807,
+          "position": 0,
+          "duration": 0,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-11",
+          "platform": "android",
+          "state": 2,
+          "ready": false,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "canSeek": false,
+          "nativeDuration": -9223372036854775807,
+          "position": 0,
+          "duration": 0,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-12",
+          "platform": "android",
+          "state": 2,
+          "ready": false,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "canSeek": false,
+          "nativeDuration": -9223372036854775807,
+          "position": 0,
+          "duration": 0,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-13",
+          "platform": "android",
+          "state": 2,
+          "ready": false,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "canSeek": true,
+          "nativeDuration": 12000,
+          "position": 0,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-13",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": false,
+          "playWhenReady": false,
+          "suppression": 0,
+          "canSeek": true,
+          "nativeDuration": 12000,
+          "position": 0,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-13",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "canSeek": true,
+          "nativeDuration": 12000,
+          "position": 0,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-13",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "canSeek": true,
+          "nativeDuration": 12000,
+          "position": 90,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-13",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "canSeek": true,
+          "nativeDuration": 12000,
+          "position": 102,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-13",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "canSeek": true,
+          "nativeDuration": 12000,
+          "position": 102,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        },
+        {
+          "id": "native-13",
+          "platform": "android",
+          "state": 3,
+          "ready": true,
+          "nativePlaying": true,
+          "playWhenReady": true,
+          "suppression": 0,
+          "canSeek": true,
+          "nativeDuration": 12000,
+          "position": 377,
+          "duration": 12000,
+          "ended": false,
+          "error": false
+        }
+      ]
+    }
+  },
+  {
+    "case": "SETUP_CLEANUP_android",
+    "result": {
+      "samples": [],
+      "commands": [],
+      "lifecycle": [
+        {
+          "event": "engine-create",
+          "time": 136582566,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 0
+        },
+        {
+          "event": "activity-create",
+          "time": 136582591,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-capacity-a",
+          "time": 136583260,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-capacity-b",
+          "time": 136583266,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-capacity-a",
+          "time": 136583335,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-capacity-c",
+          "time": 136583338,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-capacity-b",
+          "time": 136583393,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-capacity-c",
+          "time": 136583394,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-capacity-c",
+          "time": 136583399,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-capacity-b",
+          "time": 136583399,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-capacity-a",
+          "time": 136583400,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-native-1",
+          "time": 136583446,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-native-1",
+          "time": 136583549,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-native-2",
+          "time": 136583854,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-native-2",
+          "time": 136583954,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-native-3",
+          "time": 136584260,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-native-3",
+          "time": 136584361,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-native-4",
+          "time": 136584666,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-native-4",
+          "time": 136584766,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-native-5",
+          "time": 136585074,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-native-5",
+          "time": 136585174,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-native-6",
+          "time": 136585481,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-native-6",
+          "time": 136585581,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-native-7",
+          "time": 136585887,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-native-7",
+          "time": 136585986,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-native-8",
+          "time": 136586293,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-native-8",
+          "time": 136586392,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-native-9",
+          "time": 136586698,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-native-9",
+          "time": 136586799,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-native-10",
+          "time": 136587106,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-native-10",
+          "time": 136587206,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-native-11",
+          "time": 136587512,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-native-11",
+          "time": 136587611,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-native-12",
+          "time": 136587921,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-native-12",
+          "time": 136588021,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-native-13",
+          "time": 136588723,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "focus-acquired",
+          "time": 136588848,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "service-create",
+          "time": 136588850,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "service-start-ack",
+          "time": 136588860,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "focus-abandoned",
+          "time": 136589435,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-native-13",
+          "time": 136589438,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "service-destroy",
+          "time": 136589440,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "prepare-setup-fault",
+          "time": 136589577,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        },
+        {
+          "event": "released-setup-fault",
+          "time": 136589632,
+          "pid": 27365,
+          "host": "host-27365-136582141",
+          "engine": 192633113,
+          "activity": 37351631
+        }
+      ],
+      "host": "host-27365-136582141",
+      "pid": 27365,
+      "focusHeld": false,
+      "focusEpoch": 33,
+      "readGates": {
+        "native-6": {
+          "blocked": false,
+          "readers": 0,
+          "closed": true,
+          "cancelled": true,
+          "bytesRead": 0,
+          "waitedMs": 97,
+          "prefixBytes": 0,
+          "furthestPosition": 0
+        },
+        "native-7": {
+          "blocked": false,
+          "readers": 0,
+          "closed": true,
+          "cancelled": true,
+          "bytesRead": 0,
+          "waitedMs": 96,
+          "prefixBytes": 0,
+          "furthestPosition": 0
+        },
+        "native-8": {
+          "blocked": false,
+          "readers": 0,
+          "closed": true,
+          "cancelled": true,
+          "bytesRead": 0,
+          "waitedMs": 98,
+          "prefixBytes": 0,
+          "furthestPosition": 0
+        },
+        "native-9": {
+          "blocked": false,
+          "readers": 0,
+          "closed": true,
+          "cancelled": true,
+          "bytesRead": 0,
+          "waitedMs": 96,
+          "prefixBytes": 0,
+          "furthestPosition": 0
+        },
+        "native-10": {
+          "blocked": false,
+          "readers": 0,
+          "closed": true,
+          "cancelled": true,
+          "bytesRead": 0,
+          "waitedMs": 97,
+          "prefixBytes": 0,
+          "furthestPosition": 0
+        },
+        "native-11": {
+          "blocked": false,
+          "readers": 0,
+          "closed": true,
+          "cancelled": true,
+          "bytesRead": 0,
+          "waitedMs": 97,
+          "prefixBytes": 0,
+          "furthestPosition": 0
+        },
+        "native-12": {
+          "blocked": false,
+          "readers": 0,
+          "closed": true,
+          "cancelled": true,
+          "bytesRead": 0,
+          "waitedMs": 97,
+          "prefixBytes": 0,
+          "furthestPosition": 0
+        },
+        "setup-fault": {
+          "blocked": false,
+          "readers": 0,
+          "closed": true,
+          "cancelled": true,
+          "bytesRead": 0,
+          "waitedMs": 51,
+          "prefixBytes": 0,
+          "furthestPosition": 0
+        }
+      },
+      "pcmStreams": {},
+      "pendingServiceStarts": 0,
+      "servicePresent": false,
+      "lastNativeError": "",
+      "screenInteractive": true
+    }
+  }
+]

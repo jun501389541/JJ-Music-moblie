@@ -1,4 +1,60 @@
-# 当前交接：A02 v2.3共享定位能力与拒绝回执（2026-10-31）
+# 当前交接：A07当前v2.3双进程恢复（2026-11-01）
+
+AUTH-P1-PROCESS-20261101限定目标完成：[报告](evidence/process-recovery-20261101/report.md)、[计划/账本](evidence/process-recovery-20261101/plan.md)、[复核](evidence/process-recovery-20261101/review.md)。仅增强既有p1_process_probe和两端run_*_recovery_probe脚本：P1_RUN_ID隔离、参数化证据、完整runtime/disk逐字段对应、旧claim拒绝和700ms默认暂停、显式resume实际原生推进、再次pause/resume不重复确认、Stop新空原生采样；不改生产运行时/合同/native/UI/依赖。
+
+最终Android a3：PID12576→12739，Windows w2：35900→44572，均修订1/位置2345/同session、新epoch、默认暂停0资源、旧控制权无效；继续后2780/2723ms，停止0/原生空，Android服务焦点释放。android-final与windows-final为准；a2因logcat单条截断失败保留，精简重复lifecycle后复验通过。审阅P2完整队列检查和Windows半写JSON有界重试已修复并复核。quality-final58测试/52文件格式无变更/analyze/21冻结+05+锁通过。
+
+原普通APK SHA84732716da464fa10f3bee2fde475415ceef2e07da10b05d66617b60abcb946f与Windows整目录已备份核哈希后还原；普通包未重建。手机已普通COLD启动ok；Windows普通程序PID12160启动2秒后关闭，供用户自行重开；未多做普通播放验收。双进程探针产物仅graphflow-out/process-recovery-20261101备份，非用户日用包。所有先前未提交工作保留，无commit/push/publish/全局/旧库变化。
+
+下一小批建议A07真实新进程损坏/缺失/未知格式退路、保存中断后有效副本选择；只动新自有诊断目录，复用FileSnapshotStore不改冻结，先核原型与测试入口。R2独立engine死亡接管、写中断/断电、长后台/机型矩阵仍未证；A07/G-L未过，不自动P2/正式UI。GraphFlow定向index见本批index.log。
+
+---
+# 历史交接：A04重建请求与媒体控制交错（2026-11-01）
+
+AUTH-P1-RECREATE-20261101完成：[报告](evidence/recreate-controls-20261101/report.md)。新android_recreate_controls_test两顺序先提交pause/recreate Futures再等待，实际旧Activity销毁/新建、同engine/host/session/handle、确认1；plain MediaSession回调归因，暂停新采样双位置绝对差<100，显式继续后增长，Stop资源0。是不同请求顺序交错，不是严格生命周期点或物理同时、硬件键/手点通知或engine死亡恢复。
+
+reviewer P2指出旧单向共享位置断言可假通过，已补原生位置/新host采样/双绝对差及playWhenReadyfalse，最终手机2/2+共同58/格式52文件0变更/analyze/21冻结+05/锁通过。最终android-reviewed/quality-reviewed为准；三轮重复不重复计数，无生产缺陷/代码改动。记录/新测试摘要和GraphFlow见本批目录。
+
+原普通APK核哈希后恢复手机入口COLD启动ok/PID31159，不重建普通Release；Windows本批不改不验、不重启。设备35a63609，KEEP_SCREEN_ON仅测试窗口清理，不改全局；codex/seek-boundaries此前全部未提交工作保留，不提交推送发布。G-L未过。下一批建议A07复验当前v2.3下全进程退出的快照读回、默认暂停及旧控制器失效，先核实际独立入口；本批不证明死engine接管或完整后台矩阵。
+
+---
+# 历史交接：Reviewer初始化清理修复（2026-11-01）
+
+AUTH-REVIEW-CLEANUP-20261101完成：[报告](evidence/reviewer-cleanup-20261101/report.md)。用户要求先修reviewer事项，本批未继续A04。late allow新快照和提前释放前0后1已在前批落实；本批补setup失败清理：test-only DiagnosticCleanup.run逆序await所有登记动作、单项抛错仍继续、原始错误优先；容量测试setup纳入scope，目录/亮屏/后端/协调器/native release尽早登记。
+
+7故障单测通过，Windows/Android各3实际场景（原2+native分配后setup故障），完整共同58/格式51文件0变化/analyze/原v2.3 21冻结+05/锁通过。最终quality-complete，先前lint失败保留；原生场景在最后纯语句块修正前，未重复同控制流测试。独立复核无Critical/Important，建议补的两个轻微单测已执行者补齐；不扩展为原生close故障/堆句柄或长期泄漏证明。
+
+生产/native/UI/依赖不改，原APK核哈希后重装恢复普通入口COLD启动ok/PID28127；Windows普通程序不动，均不重建Release。codex/seek-boundaries全部未提交工作保留，无提交推送发布/全局/旧库修改。后续可恢复A04 Activity重建与媒体控制并发计划，先核前置，G-L仍未过。
+
+---
+# 历史交接：A03/A05容量及重复加载停止（2026-11-01）
+
+AUTH-P1-CAPACITY-20261101完成：[报告](evidence/resource-capacity-20261101/report.md)、[命令](evidence/resource-capacity-20261101/commands.md)、[审阅](evidence/resource-capacity-20261101/review.md)。新增resource_capacity_test，生产代码/依赖/合同/夹具未变，v2.3原21摘要保持。codex/seek-boundaries所有前批测试和证据未提交工作保留，无提交推送发布/全局/旧库变化。
+
+Windows/Android分别2项最终通过：两个真实blocked资源拒绝第三；释放A不影响B，再同第三输入成功；全释放。12轮同一backend加载中Stop→读数归零→晚allow再两轮新poll仍闭合，history<=8，最后普通样本确认一次/进度增长。共同51/格式49文件0变化/analyze/21冻结+05/锁通过；首轮多余import lint失败保留，修正及加强断言后两端完整复验通过。
+
+资源指标有界不等于堆/OS句柄无泄漏；非长期压力或双轨听感。只读审阅无Critical/Important，快照Minor已补；setup失败清理等边界见报告。普通Release均未重建，Android原已验APK核哈希后重装COLD启动ok/PID25080，Windows窗口不动。G-L未过，下一批建议A04 Activity重建与媒体控制并发，原engine/会话/资源是否连续及暂停不误恢复；之后补剩余长后台/engine/输出听感，不进入P2/正式UI/在线下载。
+
+---
+# 历史交接：A03/A05真实读取超时与恢复（2026-11-01）
+
+AUTH-P1-TIMEOUT-20261101完成：[报告](evidence/read-timeout-20261101/report.md)。新read_timeout_recovery_test复用既有门控真实等待约15秒，不放行/取消/注入失败；先确认A、buffering，再原生error→共享paused→资源归零→B确认，迟到allow短窗不复活A。Windows1/Android1分别通过，buffer后观测14985/15848ms；不是性能SLA、普通URI或完整后台验收。
+
+共同51/格式48文件0变更/analyze/原v2.3 21冻结与05/锁通过；首轮if花括号lint失败留存，纯风格修复后quality-final过，两端真实测试未因风格变化重跑。限定独立审阅无Critical/Important，error归因依赖门控源码+时间/通用原生error，350ms只是短窗；资源计数非OS句柄独立检查。
+
+生产源码/合同/依赖不改，前批9补充测试保留；无普通Release重建。Android实际手机35a63609，原已验APK哈希核对一致后重装恢复普通入口，COLD启动ok/PID22482；Windows普通窗口不动。分支codex/seek-boundaries全部未提交，不提交推送发布/改全局/旧仓库。下一批建议重复加载/停止与双资源容量压力；长后台/engine/输出听感等缺口保留，G-L未过。
+
+---
+# 历史交接：A02定位拒绝并发/桥接补充验证（2026-11-01）
+
+AUTH-P1-SEEKBOUND-20261101完成：[报告](evidence/seek-boundaries-20261101/report.md)。分支codex/seek-boundaries从main4b5d4b8建立，本批未提交推送发布。仅新增seek_concurrency_test.dart/native_seek_capability_test.dart及证据文档，不改生产源码/依赖/公共合同/夹具，v2.3原21摘要保持；新增验证摘要单独保存。
+
+false/null×B pending/incoming/A outgoing共6项验证拒绝不取消/释放资源且原交接可继续；bridge true/false/缺字段3项验证真实适配映射路径（Mock Channel，非原生运行）。首轮9过；独立审阅发现释放计数可能假阳性，补交接前0/交接后1断言，最终共同51/格式47文件0变更/analyze/21冻结+05/锁通过。首次4条lint失败日志保留，最终quality-final全过；未声称生产缺陷或人工验收。
+
+Android/Windows本批均未构建/安装/运行，已有程序不变、无需重装。当前仍v2.3/源码预发布v0.1.0-dev.1不变，整体G-L未过。下一批建议A03/A05自有读取自然超时及故障后恢复实际证据；并发资源/桥接验证不替代动态能力或真实双轨音频。下面为历史状态，当前以本节/status为准。
+
+---
+# 历史交接：A02 v2.3共享定位能力与拒绝回执（2026-10-31）
 
 2026-11-01 Git/发布收尾：用户授权提交推送合并，并明确选择仅源码预发布。功能b502240经PR #1合并main，merge f05a23b；两端云端CI成功；v0.1.0-dev.1已发布且tag=f05a23b，prerelease/无APK或Windows附件。详见[证据](evidence/source-release-20261101.md)。本地已切main；发布后文档另提交main，不移动tag。旧“不提交/未推送/未发布”是各开发批当时状态。默认分支设置未改，原feature保留；后续开发应新建feature分支，保留v2.3冻结与下方缺口，不把源码预发布当正式产品或G-L通过。
 

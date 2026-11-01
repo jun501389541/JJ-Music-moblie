@@ -1,0 +1,334 @@
+diff --git a/clients/flutter/lib/p1_process_probe.dart b/clients/flutter/lib/p1_process_probe.dart
+index b9be992..b88b530 100644
+--- a/clients/flutter/lib/p1_process_probe.dart
++++ b/clients/flutter/lib/p1_process_probe.dart
+@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
+ 
+ import 'app/runtime/local_runtime.dart';
+ import 'domain/playback/contracts.dart';
++import 'domain/playback/recovery_snapshot.dart';
+ import 'platform/local/native_local_backend.dart';
+ 
+ /// Explicit test entrypoint, never the normal product assembly. Same binary
+@@ -22,8 +23,19 @@ Future<void> main(List<String> args) async {
+       : args.firstOrNull;
+   LocalRuntime? r;
+   try {
+-    r = await LocalRuntime.create(runId: 'process-proof');
++    const runId = String.fromEnvironment('P1_RUN_ID');
++    if (runId.isEmpty) {
++      throw StateError('explicit-run-id-required');
++    }
++    r = await LocalRuntime.create(runId: runId);
++    final runtime = r;
++    final authorityFile = File(
++      '${r.store.directory.path}/probe-authority.json',
++    );
+     if (mode == 'save') {
++      if (r.savedRevision != 0) {
++        throw StateError('run-id-already-used');
++      }
+       r.command('a');
+       final end = DateTime.now().add(const Duration(seconds: 10));
+       while (r.snapshot.currentEntryId != ownedA.entryId &&
+@@ -38,6 +50,15 @@ Future<void> main(List<String> args) async {
+       r.command('seek', position: 2345);
+       await Future<void>.delayed(const Duration(milliseconds: 300));
+       await r.save();
++      final claim = r.coordinator.claim;
++      await authorityFile.writeAsString(
++        jsonEncode({
++          'owner': claim.ownerId,
++          'epoch': claim.coordinatorEpoch,
++          'session': claim.playbackSessionId,
++        }),
++        flush: true,
++      );
+     } else if (mode != 'restore') {
+       throw StateError('explicit-mode-required');
+     }
+@@ -51,6 +72,22 @@ Future<void> main(List<String> args) async {
+             s.confirmations.isEmpty)) {
+       throw StateError('disk-restore-check-failed');
+     }
++    final disk = (await r.store.load()).snapshot;
++    final restored = RecoverySnapshot(
++      runId: runId,
++      revision: r.savedRevision,
++      playbackSessionId: s.playbackSessionId,
++      entries: s.entries,
++      currentIndex: s.entries.indexWhere((e) => e.entryId == s.currentEntryId),
++      positionMs: s.positionMs,
++      mode: s.mode,
++      preview: s.preview,
++      confirmations: s.confirmations,
++    );
++    if (disk == null ||
++        jsonEncode(restored.toJson()) != jsonEncode(disk.toJson())) {
++      throw StateError('runtime-disk-snapshot-mismatch');
++    }
+     final proof = <String, dynamic>{
+       'stage': mode == 'save' ? 'saved' : 'loaded',
+       'pid': pid,
+@@ -63,7 +100,99 @@ Future<void> main(List<String> args) async {
+       'fixture': s.entries.first.fixtureId,
+       'confirmations': s.confirmations,
+       'directory': r.store.directory.path,
++      'runId': runId,
++      'diskSnapshot': disk.toJson(),
++      'runtimeSnapshot': restored.toJson(),
+     };
++    if (mode == 'restore') {
++      final old = jsonDecode(
++        await authorityFile.readAsString(),
++      ) as Map<String, dynamic>;
++      final before = r.snapshot;
++      final rejected = r.coordinator.stop(
++        CommandContext(
++          'previous-process-stop',
++          ControllerClaim(
++            old['owner'] as String,
++            old['epoch'] as int,
++            old['session'] as String,
++          ),
++        ),
++      );
++      await Future<void>.delayed(const Duration(milliseconds: 700));
++      if (rejected.accepted ||
++          rejected.applied ||
++          rejected.failure?.code != 'stale-controller' ||
++          r.snapshot.eventCursor != before.eventCursor ||
++          r.snapshot.positionMs != before.positionMs ||
++          r.snapshot.desired != DesiredTransport.paused ||
++          r.backend.consumers != 0 ||
++          r.snapshot.tracks.isNotEmpty ||
++          (r.backend.lastHost['samples'] as List? ?? []).isNotEmpty) {
++        throw StateError('stale-authority-or-auto-resume');
++      }
++      proof['staleClaimRejected'] = rejected.failure!.code;
++      proof['pausedObservationMs'] = 700;
++      final ack = r.command('play');
++      if (ack?.applied != true) {
++        throw StateError('resume-rejected');
++      }
++      await _until(
++        () =>
++            runtime.snapshot.desired == DesiredTransport.playing &&
++            runtime.snapshot.positionMs > before.positionMs + 300 &&
++            runtime.snapshot.tracks.any(
++              (t) =>
++                  t.role == TrackRole.active &&
++                  t.playbackConfirmationId != null,
++            ) &&
++            (runtime.backend.lastHost['samples'] as List? ?? []).any(
++              (v) => v['nativePlaying'] == true,
++            ),
++      );
++      proof['resumedPosition'] = r.snapshot.positionMs;
++      proof['resumedConfirmations'] = r.snapshot.confirmations;
++      proof['resumeHost'] = Map<String, dynamic>.of(r.backend.lastHost)
++        ..remove('lifecycle');
++      final confirmed = jsonEncode(r.snapshot.confirmations);
++      final handle = r.snapshot.tracks.single.trackHandleId;
++      r.command('pause');
++      await _until(
++        () => (runtime.backend.lastHost['samples'] as List? ?? []).any(
++          (v) => v['id'] == handle && v['nativePlaying'] == false,
++        ),
++      );
++      final pausedPosition = r.snapshot.positionMs;
++      r.command('play');
++      await _until(
++        () =>
++            runtime.snapshot.positionMs > pausedPosition + 300 &&
++            (runtime.backend.lastHost['samples'] as List? ?? []).any(
++              (v) => v['id'] == handle && v['nativePlaying'] == true,
++            ),
++      );
++      if (jsonEncode(r.snapshot.confirmations) != confirmed ||
++          r.snapshot.tracks.single.trackHandleId != handle) {
++        throw StateError('repeat-resume-duplicated-confirmation');
++      }
++      proof['repeatResumeDeduplicated'] = true;
++      final beforeStopHost = r.backend.lastHost;
++      r.command('stop');
++      await _until(
++        () =>
++            runtime.backend.consumers == 0 &&
++            !identical(runtime.backend.lastHost, beforeStopHost) &&
++            (runtime.backend.lastHost['samples'] as List? ?? []).isEmpty &&
++            (!Platform.isAndroid ||
++                runtime.backend.lastHost['servicePresent'] == false),
++      );
++      if (r.coordinator.failures.isNotEmpty) {
++        throw StateError('recovery-backend-failure');
++      }
++      proof['stoppedConsumers'] = r.backend.consumers;
++      proof['stopHost'] = Map<String, dynamic>.of(r.backend.lastHost)
++        ..remove('lifecycle');
++    }
+     await _proof(proof);
+     // Stay alive. The controller must kill us; no graceful stop/save callback.
+   } catch (e) {
+@@ -71,6 +200,16 @@ Future<void> main(List<String> args) async {
+   }
+ }
+ 
++Future<void> _until(bool Function() condition) async {
++  final end = DateTime.now().add(const Duration(seconds: 10));
++  while (!condition()) {
++    if (DateTime.now().isAfter(end)) {
++      throw StateError('recovery-observation-timeout');
++    }
++    await Future<void>.delayed(const Duration(milliseconds: 100));
++  }
++}
++
+ Future<void> _proof(Map<String, dynamic> proof) async {
+   if (Platform.isAndroid) {
+     proof['probeToken'] = await NativeLocalBackend.channel.invokeMethod<String>(
+diff --git a/clients/flutter/tool/run_android_recovery_probe.ps1 b/clients/flutter/tool/run_android_recovery_probe.ps1
+index eb9d379..eb7d3c6 100644
+--- a/clients/flutter/tool/run_android_recovery_probe.ps1
++++ b/clients/flutter/tool/run_android_recovery_probe.ps1
+@@ -1,7 +1,15 @@
+-param([Parameter(Mandatory=$true)][string]$DeviceId)
++param(
++  [Parameter(Mandatory=$true)][string]$DeviceId,
++  [Parameter(Mandatory=$true)][string]$RunId,
++  [Parameter(Mandatory=$true)][string]$EvidenceDirectory
++)
+ $ErrorActionPreference='Stop'
+ $client=Split-Path $PSScriptRoot -Parent
+ $workspace=[IO.Path]::GetFullPath((Join-Path $client '../..'))
++$logs=[IO.Path]::GetFullPath($EvidenceDirectory)
++New-Item -ItemType Directory $logs -Force | Out-Null
++$proofPath=Join-Path $logs 'android-process-proof.json'
++if(Test-Path $proofPath){throw 'Evidence already exists; choose a fresh directory'}
+ $adb='E:/Android/sdk/platform-tools/adb.exe'
+ $package='dev.jjmusic.diagnostics.jj_music_mobile'
+ $apk=Join-Path $client 'build/app/outputs/flutter-apk/app-release.apk'
+@@ -16,11 +24,14 @@ function Start-Probe([string]$mode){
+     $processId=([string](& $adb -s $DeviceId shell pidof $package)).Trim()
+     if($processId -match '^\d+$'){
+       $log=& $adb -s $DeviceId logcat -d --pid=$processId -s 'JJOwnedProbe:I' '*:S'
++      $log | Set-Content (Join-Path $logs "stage-$mode.log") -Encoding utf8
+       foreach($line in $log){
+         if($line -match 'JJOwnedProbe:\s*(\{.+\})'){
+           $value=$Matches[1]|ConvertFrom-Json
+           if($value.probeToken -ne $token){continue}
++          if([string]$value.pid -ne $processId){throw 'Probe PID mismatch'}
+           if($value.stage -eq 'error'){throw "Probe failure: $($value.error)"}
++          if($value.runId -ne $RunId){throw 'Probe run ID mismatch; rebuild with P1_RUN_ID'}
+           return $value
+         }
+       }
+@@ -30,17 +41,22 @@ function Start-Probe([string]$mode){
+   throw 'Android proof timed out'
+ }
+ & $adb -s $DeviceId shell am force-stop $package
++try {
+ $saved=Start-Probe 'save'
+ if($saved.stage -ne 'saved' -or $saved.revision -lt 1){throw 'No saved receipt'}
+ & $adb -s $DeviceId shell am force-stop $package
+ if((& $adb -s $DeviceId shell pidof $package)){throw 'Old process still alive'}
+ $loaded=Start-Probe 'restore'
+-try {
+   if($loaded.stage -ne 'loaded' -or $loaded.pid -eq $saved.pid -or
+      $loaded.coordinatorEpoch -eq $saved.coordinatorEpoch -or
+      $loaded.session -ne $saved.session -or $loaded.revision -ne $saved.revision -or
+      $loaded.position -ne $saved.position -or $loaded.desired -ne 'paused' -or $loaded.consumers -ne 0 -or
++     $loaded.fixture -ne $saved.fixture -or $loaded.directory -ne $saved.directory -or
++     $loaded.staleClaimRejected -ne 'stale-controller' -or $loaded.stoppedConsumers -ne 0 -or
++     $loaded.resumedPosition -le ($saved.position+300) -or
++     $loaded.repeatResumeDeduplicated -ne $true -or
++     (ConvertTo-Json -Depth 8 -Compress $loaded.diskSnapshot) -ne (ConvertTo-Json -Depth 8 -Compress $saved.diskSnapshot) -or
+      (ConvertTo-Json -Compress $loaded.confirmations) -ne (ConvertTo-Json -Compress $saved.confirmations)) {throw 'Android cross-process mismatch'}
+-  [ordered]@{platform='android';device=$DeviceId;apkSha256=(Get-FileHash $apk -Algorithm SHA256).Hash.ToLower();forcedTermination=$true;saved=$saved;loaded=$loaded} | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $workspace 'docs/flutter-migration/evidence/p1-a/20261031/android-process-proof.json') -Encoding utf8
++  [ordered]@{platform='android';device=$DeviceId;apkSha256=(Get-FileHash $apk -Algorithm SHA256).Hash.ToLower();forcedTermination=$true;saved=$saved;loaded=$loaded} | ConvertTo-Json -Depth 12 | Set-Content $proofPath -Encoding utf8
+   'Android two-process force-stop recovery passed'
+ }finally{& $adb -s $DeviceId shell am force-stop $package}
+diff --git a/clients/flutter/tool/run_windows_recovery_probe.ps1 b/clients/flutter/tool/run_windows_recovery_probe.ps1
+index 7739917..6d19f6e 100644
+--- a/clients/flutter/tool/run_windows_recovery_probe.ps1
++++ b/clients/flutter/tool/run_windows_recovery_probe.ps1
+@@ -1,9 +1,18 @@
++param(
++  [Parameter(Mandatory=$true)][string]$RunId,
++  [Parameter(Mandatory=$true)][string]$EvidenceDirectory
++)
+ $ErrorActionPreference='Stop'
+ $client=Split-Path $PSScriptRoot -Parent
+ $workspace=[IO.Path]::GetFullPath((Join-Path $client '../..'))
+-$temporary=Join-Path $workspace 'graphflow-out/p1-process-temp'
++if($RunId -notmatch '^[A-Za-z0-9_-]{1,80}$'){throw 'Invalid run ID'}
++$temporary=Join-Path $workspace "graphflow-out/p1-process-$RunId"
+ if(!$temporary.StartsWith($workspace+[IO.Path]::DirectorySeparatorChar)){throw 'Invalid isolated root'}
+ New-Item -ItemType Directory $temporary -Force | Out-Null
++$logs=[IO.Path]::GetFullPath($EvidenceDirectory)
++New-Item -ItemType Directory $logs -Force | Out-Null
++$proofPath=Join-Path $logs 'windows-process-proof.json'
++if(Test-Path $proofPath){throw 'Evidence already exists; choose a fresh directory'}
+ $exe=Join-Path $client 'build/windows/x64/runner/Release/jj_music_mobile.exe'
+ function Start-Probe([string]$mode) {
+   $start=[Diagnostics.ProcessStartInfo]::new($exe,$mode)
+@@ -14,36 +23,55 @@ function Start-Probe([string]$mode) {
+   $start.EnvironmentVariables['TMP']=$temporary
+   $launched=[DateTime]::UtcNow
+   $process=[Diagnostics.Process]::Start($start)
++  try {
+   $file=Join-Path $temporary "jj-owned-p1/proof-$($process.Id).json"
+   $deadline=[DateTime]::UtcNow.AddSeconds(25)
+   while([DateTime]::UtcNow -lt $deadline -and !$process.HasExited){
+     if((Test-Path $file) -and (Get-Item $file).LastWriteTimeUtc -ge $launched){
+-      $value=Get-Content $file -Raw | ConvertFrom-Json
++      # The producer flushes a small JSON file; existence alone is not a full
++      # receipt. A partial read is retried within the same bounded deadline.
++      try {$value=Get-Content $file -Raw | ConvertFrom-Json -ErrorAction Stop}
++      catch {Start-Sleep -Milliseconds 100; continue}
++      if(!$value){Start-Sleep -Milliseconds 100; continue}
+       if($value.pid -ne $process.Id){throw 'Probe PID mismatch'}
+       if($value.stage -eq 'error'){ $process.Kill();throw "Probe failure: $($value.error)" }
++      if($value.runId -ne $RunId){throw 'Probe run ID mismatch; rebuild with P1_RUN_ID'}
+       return @{process=$process;proof=$value}
+     }
+     Start-Sleep -Milliseconds 100
+   }
+   if(!$process.HasExited){$process.Kill()}
+   throw 'Probe receipt timed out'
++  } catch {
++    if(!$process.HasExited){$process.Kill();$process.WaitForExit()}
++    throw
++  }
+ }
++$saved=$null
++$loaded=$null
++try {
+ $saved=Start-Probe 'save'
+ if($saved.proof.stage -ne 'saved' -or $saved.proof.revision -lt 1){throw 'No saved receipt'}
+ # Kill only the exact Process instance started above. Never rely on graceful exit.
+ $saved.process.Kill(); $saved.process.WaitForExit()
+ $loaded=Start-Probe 'restore'
+-try {
+   if($loaded.proof.stage -ne 'loaded' -or $loaded.proof.pid -eq $saved.proof.pid -or
+     $loaded.proof.coordinatorEpoch -eq $saved.proof.coordinatorEpoch -or
+     $loaded.proof.revision -ne $saved.proof.revision -or
+     $loaded.proof.session -ne $saved.proof.session -or
+     $loaded.proof.position -ne $saved.proof.position -or
+     $loaded.proof.desired -ne 'paused' -or $loaded.proof.consumers -ne 0 -or
++    $loaded.proof.fixture -ne $saved.proof.fixture -or $loaded.proof.directory -ne $saved.proof.directory -or
++    $loaded.proof.staleClaimRejected -ne 'stale-controller' -or $loaded.proof.stoppedConsumers -ne 0 -or
++    $loaded.proof.resumedPosition -le ($saved.proof.position+300) -or
++    $loaded.proof.repeatResumeDeduplicated -ne $true -or
++    (ConvertTo-Json -Depth 8 -Compress $loaded.proof.diskSnapshot) -ne (ConvertTo-Json -Depth 8 -Compress $saved.proof.diskSnapshot) -or
+     (ConvertTo-Json -Compress $loaded.proof.confirmations) -ne (ConvertTo-Json -Compress $saved.proof.confirmations)) {throw 'Cross-process recovery mismatch'}
+   $output=[ordered]@{platform='windows';sameBinarySha256=(Get-FileHash $exe -Algorithm SHA256).Hash.ToLower();dartAssetSha256=(Get-FileHash (Join-Path (Split-Path $exe) 'data/app.so') -Algorithm SHA256).Hash.ToLower();forcedTermination=$true;saved=$saved.proof;loaded=$loaded.proof}
+-  $output | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $workspace 'docs/flutter-migration/evidence/p1-a/20261031/windows-process-proof.json') -Encoding utf8
++  $output | ConvertTo-Json -Depth 12 | Set-Content $proofPath -Encoding utf8
+   'Windows two-process forced-termination recovery passed'
+ } finally {
+-  if(!$loaded.process.HasExited){$loaded.process.Kill();$loaded.process.WaitForExit()}
++  foreach($instance in @($saved,$loaded)){
++    if($instance -and !$instance.process.HasExited){$instance.process.Kill();$instance.process.WaitForExit()}
++  }
+ }
