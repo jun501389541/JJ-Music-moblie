@@ -1,0 +1,9 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Analyzing flutter...                                            
+
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\app\runtime\local_runtime.dart:159:7 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\app\runtime\local_runtime.dart:208:7 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\runtime\runtime_close_race_test.dart:36:9 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\runtime\runtime_close_race_test.dart:44:9 - curly_braces_in_flow_control_structures
+
+4 issues found. (ran in 4.0s)

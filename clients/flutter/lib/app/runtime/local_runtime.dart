@@ -124,6 +124,8 @@ class LocalRuntime extends ChangeNotifier {
   bool _closed = false;
   bool _saving = false, _destroying = false;
   bool _backendUncertain = false;
+  Future<SnapshotSaveReceipt>? _saveFuture;
+  Future<void>? _destroyFuture;
   final _closeActions = CloseActions();
   Future<void>? _closeFuture;
   List<Object> get closeFailures => _closeActions.failures;
@@ -152,7 +154,19 @@ class LocalRuntime extends ChangeNotifier {
     return result;
   }
 
-  Future<SnapshotSaveReceipt> save() async {
+  Future<SnapshotSaveReceipt> save() {
+    if (_closed || _saving || _destroying) {
+      return Future.error(StateError('runtime-busy'));
+    }
+    final pending = Completer<SnapshotSaveReceipt>();
+    _saveFuture = pending.future;
+    unawaited(
+      _save().then<void>(pending.complete, onError: pending.completeError),
+    );
+    return pending.future;
+  }
+
+  Future<SnapshotSaveReceipt> _save() async {
     if (_closed || _saving || _destroying) throw StateError('runtime-busy');
     _saving = true;
     try {
@@ -176,7 +190,7 @@ class LocalRuntime extends ChangeNotifier {
       );
       savedRevision = receipt.revision;
       message = 'saved修订$savedRevision 已flush落盘；可停止进程后手动重开验证';
-      notifyListeners();
+      if (!_closed) notifyListeners();
       return receipt;
     } finally {
       _saving = false;
@@ -190,7 +204,22 @@ class LocalRuntime extends ChangeNotifier {
   bool _mirroring = false;
   String message = '就绪；仅播放自有12秒样本';
   PlaybackSnapshot get snapshot => coordinator.snapshot;
-  Future<void> destroyBackend() async {
+  Future<void> destroyBackend() {
+    if (_closed || _saving || _destroying) {
+      return Future.error(StateError('runtime-busy'));
+    }
+    final pending = Completer<void>();
+    _destroyFuture = pending.future;
+    unawaited(
+      _destroyBackend().then<void>(
+        (_) => pending.complete(),
+        onError: pending.completeError,
+      ),
+    );
+    return pending.future;
+  }
+
+  Future<void> _destroyBackend() async {
     if (_closed || _saving || _destroying) throw StateError('runtime-busy');
     _destroying = true;
     _backendUncertain = true;
@@ -202,13 +231,13 @@ class LocalRuntime extends ChangeNotifier {
       }
       _backendUncertain = false;
       message = '底层播放器已销毁；backendEpoch递增，暂停等待恢复';
-      notifyListeners();
+      if (!_closed) notifyListeners();
     } catch (_) {
       // Never manufacture a release receipt or allow replay/adoption when the
       // native cleanup outcome is unknown. Physical pause remains unproven.
       coordinator.pause(_cmd());
       message = '底层销毁未确认；暂停意图已提交，需显式重试销毁';
-      notifyListeners();
+      if (!_closed) notifyListeners();
       rethrow;
     } finally {
       _destroying = false;
@@ -305,10 +334,18 @@ class LocalRuntime extends ChangeNotifier {
 
   Future<void> close() => _closeFuture ??= _close();
   Future<void> _close() async {
+    final saving = _saving ? _saveFuture : null;
+    final destroying = _destroying ? _destroyFuture : null;
     _closed = true;
     _timer?.cancel();
     await _closeActions.run(() async {
       await _mirrorFuture;
+    });
+    await _closeActions.run(() async {
+      await saving;
+    });
+    await _closeActions.run(() async {
+      await destroying;
     });
     await _closeActions.run(_events.cancel);
     await _closeActions.run(_commands.cancel);

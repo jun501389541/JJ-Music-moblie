@@ -1,0 +1,37 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_race_test.dart
+00:00 +0: close joins in-flight actual save and suppresses late notifications
+00:00 +0 -1: close joins in-flight actual save and suppresses late notifications [E]
+  Expected: <Instance of 'SnapshotSaveReceipt'>
+    Actual: FlutterError:<A LocalRuntime was used after being disposed.
+            Once you have called dispose() on a LocalRuntime, it can no longer be used.>
+     Which: is not an instance of 'SnapshotSaveReceipt'
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\runtime\runtime_close_race_test.dart 46:5      main.<fn>
+  
+00:00 +0 -1: close joins gated destruction and preserves outcome fails=false
+00:00 +0 -2: close joins gated destruction and preserves outcome fails=false [E]
+  Expected: null
+    Actual: StateError:<Bad state: backend-loss-not-proven>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\runtime\runtime_close_race_test.dart 69:9      main.<fn>
+  
+00:00 +0 -2: close joins gated destruction and preserves outcome fails=true
+00:01 +0 -3: close joins gated destruction and preserves outcome fails=true [E]
+  Expected: <0>
+    Actual: <1>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\runtime\runtime_close_race_test.dart 71:7      main.<fn>
+  
+00:01 +0 -3: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_race_test.dart: close joins gated destruction and preserves outcome fails=false
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_race_test.dart: close joins gated destruction and preserves outcome fails=true
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_race_test.dart: close joins in-flight actual save and suppresses late notifications

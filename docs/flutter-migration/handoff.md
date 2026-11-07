@@ -1,3 +1,30 @@
+# 当前交接：关闭竞争阶段checkpoint最终复核（2026-11-07）
+
+[最终复核](evidence/checkpoint-20261107/report.md)核对e57079d之后的close-race增量及已有条件提交推送授权。96共同/格式63/analyze/v2.8的31冻结+05/锁通过；没有未处理Important，待提交凭据扫描未命中，远程分支仍为e57079d。准备保存到既有codex/seek-boundaries并推送，操作结果以Git及最终回执为准，不预写成功、不合并main或发行。
+
+双端正常关闭恢复与普通包收尾沿用下方实际记录，本次未重复设备/构建。完整G-L仍review，原生真实故障、无穷pending/暂停订阅及全部跨组件/听感边界保留。不要把阶段checkpoint视为P2/正式UI或发布批准。
+
+---
+# 当前交接：在途关闭汇合双端限定回归完成（2026-11-07）
+
+用户解锁后接续[报告](evidence/close-race-20261107/report.md)，Android android-final.log退出0，1项正常coordinator_restart通过：PID29736，epoch1794017524314437→1794017525694897，真实播放关闭后原生空，同目录读回修订1/2345默认暂停、旧claim拒绝、显式继续停止后空。Windows此前1项通过，本批限定验证完成。源码未变，未重复96共同/Windows；沿用quality-reviewed和独立审阅，不扩成真实竞态故障证明。
+
+测试退出后普通APK核哈希恢复安装Success/COLD启动Status ok/PID30184/Awake；android-ordinary日志完整。Windows普通文件不改不重启，普通双端摘要ordinary-final.json保持。当前v2.8/31文件、协议快照1；基线e57079d后本批修改未提交推送，旧版本保留。
+
+A07/G-L仍review：永不完成Future/暂停外部订阅、mirror挂起时错误观察责任、跨engine/真实系统故障与外设听感仍有边界。下一项宜先复核全局差异及本批关闭汇合的错误观察边界，再据条件授权决定提交范围，不自动P2/正式UI。下方待解锁文字为历史。
+
+---
+# 当前交接：在途关闭汇合已实现，Android待解锁（2026-11-07）
+
+[报告](evidence/close-race-20261107/report.md)、[审阅](evidence/close-race-20261107/review.md)。基线e57079d已包含上批所有修复，开工干净，本批修改未提交推送。save/destroy先发布Future，close只等调用时仍在途操作，之后才dispose协调器/writer/notifier，closed抑制晚通知，拒绝请求不覆盖原Future。历史已失败操作不污染新close，进行中失败保留同一错误并继续收尾。
+
+3项红绿及补2项listener重入/busy拒绝，共同最终96/格式63文件0变化/analyze/v2.8的31冻结+05/锁通过，旧v2.7保留。独立review无阻断；审阅代理自启测试未输出已中止，不算独立执行通过。Windows实际正常coordinator_restart1项通过，PID33040，新epoch1794016646531009、修订1/2345默认暂停/旧claim拒绝/显式继续停止原生空。竞争/故障本身仅宿主受控，不称硬件故障实测。
+
+手机在线但Dozing，已请求解锁尚无回复；本批Android未测试/未安装，未替换手机旧普通入口。接续先核用户解锁和foreground，运行clients/flutter/tool/flutter_with_proxy.ps1的integration_test/coordinator_restart_test.dart -d 35a63609，保存新android日志，结束后核摘要安装graphflow-out/close-race-20261107/ordinary-final/app-release.apk并COLD启动。双端新普通main Release已构建，Windows新普通入口有限启动后关闭，摘要ordinary-final.json；新APK哈希android-ordinary-hash.json，旧普通备份ordinary-before目录。
+
+A07/G-L仍review，不保证never-completing Future、暂停外部订阅或所有跨组件竞争；mirror挂起期间调用者仍须正常观察原操作失败Future。保留全部本批工作，不重写历史冻结、不自动P2/正式UI、不提交推送。下方为历史。
+
+---
 # 当前交接：GR-01/GR-02已修复（2026-11-07）
 
 用户按review修改。[修复报告](evidence/gr-fixes-20261107/report.md)、[复核](evidence/gr-fixes-20261107/review.md)。seek/移除未确认B收敛requested=A且仅playing恢复A；resume优先当前B或等待pending，异步prepare失败回A且paused不抢播。9项红绿回归，最终Quality91共同/格式/analyze/v2.7的30冻结+05/锁通过；旧v2.6保留。

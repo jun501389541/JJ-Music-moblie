@@ -98,6 +98,8 @@ Stop、Cancel、Pause或新PlayIntent不能等待旧解析、加载或整个播�
 
 ## C-03：三种恢复
 
+P1关闭竞争补充（p1-a02-v2.8）：save/destroy在操作开始前发布其Future；close只汇合调用关闭时仍在途的操作，操作收尾前不dispose协调器/写锁/notifier，closed后不再发晚通知。拒绝的新请求不替换原在途Future；历史已结束的失败不重复作为新close失败。在途失败由关闭收集后继续独立收尾，原调用者与关闭均保留同一原始错误。永不完成Future仍不保证超时，不能据此宣称整个生命周期所有竞争已覆盖。
+
 P1切歌意图补充（p1-a02-v2.7）：A仍active而B未确认时，成功seek(A)或移除B应失效B准备/确认、释放B，并将requested收敛到A；只有desired=playing且A资源有效时派发恢复A，paused不得抢播。暂停后继续优先当前request/generation的prepared或incoming B，B仍pending时等待B，不因旧A仍active而抢播A；B确认后按既有交接释放A，历史确认去重规则不变。
 
 | 流程 | 顺序与不变量 |

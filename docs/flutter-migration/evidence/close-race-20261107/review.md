@@ -1,0 +1,9 @@
+# 独立审阅
+
+close_race_review检查新runtime包装、close汇合与三个初版竞争测试，31文件+05哈希实核一致，未发现Important/阻断。Future在工作前发布，busy拒绝不覆盖pending，close只捕仍在途操作，历史失败不污染关闭，closed抑制通知。
+
+初版未直接覆盖listener重入、busy拒绝后close；执行者补两项listener重入及原两项门控测试内busy拒绝断言，review-tests.log五项通过。历史已失败操作后close由既有runtime busy/close测试消费，本批未额外声称故障全面覆盖。
+
+审阅代理误启动共享Flutter测试后无输出，已仅中止自身session43499/exit1，不计独立执行通过；未改文件或操作设备/构建。审阅是静态独立意见，平台日志由主执行者核对。
+
+mirror等待期间原调用者仍应及时观察自身错误Future；永不完成Future、暂停订阅、所有跨组件竞争及真实系统故障不在保证范围。所有新的测试修改由执行者验证，不伪称再次独立复审。

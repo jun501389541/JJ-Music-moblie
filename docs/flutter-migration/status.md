@@ -30,7 +30,7 @@ AUTH-ENV本批执行者/协调者：Codex；环境准备已完成。Flutter3.47.
 
 ## 任务状态
 
-依赖与详细说明只看tasks索引；状态含义只在workflow。owner=-表示未领取。文档历史done只证明对应文档验收；A01/A02已完成首批范围，当前共享冻结已更新p1-a02-v2.7（切歌恢复修复），当前30文件清单为evidence/A02/20261107-transition-recovery-freeze.json；后文旧版本均是历史记录，A03—A08为review（见20261031实际证据与缺口），其余保持proposed。分支证据不等于集成，done须实际必需验收与目标工作区集成证据；单agent同工作区也记录。
+依赖与详细说明只看tasks索引；状态含义只在workflow。owner=-表示未领取。文档历史done只证明对应文档验收；A01/A02已完成首批范围，当前共享冻结已更新p1-a02-v2.8（在途关闭汇合），当前31文件清单为evidence/A02/20261107-close-race-freeze.json；后文旧版本均是历史记录，A03—A08为review（见20261031实际证据与缺口），其余保持proposed。分支证据不等于集成，done须实际必需验收与目标工作区集成证据；单agent同工作区也记录。
 
 | 任务 | 状态 | owner | 分支/任务证据或阻塞 | 目标工作区集成结果 |
 | --- | --- | --- | --- | --- |
@@ -319,3 +319,11 @@ AUTH-CLOSE-FAILURE-20261106限定目标于2026-11-07完成：持续release失败
 AUTH-GR-FIX-20261107：用户按review文档修改，领取global-review GR01/02；Codex串行A02/播放维护/ConfigIntegrator。allowlist playback_coordinator.dart、新test/playback/transition_recovery_test.dart、必要集成测试、05/A02新v2.7/check.ps1及evidence/gr-fixes-20261107/status/handoff。旧v2.6/全部修改保留，不提交推送或放行G-L。先红例再修复，平台结果与fake分开。
 
 AUTH-GR-FIX-20261107完成：GR01/02及追加pending B失败回退已修，9项红绿回归、最终91共同/格式分析/新v2.7的30冻结+05/锁通过。独立review追加Important已修并复核无新阻断。Android/Windows专项各4项真实事件介入通过，普通双端Release新构建，手机恢复COLD ok/PID27568。旧v2.6/所有旧工作保留，尚未提交推送；更广全局差异及条件提交授权需另作最终核对，G-L仍review。证据evidence/gr-fixes-20261107。
+
+AUTH-CLOSE-RACE-20261107：用户继续开发，基线e57079d干净，Codex串行A07/A02/ConfigIntegrator领取close与在途save/destroy竞争修复。allowlist runtime/local_runtime.dart、新test/runtime/runtime_close_race_test.dart、05/A02新v2.8/check.ps1、evidence/close-race-20261107/status/handoff；受控复现后最小等待已开始操作、抑制closed后通知，旧v2.7保留，不扩无穷Future策略/全局/P2，不提交推送。
+
+AUTH-CLOSE-RACE-20261107 partial/review：3红→3绿，补2项listener重入及busy拒绝不覆盖pending，最终96共同/格式63文件0变更/analyze/31冻结+05/锁通过，独立review无阻断。Windows正常restart1项通过，双端普通main Release构建成功；Android本批未执行/未安装，待用户解锁，旧手机普通入口未动。新普通APK备于graphflow-out/close-race-20261107/ordinary-final。保持G-L review，旧v2.7不改，不提交推送。
+
+AUTH-CLOSE-RACE-20261107限定目标完成：用户解锁后android-final.log真机1项exit0，PID29736/新epoch1794017525694897/修订1位置2345默认暂停及最终原生空；此前Windows正常restart1项通过。本批源码未变，沿用96共同/63格式/analyze/31冻结+05/锁和独立review，不称本次重新运行。普通APK核哈希恢复安装Success/COLD ok/PID30184/Awake。受控竞态与真实正常回归分证，G-L仍review。无提交推送，未动旧库/全局。
+
+CHECKPOINT-20261107：沿用global-review-20261107记录的条件提交推送授权，对e57079d之后本批close-race增量完成最终复核；Quality96/格式63/analyze/31冻结+05/锁通过，待提交文本凭据扫描无命中，远程当前分支仍e57079d。当前准备在既有codex/seek-boundaries创建阶段checkpoint并推送，实际结果见Git回执，不merge/release，不视为完整G-L通过。详见evidence/checkpoint-20261107/report.md。
