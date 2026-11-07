@@ -1,0 +1,16 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_observe_test.dart
+00:00 +0: close observes owned failure even while mirror remains blocked
+00:00 +0 -1: close observes owned failure even while mirror remains blocked [E]
+  Expected: empty
+    Actual: [PlatformException:PlatformException(owned-release-fault, null, null, null)]
+  close took ownership before failure and must observe promptly
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\runtime\runtime_close_observe_test.dart 59:5   main.<fn>
+  
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_observe_test.dart: close observes owned failure even while mirror remains blocked

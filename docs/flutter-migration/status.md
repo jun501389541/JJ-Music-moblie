@@ -30,7 +30,7 @@ AUTH-ENV本批执行者/协调者：Codex；环境准备已完成。Flutter3.47.
 
 ## 任务状态
 
-依赖与详细说明只看tasks索引；状态含义只在workflow。owner=-表示未领取。文档历史done只证明对应文档验收；A01/A02已完成首批范围，当前共享冻结已更新p1-a02-v2.8（在途关闭汇合），当前31文件清单为evidence/A02/20261107-close-race-freeze.json；后文旧版本均是历史记录，A03—A08为review（见20261031实际证据与缺口），其余保持proposed。分支证据不等于集成，done须实际必需验收与目标工作区集成证据；单agent同工作区也记录。
+依赖与详细说明只看tasks索引；状态含义只在workflow。owner=-表示未领取。文档历史done只证明对应文档验收；A01/A02已完成首批范围，当前共享冻结已更新p1-a02-v2.9（关闭接管即时错误观察），当前32文件清单为evidence/A02/20261107-close-observe-freeze.json；后文旧版本均是历史记录，A03—A08为review（见20261031实际证据与缺口），其余保持proposed。分支证据不等于集成，done须实际必需验收与目标工作区集成证据；单agent同工作区也记录。
 
 | 任务 | 状态 | owner | 分支/任务证据或阻塞 | 目标工作区集成结果 |
 | --- | --- | --- | --- | --- |
@@ -327,3 +327,11 @@ AUTH-CLOSE-RACE-20261107 partial/review：3红→3绿，补2项listener重入及
 AUTH-CLOSE-RACE-20261107限定目标完成：用户解锁后android-final.log真机1项exit0，PID29736/新epoch1794017525694897/修订1位置2345默认暂停及最终原生空；此前Windows正常restart1项通过。本批源码未变，沿用96共同/63格式/analyze/31冻结+05/锁和独立review，不称本次重新运行。普通APK核哈希恢复安装Success/COLD ok/PID30184/Awake。受控竞态与真实正常回归分证，G-L仍review。无提交推送，未动旧库/全局。
 
 CHECKPOINT-20261107：沿用global-review-20261107记录的条件提交推送授权，对e57079d之后本批close-race增量完成最终复核；Quality96/格式63/analyze/31冻结+05/锁通过，待提交文本凭据扫描无命中，远程当前分支仍e57079d。当前准备在既有codex/seek-boundaries创建阶段checkpoint并推送，实际结果见Git回执，不merge/release，不视为完整G-L通过。详见evidence/checkpoint-20261107/report.md。
+
+AUTH-CLOSE-OBSERVE-20261107：用户继续执行，基线6bb75bc干净，Codex串行A07/A02核查mirror等待时已接管操作Future的错误观察。allowlist runtime/local_runtime.dart、新test/runtime/runtime_close_observe_test.dart、05/A02新冻结/检查选择器及evidence/close-observe-20261107/status/handoff。先受控复现，仅必要最小修复；不超时策略/原生/全局/P2/自动提交推送。
+
+AUTH-CLOSE-OBSERVE-20261107限定目标完成：mirror挂起时close已接管destroy失败形成未处理错误，corrected red复现；改为接管时立即观察并记录，关闭仍等待mirror/操作后收尾，原操作/close同错误对象。green1+全97/格式64/analyze/32冻结+05/锁通过，独立review无阻断。旧v2.8保留，普通产物摘要未变，本批不设备/构建/安装，手机仍旧已验包；不称save故障注入、全跨zone/无穷等待或G-L通过。不提交推送。报告evidence/close-observe-20261107/report.md。
+
+AUTH-CLOSE-OBSERVE-PLATFORM-20261107：用户继续执行，Codex 串行 A07/A02 验证既有 p1-a02-v2.9；范围为 evidence/close-observe-platform-20261107、status/handoff 和忽略的普通产物。验证正常关闭恢复，构建普通 main 并恢复已选手机；不修改源码、冻结或提交推送。
+
+AUTH-CLOSE-OBSERVE-PLATFORM-20261107 限定目标完成：Android/Windows 各 1 项正常关闭恢复通过；普通 main 两端构建并启动，已选手机已从测试包恢复普通 APK；普通产物 18 文件哈希与上批一致，v2.9 冻结与锁保持。证据见 evidence/close-observe-platform-20261107/report.md。G–L 仍 review，未提交推送。

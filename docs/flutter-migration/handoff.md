@@ -1,3 +1,20 @@
+# 当前交接：v2.9 双端正常关闭恢复与普通包（2026-11-07）
+
+[双端证据](evidence/close-observe-platform-20261107/report.md)：Windows、Android 正常关闭恢复各 1 项通过；普通 main 两端构建和启动通过，已选手机恢复普通 APK。18 个普通产物摘要与上批一致，不能据普通包启动认定关闭故障路径已验。v2.9 冻结及依赖锁保持，源码沿用下方修复。
+
+G–L 仍 review；真实系统故障注入和人工听感未执行。v2.9 源码及证据仍未提交推送；下一步可复核本阶段交付范围。
+
+---
+
+# 当前交接：关闭接管即时错误观察修复（2026-11-07）
+
+[报告](evidence/close-observe-20261107/report.md)、[审阅](evidence/close-observe-20261107/review.md)。此前mirror挂起时接管destroy失败Future要晚到mirror结束才观察，corrected red已复现未处理错误；现在接管即启动收集，close仍待mirror/操作结束后正常收尾并重抛，不提前成功或吞原错误。
+
+基线6bb75bc已推送；本批源修改未提交推送。新v2.9/32文件+05，协议/快照仍1，旧v2.8保留。green1、Quality97共同/格式64文件0变化/analyze/冻结+锁通过；独立review无阻断，只读未重跑。测试只注入destroy，save故障观察、mirror前pending和stack身份并非全部直接断言，按报告限定。
+
+本批不原生/依赖/全局/旧库/设备/构建/安装；前批普通APK及Windows全目录摘要保持，手机仍前批普通入口，新源码尚未打进该包。G-L仍review，不保证全跨error-zone、无限Future/暂停订阅或完整跨组件/真实系统故障/听感。后续先核本批提交范围与需要的普通构建/平台回归，不能拿宿主结果扩大平台声明，不自动P2/正式UI。历史如下。
+
+---
 # 当前交接：关闭竞争阶段checkpoint最终复核（2026-11-07）
 
 [最终复核](evidence/checkpoint-20261107/report.md)核对e57079d之后的close-race增量及已有条件提交推送授权。96共同/格式63/analyze/v2.8的31冻结+05/锁通过；没有未处理Important，待提交凭据扫描未命中，远程分支仍为e57079d。准备保存到既有codex/seek-boundaries并推送，操作结果以Git及最终回执为准，不预写成功、不合并main或发行。

@@ -1,0 +1,17 @@
+
+Algorithm Hash
+--------- ----
+SHA256    C8A9A4E7D172691EF510A2850358CA313B2C674774023FB4CF572EF8F9AD21D4
+
+
+Performing Streamed Install
+Success
+Stopping: dev.jjmusic.diagnostics.jj_music_mobile
+Starting: Intent { cmp=dev.jjmusic.diagnostics.jj_music_mobile/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: dev.jjmusic.diagnostics.jj_music_mobile/.MainActivity
+TotalTime: 242
+WaitTime: 249
+Complete
+PID=9039

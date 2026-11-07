@@ -1,0 +1,5 @@
+# 独立审阅意见
+
+close_observe_review：无阻断。立即执行run为接管Future附着错误处理，记录后仍由close最终重抛；mirror→operations→独立收尾顺序保持。corrected red确有未处理错误，green及Quality通过；原调用者与close得到同一错误对象。清理避免跨error-zone等待失败close。
+
+未运行测试、设备或构建。新增save故障注入缺失，mirror放行前pending与stack身份未直接断言，仅代码核查佐证；报告已保留限定，不扩写完整生命周期或真实原生故障结论。

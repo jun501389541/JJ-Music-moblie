@@ -338,15 +338,24 @@ class LocalRuntime extends ChangeNotifier {
     final destroying = _destroying ? _destroyFuture : null;
     _closed = true;
     _timer?.cancel();
+    // Observe owned failures now, even if the mirror has not settled yet.
+    // run captures errors without completing close before its ordered teardown.
+    final operations = <Future<void>>[
+      if (saving != null)
+        _closeActions.run(() async {
+          await saving;
+        }),
+      if (destroying != null)
+        _closeActions.run(() async {
+          await destroying;
+        }),
+    ];
     await _closeActions.run(() async {
       await _mirrorFuture;
     });
-    await _closeActions.run(() async {
-      await saving;
-    });
-    await _closeActions.run(() async {
-      await destroying;
-    });
+    for (final operation in operations) {
+      await operation;
+    }
     await _closeActions.run(_events.cancel);
     await _closeActions.run(_commands.cancel);
     await _closeActions.run(coordinator.dispose);
