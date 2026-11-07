@@ -1,0 +1,9 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Analyzing flutter...                                            
+
+  error - The method 'handoffSingleTrack' isn't defined for the type 'LocalRuntime'. Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack' - integration_test\coordinator_handoff_test.dart:43:20 - undefined_method
+  error - The method 'handoffSingleTrack' isn't defined for the type 'LocalRuntime'. Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack' - integration_test\coordinator_handoff_test.dart:56:26 - undefined_method
+  error - The method 'handoffSingleTrack' isn't defined for the type 'LocalRuntime'. Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack' - integration_test\coordinator_handoff_test.dart:60:24 - undefined_method
+  error - The method 'handoffSingleTrack' isn't defined for the type 'LocalRuntime'. Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack' - integration_test\coordinator_handoff_test.dart:92:20 - undefined_method
+
+4 issues found. (ran in 5.4s)

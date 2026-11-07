@@ -1,0 +1,85 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart
+00:00 +0: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +1: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +2: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +3: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +4: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +5: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +6: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +7: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +8: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +9: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +10: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +11: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/app_bootstrap_test.dart: diagnostic shell identifies itself and never claims audio playback
+00:00 +12: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_focus_command_test.dart: late focus poll cannot pause a renewed transport; media controls survive
+00:00 +13: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_focus_command_test.dart: late focus poll cannot pause a renewed transport; media controls survive
+00:00 +14: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps true without defaulting missing to true
+00:00 +15: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps true without defaulting missing to true
+00:00 +16: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps true without defaulting missing to true
+00:00 +17: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps true without defaulting missing to true
+00:00 +18: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps true without defaulting missing to true
+00:00 +19: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/coordinator_handoff_test.dart: inflight control rejects until failure callback finishes; sync throw does not leak
+00:00 +20: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps false without defaulting missing to true
+00:00 +21: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps false without defaulting missing to true
+00:00 +22: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps false without defaulting missing to true
+00:00 +23: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps false without defaulting missing to true
+00:00 +24: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps false without defaulting missing to true
+00:00 +25: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps false without defaulting missing to true
+00:00 +26: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps false without defaulting missing to true
+00:00 +27: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps false without defaulting missing to true
+00:00 +28: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/ownership_resources_test.dart: pause and resume keep one confirmation even when play Future stays pending
+00:00 +29: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +30: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +31: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +32: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +33: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +34: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +35: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +36: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +37: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +38: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +39: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +40: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +41: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +42: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +43: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +44: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +45: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +46: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/platform/native_seek_capability_test.dart: native ready maps null without defaulting missing to true
+00:00 +47: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/playback_contract_test.dart: TC-06/07 incoming failure preserves outgoing resource and rollback retains confirmed history
+00:00 +48: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/playback_contract_test.dart: TC-09 stop applied is separate from physical release receipt
+00:00 +49: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/preconfirmation_rollback_test.dart: preconfirmation cancel resumes still-valid old physical track
+00:00 +50: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/preconfirmation_rollback_test.dart: preconfirmation error resumes still-valid old physical track
+00:00 +51: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_restore_test.dart: valid empty persisted snapshot restores safe paused empty state
+00:00 +52: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_restore_test.dart: confirmed backend destruction advances only backend epoch and rejects stale events
+00:00 +53: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_restore_test.dart: R3 restore stays paused without native handles and resumes at saved position
+00:01 +54: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: TC-05 saved receipt means real bytes and a fresh store reads the same revision paused
+00:01 +55: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: concurrent out-of-order writes cannot replace a higher saved revision
+00:01 +56: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: missing, corrupt, oversized, unknown version and unavailable fixture are safe
+00:01 +57: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: interrupted temporary write and corrupt newest slot retain a last valid snapshot
+00:01 +58: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: interrupted temporary write and corrupt newest slot retain a last valid snapshot
+00:01 +59: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/seek_capability_test.dart: seek capability false gates all side effects
+00:01 +60: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: forbidden runtime fields and oversized queues cannot be persisted
+00:01 +61: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/recovery_snapshot_store_test.dart: forbidden runtime fields and oversized queues cannot be persisted
+00:01 +62: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/seek_concurrency_test.dart: rejected seek false preserves pending transition
+00:01 +63: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/seek_concurrency_test.dart: rejected seek false preserves incoming transition
+00:01 +64: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/seek_concurrency_test.dart: rejected seek false preserves outgoing transition
+00:01 +65: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/seek_concurrency_test.dart: rejected seek null preserves pending transition
+00:01 +66: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/seek_concurrency_test.dart: rejected seek null preserves incoming transition
+00:01 +67: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/seek_concurrency_test.dart: rejected seek null preserves outgoing transition
+00:01 +68: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_failure_test.dart: persistent release failure still disposes runtime notifier and backend streams
+00:01 +69: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_destroy_failure_test.dart: failed destruction cannot transfer or restart uncertain live resource
+00:01 +70: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_handoff_busy_test.dart: mirror gate rejects handoff without side effects, then clears fails=false
+00:02 +71: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_failure_test.dart: persistent release failure still closes writer lock (Windows host)
+00:02 +72: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_destroy_failure_test.dart: explicit destruction retry uses new release attempt and trusted receipt
+00:02 +73: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_destroy_failure_test.dart: explicit destruction retry uses new release attempt and trusted receipt
+00:02 +74: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_handoff_busy_test.dart: mirror gate rejects handoff without side effects, then clears fails=true
+00:02 +75: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_handoff_busy_test.dart: mirror gate rejects handoff without side effects, then clears fails=true
+00:02 +76: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_failure_test.dart: close awaits actual mirror after later timer ticks
+00:02 +77: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_destroy_failure_test.dart: failed pause does not unlock uncertain backend or replace original error
+00:02 +78: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_destroy_failure_test.dart: failed pause does not unlock uncertain backend or replace original error
+00:03 +79: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_handoff_busy_test.dart: destroy pending release rejects handoff and overlapping save/destroy
+00:03 +80: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_destroy_failure_test.dart: concurrent cleanup callers share one pending native release attempt
+00:03 +81: E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_destroy_failure_test.dart: concurrent cleanup callers share one pending native release attempt
+00:03 +82: All tests passed!

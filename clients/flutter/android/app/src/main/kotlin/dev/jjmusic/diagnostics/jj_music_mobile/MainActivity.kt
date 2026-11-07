@@ -22,5 +22,6 @@ class MainActivity : FlutterActivity() {
         LocalHost.timeline("activity-destroy")
         if (LocalHost.activity === this) LocalHost.activity = null
         super.onDestroy()
+        LocalHost.destroyDetachedProbe()
     }
 }

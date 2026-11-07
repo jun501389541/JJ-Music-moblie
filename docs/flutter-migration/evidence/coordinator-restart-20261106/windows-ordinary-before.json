@@ -1,0 +1,12 @@
+[
+  {
+    "Algorithm": "SHA256",
+    "Hash": "AA78E3708C8B9A9363D89A371703D416B8F9BD4C52530C51FE303BCEA3EA54A9",
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\jj_music_mobile.exe"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "B2C3EF8FF2C60A7B99D8137D9293D2F081F7125A22C75AE62EE3B4DD5A7DDA7C",
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\app.so"
+  }
+]

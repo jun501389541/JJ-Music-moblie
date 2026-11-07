@@ -1,0 +1,16 @@
+{
+  "stage": "seeded",
+  "scenario": "corrupt",
+  "runId": "faults-20261101-a2-corrupt",
+  "directory": "/data/user/0/dev.jjmusic.diagnostics.jj_music_mobile/code_cache/jj-owned-p1/recovery/faults-20261101-a2-corrupt",
+  "savedReceipts": [
+    1,
+    2
+  ],
+  "files": {
+    "snapshot-a.json": "{partial",
+    "snapshot-b.json": "{partial"
+  },
+  "pid": 17726,
+  "probeToken": "5cb45ce13e674480b269d6e7c421dcb0"
+}

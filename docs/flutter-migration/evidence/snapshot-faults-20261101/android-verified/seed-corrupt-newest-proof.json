@@ -1,0 +1,17 @@
+{
+  "stage": "seeded",
+  "scenario": "corrupt-newest",
+  "runId": "faults-20261101-a2-corrupt-newest",
+  "directory": "/data/user/0/dev.jjmusic.diagnostics.jj_music_mobile/code_cache/jj-owned-p1/recovery/faults-20261101-a2-corrupt-newest",
+  "savedReceipts": [
+    1,
+    2
+  ],
+  "files": {
+    "snapshot-a.json": "{partial",
+    "snapshot-b.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-a2-corrupt-newest\",\"revision\":1,\"playbackSessionId\":\"session-faults-20261101-a2-corrupt-newest\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":1,\"positionMs\":1234,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+    "snapshot-b.json.tmp": "{unfinished-revision-3"
+  },
+  "pid": 18730,
+  "probeToken": "2a2ede7f2a28419d9a91322fc121b6c5"
+}

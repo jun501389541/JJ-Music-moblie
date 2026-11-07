@@ -1,0 +1,321 @@
+diff --git a/clients/flutter/lib/app/runtime/local_runtime.dart b/clients/flutter/lib/app/runtime/local_runtime.dart
+index d62bf46..64bf39d 100644
+--- a/clients/flutter/lib/app/runtime/local_runtime.dart
++++ b/clients/flutter/lib/app/runtime/local_runtime.dart
+@@ -9,6 +9,7 @@ import '../../domain/playback/contracts.dart';
+ import '../../domain/playback/recovery_snapshot.dart';
+ import '../../data/prototype_recovery/file_snapshot_store.dart';
+ import '../../platform/local/native_local_backend.dart';
++import '../../platform/local/close_actions.dart';
+ 
+ const ownedA = QueueEntry(
+   entryId: 'owned-a',
+@@ -28,7 +29,7 @@ class LocalRuntime extends ChangeNotifier {
+     this.store,
+     this._lock,
+     SnapshotReadResult loaded,
+-  ) : coordinator = PlaybackCoordinator(
++  ) : _coordinator = PlaybackCoordinator(
+         backend,
+         sessionId:
+             loaded.snapshot?.playbackSessionId ??
+@@ -65,7 +66,9 @@ class LocalRuntime extends ChangeNotifier {
+       );
+     });
+     _timer = Timer.periodic(const Duration(milliseconds: 200), (_) {
+-      _mirrorFuture = _mirror();
++      if (!_mirroring) {
++        _mirrorFuture = _mirror();
++      }
+     });
+   }
+   static Future<LocalRuntime>? _instance;
+@@ -112,35 +115,72 @@ class LocalRuntime extends ChangeNotifier {
+   }
+ 
+   final NativeLocalBackend backend;
+-  final PlaybackCoordinator coordinator;
++  PlaybackCoordinator _coordinator;
++  PlaybackCoordinator get coordinator => _coordinator;
+   final FileSnapshotStore store;
+   final RandomAccessFile _lock;
+   int savedRevision = 0;
+   Future<void>? _mirrorFuture;
+   bool _closed = false;
+-  Future<SnapshotSaveReceipt> save() async {
+-    final s = snapshot;
+-    final index = s.entries.indexWhere((e) => e.entryId == s.currentEntryId);
+-    if (index < 0) {
+-      throw StateError('no-confirmed-entry');
++  bool _saving = false, _destroying = false;
++  bool _backendUncertain = false;
++  final _closeActions = CloseActions();
++  Future<void>? _closeFuture;
++  List<Object> get closeFailures => _closeActions.failures;
++
++  /// Publish a cooperative authority replacement through this wrapper only.
++  CoordinatorHandoffResult handoffSingleTrack({required String newOwner}) {
++    if (_closed) {
++      return const CoordinatorHandoffResult.rejected('runtime-closed');
+     }
+-    final receipt = await store.save(
+-      RecoverySnapshot(
+-        runId: store.runId,
+-        revision: savedRevision + 1,
+-        playbackSessionId: s.playbackSessionId,
+-        entries: s.entries,
+-        currentIndex: index,
+-        positionMs: s.positionMs,
+-        mode: s.mode,
+-        preview: s.preview,
+-        confirmations: s.confirmations,
+-      ),
++    if (_saving || _destroying || _mirroring) {
++      return const CoordinatorHandoffResult.rejected('runtime-busy');
++    }
++    if (_backendUncertain) {
++      return const CoordinatorHandoffResult.rejected(
++        'runtime-backend-uncertain',
++      );
++    }
++    final result = coordinator.handoffSingleTrack(
++      expectedClaim: coordinator.claim,
++      newOwner: newOwner,
+     );
+-    savedRevision = receipt.revision;
+-    message = 'saved修订$savedRevision 已flush落盘；可停止进程后手动重开验证';
+-    notifyListeners();
+-    return receipt;
++    if (result.coordinator != null) {
++      _coordinator = result.coordinator!;
++      notifyListeners();
++    }
++    return result;
++  }
++
++  Future<SnapshotSaveReceipt> save() async {
++    if (_closed || _saving || _destroying) throw StateError('runtime-busy');
++    _saving = true;
++    try {
++      final s = snapshot;
++      final index = s.entries.indexWhere((e) => e.entryId == s.currentEntryId);
++      if (index < 0) {
++        throw StateError('no-confirmed-entry');
++      }
++      final receipt = await store.save(
++        RecoverySnapshot(
++          runId: store.runId,
++          revision: savedRevision + 1,
++          playbackSessionId: s.playbackSessionId,
++          entries: s.entries,
++          currentIndex: index,
++          positionMs: s.positionMs,
++          mode: s.mode,
++          preview: s.preview,
++          confirmations: s.confirmations,
++        ),
++      );
++      savedRevision = receipt.revision;
++      message = 'saved修订$savedRevision 已flush落盘；可停止进程后手动重开验证';
++      notifyListeners();
++      return receipt;
++    } finally {
++      _saving = false;
++    }
+   }
+ 
+   late final StreamSubscription<BackendEvent> _events;
+@@ -151,16 +191,32 @@ class LocalRuntime extends ChangeNotifier {
+   String message = '就绪；仅播放自有12秒样本';
+   PlaybackSnapshot get snapshot => coordinator.snapshot;
+   Future<void> destroyBackend() async {
+-    final receipts = await backend.destroyNativeResources();
+-    final ack = coordinator.backendReleased(_cmd(), receipts);
+-    if (!ack.applied) {
+-      throw StateError('backend-loss-not-proven');
++    if (_closed || _saving || _destroying) throw StateError('runtime-busy');
++    _destroying = true;
++    _backendUncertain = true;
++    try {
++      final receipts = await backend.destroyNativeResources();
++      final ack = coordinator.backendReleased(_cmd(), receipts);
++      if (!ack.applied) {
++        throw StateError('backend-loss-not-proven');
++      }
++      _backendUncertain = false;
++      message = '底层播放器已销毁；backendEpoch递增，暂停等待恢复';
++      notifyListeners();
++    } catch (_) {
++      // Never manufacture a release receipt or allow replay/adoption when the
++      // native cleanup outcome is unknown. Physical pause remains unproven.
++      coordinator.pause(_cmd());
++      message = '底层销毁未确认；暂停意图已提交，需显式重试销毁';
++      notifyListeners();
++      rethrow;
++    } finally {
++      _destroying = false;
+     }
+-    message = '底层播放器已销毁；backendEpoch递增，暂停等待恢复';
+-    notifyListeners();
+   }
+ 
+   void reconnect() {
++    if (_closed) return;
+     coordinator.attachUi('ui-${++_ui}');
+     notifyListeners();
+   }
+@@ -169,6 +225,19 @@ class LocalRuntime extends ChangeNotifier {
+       CommandContext('local-${++_request}', coordinator.claim);
+   CommandAck? command(String name, {int position = 3000}) {
+     final c = _cmd();
++    if (_closed) {
++      return CommandAck(
++        c.requestId,
++        failure: const PlaybackFailure('runtime-closed', 'accept'),
++      );
++    }
++    if ((_destroying || _backendUncertain) &&
++        const {'a', 'b', 'next', 'previous', 'play', 'seek'}.contains(name)) {
++      return CommandAck(
++        c.requestId,
++        failure: const PlaybackFailure('backend-state-uncertain', 'accept'),
++      );
++    }
+     final ack = switch (name) {
+       'a' => coordinator.play(
+         c,
+@@ -234,15 +303,21 @@ class LocalRuntime extends ChangeNotifier {
+     }
+   }
+ 
+-  Future<void> close() async {
++  Future<void> close() => _closeFuture ??= _close();
++  Future<void> _close() async {
+     _closed = true;
+     _timer?.cancel();
+-    await _mirrorFuture;
+-    await _events.cancel();
+-    await _commands.cancel();
+-    await coordinator.dispose();
+-    await backend.close();
+-    await _lock.close();
+-    super.dispose();
++    await _closeActions.run(() async {
++      await _mirrorFuture;
++    });
++    await _closeActions.run(_events.cancel);
++    await _closeActions.run(_commands.cancel);
++    await _closeActions.run(coordinator.dispose);
++    await _closeActions.run(backend.close);
++    await _closeActions.run(() async {
++      await _lock.close();
++    });
++    await _closeActions.run(() => super.dispose());
++    _closeActions.throwIfFailed();
+   }
+ }
+diff --git a/clients/flutter/lib/platform/local/native_local_backend.dart b/clients/flutter/lib/platform/local/native_local_backend.dart
+index b50a813..771e8e5 100644
+--- a/clients/flutter/lib/platform/local/native_local_backend.dart
++++ b/clients/flutter/lib/platform/local/native_local_backend.dart
+@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
+ 
+ import '../../domain/playback/contracts.dart';
+ import 'native_evidence.dart';
++import 'close_actions.dart';
+ 
+ class _Handle {
+   _Handle(this.request, this.id);
+@@ -35,6 +36,9 @@ class NativeLocalBackend implements PlaybackBackend {
+   int _next = 0;
+   int _transportRevision = 0;
+   bool _polling = false, _closed = false;
++  final _closeActions = CloseActions();
++  Future<void>? _closeFuture;
++  List<Object> get closeFailures => _closeActions.failures;
+   Map<String, dynamic> lastHost = {};
+   int get consumers => _handles.length;
+   @override
+@@ -184,9 +188,18 @@ class NativeLocalBackend implements PlaybackBackend {
+       return h.closing!;
+     }
+     h.retiring = true;
++    h.intended = false;
++    h.evidence.reset();
+     return h.closing = () async {
+-      await channel.invokeMethod<void>('release', {'id': h.id});
+-      _handles.remove(h.id);
++      try {
++        await channel.invokeMethod<void>('release', {'id': h.id});
++        _handles.remove(h.id);
++      } catch (_) {
++        // Keep ownership uncertain, but do not cache a failed attempt forever.
++        // Only a subsequent explicit cleanup call may retry the idempotent release.
++        h.closing = null;
++        rethrow;
++      }
+     }();
+   }
+ 
+@@ -259,15 +272,20 @@ class NativeLocalBackend implements PlaybackBackend {
+     return ReleaseReceipt(trackHandleId, consumerId, backendEpoch);
+   }
+ 
+-  Future<void> close() async {
++  Future<void> close() => _closeFuture ??= _close();
++  Future<void> _close() async {
+     _closed = true;
+     _timer?.cancel();
+     for (final h in _handles.values.toList()) {
+-      await _closeHandle(h);
++      await _closeActions.run(() => _closeHandle(h));
++    }
++    if (_handles.isNotEmpty) {
++      await _closeActions.run(pause);
+     }
+-    await flushLog();
+-    await _stream.close();
+-    await _system.close();
++    await _closeActions.run(flushLog);
++    await _closeActions.run(_stream.close);
++    await _closeActions.run(_system.close);
++    _closeActions.throwIfFailed();
+   }
+ 
+   Future<List<ReleaseReceipt>> destroyNativeResources() async {
+diff --git a/clients/flutter/tool/check.ps1 b/clients/flutter/tool/check.ps1
+index 0fe76b3..55edc93 100644
+--- a/clients/flutter/tool/check.ps1
++++ b/clients/flutter/tool/check.ps1
+@@ -23,7 +23,7 @@ try {
+   if($Mode -in @('Quality','All')){
+     & flutter pub get --enforce-lockfile *> (Join-Path $logs 'pub-get.log')
+     Assert-Result 'pub-get'
+-    $freeze=Get-Content (Join-Path $client '../../docs/flutter-migration/evidence/A02/20261031-seek-freeze.json') -Raw | ConvertFrom-Json
++    $freeze=Get-Content (Join-Path $client '../../docs/flutter-migration/evidence/A02/20261106-close-failure-freeze.json') -Raw | ConvertFrom-Json
+     $workspace=[IO.Path]::GetFullPath((Join-Path $client '../..'))
+     foreach($entry in $freeze.files){
+       if((Get-FileHash (Join-Path $workspace $entry.path) -Algorithm SHA256).Hash.ToLower() -ne $entry.sha256){
+diff --git a/docs/flutter-migration/05-architecture-contracts.md b/docs/flutter-migration/05-architecture-contracts.md
+index 09e6114..4b88fa6 100644
+--- a/docs/flutter-migration/05-architecture-contracts.md
++++ b/docs/flutter-migration/05-architecture-contracts.md
+@@ -108,6 +108,18 @@ Activity事件不能替代存活检测。引擎毁灭导致Broker/协调器一
+ 
+ 若协调器接管时双轨无法可靠对应，不猜随机或下一首；收敛到后端可验证单轨/暂停。历史按确认ID去重。R2无损接管是H，必须验证，不能预设原生快照总能重建全部业务。
+ 
++### P1合作式单轨协调器替换（p1-a02-v2.4）
++
++仅同Dart isolate、旧协调器可合作退休且同一backend存活。`handoffSingleTrack(expectedClaim,newOwner)`校验完整旧claim/唯一事件路由权威及不同非空新owner；拒绝未完成prepare/cancel/control/release及回调收尾、等待容量、双轨/未确认/撤销/释放中等不稳定态。拒绝返回明确failure并保留旧权威，不自动停止旧播放或循环重试。
++
++成功返回不同协调器对象，session/backend实例与epoch、单轨request/resource身份/定位能力/事件序列、队列/模式/位置及确认保持；coordinatorEpoch增加、eventCursor推进、UI连接清空。固定单一后端事件路由在无await/外部调用的同步提交段切换目标，旧对象永久退休，旧claim/订阅业务/无claim回调及dispose均不能影响新权威资源。新owner最终dispose才关闭路由并释放资源。转移不调用prepare/play/release，不重签已有确认；序列围栏继续去重。
++
++应用只经LocalRuntime包装同步替换唯一coordinator引用后通知观察者，保留backend/store/writer/系统命令订阅；保存、销毁、镜像进行中及closed时拒绝。持久快照不包含运行句柄/claim；旧保存位置不覆盖存活状态。此合作式替换不等于协调器异常死亡、跨engine接管、连续听感或完整R2通过；无可信存活权威仍用R3暂停恢复。具体设计和未验范围见evidence/r2-handoff-20261106。
++
++P1销毁失败安全补充（p1-a02-v2.5）：开始销毁即标记底层状态不可信；失败保持暂停意图、不增长backendEpoch或伪造released，拒绝runtime接管/起播/切轨/seek，仅完整销毁回执被共享层接受后解除。失败的幂等native release可以由下一次显式清理调用重试，不能永久缓存失败Future或在失败时删除消费者；未完成的同一尝试仍共用Future，不自动循环。单轨失败后重试与真实平台正常回归分开留证；多资源部分销毁无法完整核对时保持不可信并走R3，不预设无损恢复。物理暂停若无底层回执仍未证明。
++
++P1关闭收尾补充（p1-a02-v2.6）：runtime/backend的close在同一实例内复用一次关闭Future，成功和失败结果均不触发重复清理。逐项尝试有序收尾，一项抛错仍尝试后续独立资源；保留所有已捕获错误，全部尝试后按原stack重抛首错。runtime仍关闭订阅、协调器、backend、writer锁及通知器；backend仍尝试后续handle、残留资源暂停、日志和两个事件流。失败handle保留消费者，不以Dart侧关闭完成冒充物理released；重复close不是资源重试，显式底层清理/R3另行处理。周期镜像只保存真正开始的Future，不能用skip tick的已完成Future替代在途镜像。闭合后命令拒绝、UI重连无副作用；不保证永不完成的Future会超时，也不等于整体save/destroy竞争已解决。
++
+ ### P1最小持久快照适配
+ 
+ A02在首批合同工作内提供窄的RecoverySnapshotStore读/保存边界与隔离文件原型适配器；唯一文件归属见任务索引，A07消费其落盘完成凭据，不依赖P2数据库。仅用于自有恢复实验，不打开Electron数据目录、不迁移真实数据、不安装正式DB依赖。

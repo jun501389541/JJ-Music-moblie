@@ -1,0 +1,11 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/coordinator_handoff_test.dart
+Running Gradle task 'assembleDebug'...                          
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Running Gradle task 'assembleDebug'...                             10.2s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           3.6s
+00:00 +0: cooperative new authority retains native single track
+COORD_HANDOFF={"platform":"android","pid":6129,"oldEpoch":1793966810055437,"newEpoch":1793966810055438,"backendEpoch":1,"handle":"native-1","savedPosition":2345,"handoffPosition":2708,"confirmation":["local-6129-1793966810055:1"],"host":"host-6129-615753578","finalSamples":[]}
+00:03 +1: (tearDownAll)
+00:03 +1: All tests passed!

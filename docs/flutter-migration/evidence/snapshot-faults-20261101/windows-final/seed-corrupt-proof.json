@@ -1,0 +1,15 @@
+{
+  "stage": "seeded",
+  "scenario": "corrupt",
+  "runId": "faults-20261101-w2-corrupt",
+  "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-corrupt",
+  "savedReceipts": [
+    1,
+    2
+  ],
+  "files": {
+    "snapshot-a.json": "{partial",
+    "snapshot-b.json": "{partial"
+  },
+  "pid": 38000
+}

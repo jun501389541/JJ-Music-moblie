@@ -1,0 +1,79 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/transition_recovery_test.dart
+00:00 +0: GR01 seek rolls back only with playing intent paused=false
+00:00 +0 -1: GR01 seek rolls back only with playing intent paused=false [E]
+  Expected: <true>
+    Actual: <false>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\transition_recovery_test.dart 31:9    main.<fn>
+  
+00:00 +0 -1: GR01 seek rolls back only with playing intent paused=true
+00:00 +0 -2: GR01 seek rolls back only with playing intent paused=true [E]
+  Expected: 'occurrence-a'
+    Actual: 'occurrence-b'
+     Which: is different.
+            Expected: ... ccurrence-a
+              Actual: ... ccurrence-b
+                                    ^
+             Differ at offset 11
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\transition_recovery_test.dart 32:9    main.<fn>
+  
+00:00 +0 -2: GR01 remove rolls back only with playing intent paused=false
+00:00 +0 -3: GR01 remove rolls back only with playing intent paused=false [E]
+  Expected: <true>
+    Actual: <false>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\transition_recovery_test.dart 31:9    main.<fn>
+  
+00:00 +0 -3: GR01 remove rolls back only with playing intent paused=true
+00:00 +0 -4: GR01 remove rolls back only with playing intent paused=true [E]
+  Expected: 'occurrence-a'
+    Actual: <null>
+     Which: not an <Instance of 'String'>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\transition_recovery_test.dart 32:9    main.<fn>
+  
+00:00 +0 -4: GR02 resume follows latest B ready-before-pause
+00:00 +0 -5: GR02 resume follows latest B ready-before-pause [E]
+  Expected: not contains 'play:ha'
+    Actual: SubListIterable<String>:['play:ha']
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\transition_recovery_test.dart 46:7    main.<fn>
+  
+00:00 +0 -5: GR02 resume follows latest B ready-during-pause
+00:00 +0 -6: GR02 resume follows latest B ready-during-pause [E]
+  Expected: not contains 'play:ha'
+    Actual: SubListIterable<String>:['play:ha']
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\transition_recovery_test.dart 46:7    main.<fn>
+  
+00:00 +0 -6: GR02 resume follows latest B ready-after-resume
+00:00 +0 -7: GR02 resume follows latest B ready-after-resume [E]
+  Expected: not contains 'play:ha'
+    Actual: SubListIterable<String>:['play:ha']
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\transition_recovery_test.dart 46:7    main.<fn>
+  
+00:00 +0 -7: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/transition_recovery_test.dart: GR01 remove rolls back only with playing intent paused=false
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/transition_recovery_test.dart: GR01 remove rolls back only with playing intent paused=true
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/transition_recovery_test.dart: GR01 seek rolls back only with playing intent paused=false
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/transition_recovery_test.dart: GR01 seek rolls back only with playing intent paused=true
+  ... and 3 more

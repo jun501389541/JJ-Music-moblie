@@ -1,0 +1,71 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_failure_test.dart
+00:00 +0: persistent release failure still disposes runtime notifier and backend streams
+00:00 +0 -1: persistent release failure still disposes runtime notifier and backend streams [E]
+  Expected: false
+    Actual: <true>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\runtime\runtime_close_failure_test.dart 96:5   main.<fn>
+  
+00:00 +0 -1: persistent release failure still closes writer lock (Windows host)
+00:00 +0 -2: persistent release failure still closes writer lock (Windows host) [E]
+  PathAccessException: Deletion failed, path = 'C:\Users\50138\AppData\Local\Temp/jj-owned-p1/recovery\close-fail-8792-1793969366139857' (OS Error: 另一个程序正在使用此文件，进程无法访问。, errno = 32)
+  dart:io                                              FileSystemEntity.delete
+  test\runtime\runtime_close_failure_test.dart 109:15  main.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                           _CustomZone.registerUnaryCallback
+  test\runtime\runtime_close_failure_test.dart 103:5   main.<fn>
+  
+00:00 +0 -2: concurrent and repeated runtime close share one completion
+00:00 +0 -3: concurrent and repeated runtime close share one completion [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\runtime\runtime_close_failure_test.dart 117:5  main.<fn>
+  
+  FileSystemException: File closed, path = 'C:\Users\50138\AppData\Local\Temp/jj-owned-p1/recovery\close-fail-8792-1793969366562907/writer.lock'
+  dart:io                                                        _RandomAccessFile.close
+  package:jj_music_mobile/app/runtime/local_runtime.dart 301:17  LocalRuntime.close
+  ===== asynchronous gap ===========================
+  dart:async                                                     _CustomZone.registerUnaryCallback
+  package:jj_music_mobile/app/runtime/local_runtime.dart 296:5   LocalRuntime.close
+  test\runtime\runtime_close_failure_test.dart 60:23             main.<fn>.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                                     _CustomZone.registerUnaryCallback
+  test\runtime\runtime_close_failure_test.dart 58:7              main.<fn>.<fn>
+  
+00:00 +0 -3: close awaits actual mirror after later timer ticks
+00:01 +0 -4: close awaits actual mirror after later timer ticks [E]
+  FileSystemException: File closed, path = 'C:\Users\50138\AppData\Local\Temp/jj-owned-p1/recovery\close-fail-8792-1793969366582451/writer.lock'
+  dart:io                                                        _RandomAccessFile.close
+  package:jj_music_mobile/app/runtime/local_runtime.dart 301:17  LocalRuntime.close
+  ===== asynchronous gap ===========================
+  dart:async                                                     _CustomZone.registerUnaryCallback
+  package:jj_music_mobile/app/runtime/local_runtime.dart 296:5   LocalRuntime.close
+  test\runtime\runtime_close_failure_test.dart 60:23             main.<fn>.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                                     _CustomZone.registerUnaryCallback
+  test\runtime\runtime_close_failure_test.dart 58:7              main.<fn>.<fn>
+  
+00:01 +0 -4: backend close attempts later handles and closes streams despite release and log errors
+00:01 +0 -5: backend close attempts later handles and closes streams despite release and log errors [E]
+  Expected: contains 'native-2'
+    Actual: ['native-1']
+     Which: does not contain 'native-2'
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\runtime\runtime_close_failure_test.dart 146:7  main.<fn>
+  
+00:01 +0 -5: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_failure_test.dart: backend close attempts later handles and closes streams despite release and log errors
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_failure_test.dart: close awaits actual mirror after later timer ticks
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_failure_test.dart: concurrent and repeated runtime close share one completion
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_failure_test.dart: persistent release failure still closes writer lock (Windows host)
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_failure_test.dart: persistent release failure still disposes runtime notifier and backend streams

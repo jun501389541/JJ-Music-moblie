@@ -1,0 +1,11 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/coordinator_restart_test.dart
+Running Gradle task 'assembleDebug'...                          
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Running Gradle task 'assembleDebug'...                              9.3s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           3.5s
+00:00 +0: fresh coordinator after closed runtime restores paused, not R2
+COORD_RESTART={"platform":"android","pid":26238,"oldEpoch":1793961383404042,"newEpoch":1793961384773375,"revision":1,"snapshot":{"formatVersion":1,"runId":"coord-26238-1793961383382517","revision":1,"playbackSessionId":"local-26238-1793961383404","entries":[{"entryId":"owned-a","trackKey":"owned-tone","fixtureId":"tone-long"},{"entryId":"owned-b","trackKey":"owned-tone","fixtureId":"tone-long"}],"currentIndex":0,"positionMs":2345,"mode":"sequence","preview":false,"confirmations":["local-26238-1793961383404:1"]},"stale":"stale-controller","releasedSamples":[],"finalSamples":[]}
+00:03 +1: (tearDownAll)
+00:03 +1: All tests passed!

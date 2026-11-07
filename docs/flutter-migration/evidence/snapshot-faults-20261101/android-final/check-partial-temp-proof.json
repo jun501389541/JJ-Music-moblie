@@ -1,0 +1,50 @@
+{
+  "stage": "checked",
+  "scenario": "partial-temp",
+  "runId": "faults-20261101-a1-partial-temp",
+  "directory": "/data/user/0/dev.jjmusic.diagnostics.jj_music_mobile/code_cache/jj-owned-p1/recovery/faults-20261101-a1-partial-temp",
+  "coordinatorEpoch": 1793494356162644,
+  "revision": 2,
+  "desired": "paused",
+  "position": 2345,
+  "snapshot": {
+    "formatVersion": 1,
+    "runId": "faults-20261101-a1-partial-temp",
+    "revision": 2,
+    "playbackSessionId": "session-faults-20261101-a1-partial-temp",
+    "entries": [
+      {
+        "entryId": "owned-a",
+        "trackKey": "owned-tone",
+        "fixtureId": "tone-long"
+      },
+      {
+        "entryId": "owned-b",
+        "trackKey": "owned-tone",
+        "fixtureId": "tone-long"
+      }
+    ],
+    "currentIndex": 0,
+    "positionMs": 2345,
+    "mode": "sequence",
+    "preview": false,
+    "confirmations": [
+      "fixture-confirmation:1"
+    ]
+  },
+  "issues": [],
+  "consumers": 0,
+  "nativeSamples": [],
+  "servicePresent": false,
+  "focusHeld": false,
+  "observationMs": 700,
+  "freshNativePolls": 6,
+  "bridgeErrors": 0,
+  "files": {
+    "snapshot-a.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-a1-partial-temp\",\"revision\":2,\"playbackSessionId\":\"session-faults-20261101-a1-partial-temp\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":0,\"positionMs\":2345,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+    "snapshot-b.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-a1-partial-temp\",\"revision\":1,\"playbackSessionId\":\"session-faults-20261101-a1-partial-temp\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":1,\"positionMs\":1234,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+    "snapshot-b.json.tmp": "{unfinished-revision-3"
+  },
+  "pid": 16737,
+  "probeToken": "403c889d4d4942b18612181dea869154"
+}

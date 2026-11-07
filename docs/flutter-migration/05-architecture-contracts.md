@@ -98,6 +98,8 @@ Stop、Cancel、Pause或新PlayIntent不能等待旧解析、加载或整个播�
 
 ## C-03：三种恢复
 
+P1切歌意图补充（p1-a02-v2.7）：A仍active而B未确认时，成功seek(A)或移除B应失效B准备/确认、释放B，并将requested收敛到A；只有desired=playing且A资源有效时派发恢复A，paused不得抢播。暂停后继续优先当前request/generation的prepared或incoming B，B仍pending时等待B，不因旧A仍active而抢播A；B确认后按既有交接释放A，历史确认去重规则不变。
+
 | 流程 | 顺序与不变量 |
 | --- | --- |
 | R1 UI重连 | 新uiConnectionId→snapshot+游标→恢复页面；会话/coord/backend/broker/租约不变，不load/play、不重复历史 |
@@ -107,6 +109,18 @@ Stop、Cancel、Pause或新PlayIntent不能等待旧解析、加载或整个播�
 Activity事件不能替代存活检测。引擎毁灭导致Broker/协调器一起死亡是组合R3，不承诺Dart继续。系统媒体合法恢复请求单独处理；用户强制停止不自动复活。
 
 若协调器接管时双轨无法可靠对应，不猜随机或下一首；收敛到后端可验证单轨/暂停。历史按确认ID去重。R2无损接管是H，必须验证，不能预设原生快照总能重建全部业务。
+
+### P1合作式单轨协调器替换（p1-a02-v2.4）
+
+仅同Dart isolate、旧协调器可合作退休且同一backend存活。`handoffSingleTrack(expectedClaim,newOwner)`校验完整旧claim/唯一事件路由权威及不同非空新owner；拒绝未完成prepare/cancel/control/release及回调收尾、等待容量、双轨/未确认/撤销/释放中等不稳定态。拒绝返回明确failure并保留旧权威，不自动停止旧播放或循环重试。
+
+成功返回不同协调器对象，session/backend实例与epoch、单轨request/resource身份/定位能力/事件序列、队列/模式/位置及确认保持；coordinatorEpoch增加、eventCursor推进、UI连接清空。固定单一后端事件路由在无await/外部调用的同步提交段切换目标，旧对象永久退休，旧claim/订阅业务/无claim回调及dispose均不能影响新权威资源。新owner最终dispose才关闭路由并释放资源。转移不调用prepare/play/release，不重签已有确认；序列围栏继续去重。
+
+应用只经LocalRuntime包装同步替换唯一coordinator引用后通知观察者，保留backend/store/writer/系统命令订阅；保存、销毁、镜像进行中及closed时拒绝。持久快照不包含运行句柄/claim；旧保存位置不覆盖存活状态。此合作式替换不等于协调器异常死亡、跨engine接管、连续听感或完整R2通过；无可信存活权威仍用R3暂停恢复。具体设计和未验范围见evidence/r2-handoff-20261106。
+
+P1销毁失败安全补充（p1-a02-v2.5）：开始销毁即标记底层状态不可信；失败保持暂停意图、不增长backendEpoch或伪造released，拒绝runtime接管/起播/切轨/seek，仅完整销毁回执被共享层接受后解除。失败的幂等native release可以由下一次显式清理调用重试，不能永久缓存失败Future或在失败时删除消费者；未完成的同一尝试仍共用Future，不自动循环。单轨失败后重试与真实平台正常回归分开留证；多资源部分销毁无法完整核对时保持不可信并走R3，不预设无损恢复。物理暂停若无底层回执仍未证明。
+
+P1关闭收尾补充（p1-a02-v2.6）：runtime/backend的close在同一实例内复用一次关闭Future，成功和失败结果均不触发重复清理。逐项尝试有序收尾，一项抛错仍尝试后续独立资源；保留所有已捕获错误，全部尝试后按原stack重抛首错。runtime仍关闭订阅、协调器、backend、writer锁及通知器；backend仍尝试后续handle、残留资源暂停、日志和两个事件流。失败handle保留消费者，不以Dart侧关闭完成冒充物理released；重复close不是资源重试，显式底层清理/R3另行处理。周期镜像只保存真正开始的Future，不能用skip tick的已完成Future替代在途镜像。闭合后命令拒绝、UI重连无副作用；不保证永不完成的Future会超时，也不等于整体save/destroy竞争已解决。
 
 ### P1最小持久快照适配
 

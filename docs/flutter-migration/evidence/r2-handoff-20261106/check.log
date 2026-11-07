@@ -1,0 +1,20 @@
+Design-only validation; no Flutter tests or devices run.
+LINK OK ../A08/20261106-r2-boundary.md
+LINK OK ../../05-architecture-contracts.md
+LINK OK ../../tasks/contracts-ownership.md
+SHA256 clients/flutter/lib/application/playback/playback_coordinator.dart AFDBB958E8A109C1B637E9A48B479B3515C5F5E872C6C49284F9DA1AA3F313AA
+SHA256 clients/flutter/lib/domain/playback/contracts.dart EDA1DCDCAE4236332E29F74FEB09AD127F49D0CFFB4384006D42E1111F16DA02
+SHA256 clients/flutter/lib/app/runtime/local_runtime.dart 64FFF1FB8D862E30FD821B96E0E0E6F30EC6EDC52E91C33C400274EADB419B44
+SHA256 clients/flutter/lib/platform/local/native_local_backend.dart 89E48125253D82263A17716AA03C0A0A13ABD2D97D52155BD7C5F594A88EAC19
+Exit 0
+Final design link and scope validation
+LINK OK ../A08/20261106-r2-boundary.md
+LINK OK ../../05-architecture-contracts.md
+LINK OK ../../tasks/contracts-ownership.md
+34	0	clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+1	0	clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/MainActivity.kt
+60	0	clients/flutter/lib/p1_process_probe.dart
+63	1	docs/flutter-migration/handoff.md
+26	0	docs/flutter-migration/status.md
+
+No product implementation/test/device execution in this batch; prior changes preserved. Exit 0.

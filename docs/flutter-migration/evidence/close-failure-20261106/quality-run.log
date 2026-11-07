@@ -1,0 +1,16 @@
+pub-get passed
+contract hashes passed
+format passed
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Analyzing flutter...                                            
+
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\runtime\runtime_close_failure_test.dart:21:7 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\runtime\runtime_close_failure_test.dart:94:9 - curly_braces_in_flow_control_structures
+warning - The member 'hasListeners' can only be used within instance members of subclasses of 'ChangeNotifier' - test\runtime\runtime_close_failure_test.dart:132:20 - invalid_use_of_protected_member
+
+3 issues found. (ran in 10.8s)
+Write-Error: 
+Line |
+   2 |  ./clients/flutter/tool/check.ps1 -Mode Quality -EvidenceDirectory E:/ …
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | analyze failed (exit 1); see E:\Workspace\project\JJ-Music-mobile\docs\flutter-migration\evidence\close-failure-20261106\quality

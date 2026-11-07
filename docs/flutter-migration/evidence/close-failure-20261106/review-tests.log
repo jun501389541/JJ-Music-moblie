@@ -1,0 +1,8 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_close_failure_test.dart
+00:00 +0: persistent release failure still disposes runtime notifier and backend streams
+00:00 +1: persistent release failure still closes writer lock (Windows host)
+00:00 +2: concurrent and repeated runtime close share one completion
+00:00 +3: close awaits actual mirror after later timer ticks
+00:01 +4: backend close attempts later handles and closes streams despite release and log errors
+00:01 +5: All tests passed!

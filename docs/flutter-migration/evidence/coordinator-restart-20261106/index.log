@@ -1,0 +1,44 @@
+[
+  {
+    "filePath": "clients/flutter/integration_test/coordinator_restart_test.dart",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\integration_test\\coordinator_restart_test.dart"
+    }
+  },
+  {
+    "filePath": "docs/flutter-migration/status.md",
+    "result": {
+      "indexedFiles": 1,
+      "indexedSymbols": 32,
+      "indexedReferences": 165,
+      "skipped": false,
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\status.md"
+    }
+  },
+  {
+    "filePath": "docs/flutter-migration/handoff.md",
+    "result": {
+      "indexedFiles": 1,
+      "indexedSymbols": 44,
+      "indexedReferences": 264,
+      "skipped": false,
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\handoff.md"
+    }
+  },
+  {
+    "filePath": "docs/flutter-migration/evidence/coordinator-restart-20261106/report.md",
+    "result": {
+      "indexedFiles": 0,
+      "indexedSymbols": 0,
+      "indexedReferences": 0,
+      "skipped": true,
+      "reason": "unchanged",
+      "path": "E:\\Workspace\\project\\JJ-Music-mobile\\docs\\flutter-migration\\evidence\\coordinator-restart-20261106\\report.md"
+    }
+  }
+]

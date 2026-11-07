@@ -1,5 +1,7 @@
 # 当前状态、授权与证据索引
 
+2026-11-07 全局审阅：用户授权“没问题提交并推送”；Codex 串行审阅，生产代码只读，证据 [global-review-20261107/report.md](evidence/global-review-20261107/report.md)。本轮 Quality 82/格式/analyze/28 冻结+05/锁通过；切歌撤销后不恢复旧轨（GR-01/P1）、切歌暂停继续选旧轨并悬挂新轨（GR-02/P2）仍复现。条件未满足，未暂存/提交/推送；保留全部既有改动。仅新增本报告/日志/探针并串行更新状态交接；G-L 不变，后续先修两项再复审。
+
 AUTH-P1-PROCESS-20261101：用户手机验收正常后继续开发，领取A07当前v2.3全进程恢复子项。owner Codex串行A07/ConfigIntegrator/证据维护；allowlist lib/p1_process_probe.dart、tool/run_android_recovery_probe.ps1、tool/run_windows_recovery_probe.ps1（均相对clients/flutter）、evidence/process-recovery-20261101、status/handoff。前置A02真实文件和21冻结、两端本地播放已有实际证据；新运行独立核对。旧claim仅测试sidecar不进持久合同；新runId防旧产物误判，证据目录参数化防覆盖历史。保存完成后真实强杀重启，读回默认暂停、旧控制器拒绝、显式恢复再停止。手机35a63609已核2211133C/fuxi/Awake；Windows单独执行。保留全部未提交工作，普通产物先备份；不改共享冻结/正式UI/全局/旧库/P2，不提交推送发布。进行中。
 
 更新日期2026-10-31；文档R4、PREP-01及A01/A02实际实施。**双端自有本地播放/系统基础/恢复原型主路径已验证；完整G-L暂不通过，不代表播放器完成。** 开发根为`E:\Workspace\project\JJ-Music-mobile`，旧`JJ-Music`只读参考。本文件是任务状态、实际owner、授权和门结果的唯一维护处。
@@ -28,7 +30,7 @@ AUTH-ENV本批执行者/协调者：Codex；环境准备已完成。Flutter3.47.
 
 ## 任务状态
 
-依赖与详细说明只看tasks索引；状态含义只在workflow。owner=-表示未领取。文档历史done只证明对应文档验收；A01/A02已完成首批范围，当前共享冻结已更新p1-a02-v2.3（单轨定位能力/拒绝回执），当前21文件清单为evidence/A02/20261031-seek-freeze.json；后文旧版本均是历史记录，A03—A08为review（见20261031实际证据与缺口），其余保持proposed。分支证据不等于集成，done须实际必需验收与目标工作区集成证据；单agent同工作区也记录。
+依赖与详细说明只看tasks索引；状态含义只在workflow。owner=-表示未领取。文档历史done只证明对应文档验收；A01/A02已完成首批范围，当前共享冻结已更新p1-a02-v2.7（切歌恢复修复），当前30文件清单为evidence/A02/20261107-transition-recovery-freeze.json；后文旧版本均是历史记录，A03—A08为review（见20261031实际证据与缺口），其余保持proposed。分支证据不等于集成，done须实际必需验收与目标工作区集成证据；单agent同工作区也记录。
 
 | 任务 | 状态 | owner | 分支/任务证据或阻塞 | 目标工作区集成结果 |
 | --- | --- | --- | --- | --- |
@@ -42,7 +44,7 @@ AUTH-ENV本批执行者/协调者：Codex；环境准备已完成。Flutter3.47.
 | V01 | proposed | - | 无对应范围授权或前置证据 | 未运行 |
 | V02 | needs-user | - | 无具体稿件确认 | 未运行 |
 | A01 | done | Codex / ConfigIntegrator | [实际证据](evidence/A01/20261030-batch.md)：双端release构建与native烟测通过，Android release三按钮通过 | mobile目标工作区已集成；仅诊断工程，无提交 |
-| A02 | done（本批最小增量） | Codex串行合同维护 | [v2.3冻结](evidence/A02/20261031-seek-freeze.md)、[本批证据](evidence/seek-capability-20261031/report.md)，58共同测试（含20261101并发/桥接及清理故障验证）；双端真实消费仍以前批证据为准 | 已集成mobile当前工作区；不等于完整G-L |
+| A02 | done（本批最小增量） | Codex串行合同维护 | [v2.6冻结](evidence/A02/20261106-close-failure-freeze.md)、[本批证据](evidence/close-failure-20261106/report.md)，82共同测试（含关闭收尾修复）；Windows/Android合作式接管各1项通过；此前v2.3定位证据保留历史 | 已集成mobile当前工作区；不等于完整G-L |
 | A03 | review | Codex / 本批串行维护 | [20261031证据](evidence/A03/20261031-batch.md)：真机file/content URI、3项本地验证；[本批Android初始加载4反例](evidence/loading-20261031/report.md)已补，[本批Android再缓冲4项](evidence/rebuffer-20261031/report.md)已补；未知时长/完整后台等未齐 | mobile目标已集成主路径，完整任务验收未宣称；无提交 |
 | A04 | review | Codex / 本批串行维护 | [20261031证据](evidence/A04/20261031-batch.md)：Activity重建、后台/实际关屏、系统控制通过；[本批焦点安全修复及release实测](evidence/focus-20261031/report.md)已补；独立engine/服务回收/完整焦点矩阵未齐 | mobile目标已集成主路径，完整任务验收未宣称；无提交 |
 | A05 | review | Codex / 本批串行维护 | [20261031证据](evidence/A05/20261031-batch.md)：WinRT3项本地验证/释放与真实回滚；[本批Windows初始加载及关闭异常](evidence/windows-loading-20261031/report.md)已补，输出失效/播放后再缓冲等未齐 | mobile目标已集成主路径，完整任务验收未宣称；无提交 |
@@ -269,3 +271,51 @@ AUTH-P1-RECREATE-20261101：用户按文档继续，A04重建/媒体暂停交错
 AUTH-P1-PROCESS-20261101限定目标完成：[报告](evidence/process-recovery-20261101/report.md)。最终Android/Windows各一组真实两进程通过，完整runtime读回、默认暂停、旧claim拒绝、显式恢复/去重、原生释放已验；审阅两项P2已修复复核。quality-final共同58、格式52文件0变更、analyze、21冻结及05/锁通过。普通APK/Windows整目录核哈希后恢复，手机COLD启动ok，Windows普通启动2秒后关闭。a2日志截断失败保留，a3重跑通过。无生产修复/提交推送发布；旧修改保留，A07/G-L仍review，下一批自有快照异常/中断新进程退路。GraphFlow见本批index.log。
 
 AUTH-GIT-PUSH-20261101：用户明确要求先提交并推送当前开发成果。允许把codex/seek-boundaries内已验A02并发/桥接、A03/A05超时容量、reviewer清理、A04重建及A07进程恢复的代码/证据/status/handoff提交，并推送origin同名分支。旧批次不提交约束保留为历史；本次不合并、不发布、不上传安装包、不修改全局配置。
+
+AUTH-P1-SNAPSHOTFAULT-20261101：用户继续开发，A07新进程快照异常退路子项。owner Codex串行A07/ConfigIntegrator/文档维护；allowlist新clients/flutter/lib/p1_snapshot_fault_probe.dart、tool/run_snapshot_fault_probe.ps1、本批evidence/snapshot-faults-20261101及status/handoff。只消费v2.3/21冻结真实FileSnapshotStore，不改原型存储/合同/native/UI。6自有场景：missing/corrupt/unknown-version/unavailable-fixture/partial-temp/corrupt-newest，真实seed保存/造故障后强杀再check进程，分别Android35a63609和Windows；遗留tmp是受控故障夹具，不称真正saveFuture中途强杀或断电原子性通过。当前基线ee0e347、分支codex/seek-boundaries，与origin一致干净；新开发不继承上次提交推送授权。普通产物备份还原；不提交推送发布/P2/全局/旧库。进行中。
+
+2026-11-06收尾AUTH-P1-SNAPSHOTFAULT-20261101：限定目标完成，证据见evidence/snapshot-faults-20261101/report.md。实际双端测试在2026-11-01执行，各6组新进程场景通过；58共同测试/53格式文件/analyze/21冻结通过。今天只核代码摘要、冻结与保存proof并补交接索引，未重跑设备、不称当前手机在线。两项诊断验证问题已修复复验，原普通产物此前恢复；A07整体/G-L仍review，真实写中断/独立engine/R2仍未证。新开发修改保持未提交，无推送发布；下一批A08更新剩余矩阵。
+
+AUTH-A08-REVIEW-20261106：用户按文档继续，Codex领取A08增量G-L审阅（A07整体未完成，故仅审已有证据与缺口，不宣称后继实施前置已全满足）。owner串行文档维护；allowlist evidence/A08/20261106-review.md、status/handoff；产品代码只读，保留未提交snapshot-faults。核09门和现有各端报告/真实Activity与engine入口，不安装/运行产品/改合同/P2/提交推送。
+
+AUTH-A08-REVIEW-20261106增量审阅完成：见evidence/A08/20261106-review.md。后续报告已覆盖早期未知输入/定位能力/超时/容量/异常快照若干缺口，当前不重复领取；G-L仍未过、A03—A08仍review。代码核MainActivity保留cached engine，recreateActivity不销毁engine，现无独立engine.destroy入口。下一小批A04/A07先设计可控engine死亡与安全R3验证，不声称R2通过。仅文档/链接检查，无设备运行或产品改动/提交推送。
+
+AUTH-ENGINE-LOSS-20261106：用户继续，领取A04/A07显式engine销毁安全R3。Codex串行Android/A07/ConfigIntegrator维护；allowlist LocalHost.kt/MainActivity.kt、lib/p1_process_probe.dart（仅optin诊断）、tool/run_android_engine_probe.ps1及evidence/engine-loss-20261106、status/handoff。真实手机35a63609/2211133C/Awake。设计：save确认落盘后显式诊断请求Activity finish，super.onDestroy完成detach后再释放native资源/焦点/服务、清旧命令并真实engine.destroy，外部据原生凭据显式重启同PID新engine，恢复默认暂停，拒旧claim后显式继续；不声称原生存活无损R2。保留先前未提交工作、21冻结不变；不改正式UI/全局/旧库/P2/提交推送。
+
+AUTH-ENGINE-LOSS-20261106限定目标完成：evidence/engine-loss-20261106/report.md。真机同PID13305、旧engine26135275真实销毁、新241633931，保存暂停态一轨→R3清资源→同修订位置默认暂停→旧claim拒绝→显式继续/停止通过；非播放中异常死亡/R2。Android本地3+重建2回归共5通过；共同58/格式53/analyze/21冻结+05+锁通过；普通Android Release重建安装COLD启动ok，Windows未验。独立review无阻断，服务退出证据仅最终采样。所有旧修改保留，无提交推送发布；G-L仍review，下一批播放态显式engine销毁扩展。
+
+AUTH-ENGINE-PLAYING-20261106：继续A04/A07播放态显式engine销毁。Codex串行A07诊断/文档维护，allowlist lib/p1_process_probe.dart、tool/run_android_engine_probe.ps1及evidence/engine-playing-20261106、status/handoff。只增编译optin与RequirePlaying断言，不改native实现/21冻结；保存2345暂停态后同handle播放，两个真实nativePlaying+position递增采样后调用既有销毁入口，新engine同PID恢复原落盘位置默认暂停。手机35a63609在线Awake。保留全部旧修改，不提交推送/P2/UI/全局/旧库。
+
+AUTH-ENGINE-PLAYING-20261106限定目标完成：evidence/engine-playing-20261106/report.md。手机销毁前两个同handle真实nativePlaying样本2465→2707；同PID18536，新engine160958312从保存2345暂停恢复，旧claim拒绝、显式2709/停止0通过；shared58/format53/analyze/21冻结+05+锁通过，聚焦review无问题。普通APK哈希还原安装COLD启动ok，Windows未验；native未变，不重复先前5项回归。当前仅显式销毁，非异常回收/R2；G-L仍review，旧修改保留无提交推送发布。
+
+AUTH-COORD-RESTART-20261106：继续A07 R2边界核对与既有安全退路。owner Codex串行共享诊断测试/文档；allowlist新integration_test/coordinator_restart_test.dart及evidence/coordinator-restart-20261106、status/handoff。现有acquireController只同对象换owner，dispose释放资源，没有存活资源adopt接口，不冒称R2。验证save→播放→close释放→新LocalRuntime新协调器读回暂停/旧claim拒绝/显式继续停止，双端分别实跑。只用自有fixture，冻结21/合同/native/UI不变，保留旧修改，不提交推送/P2/全局/旧库。
+
+AUTH-COORD-RESTART-20261106 partial：evidence/coordinator-restart-20261106/report.md。Windows真实1项新协调器安全重建通过；共同58/格式54/analyze/21冻结+05/锁通过。Android首帧停滞时Dozing，执行者中止未通过；已请求解锁并补测试窗口亮屏清理，等待重跑，不以另一端替代。普通APK已还原安装。R2现无adopt接口，CAS仅同对象，不改冻结伪接管。保留未提交修改无推送发布；下一步优先接续本Android测试。
+
+AUTH-COORD-RESTART-20261106最终接续完成：用户解锁后android-retry.log真机1项通过（PID26238，新epoch1793961384773375，修订1/位置2345暂停读回、旧claim拒绝、显式播放停止资源0）；Windows此前1项通过，本批双端限定目标完成。首次前台条件失败修正为同谓词有界等待并实跑通过，失败日志保留。quality-final共同58/格式54/analyze/21冻结+05/锁通过，普通APK恢复安装COLD启动ok。无损R2仍未实现/未验证，G-L仍review。无提交推送发布。
+
+AUTH-R2-BOUNDARY-20261106：接续用户“继续按开发文档执行”，Codex串行A07/A02只读合同核查和文档协调。allowlist evidence/A08/20261106-r2-boundary.md及配套check/index日志、status/handoff；消费p1-a02-v2.3/协议快照1，不改冻结。源码核查确认同对象CAS、释放后重建与存活资源R2的区别，完成下一批排他转移/身份核对/事件间隙/失败退路验收输入，见[报告](evidence/A08/20261106-r2-boundary.md)。本批无产品变更、设备/构建/安装或提交推送；已有未提交工作保留。R2未实现/未验证，A07/A08/G-L仍review；下一批先由共享维护者评审窄单轨接管合同与失败测试设计，再实施，不复制私有状态或改写历史冻结。
+
+AUTH-R2-DESIGN-20261106：用户“继续执行”后领取A07/A02单轨存活backend协调器替换设计，owner Codex串行合同设计/文档协调。allowlist evidence/r2-handoff-20261106/design.md及检查/索引/审阅记录、status/handoff；当前消费p1-a02-v2.3，不改冻结或产品。本批设计同isolate合作式同步handoff，拒绝pending/双轨/释放/在途控制，明确事件和旧对象退休围栏；不代替跨engine异常死亡R2。设计进入review，实施前按已安装brainstorming技能完成设计检查及具体文档确认；不新增全局工具/设备实验/提交推送，既有全部改动保留。
+
+AUTH-R2-IMPLEMENT-20261106：用户确认design.md，Codex串行A02/A07/ConfigIntegrator实施。allowlist coordinator/runtime、共同及新集成handoff测试、05、A02新v2.4冻结、tool/check.ps1选择器、evidence/r2-handoff-20261106及status/handoff；必要测试support仅本批使用。旧冻结不改，协议/快照仍1；双端分验及普通产物备份恢复，手机35a63609须在线解锁。不跨engine/P2/依赖/旧库/全局/提交推送。当前in-progress，所有已有修改保留。
+
+AUTH-R2-IMPLEMENT-20261106 partial/review：同isolate合作式单轨新协调器已实现；最终quality-final锁/24文件+05哈希/56文件格式0变更/analyze/68共同测试通过。Windows真实1项PID9948、单轨native-1、确认一次、接管位置2794>保存2345、停止原生空；独立review无Critical/Important，补3项清理/route错误测试通过。两端普通main Release已构建，Windows启动PID23372后由工具关闭，非播放验收；Android实际Dozing且未获解锁回复，本批真机测试/安装未执行。旧普通APK和Windows整目录已备份，新普通产物摘要ordinary-current.json。R2跨engine/异常死亡、完整runtime交错/听感未验，G-L保持review。保留全部旧修改，无提交推送。接续先核35a63609解锁/foreground，跑新integration_test/coordinator_handoff_test.dart，结束恢复本批新普通APK；勿重复实现或重写冻结。
+
+AUTH-R2-IMPLEMENT-20261106最终接续完成：用户解锁后android-final.log退出0，Android真实1项通过；PID372，epoch1793965093366385→1793965093366386，backendEpoch1/单轨native-1，同host，接管2709>保存2345，确认一次、旧claim拒绝、系统pause/play/stop及最后原生空。此前Windows1项通过，限定双端目标完成。未改源码，未重复共同68/Windows；沿用quality-final及独立审阅。本批新普通APK核哈希恢复安装Success，COLD启动ok/PID980/Awake。A07/G-L仍review，合作式同isolate不等于异常死亡/跨engine无损R2；完整runtime交错等未验保留。不提交推送，已有修改全部保留。
+
+AUTH-RUNTIME-BUSY-20261106：用户继续开发，领取A07已批准handoff设计的runtime busy确定性验证；owner Codex串行共享测试/文档。allowlist新clients/flutter/test/runtime/runtime_handoff_busy_test.dart、evidence/runtime-busy-20261106及status/handoff；消费v2.4/24文件/协议快照1，不改产品/原生/冻结/依赖。Mock MethodChannel+Completer控制mirror/release，覆盖mirror成功失败、destroy成功及save验证失败，拒绝不变权威资源。只宿主验证，不设备/构建/安装/私人数据/提交推送；全部旧修改保留。整体close/save和真实销毁失败资源恢复另保留未验。
+
+AUTH-RUNTIME-BUSY-20261106限定目标完成：[报告](evidence/runtime-busy-20261106/report.md)。新增4项宿主MethodChannel门控验证，mirror成功/失败finally后可转移，destroy等release时拒绝handoff/save/重复destroy且无权威资源副作用，完成后paused/空资源；save校验失败无busy泄漏。最终Quality72/格式57文件0变化/analyze/原v2.4的24冻结+05/锁通过。独立测试审阅无阻断，Minor初始化失败mock清理已补并复验。产品/冻结/native/普通双端产物未改，本批不设备/构建/安装/提交推送；不把mock写成真机故障通过，A07/G-L仍review。销毁失败安全退路和整体close/save竞争等未验保留。
+
+AUTH-DESTROY-FAILURE-20261106：用户继续执行，Codex串行A07/A02/ConfigIntegrator核查并修复销毁失败退路；allowlist runtime/local_runtime.dart、platform/local/native_local_backend.dart、新test/runtime/runtime_destroy_failure_test.dart（相对clients/flutter/lib或test）、必要双端新故障集成入口、05、A02新v2.5冻结、tool/check.ps1及evidence/destroy-failure-20261106/status/handoff。先受控复现单轨release失败后错误接管与失败Future缓存，再最小修复不可信状态阻断及显式重试；旧v2.4/全部旧工作保留，不跨engine/P2/真实源/全局/提交推送。原生不新增故障API；平台回归与受控故障分别记录。
+
+AUTH-DESTROY-FAILURE-20261106限定修复完成：受控红例证实release失败后错误接管及失败Future缓存，已修runtime不可信锁存/暂停意图/接管起播围栏、native失败释放显式重试。最终quality-reviewed77/格式58/analyze/新v2.5的26冻结+05/锁通过；旧v2.4不改。独立review无Critical/Important，pause失败与并发release复用2测试已补。真实Android/Windows正常handoff回归各1项通过，不等于真实native故障注入。双端普通main Release构建通过，手机普通安装COLD ok/PID7900/Awake，Windows启动PID4684后关闭；产物摘要ordinary-final.json。部分多资源恢复/持续失败close收尾及整体竞争、跨engine/听感仍未验，A07/G-L仍review。旧修改全部保留，无提交推送发布。
+
+AUTH-CLOSE-FAILURE-20261106：用户继续执行，Codex串行A07/A02/ConfigIntegrator修复持续release失败阻断关闭清理；allowlist runtime/local_runtime.dart、platform/local/native_local_backend.dart、必要窄清理helper、新test/runtime/runtime_close_failure_test.dart、05/A02新v2.6/tool/check.ps1、evidence/close-failure-20261106/status/handoff。先红例确认writer锁/notifier/流/后续资源清理中断及mirror Future覆盖，再最小独立收尾与close去重。旧v2.5/全部既有改动保留，不全生命周期重写、不原生故障API/P2/全局/提交推送，双端正常回归与mock失败分开记录。
+
+AUTH-CLOSE-FAILURE-20261106限定目标于2026-11-07完成：持续release失败不再阻断后续独立清理，close成功/失败共用Future、首错stack保留、writer/notifier/流和后续handle尝试；真实mirror Future不被skip tick覆盖。最终Quality82/格式60/analyze/v2.6的28冻结+05/锁通过；旧v2.5不改。独立review首次额度失败、重试无阻断，两个测试缺口已补。Android11-06/Windows11-07真实正常close→读盘恢复各1项通过，非故障注入。普通双端Release构建通过，手机恢复新普通APK COLD ok/PID23428，Windows启动PID15784后关闭。never-completing Future/暂停订阅及整体save/destroy竞争仍未保证，A07/G-L仍review；无提交推送，旧修改保留。
+
+AUTH-GR-FIX-20261107：用户按review文档修改，领取global-review GR01/02；Codex串行A02/播放维护/ConfigIntegrator。allowlist playback_coordinator.dart、新test/playback/transition_recovery_test.dart、必要集成测试、05/A02新v2.7/check.ps1及evidence/gr-fixes-20261107/status/handoff。旧v2.6/全部修改保留，不提交推送或放行G-L。先红例再修复，平台结果与fake分开。
+
+AUTH-GR-FIX-20261107完成：GR01/02及追加pending B失败回退已修，9项红绿回归、最终91共同/格式分析/新v2.7的30冻结+05/锁通过。独立review追加Important已修并复核无新阻断。Android/Windows专项各4项真实事件介入通过，普通双端Release新构建，手机恢复COLD ok/PID27568。旧v2.6/所有旧工作保留，尚未提交推送；更广全局差异及条件提交授权需另作最终核对，G-L仍review。证据evidence/gr-fixes-20261107。

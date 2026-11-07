@@ -1,0 +1,96 @@
+diff --git a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+index f52204f..f781c27 100644
+--- a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
++++ b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+@@ -68,6 +68,15 @@ object LocalHost {
+                 val id = call.argument<String>("id")
+                 when (call.method) {
+                     "launchMode" -> { result.success(launchMode); return@setMethodCallHandler }
++                    "destroyEngineProbe" -> {
++                        check(launchMode == "save" && launchToken.isNotEmpty())
++                        val hostActivity = checkNotNull(activity)
++                        check(!destroyProbePending)
++                        destroyProbePending = true
++                        result.success(true) // Delivery is not a destruction receipt.
++                        hostActivity.window.decorView.post { hostActivity.finish() }
++                        return@setMethodCallHandler
++                    }
+                     "launchToken" -> { result.success(launchToken); return@setMethodCallHandler }
+                     "diagnosticScreen" -> {
+                         if (call.argument<Boolean>("keepOn") == true) activity?.window?.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+@@ -298,6 +307,31 @@ object LocalHost {
+         timeline("engine-create")
+         return engine
+     }
++    private var destroyProbePending = false
++    fun destroyDetachedProbe() {
++        if (!destroyProbePending) return
++        check(activity == null)
++        destroyProbePending = false
++        val old = checkNotNull(cached)
++        val oldId = old.hashCode()
++        val token = launchToken
++        readGates.values.forEach { it.cancel() }
++        players.values.forEach { it.pause(); it.release() }
++        players.clear()
++        abandonFocus()
++        stopPlaybackService()
++        commands.clear()
++        pendingSafetyPause = null
++        cached = null
++        timeline("engine-destroy-begin-$oldId")
++        old.destroy()
++        timeline("engine-destroy-complete-$oldId")
++        android.util.Log.i("JJOwnedProbe", org.json.JSONObject(mapOf(
++            "stage" to "engine-destroyed", "pid" to Process.myPid(),
++            "engine" to oldId, "probeToken" to token,
++            "players" to players.size, "focusHeld" to (focus != null)
++        )).toString())
++    }
+     private fun startPlaybackService() {
+         // Registration bookkeeping only; playback intent remains in Dart.
+         serviceRegistrationRequested = true
+diff --git a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/MainActivity.kt b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/MainActivity.kt
+index edd6ea9..9636706 100644
+--- a/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/MainActivity.kt
++++ b/clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/MainActivity.kt
+@@ -22,5 +22,6 @@ class MainActivity : FlutterActivity() {
+         LocalHost.timeline("activity-destroy")
+         if (LocalHost.activity === this) LocalHost.activity = null
+         super.onDestroy()
++        LocalHost.destroyDetachedProbe()
+     }
+ }
+diff --git a/clients/flutter/lib/p1_process_probe.dart b/clients/flutter/lib/p1_process_probe.dart
+index b88b530..ba54b33 100644
+--- a/clients/flutter/lib/p1_process_probe.dart
++++ b/clients/flutter/lib/p1_process_probe.dart
+@@ -104,6 +104,12 @@ Future<void> main(List<String> args) async {
+       'diskSnapshot': disk.toJson(),
+       'runtimeSnapshot': restored.toJson(),
+     };
++    if (Platform.isAndroid) {
++      await _until(() => runtime.backend.lastHost.containsKey('lifecycle'));
++      proof['engine'] = (r.backend.lastHost['lifecycle'] as List).lastWhere(
++        (v) => v['event'] == 'engine-create',
++      )['engine'];
++    }
+     if (mode == 'restore') {
+       final old = jsonDecode(
+         await authorityFile.readAsString(),
+@@ -194,6 +200,15 @@ Future<void> main(List<String> args) async {
+         ..remove('lifecycle');
+     }
+     await _proof(proof);
++    if (mode == 'save' &&
++        const bool.fromEnvironment('P1_ENGINE_LOSS') &&
++        Platform.isAndroid) {
++      // Only request destruction; the external native receipt proves it. Never
++      // await a Future whose engine is about to disappear.
++      unawaited(
++        NativeLocalBackend.channel.invokeMethod<bool>('destroyEngineProbe'),
++      );
++    }
+     // Stay alive. The controller must kill us; no graceful stop/save callback.
+   } catch (e) {
+     await _proof({'stage': 'error', 'pid': pid, 'error': e.toString()});

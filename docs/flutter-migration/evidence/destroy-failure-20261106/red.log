@@ -1,0 +1,37 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_destroy_failure_test.dart
+00:00 +0: failed destruction cannot transfer or restart uncertain live resource
+00:00 +0 -1: failed destruction cannot transfer or restart uncertain live resource [E]
+  Expected: 'runtime-backend-uncertain'
+    Actual: <null>
+     Which: not an <Instance of 'String'>
+  
+  package:matcher                                      expect
+  package:flutter_test/src/widget_tester.dart 473:18   expect
+  test\runtime\runtime_destroy_failure_test.dart 66:5  main.<fn>
+  
+  PathAccessException: Deletion failed, path = 'C:\Users\50138\AppData\Local\Temp/jj-owned-p1/recovery\destroy-fail-1888-1793966561125610' (OS Error: 另一个程序正在使用此文件，进程无法访问。, errno = 32)
+  dart:io                                               FileSystemEntity.delete
+  test\runtime\runtime_destroy_failure_test.dart 56:43  main.<fn>.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                            _CustomZone.registerUnaryCallback
+  test\runtime\runtime_destroy_failure_test.dart 52:9   main.<fn>.<fn>
+  
+00:00 +0 -1: explicit destruction retry uses new release attempt and trusted receipt
+00:00 +0 -2: explicit destruction retry uses new release attempt and trusted receipt [E]
+  PlatformException(owned-release-fault, null, null, null)
+  package:flutter/src/services/message_codecs.dart 653:7     StandardMethodCodec.decodeEnvelope
+  package:flutter/src/services/platform_channel.dart 366:18  MethodChannel._invokeMethod
+  
+  PathAccessException: Deletion failed, path = 'C:\Users\50138\AppData\Local\Temp/jj-owned-p1/recovery\destroy-fail-1888-1793966561572810' (OS Error: 另一个程序正在使用此文件，进程无法访问。, errno = 32)
+  dart:io                                               FileSystemEntity.delete
+  test\runtime\runtime_destroy_failure_test.dart 56:43  main.<fn>.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                            _CustomZone.registerUnaryCallback
+  test\runtime\runtime_destroy_failure_test.dart 52:9   main.<fn>.<fn>
+  
+00:00 +0 -2: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_destroy_failure_test.dart: explicit destruction retry uses new release attempt and trusted receipt
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_destroy_failure_test.dart: failed destruction cannot transfer or restart uncertain live resource

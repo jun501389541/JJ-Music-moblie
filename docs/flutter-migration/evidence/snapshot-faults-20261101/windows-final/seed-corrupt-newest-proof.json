@@ -1,0 +1,16 @@
+{
+  "stage": "seeded",
+  "scenario": "corrupt-newest",
+  "runId": "faults-20261101-w2-corrupt-newest",
+  "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-corrupt-newest",
+  "savedReceipts": [
+    1,
+    2
+  ],
+  "files": {
+    "snapshot-a.json": "{partial",
+    "snapshot-b.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-w2-corrupt-newest\",\"revision\":1,\"playbackSessionId\":\"session-faults-20261101-w2-corrupt-newest\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":1,\"positionMs\":1234,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+    "snapshot-b.json.tmp": "{unfinished-revision-3"
+  },
+  "pid": 13876
+}

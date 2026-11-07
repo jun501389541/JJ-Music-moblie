@@ -1,0 +1,32 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/transition_recovery_test.dart
+00:00 +0: pending B failure restores A only if resumed remainPaused=false
+00:00 +0 -1: pending B failure restores A only if resumed remainPaused=false [E]
+  Expected: <true>
+    Actual: <false>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\transition_recovery_test.dart 46:7    main.<fn>
+  
+00:00 +0 -1: pending B failure restores A only if resumed remainPaused=true
+00:00 +0 -2: pending B failure restores A only if resumed remainPaused=true [E]
+  Expected: DesiredTransport:<DesiredTransport.paused>
+    Actual: DesiredTransport:<DesiredTransport.playing>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\transition_recovery_test.dart 47:7    main.<fn>
+  
+00:00 +0 -2: GR01 seek rolls back only with playing intent paused=false
+00:00 +1 -2: GR01 seek rolls back only with playing intent paused=true
+00:00 +2 -2: GR01 remove rolls back only with playing intent paused=false
+00:00 +3 -2: GR01 remove rolls back only with playing intent paused=true
+00:00 +4 -2: GR02 resume follows latest B ready-before-pause
+00:00 +5 -2: GR02 resume follows latest B ready-during-pause
+00:00 +6 -2: GR02 resume follows latest B ready-after-resume
+00:00 +7 -2: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/transition_recovery_test.dart: pending B failure restores A only if resumed remainPaused=false
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/transition_recovery_test.dart: pending B failure restores A only if resumed remainPaused=true

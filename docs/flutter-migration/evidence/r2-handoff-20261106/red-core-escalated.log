@@ -1,0 +1,99 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/coordinator_handoff_test.dart
+test/playback/coordinator_handoff_test.dart:45:22: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+ - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+    final result = c.handoffSingleTrack(expectedClaim: c.claim, newOwner: 'next-owner');
+                     ^^^^^^^^^^^^^^^^^^
+test/playback/coordinator_handoff_test.dart:75:18: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+ - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+      expect(old.handoffSingleTrack(expectedClaim: oldClaim, newOwner: 'third').failure, isNotNull);
+                 ^^^^^^^^^^^^^^^^^^
+test/playback/coordinator_handoff_test.dart:96:14: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+ - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+    expect(c.handoffSingleTrack(expectedClaim: ControllerClaim(claim.ownerId, claim.coordinatorEpoch + 1, claim.playbackSessionId), newOwner: 'next').failure, isNotNull);
+             ^^^^^^^^^^^^^^^^^^
+test/playback/coordinator_handoff_test.dart:97:14: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+ - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+    expect(c.handoffSingleTrack(expectedClaim: claim, newOwner: claim.ownerId).failure, isNotNull);
+             ^^^^^^^^^^^^^^^^^^
+test/playback/coordinator_handoff_test.dart:103:14: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+ - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+    expect(c.handoffSingleTrack(expectedClaim: c.claim, newOwner: 'next').failure, 'handoff-busy');
+             ^^^^^^^^^^^^^^^^^^
+test/playback/coordinator_handoff_test.dart:107:14: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+ - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+    expect(c.handoffSingleTrack(expectedClaim: c.claim, newOwner: 'next').failure, 'handoff-unsupported');
+             ^^^^^^^^^^^^^^^^^^
+test/playback/coordinator_handoff_test.dart:113:14: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+ - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+    expect(c.handoffSingleTrack(expectedClaim: c.claim, newOwner: 'next').failure, 'handoff-busy');
+             ^^^^^^^^^^^^^^^^^^
+test/playback/coordinator_handoff_test.dart:131:14: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+ - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+    expect(c.handoffSingleTrack(expectedClaim: c.claim, newOwner: 'next').failure, 'handoff-busy');
+             ^^^^^^^^^^^^^^^^^^
+test/playback/coordinator_handoff_test.dart:142:14: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+ - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+    expect(c.handoffSingleTrack(expectedClaim: c.claim, newOwner: 'next').failure, 'handoff-unsupported');
+             ^^^^^^^^^^^^^^^^^^
+00:00 +0 -1: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/coordinator_handoff_test.dart [E]
+  Failed to load "E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/coordinator_handoff_test.dart":
+  Compilation failed for testPath=E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/coordinator_handoff_test.dart: test/playback/coordinator_handoff_test.dart:45:22: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+   - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+      final result = c.handoffSingleTrack(expectedClaim: c.claim, newOwner: 'next-owner');
+                       ^^^^^^^^^^^^^^^^^^
+  test/playback/coordinator_handoff_test.dart:75:18: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+   - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+        expect(old.handoffSingleTrack(expectedClaim: oldClaim, newOwner: 'third').failure, isNotNull);
+                   ^^^^^^^^^^^^^^^^^^
+  test/playback/coordinator_handoff_test.dart:96:14: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+   - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+      expect(c.handoffSingleTrack(expectedClaim: ControllerClaim(claim.ownerId, claim.coordinatorEpoch + 1, claim.playbackSessionId), newOwner: 'next').failure, isNotNull);
+               ^^^^^^^^^^^^^^^^^^
+  test/playback/coordinator_handoff_test.dart:97:14: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+   - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+      expect(c.handoffSingleTrack(expectedClaim: claim, newOwner: claim.ownerId).failure, isNotNull);
+               ^^^^^^^^^^^^^^^^^^
+  test/playback/coordinator_handoff_test.dart:103:14: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+   - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+      expect(c.handoffSingleTrack(expectedClaim: c.claim, newOwner: 'next').failure, 'handoff-busy');
+               ^^^^^^^^^^^^^^^^^^
+  test/playback/coordinator_handoff_test.dart:107:14: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+   - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+      expect(c.handoffSingleTrack(expectedClaim: c.claim, newOwner: 'next').failure, 'handoff-unsupported');
+               ^^^^^^^^^^^^^^^^^^
+  test/playback/coordinator_handoff_test.dart:113:14: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+   - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+      expect(c.handoffSingleTrack(expectedClaim: c.claim, newOwner: 'next').failure, 'handoff-busy');
+               ^^^^^^^^^^^^^^^^^^
+  test/playback/coordinator_handoff_test.dart:131:14: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+   - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+      expect(c.handoffSingleTrack(expectedClaim: c.claim, newOwner: 'next').failure, 'handoff-busy');
+               ^^^^^^^^^^^^^^^^^^
+  test/playback/coordinator_handoff_test.dart:142:14: Error: The method 'handoffSingleTrack' isn't defined for the type 'PlaybackCoordinator'.
+   - 'PlaybackCoordinator' is from 'package:jj_music_mobile/application/playback/playback_coordinator.dart' ('lib/application/playback/playback_coordinator.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'handoffSingleTrack'.
+      expect(c.handoffSingleTrack(expectedClaim: c.claim, newOwner: 'next').failure, 'handoff-unsupported');
+               ^^^^^^^^^^^^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/coordinator_handoff_test.dart: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/coordinator_handoff_test.dart

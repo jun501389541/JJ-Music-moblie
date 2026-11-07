@@ -1,0 +1,5 @@
+2026-11-06 Asia/Shanghai
+Scope: documentation-only incremental A08 review, no product execution.
+Relative Markdown targets in 20261106-review.md checked with Test-Path; exit 0.
+Prior snapshot-faults source and evidence remain untracked and preserved.
+Git branch codex/seek-boundaries; no commit/push/merge/release.

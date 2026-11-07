@@ -1,0 +1,17 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_handoff_busy_test.dart
+test/runtime/runtime_handoff_busy_test.dart:138:45: Error: Cannot invoke a non-'const' constructor where a const expression is expected.
+Try using a constructor or factory that is 'const'.
+        gate.completion.completeError(const PlatformException(code: 'owned-mirror-fault'));
+                                            ^^^^^^^^^^^^^^^^^
+00:00 +0 -1: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_handoff_busy_test.dart [E]
+  Failed to load "E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_handoff_busy_test.dart":
+  Compilation failed for testPath=E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_handoff_busy_test.dart: test/runtime/runtime_handoff_busy_test.dart:138:45: Error: Cannot invoke a non-'const' constructor where a const expression is expected.
+  Try using a constructor or factory that is 'const'.
+          gate.completion.completeError(const PlatformException(code: 'owned-mirror-fault'));
+                                              ^^^^^^^^^^^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_handoff_busy_test.dart: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_handoff_busy_test.dart

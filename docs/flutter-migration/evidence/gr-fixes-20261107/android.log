@@ -1,0 +1,18 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/transition_recovery_test.dart
+Running Gradle task 'assembleDebug'...                          
+Picked up JAVA_TOOL_OPTIONS: -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=7897 -Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=7897 -Dhttp.nonProxyHosts=localhost|127.*|[::1]
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Running Gradle task 'assembleDebug'...                             10.7s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           3.5s
+00:00 +0: real transition recovery seek
+TRANSITION_RECOVERY platform=android mode=seek pid=26611 intercepted=true current=owned-a requested=owned-a position=3306 confirmations=1
+00:02 +1: real transition recovery remove
+TRANSITION_RECOVERY platform=android mode=remove pid=26611 intercepted=true current=owned-a requested=owned-a position=615 confirmations=1
+00:03 +2: real transition recovery resume-incoming
+TRANSITION_RECOVERY platform=android mode=resume-incoming pid=26611 intercepted=true current=owned-b requested=owned-b position=590 confirmations=2
+00:04 +3: real transition recovery resume-prepared
+TRANSITION_RECOVERY platform=android mode=resume-prepared pid=26611 intercepted=false current=owned-b requested=owned-b position=559 confirmations=2
+00:06 +4: (tearDownAll)
+00:06 +4: All tests passed!

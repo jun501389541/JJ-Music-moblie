@@ -1,0 +1,7 @@
+Final scope/artifact/document validation
+24 final frozen sources + authority unchanged after checks/builds
+Current ordinary APK and Windows full bundle hashes match recorded files
+Report/design/plan links exist
+Old v2.3 freeze has no Git diff
+Tracked scope patch + new test hashes saved; device Android remains not-run
+Exit 0

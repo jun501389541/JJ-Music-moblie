@@ -1,0 +1,8 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/integration_test/coordinator_handoff_test.dart
+Building Windows application...                                    16.2s
+√ Built build\windows\x64\runner\Debug\jj_music_mobile.exe
+00:00 +0: cooperative new authority retains native single track
+COORD_HANDOFF={"platform":"windows","pid":9820,"oldEpoch":1793966849461111,"newEpoch":1793966849461112,"backendEpoch":1,"handle":"native-1","savedPosition":2345,"handoffPosition":2794,"confirmation":["local-9820-1793966849461:1"],"host":null,"finalSamples":[]}
+00:02 +1: (tearDownAll)
+00:02 +1: All tests passed!

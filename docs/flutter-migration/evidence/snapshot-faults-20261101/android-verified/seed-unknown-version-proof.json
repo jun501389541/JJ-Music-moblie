@@ -1,0 +1,16 @@
+{
+  "stage": "seeded",
+  "scenario": "unknown-version",
+  "runId": "faults-20261101-a2-unknown-version",
+  "directory": "/data/user/0/dev.jjmusic.diagnostics.jj_music_mobile/code_cache/jj-owned-p1/recovery/faults-20261101-a2-unknown-version",
+  "savedReceipts": [
+    1,
+    2
+  ],
+  "files": {
+    "snapshot-a.json": "{\"formatVersion\":99,\"runId\":\"faults-20261101-a2-unknown-version\",\"revision\":2,\"playbackSessionId\":\"session-faults-20261101-a2-unknown-version\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":0,\"positionMs\":2345,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+    "snapshot-b.json": "{\"formatVersion\":99,\"runId\":\"faults-20261101-a2-unknown-version\",\"revision\":1,\"playbackSessionId\":\"session-faults-20261101-a2-unknown-version\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":1,\"positionMs\":1234,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}"
+  },
+  "pid": 17989,
+  "probeToken": "24b3dc7fa2d046ca99b1a5c8a84e83cf"
+}

@@ -1,0 +1,7 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_handoff_busy_test.dart
+00:00 +0: mirror gate rejects handoff without side effects, then clears fails=false
+00:00 +1: mirror gate rejects handoff without side effects, then clears fails=true
+00:01 +2: destroy pending release rejects handoff and overlapping save/destroy
+00:01 +3: save validation failure clears busy without pretending a save succeeded
+00:01 +4: All tests passed!

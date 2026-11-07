@@ -1,0 +1,320 @@
+{
+  "platform": "Windows",
+  "device": "",
+  "entrypoint": "lib/p1_snapshot_fault_probe.dart",
+  "binarySha256": "aa78e3708c8b9a9363d89a371703d416b8f9bd4c52530c51fe303bcea3ea54a9",
+  "cases": [
+    {
+      "scenario": "missing",
+      "forcedTermination": true,
+      "seed": {
+        "stage": "seeded",
+        "scenario": "missing",
+        "runId": "faults-20261101-w2-missing",
+        "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-missing",
+        "savedReceipts": [],
+        "files": {},
+        "pid": 42592
+      },
+      "checked": {
+        "stage": "checked",
+        "scenario": "missing",
+        "runId": "faults-20261101-w2-missing",
+        "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-missing",
+        "coordinatorEpoch": 1793494284271664,
+        "revision": 0,
+        "desired": "stopped",
+        "position": 0,
+        "snapshot": null,
+        "issues": [],
+        "consumers": 0,
+        "nativeSamples": [],
+        "servicePresent": null,
+        "focusHeld": null,
+        "observationMs": 700,
+        "freshNativePolls": 6,
+        "bridgeErrors": 0,
+        "files": {},
+        "pid": 30752
+      }
+    },
+    {
+      "scenario": "corrupt",
+      "forcedTermination": true,
+      "seed": {
+        "stage": "seeded",
+        "scenario": "corrupt",
+        "runId": "faults-20261101-w2-corrupt",
+        "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-corrupt",
+        "savedReceipts": [
+          1,
+          2
+        ],
+        "files": {
+          "snapshot-a.json": "{partial",
+          "snapshot-b.json": "{partial"
+        },
+        "pid": 38000
+      },
+      "checked": {
+        "stage": "checked",
+        "scenario": "corrupt",
+        "runId": "faults-20261101-w2-corrupt",
+        "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-corrupt",
+        "coordinatorEpoch": 1793494286998845,
+        "revision": 0,
+        "desired": "stopped",
+        "position": 0,
+        "snapshot": null,
+        "issues": [
+          "snapshot-invalid-or-unreadable",
+          "snapshot-invalid-or-unreadable"
+        ],
+        "consumers": 0,
+        "nativeSamples": [],
+        "servicePresent": null,
+        "focusHeld": null,
+        "observationMs": 700,
+        "freshNativePolls": 6,
+        "bridgeErrors": 0,
+        "files": {
+          "snapshot-a.json": "{partial",
+          "snapshot-b.json": "{partial"
+        },
+        "pid": 43192
+      }
+    },
+    {
+      "scenario": "unknown-version",
+      "forcedTermination": true,
+      "seed": {
+        "stage": "seeded",
+        "scenario": "unknown-version",
+        "runId": "faults-20261101-w2-unknown-version",
+        "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-unknown-version",
+        "savedReceipts": [
+          1,
+          2
+        ],
+        "files": {
+          "snapshot-a.json": "{\"formatVersion\":99,\"runId\":\"faults-20261101-w2-unknown-version\",\"revision\":2,\"playbackSessionId\":\"session-faults-20261101-w2-unknown-version\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":0,\"positionMs\":2345,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+          "snapshot-b.json": "{\"formatVersion\":99,\"runId\":\"faults-20261101-w2-unknown-version\",\"revision\":1,\"playbackSessionId\":\"session-faults-20261101-w2-unknown-version\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":1,\"positionMs\":1234,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}"
+        },
+        "pid": 44504
+      },
+      "checked": {
+        "stage": "checked",
+        "scenario": "unknown-version",
+        "runId": "faults-20261101-w2-unknown-version",
+        "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-unknown-version",
+        "coordinatorEpoch": 1793494289812504,
+        "revision": 0,
+        "desired": "stopped",
+        "position": 0,
+        "snapshot": null,
+        "issues": [
+          "snapshot-invalid-or-unreadable",
+          "snapshot-invalid-or-unreadable"
+        ],
+        "consumers": 0,
+        "nativeSamples": [],
+        "servicePresent": null,
+        "focusHeld": null,
+        "observationMs": 700,
+        "freshNativePolls": 6,
+        "bridgeErrors": 0,
+        "files": {
+          "snapshot-a.json": "{\"formatVersion\":99,\"runId\":\"faults-20261101-w2-unknown-version\",\"revision\":2,\"playbackSessionId\":\"session-faults-20261101-w2-unknown-version\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":0,\"positionMs\":2345,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+          "snapshot-b.json": "{\"formatVersion\":99,\"runId\":\"faults-20261101-w2-unknown-version\",\"revision\":1,\"playbackSessionId\":\"session-faults-20261101-w2-unknown-version\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":1,\"positionMs\":1234,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}"
+        },
+        "pid": 39808
+      }
+    },
+    {
+      "scenario": "unavailable-fixture",
+      "forcedTermination": true,
+      "seed": {
+        "stage": "seeded",
+        "scenario": "unavailable-fixture",
+        "runId": "faults-20261101-w2-unavailable-fixture",
+        "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-unavailable-fixture",
+        "savedReceipts": [
+          1,
+          2
+        ],
+        "files": {
+          "snapshot-a.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-w2-unavailable-fixture\",\"revision\":2,\"playbackSessionId\":\"session-faults-20261101-w2-unavailable-fixture\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"not-owned\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":0,\"positionMs\":2345,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+          "snapshot-b.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-w2-unavailable-fixture\",\"revision\":1,\"playbackSessionId\":\"session-faults-20261101-w2-unavailable-fixture\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"not-owned\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":1,\"positionMs\":1234,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}"
+        },
+        "pid": 40152
+      },
+      "checked": {
+        "stage": "checked",
+        "scenario": "unavailable-fixture",
+        "runId": "faults-20261101-w2-unavailable-fixture",
+        "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-unavailable-fixture",
+        "coordinatorEpoch": 1793494292520460,
+        "revision": 0,
+        "desired": "stopped",
+        "position": 0,
+        "snapshot": null,
+        "issues": [
+          "snapshot-invalid-or-unreadable",
+          "snapshot-invalid-or-unreadable"
+        ],
+        "consumers": 0,
+        "nativeSamples": [],
+        "servicePresent": null,
+        "focusHeld": null,
+        "observationMs": 700,
+        "freshNativePolls": 6,
+        "bridgeErrors": 0,
+        "files": {
+          "snapshot-a.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-w2-unavailable-fixture\",\"revision\":2,\"playbackSessionId\":\"session-faults-20261101-w2-unavailable-fixture\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"not-owned\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":0,\"positionMs\":2345,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+          "snapshot-b.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-w2-unavailable-fixture\",\"revision\":1,\"playbackSessionId\":\"session-faults-20261101-w2-unavailable-fixture\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"not-owned\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":1,\"positionMs\":1234,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}"
+        },
+        "pid": 32752
+      }
+    },
+    {
+      "scenario": "partial-temp",
+      "forcedTermination": true,
+      "seed": {
+        "stage": "seeded",
+        "scenario": "partial-temp",
+        "runId": "faults-20261101-w2-partial-temp",
+        "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-partial-temp",
+        "savedReceipts": [
+          1,
+          2
+        ],
+        "files": {
+          "snapshot-a.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-w2-partial-temp\",\"revision\":2,\"playbackSessionId\":\"session-faults-20261101-w2-partial-temp\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":0,\"positionMs\":2345,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+          "snapshot-b.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-w2-partial-temp\",\"revision\":1,\"playbackSessionId\":\"session-faults-20261101-w2-partial-temp\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":1,\"positionMs\":1234,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+          "snapshot-b.json.tmp": "{unfinished-revision-3"
+        },
+        "pid": 43208
+      },
+      "checked": {
+        "stage": "checked",
+        "scenario": "partial-temp",
+        "runId": "faults-20261101-w2-partial-temp",
+        "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-partial-temp",
+        "coordinatorEpoch": 1793494295197790,
+        "revision": 2,
+        "desired": "paused",
+        "position": 2345,
+        "snapshot": {
+          "formatVersion": 1,
+          "runId": "faults-20261101-w2-partial-temp",
+          "revision": 2,
+          "playbackSessionId": "session-faults-20261101-w2-partial-temp",
+          "entries": [
+            {
+              "entryId": "owned-a",
+              "trackKey": "owned-tone",
+              "fixtureId": "tone-long"
+            },
+            {
+              "entryId": "owned-b",
+              "trackKey": "owned-tone",
+              "fixtureId": "tone-long"
+            }
+          ],
+          "currentIndex": 0,
+          "positionMs": 2345,
+          "mode": "sequence",
+          "preview": false,
+          "confirmations": [
+            "fixture-confirmation:1"
+          ]
+        },
+        "issues": [],
+        "consumers": 0,
+        "nativeSamples": [],
+        "servicePresent": null,
+        "focusHeld": null,
+        "observationMs": 700,
+        "freshNativePolls": 6,
+        "bridgeErrors": 0,
+        "files": {
+          "snapshot-a.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-w2-partial-temp\",\"revision\":2,\"playbackSessionId\":\"session-faults-20261101-w2-partial-temp\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":0,\"positionMs\":2345,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+          "snapshot-b.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-w2-partial-temp\",\"revision\":1,\"playbackSessionId\":\"session-faults-20261101-w2-partial-temp\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":1,\"positionMs\":1234,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+          "snapshot-b.json.tmp": "{unfinished-revision-3"
+        },
+        "pid": 43676
+      }
+    },
+    {
+      "scenario": "corrupt-newest",
+      "forcedTermination": true,
+      "seed": {
+        "stage": "seeded",
+        "scenario": "corrupt-newest",
+        "runId": "faults-20261101-w2-corrupt-newest",
+        "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-corrupt-newest",
+        "savedReceipts": [
+          1,
+          2
+        ],
+        "files": {
+          "snapshot-a.json": "{partial",
+          "snapshot-b.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-w2-corrupt-newest\",\"revision\":1,\"playbackSessionId\":\"session-faults-20261101-w2-corrupt-newest\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":1,\"positionMs\":1234,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+          "snapshot-b.json.tmp": "{unfinished-revision-3"
+        },
+        "pid": 13876
+      },
+      "checked": {
+        "stage": "checked",
+        "scenario": "corrupt-newest",
+        "runId": "faults-20261101-w2-corrupt-newest",
+        "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-corrupt-newest",
+        "coordinatorEpoch": 1793494298490710,
+        "revision": 1,
+        "desired": "paused",
+        "position": 1234,
+        "snapshot": {
+          "formatVersion": 1,
+          "runId": "faults-20261101-w2-corrupt-newest",
+          "revision": 1,
+          "playbackSessionId": "session-faults-20261101-w2-corrupt-newest",
+          "entries": [
+            {
+              "entryId": "owned-a",
+              "trackKey": "owned-tone",
+              "fixtureId": "tone-long"
+            },
+            {
+              "entryId": "owned-b",
+              "trackKey": "owned-tone",
+              "fixtureId": "tone-long"
+            }
+          ],
+          "currentIndex": 1,
+          "positionMs": 1234,
+          "mode": "sequence",
+          "preview": false,
+          "confirmations": [
+            "fixture-confirmation:1"
+          ]
+        },
+        "issues": [
+          "snapshot-invalid-or-unreadable"
+        ],
+        "consumers": 0,
+        "nativeSamples": [],
+        "servicePresent": null,
+        "focusHeld": null,
+        "observationMs": 700,
+        "freshNativePolls": 6,
+        "bridgeErrors": 0,
+        "files": {
+          "snapshot-a.json": "{partial",
+          "snapshot-b.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-w2-corrupt-newest\",\"revision\":1,\"playbackSessionId\":\"session-faults-20261101-w2-corrupt-newest\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":1,\"positionMs\":1234,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+          "snapshot-b.json.tmp": "{unfinished-revision-3"
+        },
+        "pid": 37700
+      }
+    }
+  ]
+}

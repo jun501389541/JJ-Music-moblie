@@ -1,0 +1,8 @@
+Stopping: dev.jjmusic.diagnostics.jj_music_mobile
+Starting: Intent { cmp=dev.jjmusic.diagnostics.jj_music_mobile/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: dev.jjmusic.diagnostics.jj_music_mobile/.MainActivity
+TotalTime: 261
+WaitTime: 269
+Complete

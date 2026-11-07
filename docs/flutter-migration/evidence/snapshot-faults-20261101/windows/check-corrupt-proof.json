@@ -1,0 +1,25 @@
+{
+  "stage": "checked",
+  "scenario": "corrupt",
+  "runId": "faults-20261101-w1-corrupt",
+  "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w1/jj-owned-p1/recovery\\faults-20261101-w1-corrupt",
+  "coordinatorEpoch": 1793494222441897,
+  "revision": 0,
+  "desired": "stopped",
+  "position": 0,
+  "snapshot": null,
+  "issues": [
+    "snapshot-invalid-or-unreadable",
+    "snapshot-invalid-or-unreadable"
+  ],
+  "consumers": 0,
+  "nativeSamples": [],
+  "servicePresent": null,
+  "focusHeld": null,
+  "observationMs": 700,
+  "files": {
+    "snapshot-a.json": "{partial",
+    "snapshot-b.json": "{partial"
+  },
+  "pid": 33648
+}

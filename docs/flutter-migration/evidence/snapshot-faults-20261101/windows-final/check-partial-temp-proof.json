@@ -1,0 +1,49 @@
+{
+  "stage": "checked",
+  "scenario": "partial-temp",
+  "runId": "faults-20261101-w2-partial-temp",
+  "directory": "E:\\Workspace\\project\\JJ-Music-mobile\\graphflow-out\\snapshot-fault-faults-20261101-w2/jj-owned-p1/recovery\\faults-20261101-w2-partial-temp",
+  "coordinatorEpoch": 1793494295197790,
+  "revision": 2,
+  "desired": "paused",
+  "position": 2345,
+  "snapshot": {
+    "formatVersion": 1,
+    "runId": "faults-20261101-w2-partial-temp",
+    "revision": 2,
+    "playbackSessionId": "session-faults-20261101-w2-partial-temp",
+    "entries": [
+      {
+        "entryId": "owned-a",
+        "trackKey": "owned-tone",
+        "fixtureId": "tone-long"
+      },
+      {
+        "entryId": "owned-b",
+        "trackKey": "owned-tone",
+        "fixtureId": "tone-long"
+      }
+    ],
+    "currentIndex": 0,
+    "positionMs": 2345,
+    "mode": "sequence",
+    "preview": false,
+    "confirmations": [
+      "fixture-confirmation:1"
+    ]
+  },
+  "issues": [],
+  "consumers": 0,
+  "nativeSamples": [],
+  "servicePresent": null,
+  "focusHeld": null,
+  "observationMs": 700,
+  "freshNativePolls": 6,
+  "bridgeErrors": 0,
+  "files": {
+    "snapshot-a.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-w2-partial-temp\",\"revision\":2,\"playbackSessionId\":\"session-faults-20261101-w2-partial-temp\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":0,\"positionMs\":2345,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+    "snapshot-b.json": "{\"formatVersion\":1,\"runId\":\"faults-20261101-w2-partial-temp\",\"revision\":1,\"playbackSessionId\":\"session-faults-20261101-w2-partial-temp\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":1,\"positionMs\":1234,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+    "snapshot-b.json.tmp": "{unfinished-revision-3"
+  },
+  "pid": 43676
+}

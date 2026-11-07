@@ -68,6 +68,15 @@ object LocalHost {
                 val id = call.argument<String>("id")
                 when (call.method) {
                     "launchMode" -> { result.success(launchMode); return@setMethodCallHandler }
+                    "destroyEngineProbe" -> {
+                        check(launchMode == "save" && launchToken.isNotEmpty())
+                        val hostActivity = checkNotNull(activity)
+                        check(!destroyProbePending)
+                        destroyProbePending = true
+                        result.success(true) // Delivery is not a destruction receipt.
+                        hostActivity.window.decorView.post { hostActivity.finish() }
+                        return@setMethodCallHandler
+                    }
                     "launchToken" -> { result.success(launchToken); return@setMethodCallHandler }
                     "diagnosticScreen" -> {
                         if (call.argument<Boolean>("keepOn") == true) activity?.window?.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -297,6 +306,31 @@ object LocalHost {
         engine.dartExecutor.executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault())
         timeline("engine-create")
         return engine
+    }
+    private var destroyProbePending = false
+    fun destroyDetachedProbe() {
+        if (!destroyProbePending) return
+        check(activity == null)
+        destroyProbePending = false
+        val old = checkNotNull(cached)
+        val oldId = old.hashCode()
+        val token = launchToken
+        readGates.values.forEach { it.cancel() }
+        players.values.forEach { it.pause(); it.release() }
+        players.clear()
+        abandonFocus()
+        stopPlaybackService()
+        commands.clear()
+        pendingSafetyPause = null
+        cached = null
+        timeline("engine-destroy-begin-$oldId")
+        old.destroy()
+        timeline("engine-destroy-complete-$oldId")
+        android.util.Log.i("JJOwnedProbe", org.json.JSONObject(mapOf(
+            "stage" to "engine-destroyed", "pid" to Process.myPid(),
+            "engine" to oldId, "probeToken" to token,
+            "players" to players.size, "focusHeld" to (focus != null)
+        )).toString())
     }
     private fun startPlaybackService() {
         // Registration bookkeeping only; playback intent remains in Dart.

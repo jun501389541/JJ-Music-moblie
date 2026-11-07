@@ -1,0 +1,2 @@
+--------- beginning of main
+11-01 08:52:29.360 15869 15869 I JJOwnedProbe: {"stage":"seeded","scenario":"corrupt","runId":"faults-20261101-a1-corrupt","directory":"/data/user/0/dev.jjmusic.diagnostics.jj_music_mobile/code_cache/jj-owned-p1/recovery/faults-20261101-a1-corrupt","savedReceipts":[1,2],"files":{"snapshot-a.json":"{partial","snapshot-b.json":"{partial"},"pid":15869,"probeToken":"81b8af1950144234a61b27921c023eef"}

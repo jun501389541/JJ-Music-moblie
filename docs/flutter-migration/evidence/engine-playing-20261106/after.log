@@ -1,0 +1,14 @@
+ M clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/LocalHost.kt
+ M clients/flutter/android/app/src/main/kotlin/dev/jjmusic/diagnostics/jj_music_mobile/MainActivity.kt
+ M clients/flutter/lib/p1_process_probe.dart
+ M docs/flutter-migration/handoff.md
+ M docs/flutter-migration/status.md
+?? clients/flutter/lib/p1_snapshot_fault_probe.dart
+?? clients/flutter/tool/run_android_engine_probe.ps1
+?? clients/flutter/tool/run_snapshot_fault_probe.ps1
+?? docs/flutter-migration/evidence/A08/20261106-check.log
+?? docs/flutter-migration/evidence/A08/20261106-index.log
+?? docs/flutter-migration/evidence/A08/20261106-review.md
+?? docs/flutter-migration/evidence/engine-loss-20261106/
+?? docs/flutter-migration/evidence/engine-playing-20261106/
+?? docs/flutter-migration/evidence/snapshot-faults-20261101/

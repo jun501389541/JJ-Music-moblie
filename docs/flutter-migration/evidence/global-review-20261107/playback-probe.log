@@ -1,0 +1,4 @@
+seek actions=[release:hb, seek:ha:3000] current=a requested=b desired=playing roles=[ha:active, hb:released]
+remove-incoming actions=[release:hb] current=a requested=null desired=playing roles=[ha:active, hb:released]
+pause-resume-ready actions=[pause, play:ha] current=a requested=b desired=playing roles=[ha:active, hb:incoming]
+pause-resume-pending actions=[pause, play:ha] current=a requested=b desired=playing roles=[ha:active, hb:prepared]

@@ -104,6 +104,12 @@ Future<void> main(List<String> args) async {
       'diskSnapshot': disk.toJson(),
       'runtimeSnapshot': restored.toJson(),
     };
+    if (Platform.isAndroid) {
+      await _until(() => runtime.backend.lastHost.containsKey('lifecycle'));
+      proof['engine'] = (r.backend.lastHost['lifecycle'] as List).lastWhere(
+        (v) => v['event'] == 'engine-create',
+      )['engine'];
+    }
     if (mode == 'restore') {
       final old = jsonDecode(
         await authorityFile.readAsString(),
@@ -193,7 +199,61 @@ Future<void> main(List<String> args) async {
       proof['stopHost'] = Map<String, dynamic>.of(r.backend.lastHost)
         ..remove('lifecycle');
     }
+    if (mode == 'save' && const bool.fromEnvironment('P1_ENGINE_PLAYING')) {
+      if (!Platform.isAndroid ||
+          !const bool.fromEnvironment('P1_ENGINE_LOSS')) {
+        throw StateError('playing-loss-requires-android-engine-probe');
+      }
+      final handle = r.snapshot.tracks.single.trackHandleId;
+      if (r.command('play')?.applied != true) {
+        throw StateError('pre-loss-resume-rejected');
+      }
+      Map<String, dynamic>? runningSample() {
+        for (final v in runtime.backend.lastHost['samples'] as List? ?? []) {
+          if (v['id'] == handle && v['nativePlaying'] == true) {
+            return Map<String, dynamic>.from(v as Map);
+          }
+        }
+        return null;
+      }
+
+      await _until(
+        () =>
+            runningSample() != null &&
+            runtime.snapshot.positionMs > s.positionMs + 100,
+      );
+      final first = runningSample()!;
+      await _until(
+        () =>
+            runningSample() != null &&
+            (runningSample()!['position'] as int) >
+                (first['position'] as int) + 200,
+      );
+      final second = runningSample()!;
+      if (r.snapshot.desired != DesiredTransport.playing ||
+          r.backend.consumers != 1 ||
+          r.snapshot.tracks.single.trackHandleId != handle ||
+          jsonEncode(r.snapshot.confirmations) != jsonEncode(s.confirmations) ||
+          r.coordinator.failures.isNotEmpty) {
+        throw StateError('pre-loss-playing-not-proven');
+      }
+      proof['lossWhilePlaying'] = {
+        'first': first,
+        'second': second,
+        'desired': r.snapshot.desired.name,
+        'consumers': r.backend.consumers,
+      };
+    }
     await _proof(proof);
+    if (mode == 'save' &&
+        const bool.fromEnvironment('P1_ENGINE_LOSS') &&
+        Platform.isAndroid) {
+      // Only request destruction; the external native receipt proves it. Never
+      // await a Future whose engine is about to disappear.
+      unawaited(
+        NativeLocalBackend.channel.invokeMethod<bool>('destroyEngineProbe'),
+      );
+    }
     // Stay alive. The controller must kill us; no graceful stop/save callback.
   } catch (e) {
     await _proof({'stage': 'error', 'pid': pid, 'error': e.toString()});

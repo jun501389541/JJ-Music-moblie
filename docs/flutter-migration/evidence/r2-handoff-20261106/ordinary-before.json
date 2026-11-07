@@ -1,0 +1,74 @@
+[
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\app\\outputs\\flutter-apk\\app-release.apk",
+    "Hash": "26115F7D628BA5FF9BBDB4146934FC16CC14666FDD3C55273047C2A9BFE1948E"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\flutter_windows.dll",
+    "Hash": "30494FB08F9F101A8FBE42568110AAA160EFBD7341F3CFE877DC14214BE3A233"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\jj_music_mobile.exe",
+    "Hash": "AA78E3708C8B9A9363D89A371703D416B8F9BD4C52530C51FE303BCEA3EA54A9"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\native_assets.json",
+    "Hash": "9548A31E4A048135C1D94F919328BFB62AE2C7BB3CAB96557C7941DAA97776CB"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\app.so",
+    "Hash": "B2C3EF8FF2C60A7B99D8137D9293D2F081F7125A22C75AE62EE3B4DD5A7DDA7C"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\icudtl.dat",
+    "Hash": "325A86063D26334C2EABE1743CEA073B612540FBF3D8FC2EF0B5708E3763A8C7"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\flutter_assets\\AssetManifest.bin",
+    "Hash": "422D5312425FDCAEEE26D4E683D1A3DBA74022284FDD91FF66C009A28F64DE2C"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\flutter_assets\\FontManifest.json",
+    "Hash": "28B1EB2B3D2E1AD60B8C8B0F9100B1CCBF492F7FA97F5BEBB51EA97E73926E7D"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\flutter_assets\\NativeAssetsManifest.json",
+    "Hash": "9548A31E4A048135C1D94F919328BFB62AE2C7BB3CAB96557C7941DAA97776CB"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\flutter_assets\\NOTICES.Z",
+    "Hash": "E6727ABEB5B9C52CD511308B6C3DA8BEFD130249ADA005085AB50E82453FECE4"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\flutter_assets\\fixtures\\local_playback\\README.md",
+    "Hash": "F51F5AA05DE163D28C411F3B47FB4A8A7D94A35429BC6035914A86A23474CDC6"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\flutter_assets\\fixtures\\local_playback\\SHA256SUMS",
+    "Hash": "41E44D8E88A6663E6964103E2100F25B2A4F029C2CE23A940AEE6B4AFC49F6EB"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\flutter_assets\\fixtures\\local_playback\\tone-a.wav",
+    "Hash": "E7F5E0C48BC0A088E5C26273EA995869125BB663201E1CC61DEDF6B80A336512"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\flutter_assets\\fixtures\\local_playback\\tone-b.wav",
+    "Hash": "6FDE56220D24F304BD37270879473BCDF775B9968DF2D7A4E4E679BD504C38E7"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\flutter_assets\\fixtures\\local_playback\\tone-long.wav",
+    "Hash": "38288BB41430CEF5D69B99ECBC356D3A6BD9DB2FFA6D907156BA8A825BFBD094"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\flutter_assets\\fonts\\MaterialIcons-Regular.otf",
+    "Hash": "CED99E203D4268BDA1E4396794F7544A1D4DB0B6CAD196BC9BA37D4D7B36E3BE"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\flutter_assets\\shaders\\ink_sparkle.frag",
+    "Hash": "1FE8436A743884CB65078FE8C7B38E18F5365F2A2961270916F426FD13C604AF"
+  },
+  {
+    "Path": "E:\\Workspace\\project\\JJ-Music-mobile\\clients\\flutter\\build\\windows\\x64\\runner\\Release\\data\\flutter_assets\\shaders\\stretch_effect.frag",
+    "Hash": "BC7599DBBBAAB310EFE41520574138D21FB18A88C8FE4495ED79315309336F6F"
+  }
+]

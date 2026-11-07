@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 import '../../domain/playback/contracts.dart';
 import 'native_evidence.dart';
+import 'close_actions.dart';
 
 class _Handle {
   _Handle(this.request, this.id);
@@ -35,6 +36,9 @@ class NativeLocalBackend implements PlaybackBackend {
   int _next = 0;
   int _transportRevision = 0;
   bool _polling = false, _closed = false;
+  final _closeActions = CloseActions();
+  Future<void>? _closeFuture;
+  List<Object> get closeFailures => _closeActions.failures;
   Map<String, dynamic> lastHost = {};
   int get consumers => _handles.length;
   @override
@@ -184,9 +188,18 @@ class NativeLocalBackend implements PlaybackBackend {
       return h.closing!;
     }
     h.retiring = true;
+    h.intended = false;
+    h.evidence.reset();
     return h.closing = () async {
-      await channel.invokeMethod<void>('release', {'id': h.id});
-      _handles.remove(h.id);
+      try {
+        await channel.invokeMethod<void>('release', {'id': h.id});
+        _handles.remove(h.id);
+      } catch (_) {
+        // Keep ownership uncertain, but do not cache a failed attempt forever.
+        // Only a subsequent explicit cleanup call may retry the idempotent release.
+        h.closing = null;
+        rethrow;
+      }
     }();
   }
 
@@ -259,15 +272,20 @@ class NativeLocalBackend implements PlaybackBackend {
     return ReleaseReceipt(trackHandleId, consumerId, backendEpoch);
   }
 
-  Future<void> close() async {
+  Future<void> close() => _closeFuture ??= _close();
+  Future<void> _close() async {
     _closed = true;
     _timer?.cancel();
     for (final h in _handles.values.toList()) {
-      await _closeHandle(h);
+      await _closeActions.run(() => _closeHandle(h));
     }
-    await flushLog();
-    await _stream.close();
-    await _system.close();
+    if (_handles.isNotEmpty) {
+      await _closeActions.run(pause);
+    }
+    await _closeActions.run(flushLog);
+    await _closeActions.run(_stream.close);
+    await _closeActions.run(_system.close);
+    _closeActions.throwIfFailed();
   }
 
   Future<List<ReleaseReceipt>> destroyNativeResources() async {

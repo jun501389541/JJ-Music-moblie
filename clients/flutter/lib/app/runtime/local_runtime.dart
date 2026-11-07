@@ -9,6 +9,7 @@ import '../../domain/playback/contracts.dart';
 import '../../domain/playback/recovery_snapshot.dart';
 import '../../data/prototype_recovery/file_snapshot_store.dart';
 import '../../platform/local/native_local_backend.dart';
+import '../../platform/local/close_actions.dart';
 
 const ownedA = QueueEntry(
   entryId: 'owned-a',
@@ -28,7 +29,7 @@ class LocalRuntime extends ChangeNotifier {
     this.store,
     this._lock,
     SnapshotReadResult loaded,
-  ) : coordinator = PlaybackCoordinator(
+  ) : _coordinator = PlaybackCoordinator(
         backend,
         sessionId:
             loaded.snapshot?.playbackSessionId ??
@@ -65,7 +66,9 @@ class LocalRuntime extends ChangeNotifier {
       );
     });
     _timer = Timer.periodic(const Duration(milliseconds: 200), (_) {
-      _mirrorFuture = _mirror();
+      if (!_mirroring) {
+        _mirrorFuture = _mirror();
+      }
     });
   }
   static Future<LocalRuntime>? _instance;
@@ -112,35 +115,72 @@ class LocalRuntime extends ChangeNotifier {
   }
 
   final NativeLocalBackend backend;
-  final PlaybackCoordinator coordinator;
+  PlaybackCoordinator _coordinator;
+  PlaybackCoordinator get coordinator => _coordinator;
   final FileSnapshotStore store;
   final RandomAccessFile _lock;
   int savedRevision = 0;
   Future<void>? _mirrorFuture;
   bool _closed = false;
-  Future<SnapshotSaveReceipt> save() async {
-    final s = snapshot;
-    final index = s.entries.indexWhere((e) => e.entryId == s.currentEntryId);
-    if (index < 0) {
-      throw StateError('no-confirmed-entry');
+  bool _saving = false, _destroying = false;
+  bool _backendUncertain = false;
+  final _closeActions = CloseActions();
+  Future<void>? _closeFuture;
+  List<Object> get closeFailures => _closeActions.failures;
+
+  /// Publish a cooperative authority replacement through this wrapper only.
+  CoordinatorHandoffResult handoffSingleTrack({required String newOwner}) {
+    if (_closed) {
+      return const CoordinatorHandoffResult.rejected('runtime-closed');
     }
-    final receipt = await store.save(
-      RecoverySnapshot(
-        runId: store.runId,
-        revision: savedRevision + 1,
-        playbackSessionId: s.playbackSessionId,
-        entries: s.entries,
-        currentIndex: index,
-        positionMs: s.positionMs,
-        mode: s.mode,
-        preview: s.preview,
-        confirmations: s.confirmations,
-      ),
+    if (_saving || _destroying || _mirroring) {
+      return const CoordinatorHandoffResult.rejected('runtime-busy');
+    }
+    if (_backendUncertain) {
+      return const CoordinatorHandoffResult.rejected(
+        'runtime-backend-uncertain',
+      );
+    }
+    final result = coordinator.handoffSingleTrack(
+      expectedClaim: coordinator.claim,
+      newOwner: newOwner,
     );
-    savedRevision = receipt.revision;
-    message = 'saved修订$savedRevision 已flush落盘；可停止进程后手动重开验证';
-    notifyListeners();
-    return receipt;
+    if (result.coordinator != null) {
+      _coordinator = result.coordinator!;
+      notifyListeners();
+    }
+    return result;
+  }
+
+  Future<SnapshotSaveReceipt> save() async {
+    if (_closed || _saving || _destroying) throw StateError('runtime-busy');
+    _saving = true;
+    try {
+      final s = snapshot;
+      final index = s.entries.indexWhere((e) => e.entryId == s.currentEntryId);
+      if (index < 0) {
+        throw StateError('no-confirmed-entry');
+      }
+      final receipt = await store.save(
+        RecoverySnapshot(
+          runId: store.runId,
+          revision: savedRevision + 1,
+          playbackSessionId: s.playbackSessionId,
+          entries: s.entries,
+          currentIndex: index,
+          positionMs: s.positionMs,
+          mode: s.mode,
+          preview: s.preview,
+          confirmations: s.confirmations,
+        ),
+      );
+      savedRevision = receipt.revision;
+      message = 'saved修订$savedRevision 已flush落盘；可停止进程后手动重开验证';
+      notifyListeners();
+      return receipt;
+    } finally {
+      _saving = false;
+    }
   }
 
   late final StreamSubscription<BackendEvent> _events;
@@ -151,16 +191,32 @@ class LocalRuntime extends ChangeNotifier {
   String message = '就绪；仅播放自有12秒样本';
   PlaybackSnapshot get snapshot => coordinator.snapshot;
   Future<void> destroyBackend() async {
-    final receipts = await backend.destroyNativeResources();
-    final ack = coordinator.backendReleased(_cmd(), receipts);
-    if (!ack.applied) {
-      throw StateError('backend-loss-not-proven');
+    if (_closed || _saving || _destroying) throw StateError('runtime-busy');
+    _destroying = true;
+    _backendUncertain = true;
+    try {
+      final receipts = await backend.destroyNativeResources();
+      final ack = coordinator.backendReleased(_cmd(), receipts);
+      if (!ack.applied) {
+        throw StateError('backend-loss-not-proven');
+      }
+      _backendUncertain = false;
+      message = '底层播放器已销毁；backendEpoch递增，暂停等待恢复';
+      notifyListeners();
+    } catch (_) {
+      // Never manufacture a release receipt or allow replay/adoption when the
+      // native cleanup outcome is unknown. Physical pause remains unproven.
+      coordinator.pause(_cmd());
+      message = '底层销毁未确认；暂停意图已提交，需显式重试销毁';
+      notifyListeners();
+      rethrow;
+    } finally {
+      _destroying = false;
     }
-    message = '底层播放器已销毁；backendEpoch递增，暂停等待恢复';
-    notifyListeners();
   }
 
   void reconnect() {
+    if (_closed) return;
     coordinator.attachUi('ui-${++_ui}');
     notifyListeners();
   }
@@ -169,6 +225,19 @@ class LocalRuntime extends ChangeNotifier {
       CommandContext('local-${++_request}', coordinator.claim);
   CommandAck? command(String name, {int position = 3000}) {
     final c = _cmd();
+    if (_closed) {
+      return CommandAck(
+        c.requestId,
+        failure: const PlaybackFailure('runtime-closed', 'accept'),
+      );
+    }
+    if ((_destroying || _backendUncertain) &&
+        const {'a', 'b', 'next', 'previous', 'play', 'seek'}.contains(name)) {
+      return CommandAck(
+        c.requestId,
+        failure: const PlaybackFailure('backend-state-uncertain', 'accept'),
+      );
+    }
     final ack = switch (name) {
       'a' => coordinator.play(
         c,
@@ -234,15 +303,21 @@ class LocalRuntime extends ChangeNotifier {
     }
   }
 
-  Future<void> close() async {
+  Future<void> close() => _closeFuture ??= _close();
+  Future<void> _close() async {
     _closed = true;
     _timer?.cancel();
-    await _mirrorFuture;
-    await _events.cancel();
-    await _commands.cancel();
-    await coordinator.dispose();
-    await backend.close();
-    await _lock.close();
-    super.dispose();
+    await _closeActions.run(() async {
+      await _mirrorFuture;
+    });
+    await _closeActions.run(_events.cancel);
+    await _closeActions.run(_commands.cancel);
+    await _closeActions.run(coordinator.dispose);
+    await _closeActions.run(backend.close);
+    await _closeActions.run(() async {
+      await _lock.close();
+    });
+    await _closeActions.run(() => super.dispose());
+    _closeActions.throwIfFailed();
   }
 }

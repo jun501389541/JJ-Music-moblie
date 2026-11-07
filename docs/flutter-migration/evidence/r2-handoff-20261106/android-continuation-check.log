@@ -1,0 +1,4 @@
+Android continuation final check: frozen24+05 unchanged; ordinary-current APK hash matches.
+android-final.log exit0/1 real test passed; ordinary install Success/start COLD ok recorded.
+Report/handoff local links exist; remote URLs skipped. Initial check treated historical HTTPS link as local and failed; corrected validator only, documents unchanged.
+No source change, common/Windows tests not rerun. Exit 0.

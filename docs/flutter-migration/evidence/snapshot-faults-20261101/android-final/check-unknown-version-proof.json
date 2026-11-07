@@ -1,0 +1,28 @@
+{
+  "stage": "checked",
+  "scenario": "unknown-version",
+  "runId": "faults-20261101-a1-unknown-version",
+  "directory": "/data/user/0/dev.jjmusic.diagnostics.jj_music_mobile/code_cache/jj-owned-p1/recovery/faults-20261101-a1-unknown-version",
+  "coordinatorEpoch": 1793494351974353,
+  "revision": 0,
+  "desired": "stopped",
+  "position": 0,
+  "snapshot": null,
+  "issues": [
+    "snapshot-invalid-or-unreadable",
+    "snapshot-invalid-or-unreadable"
+  ],
+  "consumers": 0,
+  "nativeSamples": [],
+  "servicePresent": false,
+  "focusHeld": false,
+  "observationMs": 700,
+  "freshNativePolls": 6,
+  "bridgeErrors": 0,
+  "files": {
+    "snapshot-a.json": "{\"formatVersion\":99,\"runId\":\"faults-20261101-a1-unknown-version\",\"revision\":2,\"playbackSessionId\":\"session-faults-20261101-a1-unknown-version\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":0,\"positionMs\":2345,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}",
+    "snapshot-b.json": "{\"formatVersion\":99,\"runId\":\"faults-20261101-a1-unknown-version\",\"revision\":1,\"playbackSessionId\":\"session-faults-20261101-a1-unknown-version\",\"entries\":[{\"entryId\":\"owned-a\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"},{\"entryId\":\"owned-b\",\"trackKey\":\"owned-tone\",\"fixtureId\":\"tone-long\"}],\"currentIndex\":1,\"positionMs\":1234,\"mode\":\"sequence\",\"preview\":false,\"confirmations\":[\"fixture-confirmation:1\"]}"
+  },
+  "pid": 16225,
+  "probeToken": "3f8fe724551a49c3b6a291bcc62338d4"
+}

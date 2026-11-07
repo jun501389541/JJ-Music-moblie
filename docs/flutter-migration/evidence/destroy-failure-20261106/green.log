@@ -1,0 +1,5 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/runtime/runtime_destroy_failure_test.dart
+00:00 +0: failed destruction cannot transfer or restart uncertain live resource
+00:00 +1: explicit destruction retry uses new release attempt and trusted receipt
+00:01 +2: All tests passed!

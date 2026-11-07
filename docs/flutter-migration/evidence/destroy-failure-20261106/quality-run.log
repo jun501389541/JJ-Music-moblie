@@ -1,0 +1,15 @@
+pub-get passed
+contract hashes passed
+format passed
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Analyzing flutter...                                            
+
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\runtime\runtime_destroy_failure_test.dart:35:9 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\runtime\runtime_destroy_failure_test.dart:63:11 - curly_braces_in_flow_control_structures
+
+2 issues found. (ran in 4.4s)
+Write-Error: 
+Line |
+   2 |  ./clients/flutter/tool/check.ps1 -Mode Quality -EvidenceDirectory E:/ …
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | analyze failed (exit 1); see E:\Workspace\project\JJ-Music-mobile\docs\flutter-migration\evidence\destroy-failure-20261106\quality

@@ -1,0 +1,349 @@
+diff --git a/clients/flutter/lib/application/playback/playback_coordinator.dart b/clients/flutter/lib/application/playback/playback_coordinator.dart
+index dc5b137..b392aef 100644
+--- a/clients/flutter/lib/application/playback/playback_coordinator.dart
++++ b/clients/flutter/lib/application/playback/playback_coordinator.dart
+@@ -4,6 +4,27 @@ import 'dart:convert';
+ import '../../domain/playback/contracts.dart';
+ import '../../domain/playback/recovery_snapshot.dart';
+ 
++/// A single subscription whose authority changes only synchronously in-isolate.
++class _EventRoute {
++  _EventRoute(PlaybackBackend backend, this.authority) {
++    subscription = backend.events.listen(
++      (event) => authority?._onEvent(event),
++      onError: (Object error) => authority?._fail('backend-stream', 'events'),
++    );
++  }
++  PlaybackCoordinator? authority;
++  late final StreamSubscription<BackendEvent> subscription;
++}
++
++class CoordinatorHandoffResult {
++  const CoordinatorHandoffResult._({this.coordinator, this.failure});
++  const CoordinatorHandoffResult.rejected(String code)
++    : coordinator = null,
++      failure = code;
++  final PlaybackCoordinator? coordinator;
++  final String? failure;
++}
++
+ class _Track {
+   _Track(this.request, this.resource);
+   final PrepareRequest request;
+@@ -37,15 +58,20 @@ class PlaybackCoordinator {
+     int initialEpoch = 1,
+   }) {
+     _epoch = initialEpoch;
+-    _subscription = backend.events.listen(
+-      _onEvent,
+-      onError: (Object error) => _fail('backend-stream', 'events'),
+-    );
++    _route = _EventRoute(backend, this);
+   }
++  PlaybackCoordinator._handoff(
++    this.backend,
++    this.sessionId,
++    this.releaseTimeout,
++    this._route,
++  );
+   final PlaybackBackend backend;
+   final String sessionId;
+   final Duration releaseTimeout;
+-  late final StreamSubscription<BackendEvent> _subscription;
++  late final _EventRoute _route;
++  int _backendOperations = 0;
++  bool _retired = false;
+   String _owner = 'owner-1';
+   int _epoch = 1, _generation = 0, _revision = 0, _cursor = 0;
+   int _backendEpoch = 1;
+@@ -93,10 +119,94 @@ class PlaybackCoordinator {
+   );
+ 
+   PlaybackSnapshot attachUi(String connectionId) {
+-    _ui = connectionId;
++    if (!_disposed) _ui = connectionId;
+     return snapshot;
+   }
+ 
++  /// Cooperative single-isolate replacement, never cross-engine recovery.
++  /// Only the runtime wrapper may publish this result to application clients.
++  CoordinatorHandoffResult handoffSingleTrack({
++    required ControllerClaim expectedClaim,
++    required String newOwner,
++  }) {
++    CoordinatorHandoffResult reject(String code) =>
++        CoordinatorHandoffResult._(failure: code);
++    if (_disposed ||
++        _route.authority != this ||
++        expectedClaim.ownerId != _owner ||
++        expectedClaim.coordinatorEpoch != _epoch ||
++        expectedClaim.playbackSessionId != sessionId ||
++        newOwner.isEmpty ||
++        newOwner == _owner) {
++      return reject('handoff-stale-authority');
++    }
++    if (_backendOperations != 0 ||
++        _pending.isNotEmpty ||
++        _preparing.isNotEmpty ||
++        _waitingPrepare != null ||
++        (_capacityTimer?.isActive ?? false)) {
++      return reject('handoff-busy');
++    }
++    final live = _tracks.values
++        .where((t) => t.role != TrackRole.released)
++        .toList();
++    final active = _tracks[_active];
++    if (live.length != 1 ||
++        active == null ||
++        live.single != active ||
++        active.role != TrackRole.active ||
++        active.revoked ||
++        active.releaseTimer != null ||
++        active.confirmation == null ||
++        !_confirmations.contains(active.confirmation) ||
++        !_entries.any(
++          (e) =>
++              e.entryId == active.request.entry.entryId &&
++              e.trackKey == active.request.entry.trackKey &&
++              e.fixtureId == active.request.entry.fixtureId,
++        ) ||
++        active.request.backendEpoch != _backendEpoch ||
++        (_desired != DesiredTransport.playing &&
++            _desired != DesiredTransport.paused)) {
++      return reject('handoff-unsupported');
++    }
++    final next =
++        PlaybackCoordinator._handoff(backend, sessionId, releaseTimeout, _route)
++          .._owner = newOwner
++          .._epoch = _epoch + 1
++          .._generation = _generation
++          .._revision = _revision
++          .._cursor = _cursor + 1
++          .._backendEpoch = _backendEpoch
++          .._confirmationCounter = _confirmationCounter
++          .._active = _active
++          .._currentRequest = _currentRequest
++          .._requested = _requested
++          .._restoredEntry = _restoredEntry
++          .._position = _position
++          .._duration = _duration
++          .._preview = _preview
++          .._mode = _mode
++          .._desired = _desired
++          .._entries = List.of(_entries);
++    next._tracks[active.resource.trackHandleId] =
++        _Track(active.request, active.resource)
++          ..role = active.role
++          ..sequence = active.sequence
++          ..confirmation = active.confirmation
++          ..transitionId = active.transitionId;
++    next._confirmations.addAll(_confirmations);
++    next._failures.addAll(_failures);
++    final result = CoordinatorHandoffResult._(coordinator: next);
++    // Commit contains no external call, Future, notification or stream listen.
++    _retired = true;
++    _disposed = true;
++    _tracks.clear();
++    _active = null;
++    _route.authority = next;
++    return result;
++  }
++
+   /// Fresh authority only. R3 never restores native handles or auto-plays.
+   void restoreSnapshot(RecoverySnapshot saved) {
+     if (!_disposed &&
+@@ -235,13 +345,17 @@ class PlaybackCoordinator {
+   }
+ 
+   void _dispatch(Future<void> Function() operation, String stage) {
++    _backendOperations++;
+     try {
+       unawaited(
+-        operation().catchError((Object error) {
+-          _fail('backend-failure', stage);
+-        }),
++        operation()
++            .catchError((Object error) {
++              _fail('backend-failure', stage);
++            })
++            .whenComplete(() => _backendOperations--),
+       );
+     } catch (_) {
++      _backendOperations--;
+       _fail('backend-failure', stage);
+     }
+   }
+@@ -333,6 +447,7 @@ class PlaybackCoordinator {
+       return;
+     }
+     _preparing.add(request.requestId);
++    _backendOperations++;
+     try {
+       unawaited(
+         backend
+@@ -346,15 +461,20 @@ class PlaybackCoordinator {
+                     request.requestId == _currentRequest &&
+                     request.generation == _generation) {
+                   _fail('prepare-failure', 'prepare');
+-                  _desired = _active == null
+-                      ? DesiredTransport.stopped
+-                      : DesiredTransport.playing;
++                  _currentRequest = null;
++                  _requested = _tracks[_active]?.request.entry.entryId;
++                  if (_active == null) {
++                    _desired = DesiredTransport.stopped;
++                  }
++                  _resumeValidActive();
+                 }
+                 _drainWaiting();
+               },
+-            ),
++            )
++            .whenComplete(() => _backendOperations--),
+       );
+     } catch (_) {
++      _backendOperations--;
+       _pending.remove(request.requestId);
+       _preparing.remove(request.requestId);
+       _fail('prepare-failure', 'prepare');
+@@ -460,16 +580,17 @@ class PlaybackCoordinator {
+       }
+       return ack;
+     }
+-    final track = _active == null
+-        ? _tracks.values
+-              .where(
+-                (t) =>
+-                    (t.role == TrackRole.prepared ||
+-                        t.role == TrackRole.incoming) &&
+-                    t.request.requestId == _currentRequest,
+-              )
+-              .firstOrNull
+-        : _tracks[_active];
++    final requestedTrack = _tracks.values
++        .where(
++          (t) =>
++              (t.role == TrackRole.prepared || t.role == TrackRole.incoming) &&
++              !t.revoked &&
++              t.request.generation == _generation &&
++              t.request.requestId == _currentRequest,
++        )
++        .firstOrNull;
++    final pending = _pending.containsKey(_currentRequest);
++    final track = requestedTrack ?? (pending ? null : _tracks[_active]);
+     if (track == null && !_pending.containsKey(_currentRequest)) {
+       return _reject(c, 'no-prepared-resource');
+     }
+@@ -571,6 +692,8 @@ class PlaybackCoordinator {
+     }
+     _dispatch(() => backend.seek(_active!, positionMs), 'seek');
+     _position = positionMs;
++    _requested = _tracks[_active]?.request.entry.entryId;
++    _resumeValidActive();
+     return _applied(c, signature);
+   }
+ 
+@@ -609,10 +732,11 @@ class PlaybackCoordinator {
+       _invalidatePrepare();
+       _generation++;
+       _currentRequest = null;
+-      _requested = null;
++      _requested = _tracks[_active]?.request.entry.entryId;
+       if (_active == null) {
+         _desired = DesiredTransport.stopped;
+       }
++      _resumeValidActive();
+     }
+     _entries = List.unmodifiable(entries);
+     _revision++;
+@@ -734,6 +858,7 @@ class PlaybackCoordinator {
+   }
+ 
+   void revokeResource(String handle) {
++    if (_disposed) return;
+     final t = _tracks[handle];
+     if (t == null || t.role == TrackRole.released) {
+       return;
+@@ -756,6 +881,7 @@ class PlaybackCoordinator {
+         _fail('release-timeout', 'release');
+       });
+     }
++    _backendOperations++;
+     try {
+       unawaited(
+         backend
+@@ -770,15 +896,18 @@ class PlaybackCoordinator {
+                 t.releaseTimer?.cancel();
+                 _fail('release-failure', 'release');
+               },
+-            ),
++            )
++            .whenComplete(() => _backendOperations--),
+       );
+     } catch (_) {
++      _backendOperations--;
+       t.releaseTimer?.cancel();
+       _fail('release-failure', 'release');
+     }
+   }
+ 
+   void _acceptRelease(_Track t, ReleaseReceipt receipt) {
++    if (_retired) return;
+     if (receipt.trackHandleId != t.resource.trackHandleId ||
+         receipt.consumerId != t.resource.consumerId ||
+         receipt.backendEpoch != t.request.backendEpoch) {
+@@ -805,7 +934,8 @@ class PlaybackCoordinator {
+     _capacityTimer?.cancel();
+     _generation++;
+     _currentRequest = null;
+-    await _subscription.cancel();
++    _route.authority = null;
++    await _route.subscription.cancel();
+     for (final t in _tracks.values) {
+       _release(t);
+       t.releaseTimer?.cancel();
+diff --git a/clients/flutter/tool/check.ps1 b/clients/flutter/tool/check.ps1
+index 0fe76b3..35da6c2 100644
+--- a/clients/flutter/tool/check.ps1
++++ b/clients/flutter/tool/check.ps1
+@@ -23,7 +23,7 @@ try {
+   if($Mode -in @('Quality','All')){
+     & flutter pub get --enforce-lockfile *> (Join-Path $logs 'pub-get.log')
+     Assert-Result 'pub-get'
+-    $freeze=Get-Content (Join-Path $client '../../docs/flutter-migration/evidence/A02/20261031-seek-freeze.json') -Raw | ConvertFrom-Json
++    $freeze=Get-Content (Join-Path $client '../../docs/flutter-migration/evidence/A02/20261107-transition-recovery-freeze.json') -Raw | ConvertFrom-Json
+     $workspace=[IO.Path]::GetFullPath((Join-Path $client '../..'))
+     foreach($entry in $freeze.files){
+       if((Get-FileHash (Join-Path $workspace $entry.path) -Algorithm SHA256).Hash.ToLower() -ne $entry.sha256){
+diff --git a/docs/flutter-migration/05-architecture-contracts.md b/docs/flutter-migration/05-architecture-contracts.md
+index 09e6114..e980440 100644
+--- a/docs/flutter-migration/05-architecture-contracts.md
++++ b/docs/flutter-migration/05-architecture-contracts.md
+@@ -98,6 +98,8 @@ Stop、Cancel、Pause或新PlayIntent不能等待旧解析、加载或整个播
+ 
+ ## C-03：三种恢复
+ 
++P1切歌意图补充（p1-a02-v2.7）：A仍active而B未确认时，成功seek(A)或移除B应失效B准备/确认、释放B，并将requested收敛到A；只有desired=playing且A资源有效时派发恢复A，paused不得抢播。暂停后继续优先当前request/generation的prepared或incoming B，B仍pending时等待B，不因旧A仍active而抢播A；B确认后按既有交接释放A，历史确认去重规则不变。
++
+ | 流程 | 顺序与不变量 |
+ | --- | --- |
+ | R1 UI重连 | 新uiConnectionId→snapshot+游标→恢复页面；会话/coord/backend/broker/租约不变，不load/play、不重复历史 |
+@@ -108,6 +110,18 @@ Activity事件不能替代存活检测。引擎毁灭导致Broker/协调器一
+ 
+ 若协调器接管时双轨无法可靠对应，不猜随机或下一首；收敛到后端可验证单轨/暂停。历史按确认ID去重。R2无损接管是H，必须验证，不能预设原生快照总能重建全部业务。
+ 
++### P1合作式单轨协调器替换（p1-a02-v2.4）
++
++仅同Dart isolate、旧协调器可合作退休且同一backend存活。`handoffSingleTrack(expectedClaim,newOwner)`校验完整旧claim/唯一事件路由权威及不同非空新owner；拒绝未完成prepare/cancel/control/release及回调收尾、等待容量、双轨/未确认/撤销/释放中等不稳定态。拒绝返回明确failure并保留旧权威，不自动停止旧播放或循环重试。
++
++成功返回不同协调器对象，session/backend实例与epoch、单轨request/resource身份/定位能力/事件序列、队列/模式/位置及确认保持；coordinatorEpoch增加、eventCursor推进、UI连接清空。固定单一后端事件路由在无await/外部调用的同步提交段切换目标，旧对象永久退休，旧claim/订阅业务/无claim回调及dispose均不能影响新权威资源。新owner最终dispose才关闭路由并释放资源。转移不调用prepare/play/release，不重签已有确认；序列围栏继续去重。
++
++应用只经LocalRuntime包装同步替换唯一coordinator引用后通知观察者，保留backend/store/writer/系统命令订阅；保存、销毁、镜像进行中及closed时拒绝。持久快照不包含运行句柄/claim；旧保存位置不覆盖存活状态。此合作式替换不等于协调器异常死亡、跨engine接管、连续听感或完整R2通过；无可信存活权威仍用R3暂停恢复。具体设计和未验范围见evidence/r2-handoff-20261106。
++
++P1销毁失败安全补充（p1-a02-v2.5）：开始销毁即标记底层状态不可信；失败保持暂停意图、不增长backendEpoch或伪造released，拒绝runtime接管/起播/切轨/seek，仅完整销毁回执被共享层接受后解除。失败的幂等native release可以由下一次显式清理调用重试，不能永久缓存失败Future或在失败时删除消费者；未完成的同一尝试仍共用Future，不自动循环。单轨失败后重试与真实平台正常回归分开留证；多资源部分销毁无法完整核对时保持不可信并走R3，不预设无损恢复。物理暂停若无底层回执仍未证明。
++
++P1关闭收尾补充（p1-a02-v2.6）：runtime/backend的close在同一实例内复用一次关闭Future，成功和失败结果均不触发重复清理。逐项尝试有序收尾，一项抛错仍尝试后续独立资源；保留所有已捕获错误，全部尝试后按原stack重抛首错。runtime仍关闭订阅、协调器、backend、writer锁及通知器；backend仍尝试后续handle、残留资源暂停、日志和两个事件流。失败handle保留消费者，不以Dart侧关闭完成冒充物理released；重复close不是资源重试，显式底层清理/R3另行处理。周期镜像只保存真正开始的Future，不能用skip tick的已完成Future替代在途镜像。闭合后命令拒绝、UI重连无副作用；不保证永不完成的Future会超时，也不等于整体save/destroy竞争已解决。
++
+ ### P1最小持久快照适配
+ 
+ A02在首批合同工作内提供窄的RecoverySnapshotStore读/保存边界与隔离文件原型适配器；唯一文件归属见任务索引，A07消费其落盘完成凭据，不依赖P2数据库。仅用于自有恢复实验，不打开Electron数据目录、不迁移真实数据、不安装正式DB依赖。

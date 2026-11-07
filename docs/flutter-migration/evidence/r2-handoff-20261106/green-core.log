@@ -1,0 +1,21 @@
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+00:00 +0: loading E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/coordinator_handoff_test.dart
+00:00 +0: new authority preserves one resource and confirmation paused=false
+00:00 +1: new authority preserves one resource and confirmation paused=true
+00:00 +1 -1: new authority preserves one resource and confirmation paused=true [E]
+  Expected: <6>
+    Actual: <5>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\playback\coordinator_handoff_test.dart 85:7    main.<fn>
+  
+00:00 +1 -1: wrong claim and same owner reject without changing live authority
+00:00 +2 -1: pending prepare and two live tracks reject
+00:00 +3 -1: inflight control rejects until failure callback finishes; sync throw does not leak
+00:00 +4 -1: released event does not bypass outstanding release Future
+00:00 +5 -1: stop first cannot be revived by handoff
+00:00 +6 -1: Some tests failed.
+
+Failing tests:
+  E:/Workspace/project/JJ-Music-mobile/clients/flutter/test/playback/coordinator_handoff_test.dart: new authority preserves one resource and confirmation paused=true
